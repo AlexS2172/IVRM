@@ -1,0 +1,68 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EgHttp", "EgHttp.vcproj", "{48DD7667-1914-42F1-A5AE-9A300BE448D5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HttpUnitTest", "HttpUnitTest\HttpUnitTest.vcproj", "{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}"
+EndProject
+Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(DevPartner Solution Properties) = postSolution
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 3
+		SccProjectName0 = \u0022$/EgCommon\u0022,\u0020HNDAAAAA
+		SccLocalPath0 = ..
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection0 = EgHttp\\
+		SolutionUniqueID = {7652CFCB-98D1-44C2-B51B-9FAA0D637656}
+		SccProjectUniqueName1 = EgHttp.vcproj
+		SccLocalPath1 = ..
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection1 = EgHttp\\
+		SccProjectUniqueName2 = HttpUnitTest\\HttpUnitTest.vcproj
+		SccLocalPath2 = ..
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection2 = EgHttp\\HttpUnitTest\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+		ConfigName.2 = Unicode Debug
+		ConfigName.3 = Unicode Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.0 = {48DD7667-1914-42F1-A5AE-9A300BE448D5}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Debug.ActiveCfg = Debug|Win32
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Debug.Build.0 = Debug|Win32
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Release.ActiveCfg = Release|Win32
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Release.Build.0 = Release|Win32
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{48DD7667-1914-42F1-A5AE-9A300BE448D5}.Unicode Release.Build.0 = Unicode Release|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Debug.ActiveCfg = Debug|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Debug.Build.0 = Debug|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Release.ActiveCfg = Release|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Release.Build.0 = Release|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{E119B8F0-4C66-4E40-9AD4-8A46D8A3A67B}.Unicode Release.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+	GlobalSection(DevPartner) = postSolution
+	EndGlobalSection
+	GlobalSection(DevPartner) = postSolution
+	EndGlobalSection
+	GlobalSection(DevPartner) = postSolution
+	EndGlobalSection
+	GlobalSection(DevPartner) = postSolution
+	EndGlobalSection
+EndGlobal

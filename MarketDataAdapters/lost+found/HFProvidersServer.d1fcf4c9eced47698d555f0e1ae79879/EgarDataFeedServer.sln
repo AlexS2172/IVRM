@@ -1,0 +1,50 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HFProvidersServer", "hyperfeedproviders.vcproj", "{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PriceProviders", "..\priceproviders\priceproviders.vcproj", "{DF565740-36DF-49C9-94D8-5CA7F23C03D0}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectUniqueName0 = hyperfeedproviders.vcproj
+		SccProjectName0 = SAK
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:ClearCase
+		CanCheckoutShared = false
+		SccProjectUniqueName1 = ..\\priceproviders\\priceproviders.vcproj
+		SccProjectName1 = SAK
+		SccLocalPath1 = ..\\priceproviders
+		SccProvider1 = MSSCCI:ClearCase
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+		ConfigName.2 = Unicode Debug
+		ConfigName.3 = Unicode Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Debug.ActiveCfg = Debug|Win32
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Debug.Build.0 = Debug|Win32
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Release.ActiveCfg = Release|Win32
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Release.Build.0 = Release|Win32
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{81C45A0A-D7BE-4415-8D86-A4F8CF38C4AA}.Unicode Release.Build.0 = Unicode Release|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Debug.ActiveCfg = Debug|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Debug.Build.0 = Debug|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Release.ActiveCfg = Release|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Release.Build.0 = Release|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Unicode Debug.ActiveCfg = Unicode Debug|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Unicode Debug.Build.0 = Unicode Debug|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Unicode Release.ActiveCfg = Unicode Release|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Unicode Release.Build.0 = Unicode Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

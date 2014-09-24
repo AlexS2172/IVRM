@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmRisks.MmRvCalcTheo.1 = s 'MmRvCalcTheo Class'
+	{
+		CLSID = s '{54974E75-99CA-4986-A5C9-885A9CEE83AE}'
+	}
+	EtsMmRisks.MmRvCalcTheo = s 'MmRvCalcTheo Class'
+	{
+		CLSID = s '{54974E75-99CA-4986-A5C9-885A9CEE83AE}'
+		CurVer = s 'EtsMmRisks.MmRvCalcTheo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {54974E75-99CA-4986-A5C9-885A9CEE83AE} = s 'MmRvCalcTheo Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvCalcTheo.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvCalcTheo'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{92825A3F-98F2-4838-95C9-C1E0214DE015}'
+		}
+	}
+}

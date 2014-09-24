@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VolatilitySources'
+		'VolatilitySources.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

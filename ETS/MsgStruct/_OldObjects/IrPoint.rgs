@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.IrPoint.1 = s 'IrPoint Class'
+	{
+		CLSID = s '{98E37390-6634-42D0-B673-C7D7FF1C0981}'
+	}
+	MsgStruct.IrPoint = s 'IrPoint Class'
+	{
+		CLSID = s '{98E37390-6634-42D0-B673-C7D7FF1C0981}'
+		CurVer = s 'MsgStruct.IrPoint.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {98E37390-6634-42D0-B673-C7D7FF1C0981} = s 'IrPoint Class'
+		{
+			ProgID = s 'MsgStruct.IrPoint.1'
+			VersionIndependentProgID = s 'MsgStruct.IrPoint'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

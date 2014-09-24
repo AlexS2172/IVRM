@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmRisks.MmRvFutAtom.1 = s 'MmRvFutAtom Class'
+	{
+		CLSID = s '{1046e7a5-1b39-43f2-800f-417e7e74c93b}'
+	}
+	EtsMmRisks.MmRvFutAtom = s 'MmRvFutAtom Class'
+	{
+		CLSID = s '{1046e7a5-1b39-43f2-800f-417e7e74c93b}'
+		CurVer = s 'EtsMmRisks.MmRvFutAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {1046e7a5-1b39-43f2-800f-417e7e74c93b} = s 'MmRvFutAtom Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvFutAtom.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvFutAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{dcc0c411-74e1-4481-a7ad-336e903474bf}'
+		}
+	}
+}

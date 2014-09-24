@@ -1,0 +1,24 @@
+HKCR
+{
+	ATFDataProvider.ATFPriceInfoWithNotify.1 = s 'ATFPriceInfoWithNotify Class'
+	{
+		CLSID = s '{1ED11ED1-DBDD-4E95-8BB8-BA9885810A9D}'
+	}
+	ATFDataProvider.ATFPriceInfoWithNotify = s 'ATFPriceInfoWithNotify Class'
+	{
+		CLSID = s '{1ED11ED1-DBDD-4E95-8BB8-BA9885810A9D}'
+		CurVer = s 'ATFDataProvider.ATFPriceInfoWithNotify.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {1ED11ED1-DBDD-4E95-8BB8-BA9885810A9D} = s 'ATFPriceInfoWithNotify Class'
+		{
+			ProgID = s 'ATFDataProvider.ATFPriceInfoWithNotify.1'
+			VersionIndependentProgID = s 'ATFDataProvider.ATFPriceInfoWithNotify'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{CF819161-9305-4B34-A7B6-61F2A5786002}'
+			'TypeLib' = s '{6F74EAF0-9A4C-46A5-BE07-438DED3A9A40}'
+		}
+	}
+}

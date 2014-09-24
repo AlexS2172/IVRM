@@ -1,0 +1,145 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""..\\\\..\\\\tlb\\\\EtsMmQuotes.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,5,165,0
+ PRODUCTVERSION 1,5,165,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileVersion", "1, 5,165, 0"
+            VALUE "InternalName", "EtsMmQuotes.dll"
+            VALUE "LegalCopyright", "© EGAR Technology Inc. All rights reserved."
+            VALUE "OriginalFilename", "EtsMmQuotes.dll"
+            VALUE "ProductName", "Equity Trading System"
+            VALUE "ProductVersion", "1, 5,165, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ETSMMQUOTES         REGISTRY                "EtsMmQuotes.rgs"
+IDR_MMQVQUOTEATOM       REGISTRY                "MmQvQuoteAtom.rgs"
+IDR_MMQVQUOTECOLL       REGISTRY                "MmQvQuoteColl.rgs"
+IDR_MMQVOPTATOM         REGISTRY                "MmQvOptAtom.rgs"
+IDR_MMQVSTRIKEATOM      REGISTRY                "MmQvStrikeAtom.rgs"
+IDR_MMQVSTRIKECOLL      REGISTRY                "MmQvStrikeColl.rgs"
+IDR_MMQVEXPATOM         REGISTRY                "MmQvExpAtom.rgs"
+IDR_MMQVEXPCOLL         REGISTRY                "MmQvExpColl.rgs"
+IDR_MMQVUNDATOM         REGISTRY                "MmQvUndAtom.rgs"
+IDR_MMQVOPTPAIRATOM     REGISTRY                "MmQvOptPairAtom.rgs"
+IDR_MMQVOPTPAIRCOLL     REGISTRY                "MmQvOptPairColl.rgs"
+IDR_MMQVOPTROOTATOM     REGISTRY                "MmQvOptRootAtom.rgs"
+IDR_MMQVOPTROOTCOLL     REGISTRY                "MmQvOptRootColl.rgs"
+IDR_MMQVUNDCOLL         REGISTRY                "MmQvUndColl.rgs"
+IDR_MMQVOPTCOLL         REGISTRY                "MmQvOptColl.rgs"
+IDR_MMQVFUTATOM         REGISTRY                "MmQvFutAtom.rgs"
+IDR_MMQVGRPATOM         REGISTRY                "MmQvGrpAtom.rgs"
+IDR_MMQVFUTROOTATOM     REGISTRY                "MmQvFutRootAtom.rgs"
+IDR_ETSMMQUOTESVIEW     REGISTRY                "EtsMmQuotesView.rgs"
+IDR_MMQVREQUESTATOM     REGISTRY                "MmQvRequestAtom.rgs"
+IDR_MMQVREQUESTCOLL     REGISTRY                "MmQvRequestColl.rgs"
+IDR_MMQVROWDATA         REGISTRY                "MmQvRowData.rgs"
+IDR_MMQVSPREADDATA      REGISTRY                "MmQvSpreadData.rgs"
+IDR_MMQVSPREADATOM      REGISTRY                "MmQvSpreadAtom.rgs"
+IDR_MMQVSPREADCOLL      REGISTRY                "MmQvSpreadColl.rgs"
+IDR_MMQVFUTCOLLECTION   REGISTRY                "MmQvFutCollection.rgs"
+IDR_MMQVFUTROOTCOLLECTION REGISTRY              "MmQvFutRootCollection.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "EtsMmQuotes"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "..\\..\\tlb\\EtsMmQuotes.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

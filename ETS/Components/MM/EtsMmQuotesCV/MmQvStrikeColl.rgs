@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmQuotes.MmQvStrikeColl.1 = s 'MmQvStrikeColl Class'
+	{
+		CLSID = s '{b8bd31ae-fe97-4955-b804-3e85017c0b35}'
+	}
+	EtsMmQuotes.MmQvStrikeColl = s 'MmQvStrikeColl Class'
+	{
+		CLSID = s '{b8bd31ae-fe97-4955-b804-3e85017c0b35}'
+		CurVer = s 'EtsMmQuotes.MmQvStrikeColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {b8bd31ae-fe97-4955-b804-3e85017c0b35} = s 'MmQvStrikeColl Class'
+		{
+			ProgID = s 'EtsMmQuotes.MmQvStrikeColl.1'
+			VersionIndependentProgID = s 'EtsMmQuotes.MmQvStrikeColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{83976770-144e-44c9-8edc-5ce32cfbe5a5}'
+		}
+	}
+}

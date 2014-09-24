@@ -1,0 +1,48 @@
+<VisualStudioProject>
+    <CSHARP LastOpenVersion = "7.10.3077" >
+        <Build>
+            <Settings ReferencePath = "D:\ClearCaseViews\EG1_ASP_Inst_Development\EgarCommonLibrary\OCWrapper\OCWrapper\bin\Release\;C:\Program Files\Common Files\Egar\;C:\Program Files\Egar\EMM.FW\VMComponents\;D:\ClearCaseViews\EG1_ASP_Inst_Development\EgarCommonLibrary\OCWrapper\OCWrapper\obj\Debug\;D:\ClearCaseViews\EG1_ASP_Inst_Development\EgarCommonLibrary\OCWrapper\OCWrapper\obj\Release\;D:\ClearCaseViews\EG1_ASP_Inst_Development\EgarCommonLibrary\OCWrapper\OCWrapper\bin\Debug\;D:\ClearCaseViews\EG1_ASP_Inst_Development\ETS\OTCComWrapper\OTCComWrapper\Release\;C:\Program Files\Egar\EMM.FW\;D:\ClearCaseViews\ASP_Production\ETS\Components\" >
+                <Config
+                    Name = "Debug"
+                    EnableASPDebugging = "false"
+                    EnableASPXDebugging = "false"
+                    EnableUnmanagedDebugging = "false"
+                    EnableSQLServerDebugging = "false"
+                    RemoteDebugEnabled = "false"
+                    RemoteDebugMachine = ""
+                    StartAction = "Project"
+                    StartArguments = "AAP AAP 1 20 -1E+308 -1E+308 1/22/2005 2 0 0 0 0 0 0 0 0"
+                    StartPage = ""
+                    StartProgram = ""
+                    StartURL = ""
+                    StartWorkingDirectory = ""
+                    StartWithIE = "true"
+                />
+                <Config
+                    Name = "Release"
+                    EnableASPDebugging = "false"
+                    EnableASPXDebugging = "false"
+                    EnableUnmanagedDebugging = "false"
+                    EnableSQLServerDebugging = "false"
+                    RemoteDebugEnabled = "false"
+                    RemoteDebugMachine = ""
+                    StartAction = "Project"
+                    StartArguments = "CMCSA CCQAD 20 -1E+308 -1E+308 1/22/2005 2 0 0 0 0 0 0 0"
+                    StartPage = ""
+                    StartProgram = ""
+                    StartURL = ""
+                    StartWorkingDirectory = ""
+                    StartWithIE = "false"
+                />
+            </Settings>
+        </Build>
+        <OtherProjectSettings
+            CopyProjectDestinationFolder = ""
+            CopyProjectUncPath = ""
+            CopyProjectOption = "0"
+            ProjectView = "ProjectFiles"
+            ProjectTrust = "0"
+        />
+    </CSHARP>
+</VisualStudioProject>
+

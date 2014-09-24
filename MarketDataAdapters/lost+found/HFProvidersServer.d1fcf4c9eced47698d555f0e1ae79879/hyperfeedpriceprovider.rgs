@@ -1,0 +1,24 @@
+HKCR
+{
+	EgarDataFeedService.HyperFeedPriceProvider.1 = s 'HyperFeedPriceProvider Class'
+	{
+		CLSID = s '{DF02BE86-2C57-4dcd-A3DD-0173BA690CF4}'
+	}
+	EgarDataFeedService.HyperFeedPriceProvider = s 'HyperFeedPriceProvider Class'
+	{
+		CLSID = s '{DF02BE86-2C57-4dcd-A3DD-0173BA690CF4}'
+		CurVer = s 'EgarDataFeedService.HyperFeedPriceProvider.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DF02BE86-2C57-4dcd-A3DD-0173BA690CF4} = s 'HyperFeedPriceProvider Class'
+		{
+			ProgID = s 'EgarDataFeedService.HyperFeedPriceProvider.1'
+			VersionIndependentProgID = s 'EgarDataFeedService.HyperFeedPriceProvider'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{1F999AB9-E140-4005-9180-958D72670A36}'
+			'TypeLib' = s '{426F0B40-8F7D-497e-ADEC-C09B57D8F16A}'
+		}
+	}
+}

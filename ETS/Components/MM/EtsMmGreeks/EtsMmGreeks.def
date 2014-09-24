@@ -1,0 +1,9 @@
+; EtsMmGreeks.def : Declares the module parameters.
+
+;LIBRARY      "EtsMmGreeks.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

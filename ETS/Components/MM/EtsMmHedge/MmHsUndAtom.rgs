@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmHedge.MmHsUndAtom.1 = s 'MmHsUndAtom Class'
+	{
+		CLSID = s '{3CF86D26-F580-4A50-B543-72A82308F3AF}'
+	}
+	EtsMmHedge.MmHsUndAtom = s 'MmHsUndAtom Class'
+	{
+		CLSID = s '{3CF86D26-F580-4A50-B543-72A82308F3AF}'
+		CurVer = s 'EtsMmHedge.MmHsUndAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3CF86D26-F580-4A50-B543-72A82308F3AF} = s 'MmHsUndAtom Class'
+		{
+			ProgID = s 'EtsMmHedge.MmHsUndAtom.1'
+			VersionIndependentProgID = s 'EtsMmHedge.MmHsUndAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{89306CD2-E7F4-4AB7-9AD2-14084B8CECB3}'
+		}
+	}
+}

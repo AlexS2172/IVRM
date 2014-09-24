@@ -1,0 +1,24 @@
+HKCR
+{
+	VME.TimeSkewVolatilities.1 = s 'TimeSkewVolatilities Class'
+	{
+		CLSID = s '{02A635F2-37A9-4B3C-AD8B-F787AB3B34F4}'
+	}
+	VME.TimeSkewVolatilities = s 'TimeSkewVolatilities Class'
+	{
+		CLSID = s '{02A635F2-37A9-4B3C-AD8B-F787AB3B34F4}'
+		CurVer = s 'VME.TimeSkewVolatilities.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {02A635F2-37A9-4B3C-AD8B-F787AB3B34F4} = s 'TimeSkewVolatilities Class'
+		{
+			ProgID = s 'VME.TimeSkewVolatilities.1'
+			VersionIndependentProgID = s 'VME.TimeSkewVolatilities'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{376AB49D-9D39-4B27-B122-4D22D490FE91}'
+			'TypeLib' = s '{98359542-A5A1-4A74-9E6A-520A4126F41D}'
+		}
+	}
+}

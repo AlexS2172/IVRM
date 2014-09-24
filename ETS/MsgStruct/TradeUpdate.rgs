@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.TradeUpdate.1 = s 'TradeUpdate Class'
+	{
+		CLSID = s '{531FC407-3C8A-4FDB-8ECE-0E2B9256424B}'
+	}
+	MsgStruct.TradeUpdate = s 'TradeUpdate Class'
+	{
+		CLSID = s '{531FC407-3C8A-4FDB-8ECE-0E2B9256424B}'
+		CurVer = s 'MsgStruct.TradeUpdate.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {531FC407-3C8A-4FDB-8ECE-0E2B9256424B} = s 'TradeUpdate Class'
+		{
+			ProgID = s 'MsgStruct.TradeUpdate.1'
+			VersionIndependentProgID = s 'MsgStruct.TradeUpdate'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

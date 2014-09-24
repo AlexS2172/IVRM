@@ -1,0 +1,9 @@
+; EtsMmReports.def : Declares the module parameters.
+
+; LIBRARY      "EtsMmReports.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsBrokerAtom.1 = s 'EtsBrokerAtom Class'
+	{
+		CLSID = s '{8A28E0D1-79D5-4853-BFEA-7D1CA4FBA007}'
+	}
+	EtsGeneral.EtsBrokerAtom = s 'EtsBrokerAtom Class'
+	{
+		CLSID = s '{8A28E0D1-79D5-4853-BFEA-7D1CA4FBA007}'
+		CurVer = s 'EtsGeneral.EtsBrokerAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8A28E0D1-79D5-4853-BFEA-7D1CA4FBA007} = s 'EtsBrokerAtom Class'
+		{
+			ProgID = s 'EtsGeneral.EtsBrokerAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsBrokerAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

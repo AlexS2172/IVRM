@@ -1,0 +1,3154 @@
+// EtsGeneral.idl : IDL source for EtsGeneral
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EtsGeneral.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "ComponentsCommon.idl"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+[
+	uuid(D78D97A8-D6E1-4026-A19B-48E2F23CB0C6),
+	version(1.0),
+	helpstring("EtsGeneral 1.0 Type Library")
+]
+library EtsGeneralLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("..\..\..\MarketDataAdapters\Tlb\PriceProviders.tlb");
+	importlib("..\..\tlb\MsgStruct.tlb");
+	importlib("..\..\tlb\VADBLayout.tlb");
+	importlib("..\..\tlb\VolatilitySources.tlb");
+
+	///////////////////////////////////////////////////////////////////////////
+	interface IAsset;
+	///////////////////////////////////////////////////////////////////////////
+	[uuid(15CAFD41-8C0F-4b53-BBC9-C001F98C0E71)]
+	struct KeyValue
+	{
+		BSTR	Key;
+		DOUBLE	Value;
+	};
+	///////////////////////////////////////////////////////////////////////////
+	//Market Simulator interface definition
+	[
+		object,
+		uuid(6F7783C8-6BB8-479E-B14B-0F592B32B3B1),
+		dual,
+		nonextensible,
+		helpstring("IMarketSimulationScenario Interface"),
+		pointer_default(unique)
+	]
+	interface IMarketSimulationScenario : IDispatch{
+		ETSGENERAL_PROP_DEF(1,	BSTR,	ShiftDriverAsset)
+
+		ETSGENERAL_PROP_DEF(2,	LONG,	TimeShiftUnit)
+		ETSGENERAL_PROP_DEF(3,	LONG,	PriceShiftUnit)
+		ETSGENERAL_PROP_DEF(4,	LONG,	VolatilityShiftUnit)
+
+		ETSGENERAL_PROP_DEF(5,	DOUBLE,	TimeShiftValue)
+		ETSGENERAL_PROP_DEF(6,	DOUBLE,	PriceShiftValue)
+		ETSGENERAL_PROP_DEF(7,	DOUBLE,	VolatilityShiftValue)
+
+		ETSGENERAL_PROP_DEF(8,	LONG,	TimeShiftScenario)
+		ETSGENERAL_PROP_DEF(9,	LONG,	PriceShiftScenario)
+		ETSGENERAL_PROP_DEF(10,	LONG,	VolatilityShiftScenario)
+
+		ETSGENERAL_PROP_DEF(11, LONG,	MaturityWeghted)
+
+		[id(12), helpstring("RebuildScenario")]
+		HRESULT	RebuildScenario();
+
+		ETSGENERAL_PROPPUTREF_DEF(13,	IAsset*,		PriceShiftDriver)
+
+		[id(14), helpstring("SetSpecificValues")]
+		HRESULT SetSpecificValues (	[in]LONG Scenario, 
+									[in, out] SAFEARRAY(struct KeyValue)* SpecificValues);
+
+		[id(15), helpstring("GetSpecificValues")]
+		HRESULT GetSpecificValues (	[in]LONG Scenario, 
+									[in, out] SAFEARRAY(struct KeyValue)* SpecificValues);
+	};
+	///////////////////////////////////////////////////////////////////////////
+	[
+		uuid(4E5C06AE-3FD0-441f-9194-A038CC7B5FA7),
+		helpstring("ETS TradesList Type"),
+		v1_enum
+	]
+	typedef enum TradesListColumnEnum
+	{
+		[helpstring("Trade List None")]			TLC_NONE		= -1,
+		[helpstring("Trade List Key")]			TLC_KEY			= 0,
+		[helpstring("Trade List Type")]			TLC_TYPE		= 1,
+		[helpstring("Trade List Underlying")]	TLC_UNDERLYING	= 2,
+		[helpstring("Trade List Symbol")]		TLC_SYMBOL		= 3,
+		[helpstring("Trade List Option Type")]	TLC_OPT_TYPE	= 4,
+		[helpstring("Trade List Expiry")]		TLC_EXPIRY		= 5,
+		[helpstring("Trade List DTE")]			TLC_DTE			= 6,
+		[helpstring("Trade List Strike")]		TLC_STRIKE		= 7,
+		[helpstring("Trade List Buy/Sell")]		TLC_BS			= 8,
+		[helpstring("Trade List Price")]		TLC_PRICE		= 9,
+
+		[helpstring("Trade List Quantity")]		TLC_QTY				= 10,
+		[helpstring("Trade List LotSize")]		TLC_LOTSIZE			= 11,
+		[helpstring("Trade List Price")]		TLC_TOT_PRICE		= 12,
+		[helpstring("Trade List Date")]			TLC_DATE			= 13,
+		[helpstring("Trade List Trader")]		TLC_TRADER			= 14,
+		[helpstring("Trade List Strategy")]		TLC_STRATEGY		= 15,
+		[helpstring("Trade List Broker")]		TLC_BROKER			= 16,
+		[helpstring("Trade List CLR Broker")]	TLC_CLR_BROKER		= 17,
+		[helpstring("Trade List Commission")]	TLC_COMMISSION		= 18,
+		[helpstring("Trade List Matched")]		TLC_MATCHED			= 19,
+		[helpstring("Trade List Marked")]		TLC_MARKED			= 20,
+		[helpstring("Trade List Fut.Root")]		TLC_FUT_ROOT		= 21,
+		[helpstring("Trade List Futures")]		TLC_FUTURES			= 22,
+		[helpstring("Trade List Fut.Maturity")]	TLC_FUT_MATURITY	= 23,
+		[helpstring("Trade List Und.Price")]	TLC_STOCKREFPRICE	= 24,
+		[helpstring("Trade List Traded IV")]	TLC_TRADED_IV		= 25,
+		[helpstring("Trade List TradeType")]	TLC_TRADETYPE		= 26,
+		[helpstring("Trade List Column Count")]	TLC_COLUMN_COUNT	= 27,
+                                                
+		[helpstring("Trade List Last Column")]	TLC_LAST_COLUMN		= TLC_COLUMN_COUNT	- 1
+
+
+	} TradesListColumnEnum;
+	////////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(6D940FCF-02FF-4EBB-9E76-255197D10379),
+		dual,
+		nonextensible,
+		helpstring("IEtsFilterData Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsFilterData : IDispatch{
+		[propget, id(1), helpstring("property Data")] HRESULT Data([in] LONG DataId, [out, retval] LONG* pVal);
+		[propput, id(1), helpstring("property Data")] HRESULT Data([in] LONG DataId, [in] LONG newVal);
+		[id(2), helpstring("method Initialize")] HRESULT Initialize([in] LONG LowBound, [in] LONG HighBound);
+	};
+    /////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(81610142-842C-4bb2-930B-335572648A02),
+		helpstring("ETS Filter Type"),
+		v1_enum
+	]
+	typedef enum EtsFilterTypeEnum
+	{
+		[helpstring("Symbol")]					enFtSymbol				= 0,
+		[helpstring("Trades")]					enFtTrades				= 1,
+		[helpstring("Groups")]					enFtGroups				= 2,
+		[helpstring("Trader Groups")]			enFtTraderGroups		= 3,
+		[helpstring("Trader")]					enFtTrader				= 4,
+		[helpstring("Strategy")]				enFtStrategy			= 5,
+		[helpstring("Expiry")]					enFtExpiry				= 6,
+		[helpstring("Index")]					enFtIndex				= 7,
+		[helpstring("Simulation Date")]			enFtSimDate				= 8,
+		[helpstring("Count types")]				enFtCountTypes			= 9
+	} EtsFilterTypeEnum;
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(6B1D5186-74F6-4c86-80EF-4A528BA8EAB9),
+		helpstring("Group Ratio"),
+		v1_enum
+	]
+	typedef enum GroupRatioEnum
+	{
+		[helpstring("Spot")]					enGrSpot				= 0,
+		[helpstring("Volatility")]				enGrVola				= 1,
+		[helpstring("Enum Size")]				enGrEnumSize			= 2
+	} GroupRatioEnum;
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(32F375AA-4D72-4e1a-BE7A-36037A52F95C),
+		helpstring("Exercise Style Enum"),
+		v1_enum
+	]
+	typedef enum ExerciseStyleEnum
+	{
+		[helpstring("American")]				enEsAmerican			= 0,
+		[helpstring("European")]				enEsEuropean			= 1,
+		[helpstring("Enum Size")]				enEsEnumSize			= 2
+	} ExerciseStyleEnum;
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(CEAC202F-4A5E-4b8d-84A8-C44B7D4101DF),
+		helpstring("Settlement Type Enum"),
+		v1_enum
+	]
+	typedef enum SettlementTypeEnum
+	{
+		[helpstring("AM Settlement")]			enStAM					= 0,
+		[helpstring("PM Settlement")]			enStPM					= 1,
+		[helpstring("Undefined")]				enStUndefined			= 2,
+		[helpstring("Enum Size")]				enStEnumSize			= 3
+	} SettlementTypeEnum;
+	/////////////////////////////////////////////////////////////////////////////
+
+	[
+		uuid(5A3B54F4-3190-4587-9184-2D7B72BE3427),
+		helpstring("InterestRateRuleType"),
+		v1_enum
+	]
+	typedef enum InterestRateRuleTypeEnum
+	{
+		[helpstring("NeutralRate")]					enRtNeutralRate			= 0,
+		[helpstring("BasedOnPositionRate")]			enRtBasedOnPositionRate	= 1	
+	}InterestRateRuleTypeEnum;
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(2E1FC7B1-0680-447c-9F54-0013195A81F2),
+		helpstring("ETS Sorting Type"),
+		v1_enum
+	]
+	typedef enum EtsSortingEnum
+	{
+		[helpstring("Sort Descending")]	enSortDescending  = 0,
+		[helpstring("Sort Ascending")]	enSortAscending	  = 1
+	} EtsSortingEnum;
+
+	[
+		uuid(983F51C2-5D7D-4a25-835E-918B0BF02134),
+		helpstring("ETS Dividend Type"),
+		v1_enum
+	]
+	typedef enum EtsDivTypeEnum
+	{
+		[helpstring("Market Dividend")]					enDivMarket				= 0,
+		[helpstring("Custom Periodical Dividend")]		enDivCustomPeriodical	= 1,
+		[helpstring("Custom Stream Dividend")]			enDivCustomStream		= 2,
+		[helpstring("Stock Basket Dividend")]			enDivStockBasket		= 3,
+		[helpstring("Yield Dividend")]					enDivIndexYield			= 4
+	} EtsDivTypeEnum;
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(4BB597BC-563A-4dce-9A8E-F9F1CCFE402C),
+		helpstring("ETS Rates Period Type"),
+		v1_enum
+	]
+	typedef enum EtsPeriodTypeEnum
+	{
+		[helpstring("Days")]		enPeriodDays		= 1,
+		[helpstring("Weeks")]		enPeriodWeeks		= 2,
+		[helpstring("Months")]		enPeriodMonths		= 3,
+		[helpstring("Years")]		enPeriodYears		= 4
+	} EtsPeriodTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(D5C18183-9A6E-4DF7-B3FD-49038538B977),
+		dual,
+		nonextensible,
+		helpstring("IEtsRateAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsRateAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF		   (1,			LONG,						ID)
+		ETSGENERAL_PROPREADONLY_DEF(2,			LONG,						Period)
+		ETSGENERAL_PROP_DEF		   (3,			DOUBLE,						LongRate)
+		ETSGENERAL_PROP_DEF		   (4,			DOUBLE,						ShortRate)
+		ETSGENERAL_PROP_DEF		   (5,			DOUBLE,						NeutralRate)
+
+		ETSGENERAL_PROP_DEF		   (6,			enum EtsPeriodTypeEnum,		PeriodType)
+		ETSGENERAL_PROP_DEF		   (7,			LONG,						PeriodAmount)
+
+		[id(10), helpstring("method CalcPeriodInDays")] HRESULT CalcPeriodInDays([in] DATE dToday);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(5F156B40-B941-4AEC-B478-3218DDA878FC),
+		dual,
+		nonextensible,
+		helpstring("ICalculationParametrs Interface"),
+		pointer_default(unique)
+	]
+	interface ICalculationParametrs : IDispatch
+	{
+		ETSGENERAL_PROP_DEF		(1,		VARIANT_BOOL,	UseTimePrecision)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(044DEC72-D915-49E5-999E-C8D68C37E810),
+		dual,
+		nonextensible,
+		helpstring("ICalculationSettings Interface"),
+		pointer_default(unique)
+	]
+	interface ICalculationSettings : IDispatch{
+		ETSGENERAL_PROP_DEF(1,	LONG,		GreeksCalculationMode)
+		ETSGENERAL_PROP_DEF(2,	LONG,		GreeksCalculationModel)
+		ETSGENERAL_PROP_DEF(3,	LONG,		UseTimePrecision)
+		ETSGENERAL_PROP_DEF(4,	LONG,		UseTheoVolaIfNoBid)
+		ETSGENERAL_PROP_DEF(5,	LONG,		UseTheoVolaIfBadMarketVola)
+		ETSGENERAL_PROP_DEF(6,	DOUBLE,		PriceTolerance)
+		ETSGENERAL_PROP_DEF(7,	LONG,		PriceRoundingRule)
+		ETSGENERAL_PROP_DEF(8,	DOUBLE,		Normal)
+		ETSGENERAL_PROP_DEF(9,	LONG,		CurveExtrapolationType)
+		ETSGENERAL_PROP_DEF(10,	LONG,		CurveInterpolationType)
+	};
+	////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(064EB7E2-B9AC-47F8-BACC-B05F1221B33F),
+		dual,
+		nonextensible,
+		helpstring("IBasketAssetComponent Interface"),
+		pointer_default(unique)
+	]
+	interface IBasketAssetComponent : IDispatch{
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(40B99D1C-0833-411A-8368-15799D8E3D61),
+		dual,
+		nonextensible,
+		helpstring("IBasketAssetComponentsColl Interface"),
+		pointer_default(unique)
+	]
+	interface IBasketAssetComponentsColl : IDispatch{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IBasketAssetComponent*)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(9510711F-F213-4a7d-88B7-B0DFF40214A6),
+		helpstring("WorkingMode"),
+		v1_enum
+	]
+	typedef enum WorkingMode
+	{
+		[helpstring("ClientMode")]			enWmClient	= 0,
+		[helpstring("ServerMode")]			enWmServer	= 1	
+	}WorkingModeEnum;
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(595FCD01-4177-40B4-BC2F-A6E04DA1FB1D),
+		dual,
+		nonextensible,
+		helpstring("IEtsRateColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsRateColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IEtsRateAtom*)
+
+		[id(9),  helpstring("method CopyTo(")] HRESULT CopyTo([out, retval] IEtsRateColl** ppRetVal);
+
+		[id(10), helpstring("method GetShortRate")]	  HRESULT GetShortRate  ([in] DATE dtToday, [in] DATE dtExpiry, [out, retval] DOUBLE* pdRate);
+		[id(11), helpstring("method GetLongRate")]	  HRESULT GetLongRate	([in] DATE dtToday, [in] DATE dtExpiry, [out, retval] DOUBLE* pdRate);
+		[id(12), helpstring("method GetNeutralRate")] HRESULT GetNeutralRate([in] DATE dtToday, [in] DATE dtExpiry, [out, retval] DOUBLE* pdRate);
+
+		[id(20), helpstring("method GetPeriodInDays")] HRESULT GetPeriodInDays([in] DATE dtToday, 
+																			   [in] enum EtsPeriodTypeEnum enPeriodType, 
+																			   [in] LONG nPeriodAmount,
+																			   [out, retval] LONG* pnPeriod);
+		//CBorrowingRatesCurve
+		ETSGENERAL_PROP_DEF(22,	LONG,							ID)
+		ETSGENERAL_PROP_DEF(23,	BSTR,							Name)
+		ETSGENERAL_PROP_DEF(24,	enum InterestRateRuleTypeEnum,	Rule)
+		ETSGENERAL_PROP_DEF(25,	DOUBLE,							PosThreshold)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(6B28E3FA-323C-4928-B0DF-A5D6F19A3971),
+		dual,
+		nonextensible,
+		helpstring("IBorrowingRatesCurves Interface"),
+		pointer_default(unique)
+	]
+	interface IBorrowingRatesCurves : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IEtsRateColl*)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(75D3E9E0-DDFD-4EDE-A304-1FBD3BF80D19),
+		dual,
+		nonextensible,
+		helpstring("IEtsDivAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsDivAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			DATE,							DivDate)
+		ETSGENERAL_PROP_DEF(2,			DOUBLE,							DivAmount)
+
+	};
+
+
+	[
+		object,
+		uuid(04617C1E-4502-43A9-891A-C9307D132086),
+		dual,
+		nonextensible,
+		helpstring("IEtsMmFilterAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsMmFilterAtom : IDispatch{
+		ETSGENERAL_PROP_DEF(1,	LONG,	ID)
+		ETSGENERAL_PROP_DEF(2,	BSTR,	Name)
+	};
+
+	[
+		object,
+		uuid(80A8E47F-B6AE-4E2A-BD9E-1FB4E4597E64),
+		dual,
+		nonextensible,
+		helpstring("IEtsMmFilterAtomColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsMmFilterAtomColl : IDispatch{
+		ETSGENERAL_PROP_DEF(1,	BSTR,	Name)
+
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IEtsMmFilterAtom*)
+	};
+
+	[
+		object,
+		uuid(277E377D-9CE4-4EB9-8411-AC873C963BBD),
+		dual,
+		nonextensible,
+		helpstring("IEtsMmEntityAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsMmEntityAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,	LONG,	ID)
+		ETSGENERAL_PROP_DEF(2,	BSTR,	Name)
+		ETSGENERAL_PROP_DEF(3,	LONG,	Data)
+		ETSGENERAL_PROP_DEF(4,	LONG,	Data2)
+		ETSGENERAL_PROP_DEF(5,	DOUBLE,	Data3)
+
+		ETSGENERAL_PROP_DEF(6,	DOUBLE,		dValue1)
+		ETSGENERAL_PROP_DEF(7,	DOUBLE,		dValue2)
+		ETSGENERAL_PROP_DEF(8,	DOUBLE,		dValue3)
+		ETSGENERAL_PROP_DEF(9,	DOUBLE,		dValue4)
+
+		ETSGENERAL_PROP_DEF(10,	BSTR,		sValue1)
+		ETSGENERAL_PROP_DEF(11,	BSTR,		sValue2)
+		ETSGENERAL_PROP_DEF(12,	VARIANT,	vValue)
+
+		ETSGENERAL_PROPPUTREF_DEF(14,	IEtsMmFilterAtomColl*,	ExtData)
+	};
+
+	[
+		object,
+		uuid(219700AD-3201-4605-834F-A7C7B52D3A24),
+		dual,
+		nonextensible,
+		helpstring("IEtsMmEntityAtomColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsMmEntityAtomColl : IDispatch{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IEtsMmEntityAtom*)
+	};
+	
+	[
+		object,
+		uuid(E3C2E7E8-C441-4D3F-AA64-EBE15D285C0A),
+		dual,
+		nonextensible,
+		helpstring("IEtsHolidayAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsHolidayAtom : IDispatch
+	{
+		[id(1), helpstring("method Add")] HRESULT Add([in] DATE dtDate);
+		[id(2), helpstring("method Remove")] HRESULT Remove([in] DATE dtDate);
+		[id(3), helpstring("method GetHolidays")] HRESULT GetHolidays([in] DATE dtToday, [out] SAFEARRAY(DOUBLE) * psaDates, [out] LONG * pnCount);
+		[id(4), helpstring("method GetPreviousWorkingDate")] HRESULT GetPreviousWorkingDate([in] DATE dtDate, [out] DATE *dtPWDate);
+		[id(5), helpstring("method Clear")] HRESULT Clear(void);
+		[id(6), helpstring("method TransformDividends")] HRESULT TransformDividends([in] SAFEARRAY(DATE) *psaDates, [in] LONG nCount, [out] SAFEARRAY(DATE) *psaTDates, [out] LONG *pnTCount);
+	};
+
+	[
+		object,
+		uuid(9EF519EF-671C-4A8D-A05C-822C3E1BEF38),
+		dual,
+		nonextensible,
+		helpstring("IEtsDivColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsDivColl : IDispatch
+	{
+//		ETSGENERAL_EXTENDED_COLLECTION_DEF(DATE, DATE, DOUBLE)
+		[id(7), helpstring("method GetDividends")] HRESULT GetDividends([in] DATE nToday, [in] DATE nExpiry, [in] LONG nCount, [out] SAFEARRAY(DOUBLE) * psaDivAmounts, [out] SAFEARRAY(DOUBLE) * psaDivDates , [out] LONG* pnCount);
+		[id(8), helpstring("method GetNearest")] HRESULT GetNearest([in] DATE nToday, [in] DATE nExpiry, [out] DOUBLE* pdDivAmount, [out] DOUBLE* pdDivDate);
+		[id(9), helpstring("method GetDividendCount")] HRESULT GetDividendCount([in] DATE nToday, [in] DATE nExpiry, [out] LONG* pnCount);
+		[id(10), helpstring("method Add")] HRESULT Add([in] DATE Date, [in] DOUBLE Amount);
+		[id(11), helpstring("method Remove")] HRESULT Remove([in] DATE Date);
+		[id(12), helpstring("method Clear")] HRESULT Clear(void);
+		
+		[id(13), helpstring("method CopyToWithWeight")]
+		HRESULT CopyToWithWeight([in] DOUBLE dWeight, [in] IEtsDivColl* pDest , [out, retval] IEtsDivColl ** ppVal);
+		[id(14), helpstring("method AddNonUnique")] HRESULT AddNonUnique([in] DATE Date, [in] DOUBLE Amount);
+
+		[id(15), helpstring("method Clone")] HRESULT Clone([out, retval] IEtsDivColl** ppVal );
+		//ETM MODE//
+		ETSGENERAL_PROPPUTREF_DEF(17,	IEtsHolidayAtom*,			Holidays)
+		[id(18), helpstring("method GetDividends2")] HRESULT GetDividends2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE dtCloseTime, [in] LONG nCount, [out] SAFEARRAY(DOUBLE) * psaDivAmounts, [out] SAFEARRAY(DOUBLE) * psaDivDates , [out] LONG* pnCount);
+		[id(19), helpstring("method GetNearest2")] HRESULT GetNearest2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE dtCloseTime, [out] DOUBLE* pdDivAmount, [out] DOUBLE* pdDivDate);
+		[id(20), helpstring("method GetDividendCount2")] HRESULT GetDividendCount2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE dtCloseTime, [out] LONG* pnCount); 
+		ETSGENERAL_PROP_DEF(21,			LONG,						AssetID)
+		[id(22), helpstring("method Reload")] HRESULT Reload(void);
+	};
+
+	[
+		object,
+		uuid(C9A8CC15-7ABE-4A4F-8174-66BACF7BAB6C),
+		dual,
+		nonextensible,
+		helpstring("IEtsIndexDivAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsIndexDivAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						DivFreq)
+		ETSGENERAL_PROP_DEF(2,			DATE,						DivDate)
+		ETSGENERAL_PROP_DEF(3,			DOUBLE,						DivAmt)
+		ETSGENERAL_PROP_DEF(4,			LONG,						DivFreqCust)
+		ETSGENERAL_PROP_DEF(5,			DATE,						DivDateCust)
+		ETSGENERAL_PROP_DEF(6,			DOUBLE,						DivAmtCust)
+		ETSGENERAL_PROP_DEF(7,			enum EtsDivTypeEnum,		DivType)
+		ETSGENERAL_PROPPUTREF_DEF(8,	IEtsDivColl*,				CustomDivs)
+		[id(9), helpstring("method IsValidDivs")]
+		HRESULT IsValidDivs([in] EtsDivTypeEnum enDivType, [out, retval] VARIANT_BOOL* pVal);
+		[id(11), helpstring("method GetDividends")] HRESULT GetDividends([in] DATE nToday, [in] DATE nExpiry, [in] LONG nCount, [out] SAFEARRAY(DOUBLE) * psaDivAmounts, [out] SAFEARRAY(DOUBLE) * psaDivDates, [out] LONG * pnCount);
+		[id(12), helpstring("method GetNearest")] HRESULT GetNearest([in] DATE nToday, [in] DATE nExpiry, [out] DOUBLE* pdDivAmount, [out] DOUBLE* pdDivDate);
+		[id(13), helpstring("method GetDividendCount")] HRESULT GetDividendCount([in] DATE nToday, [in] DATE nExpiry, [out] LONG* pnCount);
+		[id(14), helpstring("method Clear")] HRESULT Clear(void);
+		[id(15), helpstring("method Clone")] HRESULT Clone([out, retval] IEtsIndexDivAtom** pDestination);
+		[id(16), helpstring("method ResetInternalCache")] HRESULT ResetInternalCache(void);
+		ETSGENERAL_PROPPUTREF_DEF(17,	IEtsHolidayAtom*,			Holidays)
+		[id(18), helpstring("method GetDividends2")] HRESULT GetDividends2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE tmCloseTime, [in] LONG nCount, [out] SAFEARRAY(DOUBLE) * psaDivAmounts, [out] SAFEARRAY(DOUBLE) * psaDivDates, [out] LONG * pnCount);
+		[id(19), helpstring("method GetNearest2")] HRESULT GetNearest2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE tmCloseTime, [out] DOUBLE* pdDivAmount, [out] DOUBLE* pdDivDate);
+		[id(20), helpstring("method GetDividendCount2")] HRESULT GetDividendCount2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE tmCloseTime,  [out] LONG* pnCount);
+		ETSGENERAL_PROP_DEF(22,			LONG,						AssetID)
+		[id(23), helpstring("method Reload")] HRESULT Reload(void);
+	};
+
+	[
+		object,
+		uuid(07DF1F75-A2CF-4133-A29F-8D46A9ED3522),
+		dual,
+		nonextensible,
+		helpstring("IEtsIndexDivColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsIndexDivColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, LONG, IEtsIndexDivAtom*)
+		[id(10), helpstring("method CopyToWithWeight")]
+		HRESULT CopyToWithWeight([in] DOUBLE dWeight, [in] IEtsIndexDivColl* pDest , [out, retval] IEtsIndexDivColl** ppVal);
+		[id(11), helpstring("method GetDividends")] HRESULT GetDividends([in] DATE nToday, [in] DATE nExpiry, [in] LONG nCount, [out] SAFEARRAY(DOUBLE) * psaDivAmounts, [out] SAFEARRAY(DOUBLE) * psaDivDates, [out] LONG* pnCount);
+		[id(12), helpstring("method GetNearest")] HRESULT GetNearest([in] DATE nToday, [in] DATE nExpiry, [out] DOUBLE* pdDivAmount, [out] DOUBLE* pdDivDate);
+		[id(13), helpstring("method GetDividendCount")] HRESULT GetDividendCount([in] DATE nToday, [in] DATE nExpiry, [out] LONG* pnCount);
+		[id(14), helpstring("method SetWeight")] HRESULT SetWeight([in] LONG nKey, [in] DOUBLE dWeight);
+		[id(15), helpstring("method GetDividends2")] HRESULT GetDividends2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE tmCloseTime, [in] LONG nCount, [out] SAFEARRAY(DOUBLE) * psaDivAmounts, [out] SAFEARRAY(DOUBLE) * psaDivDates, [out] LONG* pnCount);
+		[id(16), helpstring("method GetNearest2")] HRESULT GetNearest2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE tmCloseTime, [out] DOUBLE* pdDivAmount, [out] DOUBLE* pdDivDate);
+		[id(17), helpstring("method GetDividendCount2")] HRESULT GetDividendCount2([in] DATE dtNow, [in] DATE dtExpiryOV, [in] DATE tmCloseTime, [out] LONG* pnCount);
+		[id(28), helpstring("method Reload")] HRESULT Reload(void);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(463B9DB7-3134-48BB-81EC-F7A7EC5D525C),
+		helpstring("ETS Price Rounding Rule"),
+		v1_enum
+	]
+	typedef enum EtsPriceRoundingRuleEnum
+	{
+		[helpstring("No rounding")]		enPrrRoundNone	= 0,
+		[helpstring("Round up")]		enPrrRoundUp	= 1,
+		[helpstring("Round down")]		enPrrRoundDown	= 2
+	} EtsPriceRoundingRuleEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(EA0172AC-8DEC-4732-9B08-C93A026F5F53),
+		helpstring("ETS Underlying Bad Price Rule"),
+		v1_enum
+	]
+	typedef enum EtsUndBadPriceRuleEnum
+	{
+		[helpstring("Do not check price tolerance")]		enUbprDoNotCheckTolerance	= 0,
+		[helpstring("Check price tolerance")]				enUbprCheckTolerance		= 1
+	} EtsUndBadPriceRuleEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(9F82E7F4-EE76-4369-95E8-3A92EA0EE96E),
+		helpstring("ETS Option Bad Single Price Rule"),
+		v1_enum
+	]
+	typedef enum EtsOptBadSinglePriceRuleEnum
+	{
+		[helpstring("Replace Bad Bid/Ask With Last")]		enObsprReplaceWithLast		= 0,
+		[helpstring("Replace Bad Bid/Ask With Ask/Bid")]	enObsprReplaceWithOpposite	= 1,
+		[helpstring("Replace Bad Bid/Ask With Theo")]		enObsprReplaceWithTheo		= 2,
+		[helpstring("Replace Bad Bid/Ask With Zero")]		enObsprReplaceWithZero		= 3
+	} EtsOptBadSinglePriceRuleEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(64CFB421-E46E-4CAF-95E3-4E95648EB6D2),
+		helpstring("ETS Option Bad Both Price Rule"),
+		v1_enum
+	]
+	typedef enum EtsOptBadBothPricesRuleEnum
+	{
+		[helpstring("Use Last")]		enObbprUseLast		= 0,
+		[helpstring("Use Theo")]		enObbprUseTheo		= 1
+	} EtsOptBadBothPricesRuleEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(64593BAB-31D0-49d1-B690-D855B8BBFE24),
+		helpstring("ETS Trade Status Type"),
+		v1_enum
+	]
+	typedef enum EtsTradeStatusEnum
+	{
+		[helpstring("enTrsRealtime")]			enTrsRealtime = 0x00,
+		[helpstring("enTrsSimulated")]			enTrsSimulated = 0x01,
+		[helpstring("enTrsManual")]				enTrsManual = 0x02,
+		[helpstring("enTrsMatchedRealtime")]	enTrsMatchedRealtime = 0x03
+	} EtsTradeStatusEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(3F53B222-67EC-4057-98D3-42B55BA555DF),
+		helpstring("ETS Contract Type"),
+		v1_enum
+	]
+	typedef enum EtsContractTypeEnum
+	{
+		[helpstring("None")]									enCtNone		= 0,
+
+		// base contract types
+		[helpstring("Index")]									enCtIndex		= 1,
+		[helpstring("Stock")]									enCtStock		= 2,
+		[helpstring("Option")]									enCtOption		= 3,
+		[helpstring("Future")]									enCtFuture		= 4,
+		[helpstring("Future Option")]							enCtFutOption	= 5,
+		[helpstring("Future Underlying")]						enCtFutUnd  	= 6,
+		
+		// helpers for group selection in several views (not a real contracts)
+		[helpstring("Future Root (not contract)")]				enCtFutRoot		= 100
+	} EtsContractTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(B301E252-DD39-4006-9421-561E43C3D0F5),
+		helpstring("ETS Option Type"),
+		v1_enum
+	]
+	typedef enum EtsOptionTypeEnum
+	{
+		[helpstring("Put Option")]		enOtPut		= 0,
+		[helpstring("Call Option")]		enOtCall	= 1
+	} EtsOptionTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(E48A4A3F-8A29-4246-8C74-E333FA8DBFC9),
+		helpstring("ETS Calculation Model Type"),
+		v1_enum
+	]
+	typedef enum EtsCalcModelTypeEnum
+	{
+		[helpstring("enCmBinomial")]		enCmBinomial	= 2,
+		[helpstring("enCmBinomialOpt")]		enCmBinomialOpt	= 3,
+		[helpstring("enCmVskLog")]			enCmVskLog		= 4
+	} EtsCalcModelTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(22494D14-673A-4C89-924E-0AF88F6B92BE)
+	]
+	struct EtsRegularDividend
+	{
+		[helpstring("DivDate")] DATE LastDate;
+		[helpstring("DivFreq")] LONG Freq;
+		[helpstring("DivAmt")] DOUBLE Amt;
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(213AF418-216A-4925-B0AC-33462E566F74),
+		helpstring("ETS Replace Price Status"),
+		v1_enum
+	]
+	typedef enum EtsReplacePriceStatusEnum
+	{
+		[helpstring("No price replacement")]		enRpsNone			= 0,
+		[helpstring("Bid price is replaced")]		enRpsBid			= 1,
+		[helpstring("Ask price is replaced")]		enRpsAsk			= 2,
+		[helpstring("Both bid and ask prices are replaced")] enRpsBoth	= 3
+	} EtsReplacePriceStatusEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(DBB700FB-BC2F-401C-BBE3-DC78B179D576),
+		helpstring("ETS Order Status Type"),
+		v1_enum
+	]
+	typedef enum EtsOrderStatusEnum
+	{
+		[helpstring("enOrsUnknown")]				enOrsUnknown				= 0,
+		[helpstring("enOrsNew")]					enOrsNew					= 48,	// '0' - Exchange accepted the order.
+		[helpstring("enOrsPartiallyFilled")]		enOrsPartiallyFilled		= 49,	// '1' - Executed
+		[helpstring("enOrsFilled")]					enOrsFilled					= 50,	// '2' - Executed
+		[helpstring("enOrsDoneForDay")]				enOrsDoneForDay				= 51,	// '3' - Canceled with nothing done for any remaining open quantity on the order.
+		[helpstring("enOrsCanceled")]				enOrsCanceled				= 52,	// '4' - Canceled
+		[helpstring("enOrsReplaced")]				enOrsReplaced				= 53,	// '5' - Replaced
+		[helpstring("enOrsPendingCancelReplace")]	enOrsPendingCancelReplace	= 54,	// '6' - Reply on cancel or alter request
+		[helpstring("enOrsStopped")]				enOrsStopped				= 55,	// '7'	
+		[helpstring("enOrsRejected")]				enOrsRejected				= 56,	// '8'
+		[helpstring("enOrsSuspended")]				enOrsSuspended				= 57,	// '9'
+		[helpstring("enOrsPendingNew")]				enOrsPendingNew				= 65,	// 'A'
+		[helpstring("enOrsCalculated")]				enOrsCalculated				= 66,	// 'B'
+		[helpstring("enOrsExpired")]				enOrsExpired				= 67	// 'C'
+	} EtsOrderStatusEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(191F1976-DC7D-48A8-99D1-AE12AAA68EF9),
+		helpstring("ETS Order Execution Status"),
+		v1_enum
+	]
+	typedef enum EtsOrderExecutionStatusEnum
+	{
+		[helpstring("enOesUnknown")]				enOesUnknown				= 0,
+		[helpstring("enOesNew")]					enOesNew					= 48,	// '0' - Exchange accepted the order.
+		[helpstring("enOesPartiallyFilled")]		enOesPartiallyFilled		= 49,	// '1' - Executed
+		[helpstring("enOesFilled")]					enOesFilled					= 50,	// '2' - Executed
+		[helpstring("enOesDoneForDay")]				enOesDoneForDay				= 51,	// '3' - Canceled with nothing done for any remaining open quantity on the order.
+		[helpstring("enOesCanceled")]				enOesCanceled				= 52,	// '4' - Canceled
+		[helpstring("enOesReplaced")]				enOesReplaced				= 53,	// '5' - Replaced
+		[helpstring("enOesPendingCancelReplace")]	enOesPendingCancelReplace	= 54,	// '6' - Reply on cancel or alter request
+		[helpstring("enOesStopped")]				enOesStopped				= 55,	// '7'	
+		[helpstring("enOesRejected")]				enOesRejected				= 56,	// '8'
+		[helpstring("enOesSuspended")]				enOesSuspended				= 57,	// '9'
+		[helpstring("enOesPendingNew")]				enOesPendingNew				= 65,	// 'A'
+		[helpstring("enOesCalculated")]				enOesCalculated				= 66,	// 'B'
+		[helpstring("enOesExpired")]				enOesExpired				= 67	// 'C'
+	} EtsOrderExecutionStatusEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(2BF58187-E1ED-45E7-AABC-13A58DE6A428),
+		helpstring("ETS Order Type"),
+		v1_enum
+	]
+	typedef enum EtsOrderTypeEnum
+	{
+		[helpstring("enOrtUnknown")]			enOrtUnknown			= 0,
+		[helpstring("enOrtMarket")]				enOrtMarket				= 49,		// '1'
+		[helpstring("enOrtLimit")]				enOrtLimit				= 50,		// '2'
+		[helpstring("enOrtStop")]				enOrtStop				= 51,		// '3'
+		[helpstring("enOrtStopLimit")]			enOrtStopLimit			= 52,		// '4'
+		[helpstring("enOrtMarketOnClose")]		enOrtMarketOnClose		= 53,		// '5'
+		[helpstring("enOrtWithOrWithout")]		enOrtWithOrWithout		= 54,		// '6'
+		[helpstring("enOrtLimitOrBetter")]		enOrtLimitOrBetter		= 55,		// '7'
+		[helpstring("enOrtLimitWithOrWithout")] enOrtLimitWithOrWithout	= 56,		// '8'
+		[helpstring("enOrtOnBasis")]			enOrtOnBasis			= 57,		// '9'
+		[helpstring("enOrtOnClose")]			enOrtOnClose			= 65,		// 'A'
+		[helpstring("enOrtLimitOnClose")]		enOrtLimitOnClose		= 66,		// 'B'
+		[helpstring("enOrtForexMarket")]		enOrtForexMarket		= 67,		// 'C'
+		[helpstring("enOrtPrevQuoted")]			enOrtPrevQuoted			= 68,		// 'D'
+		[helpstring("enOrtPrevIndicated")]		enOrtPrevIndicated		= 69,		// 'E'
+		[helpstring("enOrtForexLimit")]			enOrtForexLimit			= 70,		// 'F'
+		[helpstring("enOrtForexSwap")]			enOrtForexSwap			= 71,		// 'G'
+		[helpstring("enOrtForexPrevQuoted")]	enOrtForexPrevQuoted	= 72,		// 'H'
+		[helpstring("enOrtMarketIfTouched")]	enOrtMarketIfTouched	= 74		// 'J'
+	} EtsOrderTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(BE19E5E9-975E-47DB-9EA9-23E09D83F9B3),
+		helpstring("ETS Event Type"),
+		v1_enum
+	]
+	typedef enum EtsEventTypeEnum
+	{
+		[helpstring("enEvtUnknown")]		enEvtUnknown	= 0,
+		[helpstring("enEvtInfo")]			enEvtInfo		= 1,
+		[helpstring("enEvtWarning")]		enEvtWarning	= 2,
+		[helpstring("enEvtError")]			enEvtError		= 3
+	} EtsEventTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(1DF76E8C-D7FC-4936-961C-2F7997294666),
+		helpstring("ETS TNT Card Status Type"),
+		v1_enum
+	]
+	typedef enum EtsTntCardStatusEnum
+	{
+		[helpstring("enTcsUnknown")]				enTcsUnknown				= 0,
+		[helpstring("enTcsOutPendingExecute")]		enTcsOutPendingExecute		= 1,
+		[helpstring("enTcsOutExecuted")]			enTcsOutExecuted			= 2,
+		[helpstring("enTcsOutFailed")]				enTcsOutFailed				= 3,
+		[helpstring("enTcsInNew")]					enTcsInNew					= 4,
+		[helpstring("enTcsInPendingAccept")]		enTcsInPendingAccept		= 5,
+		[helpstring("enTcsInAccepted")]				enTcsInAccepted				= 6,
+		[helpstring("enTcsInFailed")]				enTcsInFailed				= 7,
+		[helpstring("enTcsInRejected")]				enTcsInRejected				= 8
+	} EtsTntCardStatusEnum;
+	
+
+	//IContractRoot interface definition
+	[
+	  	object,
+		uuid(738A002C-4FDA-4d65-BEA6-898473A85022),
+		dual,
+		nonextensible,
+		helpstring("IContractRoot Default Interface"),
+		pointer_default(unique)
+	]
+
+	interface IContractRoot: IDispatch{
+		ETSGENERAL_PROP_DEF(1,			LONG,					ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,					Symbol)
+		ETSGENERAL_PROP_DEF(3,			BSTR,					Name)
+		ETSGENERAL_PROP_DEF(4,			enum ExerciseStyleEnum,	ExerciseStyle)
+		ETSGENERAL_PROP_DEF(5,			DATE,					SettlementValueTime)
+		ETSGENERAL_PROP_DEF(6,			LONG,					LotSize)
+		ETSGENERAL_PROP_DEF(7,			LONG,					QuotationUnitID)
+		ETSGENERAL_PROP_DEF(8,			BSTR,					QuotationUnitName)
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,					TickSize)
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,					TickValue)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,					PriceQuotationUnit)
+		ETSGENERAL_PROP_DEF(12,			LONG,					QuoteFormat)
+		ETSGENERAL_PROP_DEF(13,			LONG,					UndID)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(FE86E924-A300-455B-83F2-6D44C96C2530),
+		dual,
+		nonextensible,
+		helpstring("IContractRootColl Interface"),
+		pointer_default(unique)
+	]
+	interface IContractRootColl : IDispatch{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IContractRoot*)
+	};
+	/////////////////////////////////////////////////////////////////////////////////
+	interface IContractColl;
+	/////////////////////////////////////////////////////////////////////////////////
+	//AbstractContract interface definition
+	[
+	  	object,
+		uuid(B623B213-DE79-4abe-8689-33856B5B608C),
+		dual,
+		nonextensible,
+		helpstring("IContract Default Interface"),
+		pointer_default(unique)
+	]
+
+	interface IContract: IDispatch{
+		ETSGENERAL_PROP_DEF(1,	LONG,					ID)
+		ETSGENERAL_PROP_DEF(2,	BSTR,					Symbol)
+		ETSGENERAL_PROP_DEF(3,	BSTR,					ContractName)
+		ETSGENERAL_PROP_DEF(4,	EtsContractTypeEnum,	ContractType)
+		ETSGENERAL_PROP_DEF(5,	BSTR,					ImportID)
+
+		ETSGENERAL_PROP_DEF(6,	DOUBLE,					ManualPrice)
+		ETSGENERAL_PROP_DEF(7,	DOUBLE,					ClosePrice)
+		ETSGENERAL_PROP_DEF(8,	DOUBLE,					TheoClosePrice)
+
+		ETSGENERAL_PROPPUTREF_DEF(9,	IContract*,		BaseContract)
+		ETSGENERAL_PROPPUTREF_DEF(10,	IAsset*,		Asset)
+		
+		[id(11), helpstring("Calculate")]
+		HRESULT Calculate(	[in] ICalculationSettings* Settings,
+							[in] IMarketSimulationScenario* SimulationScenario,
+							[out, retval] struct IRisks* RetVal);
+
+		[id(12), helpstring("GetRisks")]
+		HRESULT GetRisks([out, retval] struct IRisks* RetVal);
+
+		[id(13), helpstring("GetQuotes")]
+		HRESULT GetQuotes([out, retval] struct QuoteUpdateInfo* RetVal);
+
+		ETSGENERAL_PROPPUTREF_DEF(14,	IContractColl*,	DerivativeContracts)
+
+		[id(15), helpstring("FitToMarketVolatility")]
+		HRESULT FitToMarketVolatility([in, defaultvalue(0.0)] DOUBLE Value);
+
+		[id(16), helpstring("GetPricingUnit")]
+		HRESULT GetPricingUnit([out, retval] DOUBLE* Value);
+
+		[id(17), helpstring("GetContractSizeInAsset")]
+		HRESULT GetContractSizeInAsset([out, retval] DOUBLE* Value);
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////
+	//AbstractOptionContract interface definition
+	[
+	  	object,
+		uuid(F82700F4-48CF-4a7c-9F83-35FEE281C43F),
+		dual,
+		nonextensible,
+		helpstring("IOptionContract Default Interface"),
+		pointer_default(unique)
+	]
+
+	interface IOptionContract: IContract
+	{
+		ETSGENERAL_PROP_DEF(101,			enum EtsOptionTypeEnum,			OptType)
+		ETSGENERAL_PROP_DEF(102,			DATE,							Expiry)
+		ETSGENERAL_PROP_DEF(103,			DOUBLE,							Strike)
+		ETSGENERAL_PROP_DEF(104,			BSTR,							Series)
+		ETSGENERAL_PROP_DEF(105,			DOUBLE,							PriceClose)
+		ETSGENERAL_PROP_DEF(106,			DOUBLE,							PriceTheoClose)
+		ETSGENERAL_PROP_DEF(107,			LONG,							Flex)
+		ETSGENERAL_PROP_DEF(108,			DATE,							ExpiryOV)
+		ETSGENERAL_PROP_DEF(109,			DATE,							TradingClose)
+		ETSGENERAL_PROPREADONLY_DEF(110,	IContractRoot*,					Root)
+	}
+	/////////////////////////////////////////////////////////////////////////////////
+	//AbstractSpotContract interface definition
+	[
+	  	object,
+		uuid(3876CC64-3F24-458d-A6B1-7161A7AB2527),
+		dual,
+		nonextensible,
+		helpstring("ISpotContract Default Interface"),
+		pointer_default(unique)
+	]
+
+	interface ISpotContract: IContract
+	{
+		ETSGENERAL_PROP_DEF(1001,			LONG,						LotSize)
+
+		ETSGENERAL_PROP_DEF(1002,			DOUBLE,						Skew)
+		ETSGENERAL_PROP_DEF(1003,			DOUBLE,						Kurt)
+
+		ETSGENERAL_PROP_DEF(1004,			BSTR,						PrimaryExchImportID)
+		ETSGENERAL_PROP_DEF(1005,			LONG,						PrimaryExchangeID)
+
+		ETSGENERAL_PROP_DEF(1006,			VARIANT_BOOL,				bShouldMultOptDeltaEq)
+		ETSGENERAL_PROP_DEF(1007,			DOUBLE,				        dKOptDeltaEq)
+		ETSGENERAL_PROP_DEF(1008,			LONG,						TotalQtyInShares)
+		ETSGENERAL_PROP_DEF(1009,			DOUBLE,						UndPosForRates)
+	}
+	/////////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(64D2C8B7-0888-49E5-A51B-8DB08E14721C),
+		dual,
+		nonextensible,
+		helpstring("ISpotContractAtom Interface"),
+		pointer_default(unique)
+	]
+
+	interface ISpotContractAtom : ISpotContract
+	{
+
+	};
+	/////////////////////////////////////////////////////////////////////////////////
+	[
+	  	object,
+		uuid(63B94A20-F3C2-46c2-95AC-F998C02103CA),
+		dual,
+		nonextensible,
+		helpstring("ISyntheticSpotContract Default Interface"),
+		pointer_default(unique)
+	]
+	interface ISyntheticSpotContract : IContract
+	{
+
+	}
+	/////////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(3F714B49-02CD-4C63-AFC1-3125A5F38F9A),
+		dual,
+		nonextensible,
+		helpstring("ISyntheticSpotContractAtom Interface"),
+		pointer_default(unique)
+	]
+	interface ISyntheticSpotContractAtom : ISyntheticSpotContract{
+	};
+	/////////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(487C0D91-A77B-43D7-96C0-F21F88E8BBED),
+		dual,
+		nonextensible,
+		helpstring("IContractColl Interface"),
+		pointer_default(unique)
+	]
+	/////////////////////////////////////////////////////////////////////////////////
+	interface IContractColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IContract*)
+	};
+	/////////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(F89E1E5A-59F6-4009-B31C-1521D2E9557D),
+		dual,
+		nonextensible,
+		helpstring("IAssetColl Interface"),
+		pointer_default(unique)
+	]
+	/////////////////////////////////////////////////////////////////////////////////
+	interface IAssetColl : IDispatch{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IAsset*)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(912D054F-FB39-4FEA-869B-76E69262C694),
+		dual,
+		nonextensible,
+		helpstring("IEtsProcessDelay Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsProcessDelay : IDispatch
+	{
+		// number of Sleep calls after which to need to make a delay
+		ETSGENERAL_PROP_DEF(1,			LONG,			Frequency)
+		// delay duration (ms)
+		ETSGENERAL_PROP_DEF(2,			LONG,			Duration)
+		// check is a process should be interrupted
+		ETSGENERAL_PROPREADONLY_DEF(3,	VARIANT_BOOL,	IsInterrupted)
+
+		[id(11), helpstring("Make a delay according frequency and duration")]
+		HRESULT Sleep();
+
+		[id(12), helpstring("Interrupt a process (next call of Sleep will fail)")]
+		HRESULT Interrupt();
+
+		[id(13), helpstring("Reset state")]
+		HRESULT Reset();
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(A3D18D98-1D1B-446F-A026-19716CF0F1D6),
+		dual,
+		nonextensible,
+		helpstring("IEtsPriceProfileAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsPriceProfileAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,							Name)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Description)
+		ETSGENERAL_PROP_DEF(4,			LONG,							DefaultID)
+		ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,					IsOptionProfile)
+		ETSGENERAL_PROP_DEF(6,			VARIANT_BOOL,					AlwaysUseLast)
+		ETSGENERAL_PROP_DEF(7,			VARIANT_BOOL,					UseMidMarketForPnL)
+		ETSGENERAL_PROP_DEF(8,			EtsUndBadPriceRuleEnum,			BadUndPriceRule)
+		ETSGENERAL_PROP_DEF(9,			EtsOptBadSinglePriceRuleEnum,	BadOptSinglePriceRule)
+		ETSGENERAL_PROP_DEF(10,			EtsOptBadBothPricesRuleEnum,	BadOptBothPriceRule)
+		ETSGENERAL_PROP_DEF(11,			VARIANT_BOOL,					UseZeroBidRule)
+
+		[id(12), helpstring("method GetUndPriceMid")]
+		HRESULT GetUndPriceMid([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+								[in] DOUBLE dTolerance, [in] EtsPriceRoundingRuleEnum enPriceRound,
+								[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+								[in, defaultvalue(FALSE)] VARIANT_BOOL CheckProfilManual,
+								[out,retval] DOUBLE* pdRetVal);
+
+		[id(13), helpstring("method GetUndPriceBidForPnL")]
+		HRESULT GetUndPriceBidForPnL([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+								[in] DOUBLE dTolerance, [in] EtsPriceRoundingRuleEnum enPriceRound,
+								[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+								[out,retval] DOUBLE* pdRetVal);
+
+		[id(14), helpstring("method GetUndPriceAskForPnL")]
+		HRESULT GetUndPriceAskForPnL([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+								[in] DOUBLE dTolerance, [in] EtsPriceRoundingRuleEnum enPriceRound,
+								[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+								[out,retval] DOUBLE* pdRetVal);
+
+		[id(15), helpstring("method GetOptPriceMid")]
+		HRESULT GetOptPriceMid([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+							[in] EtsPriceRoundingRuleEnum enPriceRound, [in] VARIANT_BOOL bUseTheoVola, [in] DOUBLE dPriceTheo,
+							[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+							[out,retval] DOUBLE* pdRetVal);
+
+		[id(16), helpstring("method GetOptPriceBidForPnL")]
+		HRESULT GetOptPriceBidForPnL([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+							[in] EtsPriceRoundingRuleEnum enPriceRound, [in] VARIANT_BOOL bUseTheoVola, [in] DOUBLE dPriceTheo,
+							[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+							[out,retval] DOUBLE* pdRetVal);
+
+		[id(17), helpstring("method GetOptPriceAskForPnL")]
+		HRESULT GetOptPriceAskForPnL([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+							[in] EtsPriceRoundingRuleEnum enPriceRound, [in] VARIANT_BOOL bUseTheoVola, [in] DOUBLE dPriceTheo,
+							[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+							[out,retval] DOUBLE* pdRetVal);
+
+		[id(18), helpstring("method GetOptPriceBid")]
+		HRESULT GetOptPriceBid([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+							[in] EtsPriceRoundingRuleEnum enPriceRound, [in] VARIANT_BOOL bUseTheoVola, [in] DOUBLE dPriceTheo,
+							[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+							[out,retval] DOUBLE* pdRetVal);
+
+		[id(19), helpstring("method GetOptPriceAsk")]
+		HRESULT GetOptPriceAsk([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+							[in] EtsPriceRoundingRuleEnum enPriceRound, [in] VARIANT_BOOL bUseTheoVola, [in] DOUBLE dPriceTheo,
+							[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+							[out,retval] DOUBLE* pdRetVal);
+
+		[id(20), helpstring("method GetUndPriceBid")]
+		HRESULT GetUndPriceBid([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+								[in] DOUBLE dTolerance, [in] EtsPriceRoundingRuleEnum enPriceRound,
+								[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+								[out,retval] DOUBLE* pdRetVal);
+
+		[id(21), helpstring("method GetUndPriceAsk")]
+		HRESULT GetUndPriceAsk([in] DOUBLE dPriceBid, [in] DOUBLE dPriceAsk, [in] DOUBLE dPriceLast,
+								[in] DOUBLE dTolerance, [in] EtsPriceRoundingRuleEnum enPriceRound,
+								[out, defaultvalue(0)] EtsReplacePriceStatusEnum* penPriceStatus,
+								[out,retval] DOUBLE* pdRetVal);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(8FA8E4A0-07A3-45E2-92DF-8E9A9E62FEDD),
+		dual,
+		nonextensible,
+		helpstring("IEtsPriceProfileColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsPriceProfileColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsPriceProfileAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(1360B589-982D-4DB2-A4AD-C150C56ED3EA),
+		dual,
+		nonextensible,
+		helpstring("IVolaControl Interface"),
+		pointer_default(unique)
+	]
+	interface IVolaControl : IDispatch
+	{
+		[id(1), helpstring("method Init")]
+		HRESULT Init([in] BSTR UnderlyingSymbol, [in] EtsContractTypeEnum ContractType, [in] IVolatilitySource* pVolaSrc, [in,defaultvalue(FALSE)] VARIANT_BOOL IsSimulated);
+
+		ETSGENERAL_PROP_DEF(2,	DOUBLE,				UnderlyingPrice)
+
+		[propget, id(3), helpstring("property OptionVola")]
+		HRESULT OptionVola([in] DATE Expiry, [in] DOUBLE Strike, [in, defaultvalue(-1)] LONG SurfaceID, [out, retval] DOUBLE* pVal);
+		[propput, id(3), helpstring("property OptionVola")]
+		HRESULT OptionVola([in] DATE Expiry, [in] DOUBLE Strike, [in, defaultvalue(-1)] LONG SurfaceID, [in] DOUBLE newVal);
+
+		[propget, id(4), helpstring("property OptionTargetVola")]
+		HRESULT OptionTargetVola([in] DATE Expiry, [in] DOUBLE Strike, [out, retval] DOUBLE* pVal);
+
+		[id(5), helpstring("method ShiftExpiryVola")]
+		HRESULT ShiftExpiryVola([in] DATE Expiry, [in] DOUBLE ShiftValue, [in, defaultvalue(-1)] LONG SurfaceID);
+
+		[id(6), helpstring("method SetExpiryVola")]
+		HRESULT SetExpiryVola([in] DATE Expiry, [in] DOUBLE Value, [in, defaultvalue(-1)] LONG SurfaceID);
+
+		[id(7), helpstring("method SetExpiryVolaByExpiry")]
+		HRESULT SetExpiryVolaByExpiry([in] SAFEARRAY(struct ExpiryVolaData)* saData, [in, defaultvalue(-1)] LONG SurfaceID);
+
+		[id(8), helpstring("method SetExpiryVolaAll")]
+		HRESULT SetExpiryVolaAll([in] DOUBLE Value, [in, defaultvalue(-1)] LONG SurfaceID);
+
+		[id(9), helpstring("method CleanUp")]
+		HRESULT CleanUp(void);
+
+		[id(10), helpstring("method SetExpiryAndStrikeVolaAll")]
+		HRESULT SetExpiryAndStrikeVolaAll([in] SAFEARRAY(struct ExpiryStrikeVolaData)* saData, [in, defaultvalue(-1)] LONG SurfaceID);
+
+		ETSGENERAL_PROPREADONLY_DEF(11,	VARIANT_BOOL,	IsInitialized)
+		
+		ETSGENERAL_PROPREADONLY_DEF(12,	VARIANT_BOOL,	SimulatedVol)
+
+		[id(13), helpstring("method SaveSimulatedVol")]
+		HRESULT SaveSimulatedVol(void);
+
+		[id(14), helpstring("method GetSurfaceByRoot")]
+		HRESULT GetSurfaceByRoot([in] LONG RootID, [out, retval] LONG* pVal);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(207616B1-7247-478B-9195-2F861B88CA03),
+		dual,
+		nonextensible,
+		helpstring("IExchAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IExchAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,	LONG,				ID)
+		ETSGENERAL_PROP_DEF(2,	BSTR,				Code)
+		ETSGENERAL_PROP_DEF(3,	BSTR,				Name)
+		ETSGENERAL_PROP_DEF(4,	VARIANT_BOOL,		IsUnderlying)
+		ETSGENERAL_PROP_DEF(5,	VARIANT_BOOL,		IsOption)
+		ETSGENERAL_PROP_DEF(6,	VARIANT_BOOL,		Visible)
+
+		ETSGENERAL_PROP_DEF(7,	BSTR,				Region)
+		ETSGENERAL_PROP_DEF(8,	DOUBLE,				Rate)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(B4DCCED5-7F47-4AAE-AB21-2A89DF96707F),
+		dual,
+		nonextensible,
+		helpstring("IExchColl Interface"),
+		pointer_default(unique)
+	]
+	interface IExchColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IExchAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(5E84A992-E9CC-4297-B862-B9793B5F8E9C),
+		dual,
+		nonextensible,
+		helpstring("IIndexCompAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IIndexCompAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,	LONG,				ID)
+		ETSGENERAL_PROP_DEF(2,	DOUBLE,				Beta)
+		ETSGENERAL_PROP_DEF(3,	DOUBLE,				Weight)
+		ETSGENERAL_PROP_DEF(4,	VARIANT_BOOL,		IsBasketComponent)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(727225A5-0520-4801-9501-CEF7C2FBE71B),
+		dual,
+		nonextensible,
+		helpstring("IIndexCompColl Interface"),
+		pointer_default(unique)
+	]
+	interface IIndexCompColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IIndexCompAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(80EF6CA3-DC60-4FFC-ABE3-63DE8060DC00),
+		dual,
+		nonextensible,
+		helpstring("ISynthRootCompAtom Interface"),
+		pointer_default(unique)
+	]
+	interface ISynthRootCompAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,	LONG,				UndID)
+		ETSGENERAL_PROP_DEF(2,	DOUBLE,				Weight)
+		ETSGENERAL_PROP_DEF(3,	DOUBLE,				Settlement)
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(37543532-A69F-4440-839E-8033757AD0FB),
+		dual,
+		nonextensible,
+		helpstring("ISynthRootCompColl Interface"),
+		pointer_default(unique)
+	]
+	interface ISynthRootCompColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, ISynthRootCompAtom*)
+	};
+	
+	interface IUndColl;
+	interface IIndexColl;
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(9BDC8E78-1B06-4701-90DD-3887C5F4F122),
+		dual,
+		nonextensible,
+		helpstring("ISynthRootAtom Interface"),
+		pointer_default(unique)
+	]
+	interface ISynthRootAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,					OptRootID)
+		ETSGENERAL_PROPREADONLY_DEF(2,	ISynthRootCompColl*,	SynthRootComponents)
+		ETSGENERAL_PROP_DEF(3,			DOUBLE,					CashValue)
+		ETSGENERAL_PROP_DEF(4,			DOUBLE,					Skew)
+		ETSGENERAL_PROP_DEF(5,			DOUBLE,					Kurt)
+		ETSGENERAL_PROP_DEF(6,			VARIANT_BOOL,			Basket)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,					Yield)
+		ETSGENERAL_PROPREADONLY_DEF(8,	LONG,					BasketDivsCount)
+			
+		[propget, id(9), helpstring("BasketDiv")]
+		HRESULT BasketDiv([in] LONG Index, [out, retval] struct EtsRegularDividend* pVal);
+		
+		[id(10), helpstring("method InitBasketDivs")]
+		HRESULT InitBasketDivs([in] IUndColl* pUndColl, [in] IIndexColl* pIndexColl);
+
+		ETSGENERAL_PROPREADONLY_DEF(11,	IEtsIndexDivColl*,		BasketDivs)
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(7E400D78-300A-4B3B-83AB-723C7367C4D6),
+		dual,
+		nonextensible,
+		helpstring("ISynthRootColl Interface"),
+		pointer_default(unique)
+	]
+	interface ISynthRootColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, ISynthRootAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(170E52C0-C706-4E54-87F5-F316D54C7BC1),
+		dual,
+		nonextensible,
+		helpstring("IEtsOptRootAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsOptRootAtom : IContractRoot
+	{
+		ETSGENERAL_PROP_DEF(102,			VARIANT_BOOL,				IsSynth)
+		ETSGENERAL_PROP_DEF(104,			VARIANT_BOOL,				IsFit)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(A7DCDDDB-AF2F-4BD1-BA7D-67EE988F047C),
+		dual,
+		nonextensible,
+		helpstring("IEtsOptRootColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsOptRootColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsOptRootAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(C01E031A-C63C-4985-B193-C9DA8D38D254),
+		dual,
+		nonextensible,
+		helpstring("IEtsOptRootByNameColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsOptRootByNameColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR,	IEtsOptRootAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(787DE497-9BFE-4D3A-96B4-5C932A5621F1),
+		dual,
+		nonextensible,
+		helpstring("IEtsFutOptAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsFutOptAtom : IOptionContract
+	{
+		ETSGENERAL_PROP_DEF(100001,	LONG,	FutID)
+	
+		[id(100002), helpstring("method CopyTo")] 
+		HRESULT CopyTo([in] IEtsFutOptAtom* pDest);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(420E84FE-7768-4041-A0B3-6D3C1110CE71),
+		dual,
+		nonextensible,
+		helpstring("IEtsFutOptColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsFutOptColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsFutOptAtom*)
+	};
+
+	interface IUndAtom;
+	interface IEtsFutAtom;
+	interface IEtsFutRootAtom;
+	
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(1814EBB7-91E2-44CB-9AE8-32F7E7FAF8CD),
+		dual,
+		nonextensible,
+		helpstring("IEtsContractAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsContractAtom : IContract
+	{
+		ETSGENERAL_PROPPUTREF_DEF(1001,	IUndAtom*,				Und)
+		ETSGENERAL_PROPPUTREF_DEF(1002,	IEtsFutRootAtom*,		FutRoot)
+		ETSGENERAL_PROPPUTREF_DEF(1003,	IEtsFutAtom*,			Fut)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	
+	[
+		object,
+		uuid(DF77E5DA-07E3-486C-A428-3EEAA1259BE8),
+		dual,
+		nonextensible,
+		helpstring("IEtsFutAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsFutAtom : IContract
+	{
+		ETSGENERAL_PROP_DEF(1001,			LONG,					FutRootID)
+		ETSGENERAL_PROPPUTREF_DEF(1002,		IEtsPriceProfileAtom*,	UndPriceProfile)
+		ETSGENERAL_PROPPUTREF_DEF(1003,		IEtsPriceProfileAtom*,	OptPriceProfile)
+		ETSGENERAL_PROP_DEF(1004,			DATE,					MaturityDate)
+		ETSGENERAL_PROP_DEF(1005,			VARIANT_BOOL,			IsAmerican)
+		ETSGENERAL_PROP_DEF(1006,			VARIANT_BOOL,			IsActive)
+		ETSGENERAL_PROP_DEF(1007,			DOUBLE,					PriceClose)
+		ETSGENERAL_PROP_DEF(1008,			VARIANT_BOOL,			HaveOptions)
+		ETSGENERAL_PROP_DEF(1009,			VARIANT_BOOL,			ShowInFutureContractEq)
+		ETSGENERAL_PROP_DEF(1010,			DOUBLE,					FutureBasis)
+		ETSGENERAL_PROP_DEF(1011,			VARIANT_BOOL,			UseInCalc)
+		ETSGENERAL_PROP_DEF(1012,			DOUBLE,					ActiveFutureRatio)
+		ETSGENERAL_PROP_DEF(1013,			DOUBLE,					K)
+		ETSGENERAL_PROP_DEF(1014,			DOUBLE,					KEq)
+		ETSGENERAL_PROP_DEF(1015,			VARIANT_BOOL,			MultOptDltEq)
+		ETSGENERAL_PROP_DEF(1016,			DOUBLE,					ManualActivePrice)
+		ETSGENERAL_PROP_DEF(1017,			DOUBLE,					PriceTheoClose)
+	};
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(E26B78D5-2F5D-467A-BE68-EA85034C8B42),
+		dual,
+		nonextensible,
+		helpstring("IEtsFutColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsFutColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsFutAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(9E1849F9-B425-46D3-8EE0-F9EB4E69EE9D),
+		dual,
+		nonextensible,
+		helpstring("IEtsFutRootAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsFutRootAtom : IContractRoot
+	{
+		ETSGENERAL_PROP_DEF(102,			LONG,					FutLotSize)
+		ETSGENERAL_PROP_DEF(103,			LONG,					OptLotSize)
+		ETSGENERAL_PROPREADONLY_DEF(104,	IEtsFutColl*,			Futures)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(4C052FFC-35BA-453E-8E1C-FC0007DF847F),
+		dual,
+		nonextensible,
+		helpstring("IEtsFutRootColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsFutRootColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsFutRootAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(95E94D81-2010-4F85-889B-2818921A8C0C),
+		dual,
+		nonextensible,
+		helpstring("IIndexAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IIndexAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,					ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,					Symbol)
+		ETSGENERAL_PROP_DEF(3,			VARIANT_BOOL,			IsBasket)
+		ETSGENERAL_PROPREADONLY_DEF(4,	LONG,					BasketDivsCount)
+		ETSGENERAL_PROPREADONLY_DEF(5,	IIndexCompColl*,		Components)
+		ETSGENERAL_PROP_DEF(6,			VARIANT_BOOL,			HaveComponentBetas)
+		//ETSGENERAL_PROPREADONLY_DEF(7,	IIndexCompColl*,	SyntheticRootBetas)
+		ETSGENERAL_PROPPUTREF_DEF(8,	IEtsPriceProfileAtom*,	UndPriceProfile)
+		ETSGENERAL_PROPPUTREF_DEF(9,	IEtsPriceProfileAtom*,	OptPriceProfile)
+
+		[id(21), helpstring("method InitBasketDivs")]
+		HRESULT InitBasketDivs([in] IUndColl* pUndColl);
+
+		[propget, id(22), helpstring("BasketDiv")]
+		HRESULT BasketDiv([in] LONG Index, [out, retval] struct EtsRegularDividend* pVal);
+
+		ETSGENERAL_PROPREADONLY_DEF(23,	IEtsIndexDivColl*,		BasketDivs)
+
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(A1A43A23-EC1C-4223-BA45-A92B9AD82A00),
+		dual,
+		nonextensible,
+		helpstring("IAsset Interface"),
+		pointer_default(unique)
+	]
+
+	interface IAsset : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			EtsContractTypeEnum,		UndType)
+		ETSGENERAL_PROP_DEF(3,			BSTR,						Symbol)
+		ETSGENERAL_PROP_DEF(4,			VARIANT_BOOL,				IsAmerican)
+		ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,				IsHTB)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,						Yield)
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,						PriceClose)
+		ETSGENERAL_PROP_DEF(9,			LONG,						LotSize)
+		ETSGENERAL_PROP_DEF(10,			VARIANT_BOOL,				IsTraderContract)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,						Skew)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,						Kurt)
+		ETSGENERAL_PROP_DEF(13,			BSTR,						ContractName)
+		ETSGENERAL_PROP_DEF(14,			VARIANT_BOOL,				HaveSyntheticRoots)
+		ETSGENERAL_PROPPUTREF_DEF(15,	ISynthRootColl*,			SyntheticRoots)
+		ETSGENERAL_PROP_DEF(16,			VARIANT_BOOL,				HaveOptions)
+		ETSGENERAL_PROP_DEF(17,			VARIANT_BOOL,				IsActive)
+		ETSGENERAL_PROPPUTREF_DEF(18,	IEtsPriceProfileAtom*,		UndPriceProfile)
+		ETSGENERAL_PROPPUTREF_DEF(19,	IEtsPriceProfileAtom*,		OptPriceProfile)
+		ETSGENERAL_PROP_DEF(20,			VARIANT_BOOL,				IsBasketIndex)
+		ETSGENERAL_PROP_DEF(21,			LONG,						Volume10Day)
+		ETSGENERAL_PROP_DEF(22,			LONG,						Volume5Expiration)
+		ETSGENERAL_PROP_DEF(23,			DOUBLE,						UndPosForRates)
+		ETSGENERAL_PROPREADONLY_DEF(24, IEtsOptRootColl*,			Roots)
+		ETSGENERAL_PROPREADONLY_DEF(25, IEtsFutRootColl*,			FutRoots)
+		ETSGENERAL_PROP_DEF(26,			VARIANT_BOOL,				HaveFutures)
+		ETSGENERAL_PROP_DEF(27,			LONG,						TotalQtyInShares)
+		ETSGENERAL_PROPPUTREF_DEF(28,	IEtsIndexDivAtom *,			Dividend)
+		ETSGENERAL_PROP_DEF(29,			BSTR,						PrimaryExchImportID)
+		ETSGENERAL_PROP_DEF(30,			DOUBLE,						SOQ)
+		ETSGENERAL_PROP_DEF(31,			VARIANT_BOOL,				IsAllowLending)
+		ETSGENERAL_PROPPUTREF_DEF(32,	IEtsRateColl*,				HTBRates)
+		ETSGENERAL_PROPREADONLY_DEF(35, IIndexAtom*,				BasketIndex)
+		ETSGENERAL_PROPPUTREF_DEF(38,	IEtsFutAtom*,				ActiveFuture)
+		ETSGENERAL_PROP_DEF(39,			VARIANT_BOOL,				bShouldMultOptDeltaEq)
+		ETSGENERAL_PROP_DEF(40,			DOUBLE,				        dKOptDeltaEq)
+		ETSGENERAL_PROP_DEF(41,			VARIANT_BOOL,				IsHedgeSymbol)
+		ETSGENERAL_PROP_DEF(42,			LONG,						PrimaryExchangeID)
+		ETSGENERAL_PROP_DEF(43,			DOUBLE,						ManualActivePrice)
+		ETSGENERAL_PROP_DEF(44,			DOUBLE,						PriceTheoClose)
+		ETSGENERAL_PROP_DEF(45,			VARIANT_BOOL,				IsManualVol)
+
+		ETSGENERAL_PROPPUTREF_DEF(46,	IUndAtom*,					HeadComponent)
+		ETSGENERAL_PROP_DEF(47,			DOUBLE,						Coeff)
+		ETSGENERAL_PROP_DEF(48,			VARIANT_BOOL,				PriceByHead)
+		ETSGENERAL_PROP_DEF(49,			VARIANT_BOOL,				IsHead)
+
+		ETSGENERAL_PROPPUTREF_DEF(50,	ISpotContract*,				Spot)
+		ETSGENERAL_PROPPUTREF_DEF(51,	IContractColl*,				Contracts)
+		ETSGENERAL_PROPREADONLY_DEF(52,	IVolaControl*,				VolatilitySource)
+		ETSGENERAL_PROPPUTREF_DEF(53,	IAssetColl*,				Assets)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(FAACFCCC-D916-4B34-9839-080280AEABD2),
+		dual,
+		nonextensible,
+		helpstring("ISyntheticEquityAtom Interface"),
+		pointer_default(unique)
+	]
+	interface ISyntheticEquityAtom : IAsset{
+		ETSGENERAL_PROPPUTREF_DEF(1053,	IBasketAssetComponentsColl*,				Components)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(D305E5AA-F96E-4CB9-994C-11A67073D8E4),
+		dual,
+		nonextensible,
+		helpstring("IUndAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IUndAtom : IAsset
+	{
+
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(E33AD647-9E2F-4B83-B35D-DAC736AE0589),
+		dual,
+		nonextensible,
+		helpstring("IUndColl Interface"),
+		pointer_default(unique)
+	]
+	interface IUndColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IUndAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(FE0E2385-1CDB-4931-A35B-ED67887D48CA),
+		dual,
+		nonextensible,
+		helpstring("IUndBySymColl Interface"),
+		pointer_default(unique)
+	]
+	interface IUndBySymColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IUndAtom*)
+	};
+
+	
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(21F3CD57-3786-408E-A528-37E8B8BF3EAF),
+		dual,
+		nonextensible,
+		helpstring("IIndexColl Interface"),
+		pointer_default(unique)
+	]
+	interface IIndexColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IIndexAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(F88317AA-812B-408E-A768-A05F665A49A1),
+		dual,
+		nonextensible,
+		helpstring("IEtsOptAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsOptAtom : IOptionContract
+	{
+		ETSGENERAL_PROP_DEF(100001,			LONG,				RootID)
+
+		[id(100003), helpstring("method CopyTo")] 
+		HRESULT CopyTo([in] IEtsOptAtom* pDest);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(E710A40E-ECD3-4C7B-B6F5-D5BF3C72904F),
+		dual,
+		nonextensible,
+		helpstring("IEtsOptColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsOptColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsOptAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(12C6E2DA-1216-4846-AF49-2558D3D59A9C),
+		dual,
+		nonextensible,
+		helpstring("IEtsEventAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsEventAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							EvtID)
+		ETSGENERAL_PROP_DEF(2,			DATE,							EvtTime)
+		ETSGENERAL_PROP_DEF(3,			enum EtsEventTypeEnum,			EvtType)
+		ETSGENERAL_PROP_DEF(4,			BSTR,							EvtMessage)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(D2CF7D5B-F05C-41AA-8B1A-116C648EA3A6),
+		dual,
+		nonextensible,
+		helpstring("IEtsEventColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsEventColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, DATE, IEtsEventAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(D1D639A6-749E-47E6-939C-896FB9A2404B),
+		dual,
+		nonextensible,
+		helpstring("IEtsStrategyAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsStrategyAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,							Name)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Desc)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(58D87E55-8A81-4B2E-A72B-907D3194E4E2),
+		dual,
+		nonextensible,
+		helpstring("IEtsStrategyColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsStrategyColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsStrategyAtom*)
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(E547AB18-FA50-4E0C-9B74-2EF4B0799435),
+		dual,
+		nonextensible,
+		helpstring("IEtsTraderUndAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsTraderUndAtom : IDispatch
+	{
+		ETSGENERAL_PROPPUTREF_DEF(1,	IUndAtom*,						Und)
+		ETSGENERAL_PROPPUTREF_DEF(2,	IEtsStrategyColl*,				Strategy)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(C315F494-560B-40E2-8687-75B3C37F4F24),
+		dual,
+		nonextensible,
+		helpstring("IEtsTraderUndColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsTraderUndColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsTraderUndAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(9504BF81-7C71-4957-BF2B-103EF2599CD8),
+		dual,
+		nonextensible,
+		helpstring("IEtsTraderAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsTraderAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,							Name)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Desc)
+		ETSGENERAL_PROP_DEF(4,			BSTR,							TntAccount)
+		ETSGENERAL_PROPREADONLY_DEF(5,	IEtsTraderUndColl*,				Und)
+		ETSGENERAL_PROP_DEF(6,			LONG,							GroupID)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(12EBC6DC-ACFB-418F-B7A6-2075ECBA5273),
+		dual,
+		nonextensible,
+		helpstring("IEtsTraderColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsTraderColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsTraderAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(2E47F007-5371-4D9B-9796-D3D7334A7F96),
+		dual,
+		nonextensible,
+		helpstring("IEtsTraderGroupAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsTraderGroupAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,							Name)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Desc)
+		ETSGENERAL_PROPREADONLY_DEF(4,	IEtsTraderColl*,				Trader)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(7E9F4FFD-A678-4857-A5C7-89552C17EF34),
+		dual,
+		nonextensible,
+		helpstring("IEtsTraderGroupColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsTraderGroupColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsTraderGroupAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(C45A5B0A-D773-4AEB-9407-5264A58B05C5),
+		dual,
+		nonextensible,
+		helpstring("IEtsBrokerAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsBrokerAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,							Name)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Desc)
+		ETSGENERAL_PROP_DEF(4,			VARIANT_BOOL,					IsClearing)
+		ETSGENERAL_PROP_DEF(5,			DOUBLE,							UndComm)
+		ETSGENERAL_PROP_DEF(6,			DOUBLE,							OptRegComm)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,							OptSpreadComm)
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,							LowPremComm)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(01FD53FF-059E-4041-BD9A-DA22B22C2A47),
+		dual,
+		nonextensible,
+		helpstring("IEtsBrokerColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsBrokerColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsBrokerAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(3A8404A2-0CAA-41FA-9E57-859951765CB0),
+		dual,
+		nonextensible,
+		helpstring("IEtsUndGroupAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsUndGroupAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,							Name)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Desc)
+		ETSGENERAL_PROPREADONLY_DEF(4,	IUndColl*,						Und)
+
+		[propget, id(5), helpstring("property Ratio")] 
+		HRESULT Ratio([in] enum GroupRatioEnum grIdx, [out, retval] DOUBLE* pVal);
+
+		[propput, id(5), helpstring("property Ratio")] 
+		HRESULT Ratio([in] enum GroupRatioEnum grIdx, [in] DOUBLE newVal);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(40AF6AFC-68FB-4B48-B467-DC778C283E03),
+		dual,
+		nonextensible,
+		helpstring("IEtsUndGroupColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsUndGroupColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsUndGroupAtom*)
+		
+		[id(10), helpstring("LoadProperty")]
+		HRESULT LoadProperty([in] BSTR FileName);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(FB691444-3A95-4456-9AC2-7A8B3566C2B9),
+		dual,
+		nonextensible,
+		helpstring("IEtsExpMonthAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsExpMonthAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			DATE,							Expiry)
+		ETSGENERAL_PROP_DEF(3,			DOUBLE,							VegaWeight)
+		ETSGENERAL_PROP_DEF(4,			VARIANT_BOOL,					IsDirty)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(C2899855-EB33-45DC-83BF-0F28B25A0EED),
+		dual,
+		nonextensible,
+		helpstring("IEtsExpMonthColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsExpMonthColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IEtsExpMonthAtom*)
+	};
+
+// 	/////////////////////////////////////////////////////////////////////////////
+// 	//
+// 	[
+// 		object,
+// 		uuid(0036FCAC-2AE0-42A8-837B-F7A1166B5327),
+// 		dual,
+// 		nonextensible,
+// 		helpstring("IEtsExpCalAtom Interface"),
+// 		pointer_default(unique)
+// 	]
+// 	interface IEtsExpCalAtom : IDispatch
+// 	{
+// 		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+// 		ETSGENERAL_PROP_DEF(2,			BSTR,							Name)
+// 		ETSGENERAL_PROP_DEF(3,			BSTR,							Desc)
+// 		ETSGENERAL_PROPREADONLY_DEF(4,	IEtsExpMonthColl*,				Expiry)
+// 	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(056E17B9-2A9B-4C67-A863-66E19B1C3668),
+		dual,
+		nonextensible,
+		helpstring("IEtsExpCalColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsExpCalColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IEtsExpMonthAtom*)
+		ETSGENERAL_PROP_DEF(7,	LONG,	Maturity)
+		ETSGENERAL_PROP_DEF(9,			LONG,							HiddenCount)
+
+		[id(8), helpstring("GetVegaWeight")]
+		HRESULT GetVegaWeight([in] DATE dtExpiry, [out, retval] DOUBLE* pdRetVal);
+	};
+
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(7F72234D-50ED-41F5-92BC-A6C19F521EB8),
+		dual,
+		nonextensible,
+		helpstring("IEtsContractColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsContractColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IEtsContractAtom*)
+	};
+
+	[
+		object,
+		uuid(0678C75F-C713-444B-B7B1-42EA7606CA6F),
+		dual,
+		nonextensible,
+		helpstring("IEtsMain Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsMain : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			BSTR,					DatabaseString)
+
+		ETSGENERAL_PROPREADONLY_DEF(10, IEtsTraderColl*,		Trader)
+		ETSGENERAL_PROPREADONLY_DEF(11, IEtsTraderGroupColl*,	TraderGroup)
+		ETSGENERAL_PROPREADONLY_DEF(12, IEtsStrategyColl*,		Strategy)
+		ETSGENERAL_PROPREADONLY_DEF(13, IEtsBrokerColl*,		Broker)
+		ETSGENERAL_PROPREADONLY_DEF(14, IEtsBrokerColl*,		ClearingBroker)		
+		ETSGENERAL_PROPREADONLY_DEF(15, IUndColl*,				Underlying)		
+		ETSGENERAL_PROPREADONLY_DEF(16, IUndColl*,				UnderlyingAll)		
+		ETSGENERAL_PROPREADONLY_DEF(17, IUndColl*,				Stock)		
+		ETSGENERAL_PROPREADONLY_DEF(18, IEtsUndGroupColl*,		UnderlyingGroup)		
+		ETSGENERAL_PROPREADONLY_DEF(19, IEtsOptRootByNameColl*,	OptRootByName)		
+		ETSGENERAL_PROPREADONLY_DEF(20, IEtsContractColl*,		ContractAll)		
+		ETSGENERAL_PROPREADONLY_DEF(21, IEtsContractColl*,		Contract)		
+					   
+		ETSGENERAL_PROPPUTREF_DEF(22,   IEtsPriceProfileAtom*,	DefStkPriceProfile)		
+		ETSGENERAL_PROPPUTREF_DEF(23,   IEtsPriceProfileAtom*,	DefIdxPriceProfile)		
+		ETSGENERAL_PROPPUTREF_DEF(24,   IEtsPriceProfileAtom*,	DefOptPriceProfile)		
+		ETSGENERAL_PROPREADONLY_DEF(25, IEtsPriceProfileColl*,	PriceProfile)		
+		ETSGENERAL_PROPREADONLY_DEF(26, IEtsExpCalColl*,		ExpCalendar)		
+		ETSGENERAL_PROPREADONLY_DEF(28, IExchColl*,				Exch)		
+		ETSGENERAL_PROPREADONLY_DEF(29, IEtsRateColl*,			Rates)
+
+        ETSGENERAL_PROPREADONLY_DEF(30, IIndexColl*,			Index)		
+		ETSGENERAL_PROPREADONLY_DEF(31, IIndexColl*,			BasketIndex)		
+		ETSGENERAL_PROPREADONLY_DEF(32, IIndexColl*,			HedgeSymbols)
+
+		[id(50), helpstring("Clear")]				HRESULT Clear();
+		[id(51), helpstring("LoadStrategy")]		HRESULT LoadStrategy();
+		[id(52), helpstring("LoadBroker")]			HRESULT LoadBroker();
+		[id(53), helpstring("LoadTraderGroup")]		HRESULT LoadTraderGroup();
+		[id(54), helpstring("LoadTrader")]			HRESULT LoadTrader([in] LONG lTraderID);
+		[id(55), helpstring("LoadUnderlying")]		HRESULT LoadUnderlying([in] LONG lTraderID);
+		[id(56), helpstring("LoadBetas")]			HRESULT LoadBetas();
+		[id(57), helpstring("LoadRate")]			HRESULT LoadRate();
+
+        [id(58), helpstring("SendMail")]
+		HRESULT SendMail(	[in] BSTR sAddress, [in] BSTR sSender, [in] BSTR sSubject, 
+							[in] BSTR sMessage, [in] BSTR sSMTPServer, [in, defaultvalue("")] BSTR sFilePath);
+
+		ETSGENERAL_PROP_DEF(59,			VARIANT_BOOL,			UseTheoCloseForPNL)
+		ETSGENERAL_PROPREADONLY_DEF(60, IEtsHolidayAtom*,		Holidays)
+
+		[id(62), helpstring("LoadPriceProfile")]	
+		HRESULT LoadPriceProfile();
+
+		ETSGENERAL_PROPREADONLY_DEF(63, ICalculationParametrs*,	CalculationParametrs)
+
+		[id(68), helpstring("GetContract")]		
+		HRESULT GetContract([in] LONG lContractID, [out,retval] IContract** pRetVal);
+
+		ETSGENERAL_PROPREADONLY_DEF(69,			IContractColl*,		Contracts)
+		ETSGENERAL_PROPPUTREF_DEF(70,			IVolatilitySource*,		VolatilitySource)
+
+		[id(71), helpstring("GetBorrowingRatesCurve")]		
+		HRESULT GetBorrowingRatesCurve([in] LONG lCurveID, [out,retval] IEtsRateColl** pRetVal);
+
+		[id(72), helpstring("SetWorkingMode")]
+		HRESULT	SetWorkingMode([in] WorkingModeEnum enMode);
+
+		[id(80), helpstring("DoCalc")]		
+		HRESULT DoCalc([in] SAFEARRAY(struct QuoteUpdateFullInfo)* pParams, [out, retval] SAFEARRAY(struct QuoteUpdateFullInfo)* pRetVal);
+
+		[id(82), helpstring("SetQuote")]
+		HRESULT SetQuote([in] struct ITicker* Ticker, [in] struct QuoteUpdateInfo* Quote);
+
+		[id(83), helpstring("CalculateUpdatedContracts")]		
+		HRESULT CalculateUpdatedContracts([out, retval] SAFEARRAY(struct IRisksFullInfo)* pRetVal);
+
+		[id(84), helpstring("LoadOptionRoots")]
+		HRESULT LoadOptionRoots();
+		
+		[id(85), helpstring("LoadGroups")]
+		HRESULT LoadGroups([in] LONG lCurrentTraderID);
+
+		ETSGENERAL_PROPREADONLY_DEF(86, ICalculationSettings*,	CalculationSettings)
+
+		[id(87), helpstring("LoadCustomDividends")]
+		HRESULT LoadCustomDividends();
+
+		[id(88), helpstring("ReloadDividends")]		
+		HRESULT ReloadDividends([in] LONG lAssetID);
+
+		[id(89), helpstring("LoadContracts")]
+		HRESULT LoadContracts([in] struct ITicker* Asset);
+
+		[id(90), helpstring("SetLogLevel")]
+		HRESULT	SetLogLevel([in] LONG Level);
+
+		[id(91), helpstring("method CreateFlexContract by template contract")]
+		HRESULT CreateFlexContract(	[in] LONG					AssetID,
+									[in] DATE					Expiration,
+									[in] DOUBLE					Strike,
+									[in] enum EtsOptionTypeEnum Type,
+									[in] DATE					TradingClose,
+									[in] DATE					SettlementValueTime,
+									[in] enum ExerciseStyleEnum ExerciseStyle,
+									[out, retval] IContract** FlexContract);
+
+		ETSGENERAL_PROPREADONLY_DEF(92,			IContractRootColl*,		ContractRoot)
+
+		[id(93), helpstring("SetLogLifetime")]
+		HRESULT	SetLogLifetime([in] LONG Lifetime);
+		
+		[id(94), helpstring("SetLogDirectory")]
+		HRESULT SetLogDirectory([in] BSTR directory);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(646FE100-6AE8-4350-94D0-BB921EA4DDDA),
+		dual,
+		nonextensible,
+		helpstring("IEtsContractBySymColl Interface"),
+		pointer_default(unique)
+	]
+	interface IEtsContractBySymColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IEtsContractAtom*)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(0AF28F37-B5EC-4529-9CA4-7A581EA59059),
+		helpstring("ETS TradesFilter Type"),
+		v1_enum
+	]
+	typedef enum EtsTradesFilterEnum
+	{
+		[helpstring("Trade Filter None")]				TFC_NONE		 = -1,
+		[helpstring("Trade Filter By Underlying")]		TFC_UNDERLYING	 = 0,
+		[helpstring("Trade Filter By Type")]			TFC_TYPE		 = 1,
+		[helpstring("Trade Filter By Group")]			TFC_GROUP		 = 2,
+		[helpstring("Trade Filter By TraderGroup")]		TFC_TRADER_GROUP = 3,
+		[helpstring("Trade Filter By Trader")]			TFC_TRADER		 = 4,
+		[helpstring("Trade Filter By Strategy")]		TFC_STRATEGY	 = 5,
+		[helpstring("Trade Filter By PosType")]			TFC_POSTYPE		 = 6,
+		[helpstring("Trade Filter Column Count")]		TFC_COLUMN_COUNT = 7,
+		[helpstring("Trade Filter Last Column")]		TFC_LAST_COLUMN = TFC_COLUMN_COUNT-1,
+	} EtsTradesFilterEnum;
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(340F0E0A-3DD9-45B6-A6DF-516AFA7FE9B3),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeInfoAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeInfoAtom : IDispatch
+	{
+		// trade info
+		ETSGENERAL_PROP_DEF(1,			LONG,						TradeID)
+		ETSGENERAL_PROP_DEF(2,			LONG,						SeqNum)
+		ETSGENERAL_PROP_DEF(3,			DOUBLE,						Price)	
+		ETSGENERAL_PROP_DEF(4,			LONG,						Quantity)	
+		ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,				IsBuy)
+		ETSGENERAL_PROP_DEF(6,			DATE,						TradeDate)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,						SpotReference)	
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,						TradedIV)
+		ETSGENERAL_PROP_DEF(9,			VARIANT_BOOL,				IsPosition)
+		ETSGENERAL_PROP_DEF(10,			enum EtsTradeStatusEnum,	Status)	
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,						BrokerCommission)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,						ClearingBrokerCommission)
+		ETSGENERAL_PROP_DEF(13,			LONG,						Mark)
+		ETSGENERAL_PROP_DEF(14,			LONG,						OrderID)
+		ETSGENERAL_PROP_DEF(15,			LONG,						ExecStatus)
+
+		// additional info
+		ETSGENERAL_PROPPUTREF_DEF(31,	IUndAtom*,					Und)
+		ETSGENERAL_PROPPUTREF_DEF(32,	IEtsOptAtom*,				Opt)
+		ETSGENERAL_PROPPUTREF_DEF(33,	IEtsOptRootAtom*,			OptRoot)
+		ETSGENERAL_PROPPUTREF_DEF(34,	IEtsTraderAtom*,			Trader)
+		ETSGENERAL_PROPPUTREF_DEF(35,	IEtsBrokerAtom*,			Broker)
+		ETSGENERAL_PROPPUTREF_DEF(36,	IEtsBrokerAtom*,			ClearingBroker)
+		ETSGENERAL_PROPPUTREF_DEF(37,	IEtsStrategyAtom*,			Strategy)
+		ETSGENERAL_PROPPUTREF_DEF(38,	IEtsFutRootAtom*,			FutRoot)
+		ETSGENERAL_PROPPUTREF_DEF(39,	IEtsFutAtom*,				Fut)
+		ETSGENERAL_PROPPUTREF_DEF(40,	IEtsFutOptAtom*,			FutOpt)
+
+		// helpers for additional info
+		ETSGENERAL_PROPREADONLY_DEF(51,	LONG,						ContractID)
+		ETSGENERAL_PROPREADONLY_DEF(52,	enum EtsContractTypeEnum,	ContractType)
+		ETSGENERAL_PROPREADONLY_DEF(53,	BSTR,						Symbol)
+		ETSGENERAL_PROPREADONLY_DEF(54,	LONG,						UndID)
+		ETSGENERAL_PROPREADONLY_DEF(55,	LONG,						OptRootID)
+		ETSGENERAL_PROPREADONLY_DEF(56,	LONG,						FutRootID)
+		ETSGENERAL_PROPREADONLY_DEF(57,	LONG,						FutID)
+		ETSGENERAL_PROPREADONLY_DEF(58,	LONG,						LotSize)
+		ETSGENERAL_PROPREADONLY_DEF(59,	DOUBLE,						TotalCommission)
+		ETSGENERAL_PROPREADONLY_DEF(60,	DOUBLE,						TotalPrice)
+		ETSGENERAL_PROPREADONLY_DEF(61,	LONG,						StrategyID)
+		ETSGENERAL_PROPREADONLY_DEF(62,	BSTR,						ContractName)
+		ETSGENERAL_PROPREADONLY_DEF(63,	LONG,						BrokerID)
+		ETSGENERAL_PROPREADONLY_DEF(64,	LONG,						ClearingBrokerID)
+		ETSGENERAL_PROPREADONLY_DEF(65,	BSTR,						ImportID)
+		ETSGENERAL_PROPREADONLY_DEF(66,	BSTR,						ExecStatusString)
+		ETSGENERAL_PROPREADONLY_DEF(67,	DOUBLE,					ManualActivePrice)
+
+		[id(71), helpstring("method CopyTo")] 
+		HRESULT CopyTo([in] IMmTradeInfoAtom* pDest);
+		
+		[id(72), helpstring("method GetTradeTypeString")]
+		HRESULT GetTradeTypeString([out, retval] BSTR* pDest);
+
+		[id(73), helpstring("method GetTradeMatchedString")]
+		HRESULT GetTradeMatchedString([out, retval] BSTR* pDest);
+
+		[id(74), helpstring("method CheckTradeByFilter")]
+		HRESULT CheckByFilter([in] IEtsFilterData* pFilter, [out, retval] VARIANT_BOOL *pRetVal);
+
+		ETSGENERAL_PROPPUTREF_DEF(75,	IContract*,			Contract)
+
+		[id(76), helpstring("method GetField")]
+		HRESULT GetField([in] enum TradesListColumnEnum enField,
+						 [in] VARIANT_BOOL Compare,
+						 [out] VARIANT *pRetVal,
+						 [out, retval] VARIANT_BOOL *HasValue);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(A3A6C60A-CC00-4656-BFB4-4701CCC405DF),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeInfoColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeInfoColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, DATE, IMmTradeInfoAtom*)
+		[id(50), helpstring("method Clone")] HRESULT Clone([out, retval] IMmTradeInfoColl** pSrcColl);
+                [propget, id(11), helpstring("property FilterTrades")]  
+		HRESULT FilterTradesCV([in] LONG ID, [in] LONG filterGroup, [in] LONG filterType, [in] IEtsUndGroupColl* pGroupCol, [in]VARIANT_BOOL Actual, [in] VARIANT_BOOL TradesForNullPositions, [out, retval] IMmTradeInfoColl** pVal);
+
+
+		[propget, id(51), helpstring("property FilterTrades")]  
+		HRESULT FilterTrades([in] IEtsFilterData* pFilter, 
+									[in] IEtsUndGroupColl* pGroupCol,
+									[in] VARIANT_BOOL Actual, 
+									[in, defaultvalue(FALSE)] VARIANT_BOOL bSkipFutContracts,
+									[in, defaultvalue(FALSE)] VARIANT_BOOL bFutWithDerivative,
+									[out, retval] IMmTradeInfoColl** pVal);
+
+		[id(25), helpstring("method ResetPosition")]  
+		HRESULT ResetTradesPosition();
+		[id(56), helpstring("method MoveNextPosition")]  
+		HRESULT MoveNextTrade([out] VARIANT_BOOL* bIsLast);
+		[propget, id(57), helpstring("propery TradeAtCurrentPosition")]
+		HRESULT TradeAtCurrentPosition([out, retval] IMmTradeInfoAtom** pDest);
+
+		[id(58), helpstring("method GetFirstTrade")]  
+		HRESULT GetFirstTrade([out, retval] IMmTradeInfoAtom** pDest);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(D590A619-737D-4B7C-BE9C-23C2588B5F79),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeByUndColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeByUndColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IMmTradeInfoColl* )
+		
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(F41EBAD3-F648-4A7D-82EF-A06B7B9A5EBB),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeMatchAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeMatchAtom : IDispatch
+	{
+		ETSGENERAL_PROPPUTREF_DEF(1,	IMmTradeInfoAtom*,				TrdActual	)
+		ETSGENERAL_PROPPUTREF_DEF(2,	IMmTradeInfoColl*,				TrdManual	)
+		ETSGENERAL_PROPPUTREF_DEF(3,	IMmTradeInfoAtom*,				TrdMatch	)
+		ETSGENERAL_PROP_DEF(4,			VARIANT_BOOL,					Updated)
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(196C9FE6-E58E-4DEB-9254-D858523F640B),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeMatchColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeMatchColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG,	DATE,		IMmTradeMatchAtom* )
+	};
+	///////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(AFD8BCF3-3DCE-4AD5-BCD3-4472C609310D),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeUpdateColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeUpdateColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, ITradeUpdate*)
+
+		[id(10), helpstring("method Clone")] HRESULT Clone([out, retval] IMmTradeUpdateColl** pSrcColl);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(25482764-ABFC-450D-8928-18A2B7C013EC),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeChannel Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeChannel : IDispatch
+	{
+		ETSGENERAL_PROPREADONLY_DEF(1, IMmTradeInfoColl*,  Trd)
+		ETSGENERAL_PROPREADONLY_DEF(2, IMmTradeByUndColl*, TrdByUndMan)
+		ETSGENERAL_PROPREADONLY_DEF(3, IMmTradeByUndColl*, TrdByUnd)
+		ETSGENERAL_PROPREADONLY_DEF(4, IMmTradeByUndColl*, TrdByTraderAndContract)
+		ETSGENERAL_PROPREADONLY_DEF(5, IMmTradeByUndColl*, TrdByFut)
+		ETSGENERAL_PROPREADONLY_DEF(6, IMmTradeMatchColl*, TrdForMatch)
+		ETSGENERAL_PROP_DEF(7,	BSTR,		DatabaseString)
+
+		//[id(10), helpstring("OpenTradeView")] HRESULT OpenTradeView([out, retval] IMmTradeView** pTradeView);
+
+
+		[id(20), helpstring("method LoadTrades")]
+		HRESULT LoadTrades([in] LONG lTraderId,
+						   [in] IEtsMain* pMain,
+						   [in, defaultvalue(-1)] VARIANT_BOOL bShowProgress);
+
+  		[id(21), helpstring("LoadStrategy")]		
+		HRESULT LoadStrategy([in] LONG lStrategyID, 
+							 [out] IEtsStrategyAtom** pStrategyAtom, 
+							 [out, retval] VARIANT_BOOL* bNew);
+
+  		[id(22), helpstring("UpdateManualActivePrices")]		
+		HRESULT UpdateManualActivePrices();
+
+		[id(23), helpstring("method UpdatePriceInfo")]
+		HRESULT UpdatePriceInfo([in] LONG lTraderId,
+								[in] IEtsMain* pMain);
+
+		[id(24), helpstring("method GetData")]
+		HRESULT GetData([in] IEtsFilterData* Filter,
+						[out, retval] IMmTradeInfoColl** Result);
+  	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(B1B9E070-7E0D-4311-9D15-4BA8640F57F8),
+		helpstring("VolaControl Class")
+	]
+	coclass VolaControl
+	{
+		[default] interface IVolaControl;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(2476A3F1-BF81-4398-8EFC-8D617109C2B4),
+		helpstring("MmTradeInfoAtom Class")
+	]
+	coclass MmTradeInfoAtom
+	{
+		[default] interface IMmTradeInfoAtom;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(48113D2F-3F2B-49AB-B559-EF8AD35F7644),
+		helpstring("MmTradeInfoColl Class")
+	]
+	coclass MmTradeInfoColl
+	{
+		[default] interface IMmTradeInfoColl;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(C1247841-CEA4-4240-9C69-4DBF10F893E4),
+		helpstring("MmTradeByUndColl Class")
+	]
+	coclass MmTradeByUndColl
+	{
+		[default] interface IMmTradeByUndColl;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(A609B092-31B9-49A1-9B94-DAFA712752CB),
+		helpstring("MmTradeMatchAtom Class")
+	]
+	coclass MmTradeMatchAtom
+	{
+		[default] interface IMmTradeMatchAtom;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(554CC50D-82CD-435C-A779-9A70F1230165),
+		helpstring("MmTradeMatchColl Class")
+	]
+	coclass MmTradeMatchColl
+	{
+		[default] interface IMmTradeMatchColl;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(9182A64F-21D5-4C77-A015-7210326BB40E),
+		helpstring("MmTradeUpdateColl Class")
+	]
+	coclass MmTradeUpdateColl
+	{
+		[default] interface IMmTradeUpdateColl;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(54A210CA-85AD-43F8-9BAD-59A061CDDA43),
+		helpstring("_IMmTradeChannelEvents Interface")
+	]
+	dispinterface _IMmTradeChannelEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method Notification")] HRESULT Notification([in] BSTR bsText, [in] LONG lPercent);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(076DA83D-DD23-4803-8897-CAABB986F174),
+		helpstring("MmTradeChannel Class")
+	]
+	coclass MmTradeChannel
+	{
+		[default] interface IMmTradeChannel;
+		[default, source] dispinterface _IMmTradeChannelEvents;
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(D895CF99-BDC6-4DE1-866A-2058150C7DCB),
+		helpstring("ExchAtom Class")
+	]
+	coclass ExchAtom
+	{
+		[default] interface IExchAtom;
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(5F320F04-FEE0-40EE-844D-1CB61883CF4E),
+		helpstring("ExchColl Class")
+	]
+	coclass ExchColl
+	{
+		[default] interface IExchColl;
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(A539305E-B2AF-4BB0-B7D0-5B54C4E180B7),
+		helpstring("IndexCompAtom Class")
+	]
+	coclass IndexCompAtom
+	{
+		[default] interface IIndexCompAtom;
+	};
+	[
+		uuid(35E41FBE-DCC4-41F0-8751-F8947E60C443),
+		helpstring("IndexCompColl Class")
+	]
+	coclass IndexCompColl
+	{
+		[default] interface IIndexCompColl;
+	};
+	[
+		uuid(35DF7760-D564-4219-A450-8D4F6D58D4C1),
+		helpstring("UndAtom Class")
+	]
+	coclass UndAtom
+	{
+		[default] interface IUndAtom;
+	};
+	[
+		uuid(D31F90F4-DCC9-458F-B76A-C5EBD2E320D7),
+		noncreatable,
+		helpstring("UndColl Class")
+	]
+	coclass UndColl
+	{
+		[default] interface IUndColl;
+	};
+	[
+		uuid(0D9E538B-0176-45F4-B93A-6FDB93A4C1B7),
+		noncreatable,
+		helpstring("UndBySymColl Class")
+	]
+	coclass UndBySymColl
+	{
+		[default] interface IUndBySymColl;
+	};
+	[
+		uuid(A22F7361-1C56-4CCD-B28C-7E9C550EB204),
+		helpstring("IndexAtom Class")
+	]
+	coclass IndexAtom
+	{
+		[default] interface IIndexAtom;
+	};
+	[
+		uuid(9F5AAA86-56AA-4421-AB90-72845EF8ED55),
+		helpstring("IndexColl Class")
+	]
+	coclass IndexColl
+	{
+		[default] interface IIndexColl;
+	};
+	[
+		uuid(613C318A-D393-4087-B1CC-CBA1226F71D4),
+		helpstring("SynthRootCompAtom Class")
+	]
+	coclass SynthRootCompAtom
+	{
+		[default] interface ISynthRootCompAtom;
+	};
+	[
+		uuid(29DF3685-E399-449D-90B4-FBBAF8287B30),
+		helpstring("SynthRootCompColl Class")
+	]
+	coclass SynthRootCompColl
+	{
+		[default] interface ISynthRootCompColl;
+	};
+	[
+		uuid(3810BBD1-67B0-4E05-89E2-75E404CFFCCB),
+		helpstring("SynthRootAtom Class")
+	]
+	coclass SynthRootAtom
+	{
+		[default] interface ISynthRootAtom;
+	};
+	[
+		uuid(8F15B529-3A2E-4671-896E-71465FE428DE),
+		helpstring("SynthRootColl Class")
+	]
+	coclass SynthRootColl
+	{
+		[default] interface ISynthRootColl;
+	};
+	[
+		uuid(8C477D76-2CAC-447B-BFE2-C7F79DEFA8A7),
+		helpstring("EtsPriceProfileAtom Class")
+	]
+	coclass EtsPriceProfileAtom
+	{
+		[default] interface IEtsPriceProfileAtom;
+	};
+	[
+		uuid(05EDD54C-569E-4188-949B-DB9E7F588802),
+		//noncreatable,
+		helpstring("EtsPriceProfileColl Class")
+	]
+	coclass EtsPriceProfileColl
+	{
+		[default] interface IEtsPriceProfileColl;
+	};
+	[
+		uuid(D8BB7BCF-D7B9-4529-B588-CF21A6E8D851),
+		helpstring("EtsOptAtom Class")
+	]
+	coclass EtsOptAtom
+	{
+		[default] interface IEtsOptAtom;
+	};
+	[
+		uuid(10E4701E-9D4A-4ED0-960A-152D3BE0AE11),
+		helpstring("EtsOptColl Class")
+	]
+	coclass EtsOptColl
+	{
+		[default] interface IEtsOptColl;
+	};
+	[
+		uuid(1C06A185-C07D-4E27-90B5-D09CF7FAB0CA),
+		helpstring("EtsOptRootAtom Class")
+	]
+	coclass EtsOptRootAtom
+	{
+		[default] interface IEtsOptRootAtom;
+	};
+	[
+		uuid(ECE8F2F1-CA5C-4D7E-912D-77980DE9DE52),
+		helpstring("EtsOptRootColl Class")
+	]
+	coclass EtsOptRootColl
+	{
+		[default] interface IEtsOptRootColl;
+	};
+	[
+		uuid(578F467E-1A37-4C39-BE57-6CE9EEF49B60),
+		helpstring("EtsEventAtom Class")
+	]
+	coclass EtsEventAtom
+	{
+		[default] interface IEtsEventAtom;
+	};
+	[
+		uuid(F6925DC9-3EA0-418B-A258-87911412D83B),
+		helpstring("EtsEventColl Class")
+	]
+	coclass EtsEventColl
+	{
+		[default] interface IEtsEventColl;
+	};
+	[
+		uuid(F81EC8A4-FFDD-4FD9-8CCB-10843EA0DFB5),
+		helpstring("EtsTraderAtom Class")
+	]
+	coclass EtsTraderAtom
+	{
+		[default] interface IEtsTraderAtom;
+	};
+	[
+		uuid(680D6845-358F-4D8A-B8D6-F5A646323D63),
+		noncreatable,
+		helpstring("EtsTraderColl Class")
+	]
+	coclass EtsTraderColl
+	{
+		[default] interface IEtsTraderColl;
+	};
+	[
+		uuid(D6779CF0-5002-4457-8538-FC5723B9E889),
+		noncreatable,
+		helpstring("EtsOptRootByNameColl Class")
+	]
+	coclass EtsOptRootByNameColl
+	{
+		[default] interface IEtsOptRootByNameColl;
+	};
+	[
+		uuid(8A28E0D1-79D5-4853-BFEA-7D1CA4FBA007),
+		helpstring("EtsBrokerAtom Class")
+	]
+	coclass EtsBrokerAtom
+	{
+		[default] interface IEtsBrokerAtom;
+	};
+	[
+		uuid(923B0BCF-39FB-4391-B8A3-AEFF80805465),
+		noncreatable,
+		helpstring("EtsBrokerColl Class")
+	]
+	coclass EtsBrokerColl
+	{
+		[default] interface IEtsBrokerColl;
+	};
+	[
+		uuid(438BC62D-29B1-4A73-BB56-9A2C772FD255),
+		helpstring("EtsTraderGroupAtom Class")
+	]
+	coclass EtsTraderGroupAtom
+	{
+		[default] interface IEtsTraderGroupAtom;
+	};
+	[
+		uuid(8147E9BB-3E30-431B-A7BC-27C1BD9D6D2E),
+		noncreatable,
+		helpstring("EtsTraderGroupColl Class")
+	]
+	coclass EtsTraderGroupColl
+	{
+		[default] interface IEtsTraderGroupColl;
+	};
+	[
+		uuid(06441DA3-3546-40F7-9345-B0D51E36F24D),
+		helpstring("EtsUndGroupAtom Class")
+	]
+	coclass EtsUndGroupAtom
+	{
+		[default] interface IEtsUndGroupAtom;
+	};
+	[
+		uuid(EE13EDB0-84E3-49F4-91A9-AE8D76F95702),
+		helpstring("EtsUndGroupColl Class")
+	]
+	coclass EtsUndGroupColl
+	{
+		[default] interface IEtsUndGroupColl;
+	};
+	[
+		uuid(58E02243-DEEF-4E3F-9F52-D314F4C609B1),
+		helpstring("EtsStrategyAtom Class")
+	]
+	coclass EtsStrategyAtom
+	{
+		[default] interface IEtsStrategyAtom;
+	};
+	[
+		uuid(BC387F06-97FA-4607-B8C4-895174465B08),
+		noncreatable,
+		helpstring("EtsStrategyColl Class")
+	]
+	coclass EtsStrategyColl
+	{
+		[default] interface IEtsStrategyColl;
+	};
+	[
+		uuid(D8EA95E2-1FD3-4208-9736-7FF6D8783954),
+		helpstring("EtsExpMonthAtom Class")
+	]
+	coclass EtsExpMonthAtom
+	{
+		[default] interface IEtsExpMonthAtom;
+	};
+	[
+		uuid(A85835A1-75BC-4D2F-B733-AAF53CFFE225),
+		helpstring("EtsExpMonthColl Class")
+	]
+	coclass EtsExpMonthColl
+	{
+		[default] interface IEtsExpMonthColl;
+	};
+// 	[
+// 		uuid(195CDD77-2A3C-47B5-807C-5872C59E1DDD),
+// 		helpstring("EtsExpCalAtom Class")
+// 	]
+// 	coclass EtsExpCalAtom
+// 	{
+// 		[default] interface IEtsExpCalAtom;
+// 	};
+	[
+		uuid(A8A66D2F-8CE9-434A-845F-7075B49CD468),
+		noncreatable,
+		helpstring("EtsExpCalColl Class")
+	]
+	coclass EtsExpCalColl
+	{
+		[default] interface IEtsExpCalColl;
+	};
+	[
+		uuid(672B6C3B-D3B8-4DC9-B1D3-DFAA9F0F9A3C),
+		helpstring("EtsTraderUndAtom Class")
+	]
+	coclass EtsTraderUndAtom
+	{
+		[default] interface IEtsTraderUndAtom;
+	};
+	[
+		uuid(F3BCEF2F-3512-44B7-A217-9499B2FCF588),
+		helpstring("EtsTraderUndColl Class")
+	]
+	coclass EtsTraderUndColl
+	{
+		[default] interface IEtsTraderUndColl;
+	};
+	[
+		uuid(DF3218BF-487B-497D-BD02-9ACB5331AB9A),
+		helpstring("EtsFutAtom Class")
+	]
+	coclass EtsFutAtom
+	{
+		[default]	interface IEtsFutAtom;
+					//interface IEtsContractAtom;
+	};
+	[
+		uuid(34A36BA6-09BE-4A3A-BE2F-0F35D7531C59),
+		helpstring("EtsFutColl Class")
+	]
+	coclass EtsFutColl
+	{
+		[default] interface IEtsFutColl;
+	};
+	[
+		uuid(B2623F2C-4C74-45DA-B249-5B7711BF6A16),
+		helpstring("EtsFutRootAtom Class")
+	]
+	coclass EtsFutRootAtom
+	{
+		[default] interface IEtsFutRootAtom;
+	};
+	[
+		uuid(0FC8B57E-8DF7-46FF-BEFB-D8129A525ACB),
+		helpstring("EtsFutRootColl Class")
+	]
+	coclass EtsFutRootColl
+	{
+		[default] interface IEtsFutRootColl;
+	};
+	[
+		uuid(C2A73296-C049-47ED-8795-8BAB30A8A01E),
+		helpstring("EtsFutOptAtom Class")
+	]
+	coclass EtsFutOptAtom
+	{
+		[default] interface IEtsFutOptAtom;
+	};
+	[
+		uuid(4596DFAE-C287-4C1D-8BFF-62F5EDD41E71),
+		helpstring("EtsFutOptColl Class")
+	]
+	coclass EtsFutOptColl
+	{
+		[default] interface IEtsFutOptColl;
+	};
+	[
+		uuid(B258D64E-2F2F-4E49-89A5-85134A4A652B),
+		helpstring("EtsContractAtom Class")
+	]
+	coclass EtsContractAtom
+	{
+		[default] interface IEtsContractAtom;
+	};
+	[
+		uuid(A40C44E6-4763-4A8C-AEDA-FFD1B4FA593D),
+		noncreatable,
+		helpstring("EtsContractColl Class")
+	]
+	coclass EtsContractColl
+	{
+		[default] interface IEtsContractColl;
+	};
+	[
+		uuid(3D0690A6-B52B-4398-92C1-B59ED7A4606F),
+		noncreatable,
+		helpstring("EtsContractBySymColl Class")
+	]
+	coclass EtsContractBySymColl
+	{
+		[default] interface IEtsContractBySymColl;
+	};
+	[
+		uuid(F915F505-7C4C-4BF5-B47F-B10EA9B6C902),
+		helpstring("EtsProcessDelay Class")
+	]
+	coclass EtsProcessDelay
+	{
+		[default] interface IEtsProcessDelay;
+	};
+	[
+		uuid(7C326DC8-860C-4831-970D-74A4AE04277F),
+		helpstring("EtsDivAtom Class")
+	]
+	coclass EtsDivAtom
+	{
+		[default] interface IEtsDivAtom;
+	};
+	[
+		uuid(D3373776-77A2-42BB-A320-ED1BDA06196D),
+		helpstring("EtsDivColl Class")
+	]
+	coclass EtsDivColl
+	{
+		[default] interface IEtsDivColl;
+	};
+
+	[
+		uuid(068A8DA9-C5F7-467D-AC11-858DC34A61B6),
+		helpstring("EtsIndexDivAtom Class")
+	]
+	coclass EtsIndexDivAtom
+	{
+		[default] interface IEtsIndexDivAtom;
+	};
+	[
+		uuid(29B05E97-CEE9-4707-80F3-202B547D3737),
+		helpstring("EtsIndexDivColl Class")
+	]
+	coclass EtsIndexDivColl
+	{
+		[default] interface IEtsIndexDivColl;
+	};
+
+	[
+		uuid(0DCDFD13-7973-4952-9425-F4449A48D6F0),
+		helpstring("_IEtsMainEvents Interface")
+	]
+	dispinterface _IEtsMainEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method Progress")] HRESULT Progress([in] BSTR bsMessage, [in] LONG lProgress);
+		[id(2), helpstring("method OnAnalytics")] HRESULT OnAnalytics([in] SAFEARRAY(struct IRisksFullInfo) * anx);
+	};
+	[
+		uuid(AABF1053-C2A6-404A-9D0E-77704A8A04CB),
+		helpstring("EtsMain Class")
+	]
+	coclass EtsMain
+	{
+		[default] interface IEtsMain;
+		[default, source] dispinterface _IEtsMainEvents;
+	};
+	[
+		uuid(614A4C0C-1248-486D-978A-3D6ED2CA08E2),
+		helpstring("EtsMmEntityAtom Class")
+	]
+	coclass EtsMmEntityAtom
+	{
+		[default] interface IEtsMmEntityAtom;
+	};
+	[
+		uuid(04F6391A-B4FB-43FA-97F7-8D5071A29419),
+		helpstring("EtsMmFilterAtom Class")
+	]
+	coclass EtsMmFilterAtom
+	{
+		[default] interface IEtsMmFilterAtom;
+	};
+	[
+		uuid(0E8A883B-7F02-4C7B-A295-1EBD4A949AAA),
+		helpstring("EtsMmFilterAtomColl Class")
+	]
+	coclass EtsMmFilterAtomColl
+	{
+		[default] interface IEtsMmFilterAtomColl;
+	};
+	[
+		uuid(4C852438-0B3F-4159-B65B-B214E792C559),
+		helpstring("EtsMmEntityAtomColl Class")
+	]
+	coclass EtsMmEntityAtomColl
+	{
+		[default] interface IEtsMmEntityAtomColl;
+	};
+	[
+		uuid(D58C3A3B-EB5C-4F1C-A49D-A9FFDD7106A9),
+		helpstring("EtsRateAtom Class")
+	]
+	coclass EtsRateAtom
+	{
+		[default] interface IEtsRateAtom;
+	};
+	[
+		uuid(C943A000-55F5-41AC-86B1-12F3F5BE4651),
+		helpstring("EtsRateColl Class")
+	]
+	coclass EtsRateColl
+	{
+		[default] interface IEtsRateColl;
+	};
+	[
+		uuid(B76DEB64-0C30-4FFB-AB3E-7842D3E35887),
+		helpstring("EtsFilterData Class")
+	]
+	coclass EtsFilterData
+	{
+		[default] interface IEtsFilterData;
+	};
+
+
+
+	[
+		uuid(5E590859-41EC-4BEB-B926-B18BBFACBD58),
+		helpstring("EtsHolidayAtom Class")
+	]
+	coclass EtsHolidayAtom
+	{
+		[default] interface IEtsHolidayAtom;
+	};
+	[
+		uuid(1FC9F748-165C-4FB8-B421-E7AEC4132963),
+		helpstring("CalculationParametrs Class")
+	]
+	coclass CalculationParametrs
+	{
+		[default] interface ICalculationParametrs;
+	};
+	[
+		uuid(D7715740-0722-41A7-8EBA-B3FDFBD06BD4),
+		helpstring("SpotContractAtom Class")
+	]
+	coclass SpotContractAtom
+	{
+		[default] interface ISpotContractAtom;
+	};
+	[
+		uuid(70E189A5-6E5C-411F-B91C-9C67ED5C181E),
+		helpstring("ContractColl Class")
+	]
+	coclass ContractColl
+	{
+		[default] interface IContractColl;
+	};
+	[
+		uuid(7880434D-05AA-44BC-BC05-8DD30447D992),
+		helpstring("BorrowingRatesCurves Class")
+	]
+	coclass BorrowingRatesCurves
+	{
+		[default] interface IBorrowingRatesCurves;
+	};
+	[
+		uuid(987670A2-EE58-418D-8E47-C1F7FEAF9C8F),
+		helpstring("CalculationSettings Class")
+	]
+	coclass CalculationSettings
+	{
+		[default] interface ICalculationSettings;
+	};
+	[
+		uuid(9B1A90B1-8EA9-4782-8566-71DF3AF029B2),
+		helpstring("SyntheticSpotContractAtom Class")
+	]
+	coclass SyntheticSpotContractAtom
+	{
+		[default] interface ISyntheticSpotContractAtom;
+	};
+	[
+		uuid(F0E1B524-E387-4E04-BE05-57C8DF517B93),
+		helpstring("AssetColl Class")
+	]
+	coclass AssetColl
+	{
+		[default] interface IAssetColl;
+	};
+	[
+		uuid(59E6218E-F90F-4A94-AEF7-6F23206C1F9B),
+		helpstring("SyntheticEquityAtom Class")
+	]
+	coclass SyntheticEquityAtom
+	{
+		[default] interface ISyntheticEquityAtom;
+	};
+	[
+		uuid(9A97E30E-1FA9-444F-891E-DC82F510BD37),
+		helpstring("BasketAssetComponent Class")
+	]
+	coclass BasketAssetComponent
+	{
+		[default] interface IBasketAssetComponent;
+	};
+	[
+		uuid(0ACFE452-3B7B-49E3-A833-2718BBA8FD14),
+		helpstring("BasketAssetComponentsColl Class")
+	]
+	coclass BasketAssetComponentsColl
+	{
+		[default] interface IBasketAssetComponentsColl;
+	};
+	[
+		uuid(ED77FC0D-9392-41C2-890F-AB7F36C64027),
+		helpstring("ContractRootColl Class")
+	]
+	coclass ContractRootColl
+	{
+		[default] interface IContractRootColl;
+	};
+	[
+		uuid(B0D6C267-19B3-41A3-9EA9-D873038407A6),
+		helpstring("MarketSimulationScenario Class")
+	]
+	coclass MarketSimulationScenario
+	{
+		[default] interface IMarketSimulationScenario;
+	};
+};

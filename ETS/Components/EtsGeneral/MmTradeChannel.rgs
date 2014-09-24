@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.MmTradeChannel.1 = s 'MmTradeChannel Class'
+	{
+		CLSID = s '{076DA83D-DD23-4803-8897-CAABB986F174}'
+	}
+	EtsGeneral.MmTradeChannel = s 'MmTradeChannel Class'
+	{
+		CLSID = s '{076DA83D-DD23-4803-8897-CAABB986F174}'
+		CurVer = s 'EtsGeneral.MmTradeChannel.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {076DA83D-DD23-4803-8897-CAABB986F174} = s 'MmTradeChannel Class'
+		{
+			ProgID = s 'EtsGeneral.MmTradeChannel.1'
+			VersionIndependentProgID = s 'EtsGeneral.MmTradeChannel'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ECC5DD29-4F8D-4AD1-9E2F-C9B61683C08C}'
+		}
+	}
+}

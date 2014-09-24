@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.SyntheticEquityAtom.1 = s 'SyntheticEquityAtom Class'
+	{
+		CLSID = s '{59E6218E-F90F-4A94-AEF7-6F23206C1F9B}'
+	}
+	EtsGeneral.SyntheticEquityAtom = s 'SyntheticEquityAtom Class'
+	{
+		CLSID = s '{59E6218E-F90F-4A94-AEF7-6F23206C1F9B}'
+		CurVer = s 'EtsGeneral.SyntheticEquityAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {59E6218E-F90F-4A94-AEF7-6F23206C1F9B} = s 'SyntheticEquityAtom Class'
+		{
+			ProgID = s 'EtsGeneral.SyntheticEquityAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.SyntheticEquityAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

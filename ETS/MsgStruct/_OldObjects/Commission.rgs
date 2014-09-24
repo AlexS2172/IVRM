@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Commission.1 = s 'Commission Class'
+	{
+		CLSID = s '{18BD58A6-615F-459D-BC35-B990B9835E98}'
+	}
+	MsgStruct.Commission = s 'Commission Class'
+	{
+		CLSID = s '{18BD58A6-615F-459D-BC35-B990B9835E98}'
+		CurVer = s 'MsgStruct.Commission.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {18BD58A6-615F-459D-BC35-B990B9835E98} = s 'Commission Class'
+		{
+			ProgID = s 'MsgStruct.Commission.1'
+			VersionIndependentProgID = s 'MsgStruct.Commission'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

@@ -1,0 +1,154 @@
+' ------------------------------------------------------------------------
+'
+'    OptionCalc.TXT -- OptiobCalc API Declarations for Visual Basic
+' ------------------------------------------------------------------------
+
+' ------------------------------------------------------------------------
+'	Rates
+' ------------------------------------------------------------------------
+
+Type RATE
+    dRate As Double
+    nDTE  As Long
+End Type
+
+' Interpolates rates. Returns 0 if failed, or value greater than 0 if succeeded
+' nDTE must be greater that zero. Input rates array assumed to be unsorted.
+Declare Function InterpolateRates _
+				 Lib "OptionCalc.dll" _
+				(_
+				 ByVal nCount As Long,_
+				 pRates As RATE,_
+				 ByVal nDTE As Long_
+				 )_ 
+				 As Double
+
+
+' ------------------------------------------------------------------------
+'	Dividends
+' ------------------------------------------------------------------------
+
+Const FREQUENCY_MONTHLY	    = 12
+Const FREQUENCY_QUATERLY	= 4
+Const FREQUENCY_SEMIANNUALY = 2
+Const FREQUENCY_ANNUALY	    = 1
+
+Type DIVIDEND
+    dTimeFraction As Double
+    dAmount		  As Double
+End Type
+
+' Returns number of dividends or -1 if error occured.
+Declare Function GetDividendsCount _
+				 Lib "OptionCalc.dll"_
+				 (_
+				 ByVal nToday As Long,_
+				 ByVal nDTE As Long,_
+				 ByVal nLastDivDate As Long,_
+				 ByVal nFrequency As Long_
+				 )_
+				 As Long
+
+' Fills array of dividends using given last dividend amount, last dividend day and 
+' dividend frequency. Returns 0 if failed, or value greater than zero otherwise.
+' pnCount contains number of dividends available prior expiry date.
+Declare Function GetDividends _
+				 Lib "OptionCalc.dll" _
+				 (_
+				 ByVal nToday As Long,_
+				 ByVal nDTE As Long,_
+				 ByVal nLastDivDate As Long,_
+				 ByVal nFrequency As Long,_
+				 ByVal dAmount As Double,_
+				 ByVal nCount As Long,_
+				 pDividends As DIVIDEND,_
+				 pnCount As Long_
+				 )_
+				 As Long
+
+' ------------------------------------------------------------------------
+'	Implied volatility
+' ------------------------------------------------------------------------
+
+' Calculates volatility. Returns -1 if error occured.
+Declare Function CalcVolatility _
+				 Lib "OptionCalc.dll" _
+				 (_
+				 ByVal dDomesticRate As Double,_
+				 ByVal dForeignRate As Double,_
+				 ByVal dSpotPrice As Double,_
+				 ByVal dOptionPrice As Double,_
+				 ByVal dStrike As Double,_
+				 ByVal nDTE As Long,_
+				 ByVal nIsCall As Long,_
+				 ByVal nIsAmerican As Long,_
+				 ByVal nCount As Long,_
+				 pDividends As DIVIDEND,_
+				 ByVal nSteps As Long_
+				 )_
+				 As Double
+
+' ------------------------------------------------------------------------
+'	Greeks
+' ------------------------------------------------------------------------
+
+Const GT_NOTHING	= &H00000000
+Const GT_THEOPRICE	= &H1
+Const GT_ALPHA		= &H2
+Const GT_DELTA		= &H4
+Const GT_GAMMA		= &H8
+Const GT_VEGA		= &H10
+Const GT_THETA		= &H20
+Const GT_RHO		= &H40
+Const GT_ALL		= &HFFFFFFFF
+
+Type  GREEKS
+	nMask As Long
+
+	dTheoPrice As Double
+	dAlpha As Double
+	dDelta As Double
+	dGamma As Double
+	dVega As Double
+	dTheta As Double
+	dRho As Double
+End Type
+
+' Calculates greeks. Returns 0 if failed, or value greater than zero otherwise.
+Declare Function CalcGreeks  _
+				 Lib "OptionCalc.dll" _
+				 (_
+				 ByVal dDomesticRate As Double,_
+				 ByVal dForeignRate As Double,_
+				 ByVal dSpotPrice As Double,_
+				 ByVal dStrike As Double,_
+				 ByVal dVolatility As Double,_
+				 ByVal nDTE As Long,_
+				 ByVal nIsCall As Long,_
+				 ByVal nIsAmerican As Long,_
+				 ByVal nCount As Long,_
+				 pDividends As DIVIDEND,_
+				 ByVal nSteps As Long,_
+				 pGreeks As GREEKS_
+				 )_
+				 As Long
+
+' Calculates greeks. Returns 0 if failed, or value greater than zero otherwise.
+' Uses alternative algorithm to calculate Delta and Gamma.
+Declare Function CalcGreeksEx  _
+				 Lib "OptionCalc.dll" _
+				 (_
+				 ByVal dDomesticRate As Double,_
+				 ByVal dForeignRate As Double,_
+				 ByVal dSpotPrice As Double,_
+				 ByVal dStrike As Double,_
+				 ByVal dVolatility As Double,_
+				 ByVal nDTE As Long,_
+				 ByVal nIsCall As Long,_
+				 ByVal nIsAmerican As Long,_
+				 ByVal nCount As Long,_
+				 pDividends As DIVIDEND,_
+				 ByVal nSteps As Long,_
+				 pGreeks As GREEKS_
+				 )_
+				 As Long

@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmStockHedge.MmTePriceAtom.1 = s 'MmTePriceAtom Class'
+	{
+		CLSID = s '{C00DA0AB-511E-43F6-B0A1-EEAB427ABA4F}'
+	}
+	EtsMmStockHedge.MmTePriceAtom = s 'MmTePriceAtom Class'
+	{
+		CLSID = s '{C00DA0AB-511E-43F6-B0A1-EEAB427ABA4F}'
+		CurVer = s 'EtsMmStockHedge.MmTePriceAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C00DA0AB-511E-43F6-B0A1-EEAB427ABA4F} = s 'MmTePriceAtom Class'
+		{
+			ProgID = s 'EtsMmStockHedge.MmTePriceAtom.1'
+			VersionIndependentProgID = s 'EtsMmStockHedge.MmTePriceAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{37675864-422F-416A-ACF1-B8860B1B70A6}'
+		}
+	}
+}

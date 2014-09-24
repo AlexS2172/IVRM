@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmVolaAnalysis.MmVaOptPairAtom.1 = s 'MmVaOptPairAtom Class'
+	{
+		CLSID = s '{FA313FBA-F5D4-4207-B5F7-CD0777232755}'
+	}
+	EtsMmVolaAnalysis.MmVaOptPairAtom = s 'MmVaOptPairAtom Class'
+	{
+		CLSID = s '{FA313FBA-F5D4-4207-B5F7-CD0777232755}'
+		CurVer = s 'EtsMmVolaAnalysis.MmVaOptPairAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FA313FBA-F5D4-4207-B5F7-CD0777232755} = s 'MmVaOptPairAtom Class'
+		{
+			ProgID = s 'EtsMmVolaAnalysis.MmVaOptPairAtom.1'
+			VersionIndependentProgID = s 'EtsMmVolaAnalysis.MmVaOptPairAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FFE2394C-E154-49F2-838A-9D51EDF17C79}'
+		}
+	}
+}

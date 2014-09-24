@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Exchange.1 = s 'Exchange Class'
+	{
+		CLSID = s '{738B7D61-3E81-43F1-825C-60B8968BA5D9}'
+	}
+	MsgStruct.Exchange = s 'Exchange Class'
+	{
+		CLSID = s '{738B7D61-3E81-43F1-825C-60B8968BA5D9}'
+		CurVer = s 'MsgStruct.Exchange.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {738B7D61-3E81-43F1-825C-60B8968BA5D9} = s 'Exchange Class'
+		{
+			ProgID = s 'MsgStruct.Exchange.1'
+			VersionIndependentProgID = s 'MsgStruct.Exchange'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

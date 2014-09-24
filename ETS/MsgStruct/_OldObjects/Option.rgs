@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Option.1 = s 'Option Class'
+	{
+		CLSID = s '{21BCCB2E-87CB-493D-AFD7-914A88B6850D}'
+	}
+	MsgStruct.Option = s 'Option Class'
+	{
+		CLSID = s '{21BCCB2E-87CB-493D-AFD7-914A88B6850D}'
+		CurVer = s 'MsgStruct.Option.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {21BCCB2E-87CB-493D-AFD7-914A88B6850D} = s 'Option Class'
+		{
+			ProgID = s 'MsgStruct.Option.1'
+			VersionIndependentProgID = s 'MsgStruct.Option'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

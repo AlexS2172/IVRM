@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsStrategyAtom.1 = s 'EtsStrategyAtom Class'
+	{
+		CLSID = s '{58E02243-DEEF-4E3F-9F52-D314F4C609B1}'
+	}
+	EtsGeneral.EtsStrategyAtom = s 'EtsStrategyAtom Class'
+	{
+		CLSID = s '{58E02243-DEEF-4E3F-9F52-D314F4C609B1}'
+		CurVer = s 'EtsGeneral.EtsStrategyAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {58E02243-DEEF-4E3F-9F52-D314F4C609B1} = s 'EtsStrategyAtom Class'
+		{
+			ProgID = s 'EtsGeneral.EtsStrategyAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsStrategyAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

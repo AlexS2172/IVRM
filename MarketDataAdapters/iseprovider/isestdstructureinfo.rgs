@@ -1,0 +1,24 @@
+HKCR
+{
+	ISEProvider.ISEStdStructureInfo.1 = s 'ISEStdStructureInfo Class'
+	{
+		CLSID = s '{B4B95CBE-DB82-4944-B519-97C2FDB249EC}'
+	}
+	ISEProvider.ISEStdStructureInfo = s 'ISEStdStructureInfo Class'
+	{
+		CLSID = s '{B4B95CBE-DB82-4944-B519-97C2FDB249EC}'
+		CurVer = s 'ISEProvider.ISEStdStructureInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B4B95CBE-DB82-4944-B519-97C2FDB249EC} = s 'ISEStdStructureInfo Class'
+		{
+			ProgID = s 'ISEProvider.ISEStdStructureInfo.1'
+			VersionIndependentProgID = s 'ISEProvider.ISEStdStructureInfo'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{9848FACF-EB55-4687-8A44-B540CE806C6E}'
+			'TypeLib' = s '{DB12E66D-0F62-4783-855C-383886AA3D22}'
+		}
+	}
+}

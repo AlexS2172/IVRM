@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{B9907F04-2B52-4B83-9A76-47D92A5A6730} = s 'SimParams'
+		'SimParams.EXE'
+		{
+			val AppID = s {B9907F04-2B52-4B83-9A76-47D92A5A6730}
+		}
+	}
+}

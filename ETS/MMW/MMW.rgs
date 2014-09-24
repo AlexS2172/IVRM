@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{8A439822-02C3-4490-B6BE-797877EDF4A6} = s 'MMW'
+		'MMW.EXE'
+		{
+			val AppID = s {8A439822-02C3-4490-B6BE-797877EDF4A6}
+		}
+	}
+}

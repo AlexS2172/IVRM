@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.SettingsUpdate.1 = s 'SettingsUpdate Class'
+	{
+		CLSID = s '{2B2E7B03-A0A3-471A-8082-A40039C2761D}'
+	}
+	MsgStruct.SettingsUpdate = s 'SettingsUpdate Class'
+	{
+		CLSID = s '{2B2E7B03-A0A3-471A-8082-A40039C2761D}'
+		CurVer = s 'MsgStruct.SettingsUpdate.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2B2E7B03-A0A3-471A-8082-A40039C2761D} = s 'SettingsUpdate Class'
+		{
+			ProgID = s 'MsgStruct.SettingsUpdate.1'
+			VersionIndependentProgID = s 'MsgStruct.SettingsUpdate'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

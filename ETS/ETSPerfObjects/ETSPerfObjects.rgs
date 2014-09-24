@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'ETSPerfObjects'
+		'ETSPerfObjects.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

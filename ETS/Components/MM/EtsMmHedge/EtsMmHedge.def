@@ -1,0 +1,9 @@
+; EtsMmHedge.def : Declares the module parameters.
+
+; LIBRARY      "EtsMmHedge.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.LastQuote.1 = s 'LastQuote Class'
+	{
+		CLSID = s '{201A80A1-1C56-48FD-B5BF-B631FBCAB8FE}'
+	}
+	MsgStruct.LastQuote = s 'LastQuote Class'
+	{
+		CLSID = s '{201A80A1-1C56-48FD-B5BF-B631FBCAB8FE}'
+		CurVer = s 'MsgStruct.LastQuote.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {201A80A1-1C56-48FD-B5BF-B631FBCAB8FE} = s 'LastQuote Class'
+		{
+			ProgID = s 'MsgStruct.LastQuote.1'
+			VersionIndependentProgID = s 'MsgStruct.LastQuote'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

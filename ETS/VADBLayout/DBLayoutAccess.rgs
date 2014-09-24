@@ -1,0 +1,26 @@
+HKCR
+{
+	VADBLayout.DBLayoutAccess.1 = s 'DBLayoutAccess Class'
+	{
+		CLSID = s '{FBD72117-1F27-4FC1-98BF-ACD948A73AF6}'
+	}
+	VADBLayout.DBLayoutAccess = s 'DBLayoutAccess Class'
+	{
+		CLSID = s '{FBD72117-1F27-4FC1-98BF-ACD948A73AF6}'
+		CurVer = s 'VADBLayout.DBLayoutAccess.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FBD72117-1F27-4FC1-98BF-ACD948A73AF6} = s 'DBLayoutAccess Class'
+		{
+			ProgID = s 'VADBLayout.DBLayoutAccess.1'
+			VersionIndependentProgID = s 'VADBLayout.DBLayoutAccess'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{B028F3F3-EDE4-445D-B9A0-D5E50F9ECDF3}'
+		}
+	}
+}

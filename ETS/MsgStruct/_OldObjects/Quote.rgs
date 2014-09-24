@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Quote.1 = s 'Quote Class'
+	{
+		CLSID = s '{376304FA-6938-48E2-BBAE-6348EA6F8544}'
+	}
+	MsgStruct.Quote = s 'Quote Class'
+	{
+		CLSID = s '{376304FA-6938-48E2-BBAE-6348EA6F8544}'
+		CurVer = s 'MsgStruct.Quote.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {376304FA-6938-48E2-BBAE-6348EA6F8544} = s 'Quote Class'
+		{
+			ProgID = s 'MsgStruct.Quote.1'
+			VersionIndependentProgID = s 'MsgStruct.Quote'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

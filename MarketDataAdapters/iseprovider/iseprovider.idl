@@ -1,0 +1,1030 @@
+// ISEProvider.idl : IDL source for ISEProvider.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ISEProvider.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(DB12E66D-0F62-4783-855C-383886AA3D22),
+	version(1.0),
+	helpstring("ISEProvider 1.0 Type Library")
+]
+library ISEPROVIDERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(1C48C994-028D-4a81-8841-D7FB9780809E),
+		helpstring("Proxy Auth Type"),
+		v1_enum
+	]
+	typedef enum ProviderProxyAuthType
+	{
+		[helpstring("Proxy Authorization is not supported")]	enProxyAuthNone = -1,
+		[helpstring("Disable Proxy Authorization")]				enProxyAuthDisable = 0,
+		[helpstring("Enable Proxy Authorization")]				enProxyAuthEnable  = 1
+	}ProviderProxyAuthType;
+
+	[
+		uuid(E9134684-347A-4a81-A99B-187760EB468F),
+		helpstring("Use Proxy Type"),
+		v1_enum
+	]
+	typedef enum ProviderUseProxyType
+	{
+		[helpstring("Proxy us not supported")]			 enProxyNone = -1,
+		[helpstring("Disable Proxy")]					 enProxyDisable = 0,
+		[helpstring("UseCustom Proxy Settings")]		 enProxyCustom  = 1,
+		[helpstring("Use Default Proxy Settings")]		 enProxyDefault = 2,
+	}ProviderUseProxyType;
+
+	typedef
+	[
+		uuid(CBF514FD-2C5B-432b-AD90-5836C6F8D8B5),
+		helpstring("Provider Role enum"),
+		v1_enum
+	]
+	enum ProviderRole
+	{
+		enStructureProvider,
+		enStructureInfo,
+		enPriceProvider,
+		enPriceInfo
+	} ProviderRole;
+
+	typedef
+	[
+		uuid(75131B2C-2F08-4bc9-A47E-C93FC5AD4A51),
+		helpstring("Instrument types enum"),
+		v1_enum
+	]
+	enum InstrumentTypeEnum
+	{
+		[helpstring("Stock")]	enSTK		= 0,
+		[helpstring("Futures")]	enFUT		= 1,
+								enOST		= 2,
+								enOFT		= 3,
+		[helpstring("Index")]	enIDX		= 4,
+		[helpstring("Option")]	enOPT		= 5,
+		[helpstring("Stock for Group Request")]	enGrSTK		= 6,
+		[helpstring("Index for Group Request")]	enGrIDX		= 7
+	} InstrumentTypeEnum;
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(41C621A9-835D-4f0b-A945-4C95AB157967),
+		helpstring("Request types enum"),
+		v1_enum
+	]
+	enum RequestsTypeEnum
+	{
+		enNoRequest				= 0,
+		enRequestLastQuote		= 1,
+		enSubscribeQuote		= 2,
+		enRequestStock			= 3,
+		enRequestOptions		= 4
+	} RequestsTypeEnum;
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(E23F85D5-9BEE-49c8-AB8A-B5CB520B8CEC),
+		helpstring("Option types enum"),
+		v1_enum
+	]
+	enum OptionTypeEnum
+	{
+		enCall				= 0,
+		enPut				= 1		
+	} OptionTypeEnum;
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(4ECD56F2-9E31-477b-A8CE-F74E88BCABE4),
+		helpstring("Stock types enum"),
+		v1_enum
+	]
+	enum StockTypeEnum
+	{
+		enIndex				= 0,
+		enStock				= 1		
+	} StockTypeEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(04702212-9270-4864-977F-B09F78D640A3),
+		helpstring("ISE info types enum"),
+		v1_enum
+	]
+	enum ISEInfoTypeEnum
+	{
+		enError				= 0,
+		enWarning			= 1,
+		enInfo				= 2,
+		enFatal				= 4,
+		enISE				= 5
+	} ISEInfoTypeEnum;
+
+	typedef
+	[
+		uuid(86C0F0F5-2DA6-4f9e-B300-7ACFCC2F3CCD),
+		helpstring("BidAsk enum"),
+		v1_enum
+	]
+	enum BidAskEnum
+	{
+		enBoth				= 0,
+		enBid			    = 1,
+		enAsk				= 2
+	} BidAskEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(20584DB2-5F55-49a5-BF02-6E0FC011AADF),
+		helpstring("Price Provider Type Enum"),
+		v1_enum
+	]
+	enum PriceProviderTypeEnum
+	{
+		enPPDefault			= 0,
+		enPPAll				= 1		
+	} PriceProviderTypeEnum;
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(500EA87A-1543-4298-8B7E-A1E7A98EAA09),
+		helpstring("Group Request Type Type"),
+	]
+	typedef enum GroupRequestType
+	{
+		[helpstring("Request Last and Subscribe")]			enGroupRequestAll       = -1,
+		[helpstring("Request Last Quote only")]				enGroupRequestLastQuote = 0,
+		[helpstring("Subscribe Quotes only")]				enGroupRequestSubscribe = 1
+	} GroupRequestType;
+
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(7A766CF9-7734-47be-888D-E2D90C62E7BC),
+		helpstring("Instrument Group Enum"),
+		v1_enum
+	]
+	enum InstrumentGroupEnum
+	{
+		enIGAll					= 0,
+		enIGEuropeanCallOption	= 1,
+		enIGEuropeanPutOption	= 2,
+		enIGAmericanCallOption	= 6,
+		enIGAmericanPutOption	= 7
+	} InstrumentGroupEnum;
+
+	typedef
+	[
+		uuid(86910FBC-7B70-4e2d-9FA4-E5FE344DC5A5),
+		helpstring("Expiration Group Enum"),
+		v1_enum
+	]
+	enum ExpirationGroupEnum
+	{
+		enEGAll					= 0,
+		enEGNear				= 1,
+		enEGLess9Month			= 2,
+		enEGLEAPS				= 3		
+	} ExpirationGroupEnum;
+
+	typedef
+	[
+		uuid(2DD907A5-58D9-4d23-9CC7-E744586D0866),
+		helpstring("Strike Price Group Enum"),
+		v1_enum
+	]
+	enum StrikePriceGroupEnum
+	{
+		enSPGAll				= 0,
+		enSPGDeepInTheMoney		= 1,
+		enSPGInTheMoney			= 2,
+		enSPGAtTheMoney			= 3,
+		enSPGOutOfTheMoney		= 4,
+		enSPGDeepOutOfTheMoney	= 5
+	} StrikePriceGroupEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(7A8D0C51-9760-487a-85F7-0691EE66CD00),
+		helpstring("Trade types enum"),
+		v1_enum
+	]
+	enum TradeTypeEnum
+	{
+		enTTUnknown				= 0,
+		enTTStandard			= 1,
+		enTTTransitory			= 2,
+		enTTOvertaking			= 3,
+		enTTReversing			= 4,
+		enTTTransfer			= 5,
+		enTTExercise			= 6,
+		enTTAssign				= 7,
+		enTTClosing				= 8,
+		enTTIssue				= 9,
+		enTTNewContract			= 10		
+	} TradeTypeEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(B3DB87BE-4F40-4ad8-AC11-E0122C056CB0),
+		helpstring("Underlying trading status enum"),
+		v1_enum
+	]
+	enum UnderlyingTradingStatusEnum
+	{
+		enUtsClosed		= 0,
+		enUtsOpen		= 1,
+		enUtsSuspended	= 2,
+		enUtsResumed	= 3,
+		enUtsFastMarket	= 4
+	} UnderlyingTradingStatusEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(8CB43955-1526-482d-A889-CF2D9097BFC0),
+		helpstring("Series trading status enum"),
+		v1_enum
+	]
+	enum SeriesTradingStatusEnum
+	{
+		enStsClosed					= 0,
+		enStsQueuing				= 1,
+		enStsQueuingAndTryingToOpen	= 2,
+		enStsRegular				= 3,
+		enStsHalt					= 4,
+		enStsFastMarket				= 5
+	} SeriesTradingStatusEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(35FE3597-BA30-4e39-AEA6-CB3567CB99CA),
+		helpstring("Trader Role Enum"),
+		v1_enum
+	]
+	enum TraderRoleEnum
+	{
+		enTrEAM			= 0,
+		enTrCMM			= 1,
+		enTrPMM			= 2
+	} TraderRoleEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(24C78375-FB1F-4a2c-BC8D-76C834948D63),
+		helpstring("Error number enum"),
+		v1_enum
+	]
+	enum ErrorNumberEnum
+	{
+		enUnknown					= 0,
+		enNoError					= 1,
+		enSymbolNotSupported		= 2,
+		enNoDataAvailableForSymbol	= 3, 
+		enNoAccessForData			= 4,
+		enCouldNotConnectToProvider = 5,
+		enNotConnected				= 6,
+		enConnectionWasDisconnected	= 7,
+		enInvalidAccount			= 8,
+		enVersionIsNoLongerSupport	= 9,
+		enInternalError				= 10,
+		enProviderInternalError		= 11
+	} ErrorNumberEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(0E5F97CA-AC73-4546-96FB-74E1E2344942),
+		helpstring("Event number enum"),
+		v1_enum
+	]
+	enum EventNumberEnum
+	{
+		enEvConnected					= 0
+	} EventNumberEnum;
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(2BB28A0D-D1EC-4fec-92C5-D3F2D740600D)
+	]
+	struct QuoteUpdateParams
+	{
+		[helpstring("Symbol")]				BSTR				Symbol;
+		[helpstring("Instrument type")]		InstrumentTypeEnum	Type;
+		[helpstring("Exchange code")]		BSTR				Exchange;
+	};
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(7F841DD2-C284-4a52-9048-8D8DD0EF5A0A)
+	]
+	struct StockParams
+	{
+		[helpstring("Stock")]				BSTR				Stock;
+		[helpstring("Exchange code")]		BSTR				Exchange;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(521BAE4E-0C97-4afe-BE72-F2E2C577DC95)
+	]
+	struct ISEMMQuoteParams
+	{
+		[helpstring("Symbol")]				BSTR				Symbol;
+		[helpstring("Instrument type")]		InstrumentTypeEnum	Type;
+		[helpstring("BidOrAsk")]			BidAskEnum			BidOrAsk;
+	};
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(D761FEFC-BC8A-4c2f-ADFA-938F3C6012F5)
+	]
+	struct OptionParams
+	{
+		[helpstring("Underlying Symbol")]	BSTR				UnderlyingSymbol;
+		[helpstring("Exchange code")]		BSTR				Exchange;
+	};
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(6414358F-4491-4fd4-B90F-98609E26F187)
+	]
+	struct ISEStockResults
+	{
+		[helpstring("Type")]					StockTypeEnum		StockType;
+		[helpstring("Currency")]				BSTR				Currency;
+		[helpstring("Lot size")]				long				LotSize;
+		[helpstring("Exchange")]				BSTR				Exchange;
+		[helpstring("Description")]				BSTR				Description;
+		[helpstring("Bin #")]					long				BinNum;
+		[helpstring("Trader role")]				TraderRoleEnum		TraderRole;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(3473AAAC-ED10-4737-95BF-CAC4005BFF36)
+	]
+	struct StockResults
+	{
+		[helpstring("Type")]					StockTypeEnum		StockType;
+		[helpstring("Dividends frequency")]		long				DivFreq;
+		[helpstring("Dividends last date")]		DATE				DivLastDate;
+		[helpstring("Dividends amount")]		double				DivAmount;
+		[helpstring("Currency (now only USD)")]	BSTR				Currency;
+		[helpstring("Description")]				BSTR				Description;
+		[helpstring("Lot size")]				long				LotSize;
+		[helpstring("Exchange")]				BSTR				Exchange;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(E4B58341-79A1-41fd-AE31-8674B997422F)
+	]
+	struct StockInfo
+	{
+		[helpstring("Name")]					BSTR	Name;
+		[helpstring("Type")]					StockTypeEnum		StockType;
+		[helpstring("Dividends frequency")]		long				DivFreq;
+		[helpstring("Dividends last date")]		DATE				DivLastDate;
+		[helpstring("Dividends amount")]		double				DivAmount;
+		[helpstring("Currency (now only USD)")]	BSTR				Currency;
+		[helpstring("Description")]				BSTR				Description;
+		[helpstring("Lot size")]				long				LotSize;
+		[helpstring("Exchange")]				BSTR				Exchange;
+		[helpstring("Ask")]  					double	Ask;
+		[helpstring("Bid")]  					double	Bid;
+		[helpstring("OpenPrice")]  				double	OpenPrice;
+		[helpstring("ClosePrice")] 				double	ClosePrice;
+		[helpstring("High")] 					double	High;
+		[helpstring("Low")] 					double	Low;
+
+		[helpstring("Volume")] 					double	Volume;
+		[helpstring("CompositeVolume")] 		double	CompositeVolume;
+
+		[helpstring("CurrentVolume")] 			double	CurrentVolume;
+		[helpstring("LastTradeVolume")] 		double	LastTradeVolume;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(C330E48F-75D5-4418-A64B-9A559D675589)
+	]
+	struct OptionResults
+	{
+		[helpstring("Strike price")]			double				StrikePrice;
+		[helpstring("Expiration date")]			DATE				ExpirationDate;
+		[helpstring("Series")]					BSTR				Series;
+		[helpstring("Type")]					OptionTypeEnum		OptionType;
+		[helpstring("Currency (now only USD)")]	BSTR				Currency;
+		[helpstring("Lot size")]				long				LotSize;
+		[helpstring("Exchange")]				BSTR				Exchange;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(8969FCBE-0C47-4678-81D9-2D5823C303E6)
+	]
+	struct OptionInfo
+	{
+		[helpstring("Strike price")]			double				StrikePrice;
+		[helpstring("Expiration date")]			DATE				ExpirationDate;
+		[helpstring("Series")]					BSTR				Series;
+		[helpstring("Type")]					OptionTypeEnum		OptionType;
+		[helpstring("Currency (now only USD)")]	BSTR				Currency;
+		[helpstring("Lot size")]				long				LotSize;
+		[helpstring("Exchange")]				BSTR				Exchange;
+		[helpstring("Ask")]						double				Ask;
+		[helpstring("Bid")]						double				Bid;
+		[helpstring("Last")]					double				Last;
+		[helpstring("Open Interest")]			long				OpenInterest;
+		[helpstring("Volume")]					long				Volume;
+		[helpstring("Yesterday Volume")]		long				YVolume;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(01252ACA-4131-4273-BB33-9609F0E490BA)
+	]
+	struct ISEQuoteUpdateResult
+	{
+		[helpstring("BidPrice")]			double				BidPrice;
+		[helpstring("AskPrice")]			double				AskPrice;
+		[helpstring("BidSize")]				long				BidSize;
+		[helpstring("AskSize")]				long				AskSize;
+		[helpstring("Trading status")]		long				TradingStatus;
+		[helpstring("LastPrice")]			double				LastPrice;
+		[helpstring("Yesterday Close Price")]	double			ClosePrice;
+		[helpstring("Currency")]			BSTR				Currency;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(11786B12-35BB-4525-914C-41F08D22195D)
+	]
+	struct QuoteUpdateResult
+	{
+		[helpstring("UpdateDateTime")]		DATE				UpdateDateTime;
+		[helpstring("SeqNum")]				long				SeqNum;
+		[helpstring("BidPrice")]			double				BidPrice;
+		[helpstring("AskPrice")]			double				AskPrice;
+		[helpstring("BidSize")]				long				BidSize;
+		[helpstring("AskSize")]				long				AskSize;
+		[helpstring("Currency")]			BSTR				Currency;
+		[helpstring("LotSize")]				long				LotSize;
+		[helpstring("LastPrice")]			double				LastPrice;
+		[helpstring("OpenInterest")]		double				OpenInterest;
+		[helpstring("Volume")]				long				Volume;
+		[helpstring("Exchange")]			BSTR				Exchange;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(386BBCDF-0D59-42ef-BB3C-8FF665352FAC)
+	]
+	struct QuoteUpdateInfo
+	{
+		[helpstring("UpdateDateTime")]		DATE				UpdateDateTime;
+		[helpstring("SeqNum")]				long				SeqNum;
+		[helpstring("BidPrice")]			double				BidPrice;
+		[helpstring("AskPrice")]			double				AskPrice;
+		[helpstring("BidSize")]				long				BidSize;
+		[helpstring("AskSize")]				long				AskSize;
+		[helpstring("Currency")]			BSTR				Currency;
+		[helpstring("LotSize")]				long				LotSize;
+		[helpstring("LastPrice")]			double				LastPrice;
+		[helpstring("OpenInterest")]		double				OpenInterest;
+		[helpstring("Volume")]				long				Volume;
+		[helpstring("Exchange")]			BSTR				Exchange;
+
+		[helpstring("Open Price")]				double				OpenPrice;
+		[helpstring("Yesterday Close Price")]	double				ClosePrice;
+		[helpstring("day High Price")]		    double				HighPrice;
+		[helpstring("day Low Price")]		    double				LowPrice;
+
+		[helpstring("Skipped Items Number")]	long			Skipped;
+		[helpstring("Total Requests in queue")]	long			TotalRequests;
+		[helpstring("Wait time in mSecs")]	    long			WaitTime;
+		[helpstring("Net Change")]		        double			NetChange;
+
+	};
+
+	[
+		uuid(921E39AC-7E9D-45ff-BCBE-9CCB1B3D1A5A)
+	]
+	struct ISEQuote
+	{
+		[helpstring("Series")]				BSTR				Series;
+		[helpstring("BidOrAsk")]			BidAskEnum			BidOrAsk;
+		[helpstring("Premium")]				double				Premium;
+		[helpstring("Quantity")]			long				Quantity;
+		[helpstring("OpenQuantity")]		long				OpenQuantity;
+		[helpstring("StepUpBuffer")]		long				StepUpBuffer;
+	};
+
+	[
+		uuid(7D3A0ADA-CAD0-4688-89C4-475A4EC0AAD7)
+	]
+	struct ISEOrder
+	{
+		[helpstring("Series")]				BSTR				Series;
+		[helpstring("BidOrAsk")]			BidAskEnum			BidOrAsk;
+		[helpstring("Price")]				double				Price;
+		[helpstring("Quantity")]			long				Quantity;
+	};
+
+	[
+		uuid(24FA2217-A5B1-4f20-958C-8AE6F076ABE7)
+	]
+	struct ISEDeal
+	{
+		[helpstring("Series")]				BSTR				Series;
+		[helpstring("BidOrAsk")]			BidAskEnum			BidOrAsk;
+		[helpstring("Price")]				double				Price;
+		[helpstring("Quantity")]			long				Quantity;
+		[helpstring("OrderID")]				BSTR				OrderID;
+	};
+
+	[
+		uuid(0365003E-DA56-4c42-99D7-D7B41CD14A89)
+	]
+	struct ISETrade
+	{
+		[helpstring("Series")]				BSTR				Series;
+		[helpstring("TradeNumber")]			long				TradeNumber;
+		[helpstring("Type")]				TradeTypeEnum		Type;
+		[helpstring("OldSeries")]			BSTR				OldSeries;
+		[helpstring("OldTradeNumber")]		long				OldTradeNumber;
+		[helpstring("OldType")]				TradeTypeEnum		OldType;
+		[helpstring("Price")]				double				Price;
+		[helpstring("Quantity")]			long				Quantity;
+		[helpstring("OrderID")]				BSTR				OrderID;
+		[helpstring("TradeDate")]			DATE				TradeDate;
+		[helpstring("IsBought")]			VARIANT_BOOL		IsBought;
+		[helpstring("IsNew")]				VARIANT_BOOL		IsNew;
+	};
+
+	//-----------------------------------------------------------------------------//
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Source interfaces
+
+	// dispinterface _IISEStructureProviderEvents
+	[
+		uuid(031B5CF5-B9BE-44ad-A6B1-05CF7121EDAE),
+		helpstring("_IISEStructureProviderEvents Interface")
+	]
+	dispinterface _IISEStructureProviderEvents
+	{
+		properties:
+		methods:
+		
+		[id(1), helpstring("event OnStock")] 
+		HRESULT OnStock([in] struct StockParams *Params, [in] struct ISEStockResults *Results, [in] VARIANT_BOOL IsLastStock);
+		[id(2), helpstring("event OnOption")] 
+		HRESULT OnOption([in] struct OptionParams *Params, [in] struct OptionResults *Results, [in] VARIANT_BOOL IsLastOption);
+		[id(3), helpstring("event OnError")] 
+		HRESULT OnError([in] ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] RequestsTypeEnum ReqType, [in] VARIANT Request);
+		[id(4), helpstring("event OnEvent")] 
+		HRESULT OnEvent([in] EventNumberEnum EventNumber, [in] BSTR Description);
+	};
+
+	// dispinterface _IISEPriceProviderEvents
+	[
+		uuid(7AB940C8-9733-4b45-970E-604E41B87C92),
+		helpstring("_IISEPriceProviderEvents Interface")
+	]
+	dispinterface _IISEPriceProviderEvents
+	{
+		properties:
+		methods:
+		
+		[id(1), helpstring("method OnLastQuote")] 
+		HRESULT OnLastQuote([in] struct QuoteUpdateParams *Params, [in] struct ISEQuoteUpdateResult *Results);
+		[id(2), helpstring("method OnQuoteUpdate")] 
+		HRESULT OnQuoteUpdate([in] struct QuoteUpdateParams *Params, [in] struct ISEQuoteUpdateResult *Results);
+		[id(3), helpstring("method OnError")] 
+		HRESULT OnError([in] ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] RequestsTypeEnum ReqType, [in] VARIANT Request);
+		[id(4), helpstring("event OnEvent")] 
+		HRESULT OnEvent([in] EventNumberEnum EventNumber, [in] BSTR Description);
+	};
+
+	// dispinterface _IISEMMManagerEvents
+	[
+		uuid(E769CEDE-30AE-41B1-BB39-118368CD8E30),
+		helpstring("_IISEMMManagerEvents Interface")
+	]
+	dispinterface _IISEMMManagerEvents
+	{
+		properties:
+		methods:
+
+		[id(1), helpstring("method OnQuoteRejection")] 
+		HRESULT OnQuoteRejection([in] struct ISEQuote* Quote, [in] BSTR Reason);
+		[id(2), helpstring("method OnQuoteStepUp")] 
+		HRESULT OnQuoteStepUp([in] struct ISEQuote* Quote);
+		[id(3), helpstring("method OnQuoteTickWorse")] 
+		HRESULT OnQuoteTickWorse([in] struct ISEQuote* Quote, [in] long TickWorseLevel, [in] BSTR Reason);
+		[id(4), helpstring("method OnQuotesSent")] 
+		HRESULT OnQuotesSent([in] SAFEARRAY(struct ISEQuote)* Quotes, [in] ErrorNumberEnum ErrorNumber, [in] BSTR OrderID);
+		[id(5), helpstring("method OnLastMmQuote")] 
+		HRESULT OnLastMmQuote([in] struct ISEMMQuoteParams* Request, [in] struct ISEQuote* Results, [in] long TickWorseLevel);
+		[id(6), helpstring("method OnError")] 
+		HRESULT OnError([in] ErrorNumberEnum ErrorNumber, [in] BSTR Description, 
+						[in] RequestsTypeEnum ReqType, [in] VARIANT Request);
+		[id(7), helpstring("method OnDeal")] 
+		HRESULT OnDeal([in] struct ISEDeal* Deal);
+		[id(8), helpstring("method OnTrade")] 
+		HRESULT OnTrade([in] struct ISETrade* Trade);
+		[id(9), helpstring("event OnEvent")] 
+		HRESULT OnEvent([in] EventNumberEnum EventNumber, [in] BSTR Description);
+	};
+
+	//	dispinterface _IISETracerEvents
+	[
+		uuid(47B8BAA7-0BA0-49EF-8C89-C117D4A1C837),
+		helpstring("_IISEInfoEvents Interface")
+	]
+	dispinterface _IISETracerEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method OnMessage")] HRESULT OnMessage([in] ISEInfoTypeEnum MessageType, [in] BSTR Text);
+		[id(2), helpstring("method OnHeartbeat")] HRESULT OnHeartbeat([in] long Instance);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//	Incoming interfaces
+
+	// interface IPriceProvider
+	[
+		object,
+		uuid(A7A12A3F-5392-44D4-BBC2-2866A488C699),
+		dual,
+		helpstring("IPriceProvider Interface"),
+		pointer_default(unique)
+	]
+	interface IPriceProvider : IDispatch
+	{
+		[id(1), helpstring("method RequestLastQuote")] HRESULT RequestLastQuote([in] struct QuoteUpdateParams *Params);
+		[id(2), helpstring("method CancelLastQuote")] HRESULT CancelLastQuote([in,optional] VARIANT Params);
+		[id(3), helpstring("method SubscribeQuote")] HRESULT SubscribeQuote([in] struct QuoteUpdateParams *Params);
+		[id(4), helpstring("method UnSubscribeQuote")] HRESULT UnSubscribeQuote([in,optional] VARIANT Params);
+		[id(5), helpstring("method Connect")] HRESULT Connect();
+		[id(6), helpstring("method Disconnect")] HRESULT Disconnect();
+	};
+
+	// interface IGroupPrice
+	[
+		object,
+		uuid(7B5A7260-2E4A-4e93-8269-5B7512E704E0),
+		dual,
+		helpstring("IGroupPriceProvider Interface"),
+		pointer_default(unique)
+	]
+	interface IGroupPrice : IDispatch
+	{
+		[id(1), helpstring("method RequestGroup")] HRESULT RequestGroup([in] struct QuoteUpdateParams *Params, [in] GroupRequestType enOperationType);
+		[id(2), helpstring("method CancelGroup")] HRESULT CancelGroup([in,optional] VARIANT Params);
+		[id(5), helpstring("method Connect")] HRESULT Connect();
+		[id(6), helpstring("method Disconnect")] HRESULT Disconnect();
+	};
+
+	// interface IISEStructureProvider
+	[
+		object,
+		uuid(AFFF8DBD-223D-4310-9BAE-8700B438CF2B),
+		dual,
+		helpstring("IISEStructureProvider Interface"),
+		pointer_default(unique)
+	]
+	interface IISEStructureProvider : IDispatch
+	{
+		[id(1), helpstring("method RequestStock")] HRESULT RequestStock([in] struct StockParams *Params);
+		[id(2), helpstring("method CancelStock")] HRESULT CancelStock([in,optional] VARIANT Params);		
+		[id(3), helpstring("method RequestOptions")] HRESULT RequestOptions([in] struct OptionParams *Params);
+		[id(4), helpstring("method CancelOptions")] HRESULT CancelOptions([in,optional] VARIANT Params);
+		[id(5), helpstring("method RequestAllStocks")] HRESULT RequestAllStocks();
+		[id(6), helpstring("method CancelAllStocks")] HRESULT CancelAllStocks();
+		[id(7), helpstring("method Connect")] HRESULT Connect();
+		[id(8), helpstring("method Disconnect")] HRESULT Disconnect();
+	};
+
+	// interface IMMParameters
+	[
+		object,
+		uuid(E5BF7DF6-C157-4C5A-8AAF-8595EAA21DEE),
+		dual,
+		helpstring("IMMParameters Interface"),
+		pointer_default(unique)
+	]
+	interface IMMParameters : IDispatch
+	{
+		[propget, id(1), helpstring("property UnderlyingSymbol")] HRESULT UnderlyingSymbol([out, retval] BSTR *pVal);
+		[propput, id(1), helpstring("property UnderlyingSymbol")] HRESULT UnderlyingSymbol([in] BSTR newVal);
+		[propget, id(2), helpstring("property InstrumentGroup")] HRESULT InstrumentGroup([out, retval] InstrumentGroupEnum *pVal);
+		[propput, id(2), helpstring("property InstrumentGroup")] HRESULT InstrumentGroup([in] InstrumentGroupEnum newVal);
+		[propget, id(3), helpstring("property ExpirationGroup")] HRESULT ExpirationGroup([out, retval] ExpirationGroupEnum *pVal);
+		[propput, id(3), helpstring("property ExpirationGroup")] HRESULT ExpirationGroup([in] ExpirationGroupEnum newVal);
+		[propget, id(4), helpstring("property StrikePriceGroup")] HRESULT StrikePriceGroup([out, retval] StrikePriceGroupEnum *pVal);
+		[propput, id(4), helpstring("property StrikePriceGroup")] HRESULT StrikePriceGroup([in] StrikePriceGroupEnum newVal);		
+		[propget, id(5), helpstring("property TickWorseVolume")] HRESULT TickWorseVolume(long Tick, [out, retval] long *pVal);
+		[propput, id(5), helpstring("property TickWorseVolume")] HRESULT TickWorseVolume(long Tick, [in] long newVal);
+		[propget, id(6), helpstring("property StepUpAfterRegenBuffer")] HRESULT StepUpAfterRegenBuffer([out, retval] long *pVal);
+		[propput, id(6), helpstring("property StepUpAfterRegenBuffer")] HRESULT StepUpAfterRegenBuffer([in] long newVal);
+		[propget, id(7), helpstring("property IseMMTradeLimitAbsolute")] HRESULT IseMMTradeLimitAbsolute([out, retval] long *pVal);
+		[propput, id(7), helpstring("property IseMMTradeLimitAbsolute")] HRESULT IseMMTradeLimitAbsolute([in] long newVal);
+		[propget, id(8), helpstring("property FirmTradeLimitAbsolute")] HRESULT FirmTradeLimitAbsolute([out, retval] long *pVal);
+		[propput, id(8), helpstring("property FirmTradeLimitAbsolute")] HRESULT FirmTradeLimitAbsolute([in] long newVal);
+		[propget, id(9), helpstring("property FarMmTradeLimitFraction")] HRESULT FarMmTradeLimitFraction([out, retval] long *pVal);
+		[propput, id(9), helpstring("property FarMmTradeLimitFraction")] HRESULT FarMmTradeLimitFraction([in] long newVal);
+		[propget, id(10), helpstring("property IseMmTradeLimitFraction")] HRESULT IseMmTradeLimitFraction([out, retval] long *pVal);
+		[propput, id(10), helpstring("property IseMmTradeLimitFraction")] HRESULT IseMmTradeLimitFraction([in] long newVal);
+		[propget, id(11), helpstring("property FirmTradeLimitFraction")] HRESULT FirmTradeLimitFraction([out, retval] long *pVal);
+		[propput, id(11), helpstring("property FirmTradeLimitFraction")] HRESULT FirmTradeLimitFraction([in] long newVal);
+		[propget, id(12), helpstring("property FarMMTradeLimitAbsolute")] HRESULT FarMMTradeLimitAbsolute([out, retval] long *pVal);
+		[propput, id(12), helpstring("property FarMMTradeLimitAbsolute")] HRESULT FarMMTradeLimitAbsolute([in] long newVal);
+		[propget, id(13), helpstring("property DerivedOrderMaxSize")] HRESULT DerivedOrderMaxSize(long Tick, [out, retval] long *pVal);
+		[propput, id(13), helpstring("property DerivedOrderMaxSize")] HRESULT DerivedOrderMaxSize(long Tick, [in] long newVal);
+		[propget, id(14), helpstring("property MatchAwayMarketMaxSize")] HRESULT MatchAwayMarketMaxSize(long Tick, [out, retval] long *pVal);
+		[propput, id(14), helpstring("property MatchAwayMarketMaxSize")] HRESULT MatchAwayMarketMaxSize(long Tick, [in] long newVal);
+	};
+
+	// interface IISEMMManager
+	[
+		object,
+		uuid(31B78D81-5B19-41F9-BED3-1889F97A7132),
+		dual,
+		helpstring("IISEMMManager Interface"),
+		pointer_default(unique)
+	]
+	interface IISEMMManager : IDispatch
+	{
+		[id(1), helpstring("method SetPmmParameters")] 
+		HRESULT SetPmmParameters([in] IMMParameters* Parameters);
+		[id(2), helpstring("method SetCmmParameters")] 
+		HRESULT SetCmmParameters([in] IMMParameters* Parameters);
+		[id(3), helpstring("method Connect")] 
+		HRESULT Connect();
+		[id(4), helpstring("method Disconnect")] 
+		HRESULT Disconnect();
+		[id(5), helpstring("method RequestLastMmQuote")] 
+		HRESULT RequestLastMmQuote([in] struct ISEMMQuoteParams* Params);
+		[id(6), helpstring("method CancelLastMmQuote")] 
+		HRESULT CancelLastMmQuote([in,optional] VARIANT Params);
+	 	[id(7), helpstring("method SubmitQuotes")] 
+		HRESULT SubmitQuotes([in] SAFEARRAY(struct ISEQuote)* Quotes);
+		[id(8), helpstring("method EnterOrder")] 
+		HRESULT EnterOrder([in] struct ISEOrder* Order, [out, retval] BSTR* OrderID);
+	};
+
+	// interface IISETracer
+	[
+		object,
+		uuid(6B4293F4-48AB-4A4E-A858-92259A314947),
+		dual,
+		helpstring("IISEInfo Interface"),
+		pointer_default(unique)
+	]
+	interface IISETracer : IDispatch
+	{
+		[id(1), helpstring("method Bind")] HRESULT Bind();
+		[id(2), helpstring("method Unbind")] HRESULT Unbind();
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//	COCLASSES
+
+	// coclass ISEStructureProvider
+	[
+		uuid(13EC7F7D-37DA-4CF9-B979-200DB9C1401E),
+		helpstring("ISEStructureProvider Class")
+	]
+	coclass ISEStructureProvider
+	{
+		[default] interface IISEStructureProvider;
+		[default, source] dispinterface _IISEStructureProviderEvents;
+	};
+
+	// coclass ISEPriceProvider
+	[
+		uuid(49CF00B5-C2BD-488A-B221-02A86947DEE2),
+		helpstring("ISEPriceProvider Class")
+	]
+	coclass ISEPriceProvider
+	{
+		[default] interface IPriceProvider;
+				  interface IGroupPrice;
+		[default, source] dispinterface _IISEPriceProviderEvents;
+	};
+
+	// coclass MMParameters
+	[
+		uuid(D2C63F9F-7E1D-4DD3-A931-D148E2E8E0A8),
+		helpstring("MMParameters Class")
+	]
+	coclass MMParameters
+	{
+		[default] interface IMMParameters;
+	};
+
+	// coclass ISEMMManager
+	[
+		uuid(846A4AA7-B0B8-4258-9A1C-DAC58AD9843E),
+		helpstring("ISEPMMManager Class")
+	]
+	coclass ISEMMManager
+	{
+		[default] interface IISEMMManager;
+		[default, source] dispinterface _IISEMMManagerEvents;
+	};
+
+	// coclass ISETracer
+	[
+		uuid(3367D030-B87A-4941-A8E7-A25FFE4F5D3B),
+		helpstring("ISEInfo Class")
+	]
+	coclass ISETracer
+	{
+		[default] interface IISETracer;
+		[default, source] dispinterface _IISETracerEvents;
+	};
+
+
+	///////////////////////////////////////////////////////////////////////////////
+	// For supporting PriceProviders.dll
+
+	// interface IProviderInfo
+	[
+		object,
+		uuid(740124B1-E5CB-4681-9F3C-3F67328481DA),
+		dual,
+		helpstring("IProviderInfo Interface"),
+		pointer_default(unique)
+	]
+	interface IProviderInfo : IDispatch
+	{
+		[propget, id(1), helpstring("property ProviderID")]  HRESULT ProviderID([out, retval] long *pVal);
+		[propget, id(2), helpstring("property Provider")]    HRESULT Provider([in] ProviderRole type, [out] BSTR* pProgID);
+		[propget, id(3), helpstring("property Description")] HRESULT Description([out, retval] BSTR *pVal);
+		[propget, id(4), helpstring("property IsGroup")] HRESULT IsGroup([out, retval] VARIANT_BOOL *pVal);
+		[propget, id(5), helpstring("property NeedLogin")] HRESULT NeedLogin([out, retval] VARIANT_BOOL *pVal);
+		[propget, id(6), helpstring("property UseProxy")] HRESULT UseProxy([out, retval] ProviderUseProxyType* pVal);
+		[propput, id(6), helpstring("property UseProxy")] HRESULT UseProxy([in] ProviderUseProxyType newVal);
+		[propget, id(7), helpstring("property ProxyName")] HRESULT ProxyName([out, retval] BSTR* pVal);
+		[propput, id(7), helpstring("property ProxyName")] HRESULT ProxyName([in] BSTR newVal);
+		[propget, id(8), helpstring("property ProxyPort")] HRESULT ProxyPort([out, retval] LONG* pVal);
+		[propput, id(8), helpstring("property ProxyPort")] HRESULT ProxyPort([in] LONG newVal);
+		[propget, id(9), helpstring("property UserAccount")] HRESULT UserAccount([out, retval] BSTR* pVal);
+		[propput, id(9), helpstring("property UserAccount")] HRESULT UserAccount([in] BSTR newVal);
+		[propget, id(10), helpstring("property UserPassword")] HRESULT UserPassword([out, retval] BSTR* pVal);
+		[propput, id(10), helpstring("property UserPassword")] HRESULT UserPassword([in] BSTR newVal);
+		[propget, id(11), helpstring("property ProxyAuthorization")] HRESULT ProxyAuthorization([out, retval] ProviderProxyAuthType* pVal);
+		[propput, id(11), helpstring("property ProxyAuthorization")] HRESULT ProxyAuthorization([in] ProviderProxyAuthType newVal);
+		[propget, id(12), helpstring("property ProxyLogin")] HRESULT ProxyLogin([out, retval] BSTR* pVal);
+		[propput, id(12), helpstring("property ProxyLogin")] HRESULT ProxyLogin([in] BSTR newVal);
+		[propget, id(13), helpstring("property ProxyPassword")] HRESULT ProxyPassword([out, retval] BSTR* pVal);
+		[propput, id(13), helpstring("property ProxyPassword")] HRESULT ProxyPassword([in] BSTR newVal);
+	};
+
+	// interface IStructureProvider
+	[
+		object,
+		uuid(BE522C2B-CF7B-4718-9454-286DB51B9438),
+		dual,
+		helpstring("IStructureProvider Interface"),
+		pointer_default(unique)
+	]
+	interface IStructureProvider : IDispatch
+	{
+		[id(1), helpstring("method RequestStock")] HRESULT RequestStock([in] struct StockParams *Params);
+		[id(2), helpstring("method CancelStock")] HRESULT CancelStock([in,optional] VARIANT Params);
+		[id(3), helpstring("method RequestOptions")] HRESULT RequestOptions([in] struct OptionParams *Params);
+		[id(4), helpstring("method CancelOptions")] HRESULT CancelOptions([in,optional] VARIANT Params);
+		[id(6), helpstring("method Connect")] HRESULT Connect();
+		[id(7), helpstring("method Disconnect")] HRESULT Disconnect();
+	};
+	
+	// dispinterface _IStructureProviderEvents
+	[
+		uuid(1DDE8D99-481B-4D1D-B4F1-C0CA68FBF618),
+		helpstring("_IStructureProviderEvents Interface")
+	]
+	dispinterface _IStructureProviderEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("event OnStock")] HRESULT OnStock([in] struct StockParams *Params, [in] struct StockResults *Results);
+		[id(2), helpstring("event OnOption")] HRESULT OnOption([in] struct OptionParams *Params, [in] struct OptionResults *Results, [in] VARIANT_BOOL IsLastOption);
+		[id(3), helpstring("event OnError")] HRESULT OnError([in] ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] RequestsTypeEnum ReqType, [in] VARIANT Request);
+	};
+
+	// dispinterface _IMyTrackStructureInfoEvents
+	[
+		uuid(0642E129-165F-402E-B7C1-BD97CAC1DE93),
+		helpstring("_IMyTrackStructureInfoEvents Interface")
+	]
+	dispinterface _IMyTrackStructureInfoEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("event OnStock")] HRESULT OnStock([in] struct StockParams *Params, [in] struct StockInfo *Results);
+		[id(2), helpstring("event OnOption")] HRESULT OnOption([in] struct OptionParams *Params, [in] struct OptionInfo *Results, [in] VARIANT_BOOL IsLastOption);
+		[id(3), helpstring("event OnError")] HRESULT OnError([in] ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] RequestsTypeEnum ReqType, [in] VARIANT Request);
+	};
+
+	// coclass ISEStdStructureProvider
+	[
+		uuid(DCA02808-8BA0-4ca1-87D2-630DE73AF05D),
+		helpstring("StructureProvider Class")
+	]
+	coclass ISEStdStructureProvider
+	{
+		[default] interface IStructureProvider;
+		[default, source] dispinterface _IStructureProviderEvents;
+	};
+
+	// coclass ISEStdStructureInfo
+	[
+		uuid(B4B95CBE-DB82-4944-B519-97C2FDB249EC),
+		helpstring("ISEStdStructureInfo Class")
+	]
+	coclass ISEStdStructureInfo
+	{
+		[default] interface IStructureProvider;
+		[default, source] dispinterface _IMyTrackStructureInfoEvents;
+	};
+
+	// dispinterface _IPriceProviderEvents
+	[
+		uuid(2FA5EFB9-BF96-4701-B981-BCE45DA06F18),
+		helpstring("_IPriceProviderEvents Interface")
+	]
+	dispinterface _IPriceProviderEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method OnLastQuote")] HRESULT OnLastQuote([in] struct QuoteUpdateParams *Params, [in] struct QuoteUpdateResult *Results);
+		[id(2), helpstring("method OnQuoteUpdate")] HRESULT OnQuoteUpdate([in] struct QuoteUpdateParams *Params, [in] struct QuoteUpdateResult *Results);
+		[id(3), helpstring("method OnError")] HRESULT OnError([in] ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] RequestsTypeEnum ReqType, [in] VARIANT Request);
+	};
+
+	// dispinterface _IPriceInfoEvents
+	[
+		uuid(513137BD-4FA2-4AF8-BD5B-D6BC70339263),
+		helpstring("_IPriceInfoEvents Interface")
+	]
+	dispinterface _IPriceInfoEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method OnLastQuote")] HRESULT OnLastQuote([in] struct QuoteUpdateParams *Params, [in] struct QuoteUpdateInfo *Results);
+		[id(2), helpstring("method OnQuoteUpdate")] HRESULT OnQuoteUpdate([in] struct QuoteUpdateParams *Params, [in] struct QuoteUpdateInfo *Results);
+		[id(3), helpstring("method OnError")] HRESULT OnError([in] ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] RequestsTypeEnum ReqType, [in] VARIANT Request);
+
+	};
+
+	// coclass ISEStdPriceProvider
+	[
+		uuid(B4401577-BD8D-4fd6-9348-3B432DCDD9F4),
+		helpstring("ISEStdPriceProvider Class")
+	]
+	coclass ISEStdPriceProvider
+	{
+		[default] interface IPriceProvider;
+				  interface IGroupPrice;
+		[default, source] dispinterface _IPriceProviderEvents;
+	};
+
+	// coclass ISEStdPriceInfo
+	[
+		uuid(75E355C4-B71D-4891-8350-B281CF00D28A),
+		helpstring("ISEStdPriceInfo Class")
+	]
+	coclass ISEStdPriceInfo
+	{
+		[default] interface IPriceProvider;
+				  interface IGroupPrice;
+		[default, source] dispinterface _IPriceInfoEvents;
+	};
+
+	//coclass ProviderInfo
+	[
+		uuid(7CA572CC-E09F-4EAE-B788-D7C04259A164),
+		helpstring("ProviderInfo Class")
+	]
+	coclass ProviderInfo
+	{
+		[default] interface IProviderInfo;
+	};
+};

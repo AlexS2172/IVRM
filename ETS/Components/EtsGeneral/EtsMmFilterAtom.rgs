@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsMmFilterAtom.1 = s 'EtsMmFilterAtom Class'
+	{
+		CLSID = s '{04F6391A-B4FB-43FA-97F7-8D5071A29419}'
+	}
+	EtsGeneral.EtsMmFilterAtom = s 'EtsMmFilterAtom Class'
+	{
+		CLSID = s '{04F6391A-B4FB-43FA-97F7-8D5071A29419}'
+		CurVer = s 'EtsGeneral.EtsMmFilterAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {04F6391A-B4FB-43FA-97F7-8D5071A29419} = s 'EtsMmFilterAtom Class'
+		{
+			ProgID = s 'EtsGeneral.EtsMmFilterAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsMmFilterAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

@@ -1,0 +1,52 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EgDebugUtil", "EgDebugUtil.vcproj", "{43F3133E-29F1-4896-B3C6-0DF24A3CA374}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrashDLL", "CrashDLL\CrashDLL.vcproj", "{C5113F81-624F-4E27-AACA-FD7573A4BD05}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcproj", "{DF96DD0F-8C0F-436C-A048-F53E51ADAD8C}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 4
+		SccLocalPath0 = .
+		CanCheckoutShared = false
+		SolutionUniqueID = {030FE362-080E-4E2C-A2A9-1B50C3EB9884}
+		SccProjectUniqueName1 = CrashDLL\\CrashDLL.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection1 = CrashDLL\\
+		SccProjectUniqueName2 = EgDebugUtil.vcproj
+		SccLocalPath2 = .
+		CanCheckoutShared = false
+		SccProjectUniqueName3 = test\\test.vcproj
+		SccLocalPath3 = .
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection3 = test\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{C5113F81-624F-4E27-AACA-FD7573A4BD05}.0 = {43F3133E-29F1-4896-B3C6-0DF24A3CA374}
+		{DF96DD0F-8C0F-436C-A048-F53E51ADAD8C}.0 = {43F3133E-29F1-4896-B3C6-0DF24A3CA374}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{43F3133E-29F1-4896-B3C6-0DF24A3CA374}.Debug.ActiveCfg = Debug|Win32
+		{43F3133E-29F1-4896-B3C6-0DF24A3CA374}.Debug.Build.0 = Debug|Win32
+		{43F3133E-29F1-4896-B3C6-0DF24A3CA374}.Release.ActiveCfg = Release|Win32
+		{43F3133E-29F1-4896-B3C6-0DF24A3CA374}.Release.Build.0 = Release|Win32
+		{C5113F81-624F-4E27-AACA-FD7573A4BD05}.Debug.ActiveCfg = Debug|Win32
+		{C5113F81-624F-4E27-AACA-FD7573A4BD05}.Debug.Build.0 = Debug|Win32
+		{C5113F81-624F-4E27-AACA-FD7573A4BD05}.Release.ActiveCfg = Release|Win32
+		{C5113F81-624F-4E27-AACA-FD7573A4BD05}.Release.Build.0 = Release|Win32
+		{DF96DD0F-8C0F-436C-A048-F53E51ADAD8C}.Debug.ActiveCfg = Debug|Win32
+		{DF96DD0F-8C0F-436C-A048-F53E51ADAD8C}.Debug.Build.0 = Debug|Win32
+		{DF96DD0F-8C0F-436C-A048-F53E51ADAD8C}.Release.ActiveCfg = Release|Win32
+		{DF96DD0F-8C0F-436C-A048-F53E51ADAD8C}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

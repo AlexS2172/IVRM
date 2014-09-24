@@ -1,0 +1,67 @@
+// VolatilitySources.idl : IDL source for VolatilitySources
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (VolatilitySources.tlb) and marshalling code.
+
+import "oaidl.idl";
+[
+	uuid(9411CFF5-92B2-411E-B222-C587570DAD5A),
+	version(1.0),
+	helpstring("VolatilitySources 1.0 Type Library")
+]
+library VolatilitySourcesLib
+{
+	importlib("stdole2.tlb");
+	importlib("..\tlb\MsgStruct.tlb");
+	importlib("..\tlb\VADBLayout.tlb");
+	#include "..\include\VolatilitySourceCommon.idl"
+
+	[
+		object,
+		uuid(2DBFB048-8E68-4E9E-8BF2-9852D2CEB19F),
+		dual,
+		nonextensible,
+		helpstring("IVolatilitySources Interface"),
+		pointer_default(unique)
+	]
+	interface IVolatilitySources : IDispatch
+	{
+		[propget, id(1), helpstring("property Count")] HRESULT Count([out, retval] long* pVal);
+		[id(2), helpstring("method GetVolatilitySourceInfo")] HRESULT GetVolatilitySourceInfo([in] long Index, [out] long *ID, [out] BSTR* Title, [out] BSTR* FileName, [out] BSTR* Version, [out] BSTR* ProgID);
+		[propget, id(3), helpstring("property VolatilitySource")] HRESULT VolatilitySource([in] LONG ID, [out, retval] IVolatilitySource** Source);
+		[id(4), helpstring("method GetVolatilitySourceInfoByID")] HRESULT GetVolatilitySourceInfoByID([in] long ID, [out] BSTR* Title, [out] BSTR* FileName, [out] BSTR* Version, [out] BSTR* ProgID);
+	};
+	[	
+		uuid("C42B69E4-9A2E-4128-B070-D171F8D7AE73"),
+		helpstring("_IVSourceEvents Interface")
+	]
+	dispinterface _IVSourceEvents
+	{
+		properties:
+		methods:
+
+		[id(1), helpstring("method VolatilityChanged")] HRESULT VolatilityChanged([in] BSTR Symbol);
+	};
+
+
+	[
+		uuid(A53B3209-BDB9-4DF2-B956-777A38C1606D),
+		helpstring("Source Class"),
+		noncreatable
+	]
+	coclass VolatilitySource
+	{
+		[default] interface IVolatilitySource;
+		[default, source] dispinterface _IVSourceEvents;
+	};
+	
+	[
+		uuid(E313EC0E-5CC0-4658-882A-605F4374CFFE),
+		helpstring("VolatilitySources Class")
+	]
+	coclass VolatilitySources
+	{
+		[default] interface IVolatilitySources;
+	};
+};

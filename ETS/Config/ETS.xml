@@ -1,0 +1,200 @@
+<ETS>
+	<Parameter Name="" Type="string" Value=""/>
+	<Asp>
+		<BOReconcilation>
+			<Parameter Name="TESTDEV" Type="string" Value="D:\ETS\ETS_CFG\FILDES_CFI.txt"/>
+		</BOReconcilation>
+		<Calculation>
+			<Parameter Name="" Type="string" Value=""/>
+			<Parameter Name="TESTBHGROUP" Type="long" Value="2000"/>
+		</Calculation>
+		<Database>
+			<Parameter Name="" Type="string" Value=""/>
+			<Parameter Name="EOD" Type="string" Value="Provider=SQLOLEDB.1;Data Source=192.168.9.154;Initial Catalog=ETS_ASP_EOD;Password=sa;User ID=sa;Persist Security Info=True"/>
+			<Parameter Name="TESTBHGROUP" Type="string" Value="Provider=SQLOLEDB.1;Data Source=192.168.25.11;Initial Catalog=ETS_ASP_TESTBH;User ID=asp;Password=ASP;Persist Security Info=False"/>
+		</Database>
+		<DebugLevel>
+			<Parameter Name="TESTBHGROUP" Type="long" Value="10"/>
+		</DebugLevel>
+		<ExchangeRates>
+			<Parameter Name="CAD" Type="string" Value="1"/>
+		</ExchangeRates>
+		<FTP>
+			<Parameter Name="TEST" Type="string" Value="D:\Check\rec"/>
+		</FTP>
+		<Groups>
+			<EOD>
+				<Parameter Name="Commodity" Type="long" Value="1"/>
+				<Parameter Name="CustodianDesc" Type="string" Value="AAA-BBB-CCC"/>
+				<Parameter Name="SECFees" Type="string" Value="0.2546985"/>
+				<Parameter Name="Visible" Type="long" Value="1"/>
+			</EOD>
+			<TESTBHGROUP>
+				<Parameter Name="Appearance" Type="string" Value="D:\AngoraRes.dll"/>
+				<Parameter Name="Commodity" Type="long" Value="1"/>
+				<Parameter Name="CustodianDesc" Type="string" Value="MMM-NNN-DDD"/>
+				<DataLoader>
+					<Parameter Name="ApplicationLogPath" Type="string" Value="D:\ETS\IVData\appimportlogpath"/>
+					<Parameter Name="DataHistoryPath" Type="string" Value="D:\ETS\IVData\datahistorylogpath"/>
+					<Parameter Name="DividendsFile" Type="string" Value="DF%m-%d-%Y.txt"/>
+					<Parameter Name="Frequency" Type="long" Value="170"/>
+					<Parameter Name="FTPFolder" Type="string" Value="D:\ETS\IVData\ftp"/>
+					<Parameter Name="ImportLogPath" Type="string" Value="D:\ETS\IVData\importlogpath"/>
+					<Parameter Name="IndexWeightFile" Type="string" Value="IWF%m-%d-%Y.txt"/>
+					<Parameter Name="InterestRatesFile" Type="string" Value="IRF%m-%d-%Y.txt"/>
+					<Parameter Name="LastDataDate" Type="string" Value="8/1/2008"/>
+					<Parameter Name="LastDataTime" Type="string" Value="12:23:26 PM"/>
+					<Parameter Name="LastDivFile" Type="string" Value="[2:34:43 PM]DF01-17-2007.txt"/>
+					<Parameter Name="LastIRFile" Type="string" Value="[12:23:26 PM]IRF08-01-2008.txt"/>
+					<Parameter Name="LastIWFile" Type="string" Value="[8:11:46 PM]IWF12-21-2006.txt"/>
+					<Parameter Name="LastVolaFile" Type="string" Value="[5:22:47 PM]VF01-17-2007.txt"/>
+					<Parameter Name="StartTime" Type="long" Value="2012"/>
+					<Parameter Name="StopTime" Type="long" Value="2300"/>
+					<Parameter Name="VolaFile" Type="string" Value="VF%m-%d-%Y.txt"/>
+				</DataLoader>
+				<Parameter Name="Orders" Type="long" Value="2"/>
+				<Parameter Name="OrdersCfg" Type="string" Value="D:\ETS\ETS_CFG\FIX\Orders.cfg"/>
+				<Parameter Name="SECFees" Type="string" Value="0.2546985"/>
+				<SMTPSettings>
+					<Parameter Name="SenderAddress" Type="string" Value="Testing"/>
+					<Parameter Name="SMTPServer" Type="string" Value="192.168.8.3"/>
+				</SMTPSettings>
+			</TESTBHGROUP>
+		</Groups>
+		<MaxQuoteRTNumber>
+			<Parameter Name="TESTDEV" Type="long" Value="3"/>
+		</MaxQuoteRTNumber>
+		<MaxRiskRTNumber>
+			<Parameter Name="TESTDEV" Type="long" Value="3"/>
+		</MaxRiskRTNumber>
+		<MMLogLevel>
+			<Parameter Name="TESTDEV" Type="long" Value="10"/>
+		</MMLogLevel>
+		<Settings>
+			<Parameter Name="PathToMainXML" Type="string" Value="D:\ETS\ETS_CFG\ets.xml"/>
+		</Settings>
+		<Users>
+			<Administrator>
+				<Parameter Name="PathToXML" Type="string" Value="C:\IvRm\Config\administrator.xml"/>
+				<Parameter Name="UserGroup" Type="string" Value="TESTBHGROUP"/>
+			</Administrator>
+			<EOD>
+				<Parameter Name="PathToXML" Type="string" Value="D:\ETS\ETS_CFG\EOD.xml"/>
+				<Parameter Name="UserGroup" Type="string" Value="EOD"/>
+			</EOD>
+		</Users>
+	</Asp>
+	<Database>
+		<Parameter Name="" Type="string" Value="Provider=SQLOLEDB.1;Password=asp;Persist Security Info=True;User ID=asp;Initial Catalog=ETS_ASP_AcrLight;Data Source=(local)"/>
+		<Parameter Name="Key" Type="long" Value="0"/>
+	</Database>
+	<IVFeed>
+		<Parameter Name="" Type="string" Value=""/>
+		<Parameter Name="Key" Type="long" Value="0"/>
+		<Parameter Name="ProxyAuthType" Type="long" Value="0"/>
+		<Parameter Name="ProxyLogin" Type="string" Value=""/>
+		<Parameter Name="ProxyName" Type="string" Value=""/>
+		<Parameter Name="ProxyPassword" Type="string" Value=""/>
+		<Parameter Name="ProxyPort" Type="long" Value="0"/>
+		<Parameter Name="UseProxy" Type="long" Value="0"/>
+		<Parameter Name="VolLogin" Type="string" Value="ftteam"/>
+		<Parameter Name="VolPassword" Type="string" Value="ftteam"/>
+		<Parameter Name="VolProtocol" Type="long" Value="0"/>
+		<Parameter Name="VolServerAppPath" Type="string" Value="data_load"/>
+		<Parameter Name="VolServerName" Type="string" Value="www.IVolatility.com"/>
+		<Parameter Name="VolServerPort" Type="long" Value="0"/>
+	</IVFeed>
+	<License>
+		<Parameter Name="" Type="string" Value=""/>
+		<Parameter Name="Company" Type="string" Value="EGAR Technology"/>
+		<Parameter Name="User" Type="string" Value="FT"/>
+	</License>
+	<OConnorConnector>
+		<Parameter Name="FTPMode" Type="long" Value="1"/>
+		<Parameter Name="Last trade date" Type="long" Value="38510"/>
+		<Parameter Name="Last trade line" Type="long" Value="922"/>
+		<Parameter Name="Last trade time" Type="long" Value="744"/>
+		<Parameter Name="LogDaily" Type="long" Value="0"/>
+		<Parameter Name="LogToConsole" Type="long" Value="1"/>
+		<Parameter Name="LogToFile" Type="long" Value="1"/>
+		<TESTDEV>
+			<Parameter Name="Encrypted" Type="long" Value="0"/>
+			<Parameter Name="FTPMode" Type="long" Value="1"/>
+			<Parameter Name="Last trade date" Type="long" Value="39385"/>
+			<Parameter Name="Last trade line" Type="long" Value="2"/>
+			<Parameter Name="Last trade time" Type="long" Value="1442"/>
+			<Parameter Name="LogNameID" Type="string" Value="ixis_front_4"/>
+			<Parameter Name="PassPhrase" Type="string" Value=""/>
+			<Parameter Name="Password" Type="string" Value="test"/>
+			<Parameter Name="Positions Download Time" Type="string" Value="7:00:00 PM"/>
+			<Parameter Name="Positions File" Type="string" Value="Out.txt"/>
+			<Parameter Name="Read Trades Period" Type="long" Value="60"/>
+			<Parameter Name="Server Address" Type="string" Value="localhost"/>
+			<Parameter Name="Trades File" Type="string" Value="EgarTrades.txt"/>
+			<Parameter Name="User" Type="string" Value="test"/>
+		</TESTDEV>
+		<Parameter Name="Trades File" Type="string" Value="EgarTrades.txt"/>
+		<Parameter Name="User" Type="string" Value="ftpegar"/>
+	</OConnorConnector>
+	<Parameter Name="Path" Type="string" Value="C:\Program Files\Egar\EMM.FW\"/>
+	<PequoteConnector>
+		<TEMP>
+			<Parameter Name="Encrypted" Type="long" Value="0"/>
+			<Parameter Name="FTPMode" Type="long" Value="1"/>
+			<Parameter Name="Last trade date" Type="long" Value="38679"/>
+			<Parameter Name="Last trade line" Type="long" Value="1336"/>
+			<Parameter Name="Last trade time" Type="long" Value="1326"/>
+			<Parameter Name="PassPhrase" Type="string" Value=""/>
+			<Parameter Name="Password" Type="string" Value="parallaxegar"/>
+			<Parameter Name="PeQuote Connect" Type="string" Value="Provider=SQLOLEDB.1;Password=asp;Persist Security Info=True;User ID=asp;Initial Catalog=ETS_ASP_PEQUOTESNAPSHOT;Data Source=ZURICH"/>
+			<Parameter Name="Positions Download Time" Type="string" Value="7:00:00 PM"/>
+			<Parameter Name="Positions File" Type="string" Value="open.txt"/>
+			<Parameter Name="Read Trades Period" Type="long" Value="120"/>
+			<Parameter Name="Server Address" Type="string" Value="216.88.156.12"/>
+			<Parameter Name="Trades File" Type="string" Value="EgarTrades.txt"/>
+			<Parameter Name="User" Type="string" Value="ftpegar"/>
+		</TEMP>
+		<TEST_PAR>
+			<Parameter Name="Encrypted" Type="long" Value="0"/>
+			<Parameter Name="FTPMode" Type="long" Value="1"/>
+			<Parameter Name="PassPhrase" Type="string" Value=""/>
+			<Parameter Name="Password" Type="string" Value="anonymous"/>
+			<Parameter Name="PeQuote Connect" Type="string" Value=""/>
+			<Parameter Name="Read Trades Period" Type="long" Value="60"/>
+			<Parameter Name="Server Address" Type="string" Value="ftp.ePequote.com"/>
+			<Parameter Name="Trades File" Type="string" Value="trades.out"/>
+			<Parameter Name="User" Type="string" Value="anonymous"/>
+		</TEST_PAR>
+	</PequoteConnector>
+	<PriceProvider>
+		<Parameter Name="" Type="string" Value=""/>
+		<Parameter Name="Key" Type="long" Value="361476000"/>
+		<Parameter Name="Type" Type="long" Value="10"/>
+	</PriceProvider>
+	<Parameter Name="ProductVersion" Type="string" Value="2.1.422"/>
+	<SageConnector>
+		<Parameter Name="TESTDEV" Type="string" Value="D:\ETS\FIX\QFIX\Source\examples\tradeclient\bin\debug\tradeclient\fixclient41.cfg"/>
+		<TESTDEV1>
+			<Parameter Name="" Type="string" Value=""/>
+			<Parameter Name="AcrLight" Type="string" Value="C:\Program Files\Egar\EMM.FW\FIX_cfg\FixClient_FOC.cfg"/>
+			<Parameter Name="InSeqNum" Type="long" Value="1"/>
+			<Parameter Name="LogNameID" Type="string" Value="sage_front_4"/>
+			<Parameter Name="LogToConsole" Type="long" Value="1"/>
+			<Parameter Name="LogToFile" Type="long" Value="1"/>
+			<Parameter Name="OutSeqNum" Type="long" Value="1"/>
+			<Parameter Name="ReconnectTime" Type="long" Value="5"/>
+			<Parameter Name="REFCO" Type="string" Value="C:\Program Files\Egar\EMM.FW\FIX_cfg\FixClient_FOC.cfg"/>
+			<Parameter Name="SenderCompID" Type="string" Value="EGAR"/>
+			<Parameter Name="ServerAddr" Type="string" Value="198.148.168.65"/>
+			<Parameter Name="ServerPort" Type="long" Value="15843"/>
+			<Parameter Name="TargetCompID" Type="string" Value="DAF"/>
+			<Parameter Name="TEMP" Type="string" Value="C:\Program Files\Egar\EMM.FW\FIX_cfg\FixClient_FOC.cfg"/>
+			<Parameter Name="TEST" Type="string" Value="C:\Program Files\Egar\EMM.FW\FIX_cfg\FixClient_FOC.cfg"/>
+		</TESTDEV1>
+	</SageConnector>
+	<VolaManager>
+		<Settings>
+			<Parameter Name="" Type="string" Value=""/>
+		</Settings>
+	</VolaManager>
+</ETS>

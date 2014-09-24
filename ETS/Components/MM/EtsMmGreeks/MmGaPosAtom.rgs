@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmGreeks.MmGaPosAtom.1 = s 'MmGaPosAtom Class'
+	{
+		CLSID = s '{5B8729DA-72F3-429A-98EB-4C7471DF1974}'
+	}
+	EtsMmGreeks.MmGaPosAtom = s 'MmGaPosAtom Class'
+	{
+		CLSID = s '{5B8729DA-72F3-429A-98EB-4C7471DF1974}'
+		CurVer = s 'EtsMmGreeks.MmGaPosAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5B8729DA-72F3-429A-98EB-4C7471DF1974} = s 'MmGaPosAtom Class'
+		{
+			ProgID = s 'EtsMmGreeks.MmGaPosAtom.1'
+			VersionIndependentProgID = s 'EtsMmGreeks.MmGaPosAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{B4A726AD-9406-4A24-9E8A-D8ADD9CAC4DC}'
+		}
+	}
+}

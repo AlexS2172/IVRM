@@ -1,0 +1,50 @@
+// ActivFeedProviders.idl : IDL source for ActivFeedProviders
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ActivFeedProviders.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(BEBDF61A-0EFD-468F-ACC0-9C5F5402293F),
+	version(1.0),
+	helpstring("ActivFeedProviders 1.0 Type Library")
+]
+library ActivFeedProvidersLib
+{
+	importlib("stdole2.tlb");
+	importlib("..\tlb\PriceProviders.tlb");
+
+	[
+		uuid(AA7DECDF-CA9B-4670-BB25-8583B099D71B),
+		helpstring("ActivFeedBatchPriceInfo Class")
+	]
+	coclass ActivFeedBatchPriceInfo
+	{
+		[default]	interface IPriceProvider;
+					interface IBatchPriceProvider;
+					interface IUserInformation;
+		[default, source] dispinterface _IBatchPriceInfoEvents;
+	};
+	[
+		uuid(6D2B610A-E942-4724-854F-0E0C3C8C9244),
+		helpstring("ActivFeedStructureInfo Class")
+	]
+	coclass ActivFeedStructureInfo
+	{
+		[default] interface IStructureProvider;
+				  interface IProvider;
+				  interface IStructureProvider2;
+		[default, source] dispinterface _IStructureProviderExEvents;
+	};
+	[
+		uuid(687E392C-C0BB-44C8-8DB4-034E4FF10927),
+		helpstring("ProviderInfo Class")
+	]
+	coclass ProviderInfo
+	{
+		[default] interface IProviderInfo;
+	};
+};

@@ -1,0 +1,27 @@
+HKCR
+{
+	CV.cvRTPool.1 = s 'cvRTPool Class'
+	{
+		CLSID = s '{C721DE0C-C255-4938-858C-59A5926B5B92}'
+	}
+	CV.cvRTPool = s 'cvRTPool Class'
+	{
+		CLSID = s '{C721DE0C-C255-4938-858C-59A5926B5B92}'
+		CurVer = s 'CV.cvRTPool.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C721DE0C-C255-4938-858C-59A5926B5B92} = s 'cvRTPool Class'
+		{
+			ProgID = s 'CV.cvRTPool.1'
+			VersionIndependentProgID = s 'CV.cvRTPool'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{DACC06D8-9039-498F-A5BB-9E7462205C74}'
+		}
+	}
+}

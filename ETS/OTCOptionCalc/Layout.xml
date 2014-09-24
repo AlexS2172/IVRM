@@ -1,0 +1,173 @@
+﻿<XtraSerializer version="1.0" application="View">
+  <property name="ColumnPanelRowHeight">-1</property>
+  <property name="Columns" iskey="true" value="2">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="ImageIndex">-1</property>
+      <property name="Width">75</property>
+      <property name="FieldName" />
+      <property name="ImageAlignment">Near</property>
+      <property name="MinWidth">20</property>
+      <property name="ColumnEditName" />
+      <property name="GroupIndex">-1</property>
+      <property name="SortIndex">-1</property>
+      <property name="SortOrder">None</property>
+      <property name="Name">colDivDate</property>
+      <property name="Options">CanFiltered, CanMoved, CanGrouped, CanResized, CanSorted, CanFocused, ShowInCustomizationForm</property>
+      <property name="Caption">Dates</property>
+      <property name="StyleName" />
+      <property name="VisibleIndex">0</property>
+      <property name="ShowButtonMode">Default</property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString" />
+        <property name="FormatType">None</property>
+      </property>
+      <property name="SummaryItem" isnull="true" iskey="true">
+        <property name="DisplayFormat" />
+        <property name="SummaryType">None</property>
+        <property name="Tag" isnull="true" />
+        <property name="FieldName" />
+      </property>
+      <property name="Fixed">None</property>
+      <property name="HeaderStyleName" />
+      <property name="FilterInfo">~Xtra#Base64AAEAAAD/////AQAAAAAAAAAMAgAAABNEZXZFeHByZXNzLlh0cmFHcmlkBQEAAAAsRGV2RXhwcmVzcy5YdHJhR3JpZC5Db2x1bW5zLkNvbHVtbkZpbHRlckluZm8BAAAABFR5cGUELERldkV4cHJlc3MuWHRyYUdyaWQuQ29sdW1ucy5Db2x1bW5GaWx0ZXJUeXBlAgAAAAIAAAAF/f///yxEZXZFeHByZXNzLlh0cmFHcmlkLkNvbHVtbnMuQ29sdW1uRmlsdGVyVHlwZQEAAAAHdmFsdWVfXwAIAgAAAAAAAAAL</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="ImageIndex">-1</property>
+      <property name="Width">75</property>
+      <property name="FieldName" />
+      <property name="ImageAlignment">Near</property>
+      <property name="MinWidth">20</property>
+      <property name="ColumnEditName" />
+      <property name="GroupIndex">-1</property>
+      <property name="SortIndex">-1</property>
+      <property name="SortOrder">None</property>
+      <property name="Name">colDivAmount</property>
+      <property name="Options">CanFiltered, CanMoved, CanGrouped, CanResized, CanSorted, CanFocused, ShowInCustomizationForm</property>
+      <property name="Caption">Amounts</property>
+      <property name="StyleName" />
+      <property name="VisibleIndex">1</property>
+      <property name="ShowButtonMode">Default</property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString" />
+        <property name="FormatType">None</property>
+      </property>
+      <property name="SummaryItem" isnull="true" iskey="true">
+        <property name="DisplayFormat" />
+        <property name="SummaryType">None</property>
+        <property name="Tag" isnull="true" />
+        <property name="FieldName" />
+      </property>
+      <property name="Fixed">None</property>
+      <property name="HeaderStyleName" />
+      <property name="FilterInfo">~Xtra#Base64AAEAAAD/////AQAAAAAAAAAMAgAAABNEZXZFeHByZXNzLlh0cmFHcmlkBQEAAAAsRGV2RXhwcmVzcy5YdHJhR3JpZC5Db2x1bW5zLkNvbHVtbkZpbHRlckluZm8BAAAABFR5cGUELERldkV4cHJlc3MuWHRyYUdyaWQuQ29sdW1ucy5Db2x1bW5GaWx0ZXJUeXBlAgAAAAIAAAAF/f///yxEZXZFeHByZXNzLlh0cmFHcmlkLkNvbHVtbnMuQ29sdW1uRmlsdGVyVHlwZQEAAAAHdmFsdWVfXwAIAgAAAAAAAAAL</property>
+    </property>
+  </property>
+  <property name="OptionsHint" isnull="true" iskey="true">
+    <property name="ShowColumnHeaderHints">true</property>
+    <property name="ShowCellHints">true</property>
+  </property>
+  <property name="FilterPopupRowCount">20</property>
+  <property name="OptionsMenu" isnull="true" iskey="true">
+    <property name="EnableFooterMenu">true</property>
+    <property name="EnableColumnMenu">true</property>
+    <property name="EnableGroupPanelMenu">true</property>
+  </property>
+  <property name="GroupRowHeight">-1</property>
+  <property name="DetailHeight">160</property>
+  <property name="GroupFormat">{0}: {1} {2}</property>
+  <property name="HorzScrollStep">3</property>
+  <property name="FixedLineWidth">2</property>
+  <property name="ViewCaption" />
+  <property name="FilterPopupMaxRecordsCount">-1</property>
+  <property name="OptionsView" isnull="true" iskey="true">
+    <property name="ShowFilterPanel">true</property>
+    <property name="ShowVertLines">true</property>
+    <property name="RowAutoHeight">false</property>
+    <property name="ShowIndicator">true</property>
+    <property name="ShowPreview">false</property>
+    <property name="AutoCalcPreviewLineCount">false</property>
+    <property name="ShowNewItemRow">false</property>
+    <property name="ShowFooter">false</property>
+    <property name="ShowChildrenInGroupPanel">false</property>
+    <property name="ShowGroupPanel">true</property>
+    <property name="ColumnAutoWidth">true</property>
+    <property name="ShowHorzLines">true</property>
+    <property name="ShowDetailButtons">true</property>
+    <property name="ShowColumnHeaders">true</property>
+    <property name="ShowGroupedColumns">false</property>
+  </property>
+  <property name="Name">gridView1</property>
+  <property name="VertScrollVisibility">Auto</property>
+  <property name="SynchronizeClones">true</property>
+  <property name="VertScrollTipFieldName" />
+  <property name="PreviewLineCount">-1</property>
+  <property name="RowHeight">-1</property>
+  <property name="OptionsCustomization" isnull="true" iskey="true">
+    <property name="AllowRowSizing">false</property>
+    <property name="AllowFilter">true</property>
+    <property name="AllowGroup">true</property>
+    <property name="AllowSort">true</property>
+  </property>
+  <property name="GroupPanelText">Drag a column header here to group by that column</property>
+  <property name="PreviewFieldName" />
+  <property name="DetailTabHeaderLocation">Top</property>
+  <property name="FooterPanelHeight">-1</property>
+  <property name="ChildGridLevelName" />
+  <property name="OptionsDetail" isnull="true" iskey="true">
+    <property name="ShowDetailTabs">false</property>
+    <property name="EnableDetailToolTip">false</property>
+    <property name="SmartDetailExpand">true</property>
+    <property name="AutoZoomDetail">false</property>
+    <property name="SmartDetailHeight">false</property>
+    <property name="EnableMasterViewMode">true</property>
+    <property name="AllowZoomDetail">true</property>
+    <property name="AllowExpandEmptyDetails">false</property>
+  </property>
+  <property name="IndicatorWidth">12</property>
+  <property name="ShowButtonMode">ShowForFocusedCell</property>
+  <property name="OptionsPrint" isnull="true" iskey="true">
+    <property name="PrintGroupFooter">true</property>
+    <property name="AutoWidth">true</property>
+    <property name="PrintFooter">true</property>
+    <property name="PrintVertLines">true</property>
+    <property name="ExpandAllGroups">true</property>
+    <property name="PrintHeader">true</property>
+    <property name="PrintPreview">false</property>
+    <property name="PrintFilterInfo">false</property>
+    <property name="ExpandAllDetails">false</property>
+    <property name="PrintHorzLines">true</property>
+    <property name="PrintDetails">false</property>
+    <property name="UsePrintStyles">false</property>
+  </property>
+  <property name="HorzScrollVisibility">Auto</property>
+  <property name="BestFitMaxRowCount">-1</property>
+  <property name="GroupFooterShowMode">Hidden</property>
+  <property name="ScrollStyle">LiveVertScroll, LiveHorzScroll</property>
+  <property name="RowSeparatorHeight">0</property>
+  <property name="OptionsSelection" isnull="true" iskey="true">
+    <property name="MultiSelect">false</property>
+    <property name="InvertSelection">false</property>
+  </property>
+  <property name="OptionsBehavior" isnull="true" iskey="true">
+    <property name="AutoUpdateTotalSummary">true</property>
+    <property name="Editable">true</property>
+    <property name="AutoSelectAllInEditor">true</property>
+    <property name="ShowEditorOnMouseUp">false</property>
+    <property name="AllowIncrementalSearch">false</property>
+    <property name="SmartVertScrollBar">true</property>
+    <property name="AllowOnlyOneMasterRowExpanded">false</property>
+    <property name="KeepGroupExpandedOnSorting">true</property>
+    <property name="ShowAllTableValuesInFilterPopup">false</property>
+    <property name="UseNewCustomFilterDialog">false</property>
+  </property>
+  <property name="FocusRectStyle">CellFocus</property>
+  <property name="OptionsNavigation" isnull="true" iskey="true">
+    <property name="AutoMoveRowFocus">true</property>
+    <property name="EnterMoveNextColumn">false</property>
+    <property name="AutoFocusNewRow">false</property>
+    <property name="UseTabKey">true</property>
+  </property>
+  <property name="BorderStyle">Default</property>
+  <property name="CustomizationRowCount">7</property>
+  <property name="GroupSummary" iskey="true" value="0" />
+</XtraSerializer>

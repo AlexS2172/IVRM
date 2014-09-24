@@ -1,0 +1,26 @@
+HKCR
+{
+	MMW.MsgManager.1 = s 'MsgManager Class'
+	{
+		CLSID = s '{D9614A17-5E4D-47d9-8EDB-8A6209CF7A1A}'
+	}
+	MMW.MsgManager = s 'MsgManager Class'
+	{
+		CLSID = s '{D9614A17-5E4D-47d9-8EDB-8A6209CF7A1A}'
+		CurVer = s 'MMW.MsgManager.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {D9614A17-5E4D-47d9-8EDB-8A6209CF7A1A} = s 'MsgManager Class'
+		{
+			ProgID = s 'MMW.MsgManager.1'
+			VersionIndependentProgID = s 'MMW.MsgManager'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{602C2386-E1D1-4be2-B5DF-9A24E2717D86}'
+		}
+	}
+}

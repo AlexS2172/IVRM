@@ -1,0 +1,137 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,32,0
+ PRODUCTVERSION 1,0,32,0
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileDescription", "Common HTTP access module"
+            VALUE "FileVersion", "1, 0,32, 0"
+            VALUE "InternalName", "EgHttp"
+            VALUE "LegalCopyright", "© 2003 EGAR Technology Inc. All rights reserved."
+            VALUE "OriginalFilename", "EgHttp.dll"
+            VALUE "ProductName", "EgHttp Dynamic Link Library"
+            VALUE "ProductVersion", "1, 0,32, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_EGHTTP_E_ALREADY_OPENED_SESSION "Http session already opened!"
+    IDS_EGHTTP_E_NOT_OPENED_SESSION "Http session not opened!"
+    IDS_EGHTTP_E_ALREADY_OPENED_URL "URL already opened!"
+    IDS_EGHTTP_E_NOT_OPENED_URL "URL not opened!"
+    IDS_EGHTTP_E_IV_ACCESS_DENIED 
+                            "Access denied: check your password to login to IVolatility.com"
+    IDS_EGHTTP_E_IV_OLEDB_TIMEOUT 
+                            "OLE DB Timeout expired: IVolatility services are temporarily unavailable"
+    IDS_EGHTTP_E_IV_TIMEOUT "IVolatility.com timeout expired: services are temporarily unavailable"
+    IDS_EGHTTP_E_IV_OLEDB   "Microsoft OLE DB Provider error on IVolatility.com"
+    IDS_EGHTTP_E_IV_UNKNOWN "Error found in IVolatility.com response data"
+    IDS_EGHTTP_E_IV_CANNOT_LOGIN 
+                            "Unable to login user <%s> to IVolatility.com"
+    IDS_EGHTTP_E_IV_LOGIN_FAILED "Login failed"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_EGHTTP_E_UNEXPECTED "Unexpected error"
+    IDS_EGHTTP_E_CANNOT_OPEN_URL "Cannot open URL"
+    IDS_EGHTTP_E_CANNOT_OPEN_SESSION "Cannot initialize HTTP session"
+    IDS_EGHTTP_E_CANNOT_READ_DATA "Cannot read data"
+    IDS_AGENT_NAME          "EgHttp"
+    IDS_EGHTTP_E_IV_MD5     "Unable to create MD5 object's instance"
+    IDS_EGHTTP_E_IV_BUSY    "IVolatility.com server to busy now. Please retry later"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

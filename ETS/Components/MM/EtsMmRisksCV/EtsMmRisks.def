@@ -1,0 +1,9 @@
+; EtsMmRisks.def : Declares the module parameters.
+
+;LIBRARY      "EtsMmRisksCV.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

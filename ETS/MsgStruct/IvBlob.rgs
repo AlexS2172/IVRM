@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.IvBlob.1 = s 'IvBlob Class'
+	{
+		CLSID = s '{F76359F4-9B66-4CA2-A7C6-F02B58DB1D10}'
+	}
+	MsgStruct.IvBlob = s 'IvBlob Class'
+	{
+		CLSID = s '{F76359F4-9B66-4CA2-A7C6-F02B58DB1D10}'
+		CurVer = s 'MsgStruct.IvBlob.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F76359F4-9B66-4CA2-A7C6-F02B58DB1D10} = s 'IvBlob Class'
+		{
+			ProgID = s 'MsgStruct.IvBlob.1'
+			VersionIndependentProgID = s 'MsgStruct.IvBlob'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

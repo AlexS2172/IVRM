@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsOptRootAtom.1 = s 'EtsOptRootAtom Class'
+	{
+		CLSID = s '{1C06A185-C07D-4E27-90B5-D09CF7FAB0CA}'
+	}
+	EtsGeneral.EtsOptRootAtom = s 'EtsOptRootAtom Class'
+	{
+		CLSID = s '{1C06A185-C07D-4E27-90B5-D09CF7FAB0CA}'
+		CurVer = s 'EtsGeneral.EtsOptRootAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {1C06A185-C07D-4E27-90B5-D09CF7FAB0CA} = s 'EtsOptRootAtom Class'
+		{
+			ProgID = s 'EtsGeneral.EtsOptRootAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsOptRootAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

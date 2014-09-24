@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.SymbolObject.1 = s 'SymbolObject Class'
+	{
+		CLSID = s '{5B7B0165-1126-4C59-B85C-C0C6B4E8642F}'
+	}
+	MsgStruct.SymbolObject = s 'SymbolObject Class'
+	{
+		CLSID = s '{5B7B0165-1126-4C59-B85C-C0C6B4E8642F}'
+		CurVer = s 'MsgStruct.SymbolObject.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5B7B0165-1126-4C59-B85C-C0C6B4E8642F} = s 'SymbolObject Class'
+		{
+			ProgID = s 'MsgStruct.SymbolObject.1'
+			VersionIndependentProgID = s 'MsgStruct.SymbolObject'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

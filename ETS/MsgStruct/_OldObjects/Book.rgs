@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Book.1 = s 'Book Class'
+	{
+		CLSID = s '{DF8B03E6-2165-4468-9DC0-3AE7A02B00CA}'
+	}
+	MsgStruct.Book = s 'Book Class'
+	{
+		CLSID = s '{DF8B03E6-2165-4468-9DC0-3AE7A02B00CA}'
+		CurVer = s 'MsgStruct.Book.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DF8B03E6-2165-4468-9DC0-3AE7A02B00CA} = s 'Book Class'
+		{
+			ProgID = s 'MsgStruct.Book.1'
+			VersionIndependentProgID = s 'MsgStruct.Book'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

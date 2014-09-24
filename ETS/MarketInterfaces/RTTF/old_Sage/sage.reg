@@ -1,0 +1,15 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\ETS\Sage Connector]
+"ConnectionString"="Provider=sqloledb;Data Source=crocodile;Initial catalog=EMM_FW_Temp;Integrated Security=SSPI;"
+"LogDaily"=dword:00000000
+"LogToConsole"=dword:00000001
+"LogToFile"=dword:00000001
+"InSeqNum"=dword:000000b8
+"OutSeqNum"=dword:00000418
+"TargetCompID"="SAGE_FIX_DROPCOPY"
+"SenderCompID"="MAIN_LINE"
+"ServerAddr"="sage-prd.ny.egartech.com"
+"ServerPort"=dword:00000a97
+"ReconnectTime"=dword:00000005
+

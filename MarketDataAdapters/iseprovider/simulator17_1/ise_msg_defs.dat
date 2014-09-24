@@ -1,0 +1,3137 @@
+//
+// strictly structured file, ise_msg_defs.dat, which defines the format of the
+// OM-for-ISE API message definitions
+// 
+//	author		Neil Cossor
+//	history :-
+//
+//	date	who		description
+//	990615	NAC		module creation
+//  990921			updated for new omex_usa.h. mc113->mo113, ma106, bo106 change
+//  000105	NAC		update to OM v15.7 - first pass just updates changed messages
+//                  major fix to ma102, which was very wrong
+//					add bd111
+//  000213			add field name for pad field in answer_instrument_group_da208_t
+//  000327			add missing field at tail of BD5 (account type)
+//  000420			add missing position limit in BI204
+//	000425			fix om15-7-3 changes (fields from da203 to da210, bi210, some rearrangement)
+//  000502			change opra strike and expiries to chars, not uint8, in bi202 and da202
+//  000510			fix ua15.. did not have series struct in header
+//  010226			update for 16.3... major update
+//  010524			update for 16.5... major update
+//  010628			update for OMupdate 20010628.. minor fixes
+//  010709			add speedbump messages, only work with 16.5-1 back-end
+//  0203xx			update for 20011204 Gemini
+//
+// file format is (space separated fields)
+//
+//		Start line character	Significance
+//		--------------------	------------
+//		"/"						comment, ignore whole line..so we can read as C comment
+//		"M" or "m"				Message defn, 2nd field is message code
+//								3rd field is number of fields
+//								- which MUST be present before next "M" line
+//								optional 4th field is string name of message (no spaces)
+//		"F" or "f"				field of a API message,
+//								2nd field is I or i for signed number,
+//									or U or u for unsigned number,
+//                                  or O or o for 8-byte orderID/transID (which may be supressed)
+//									or C or c for one-byte character, no \0 trailer
+//									or S or s for \0 terminated string, len includes \0
+//									or P or p for pad, len = 1..3 (for quad alignment)
+//									or A or a for (ascii) click-style, non NUL terminated string - exact size
+//									or R or r for repeat count field, # of repeat fields
+/										(implied) always occupies 4 bytes
+//								3rd field is number of bytes if number,
+//									or # chars if string - type S - includes space for \0's
+//										unless type A, in case no space for NUL
+//									or max REPEAT count if type R (e.g. 400)
+//									always 1 if type C
+//									always 2/4/8 if type U/I
+//									always 1..3 if type P
+//								optional 4th field is string name of field (no spaces)
+//
+//	NB Repeat counts must be 4-byte aligned, and must be the last (fixed) field in
+//  a message, before the repeat fields. The repeat fields must be (tail) padded for 4-byte
+//	alignment of the following repeat.
+//
+//		e.g.
+//		M 2001 2 msg_order_action	Msg, code 2001, 2 fields to follow, name msg_order_action
+//		F I 2 trade_type			2 byte signed numeric field, name trade_type
+//		F S 7 ise_code				6 character string field, \0 terminated, name ise_code
+//		M .... next message etc
+//
+//
+// CLICK msgs - only used by ISESIM's logger.c module
+// the next slab are all CLICK INPUT msgs..implicit trans hdr at start of all
+//
+m 2000 6 click_logon - NB CLICK logon uses NUL terminated strings, like MC strings
+// NB first 4-byte type_u implicitly overlays 4-byte space of most 'normal' messages
+f s 32 omni_username
+f s 32 omni_password
+f s 32 new_password
+f s 129 gw_node
+f s 21 gw_socket
+f s 18 program ident of calling application
+//
+//
+m 2001 0 click_logout
+//
+//
+m 2002 9 click_series_query_segments
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_number
+f p 2 filler
+//
+//
+m 2003 9 click_series_query_bin
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_n
+f u 1 bin
+//
+//
+m 2004 11 click_query_broker_dq206 == query_broker_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_number
+f a 2 country_id_s
+f a 5 ex_customer_s
+f p 3 filler
+//
+//
+m 2005 8 click_application_status
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f i 4 application_status
+//
+//
+// mq102
+m 2006 25 query_inactive_mq102_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 3 filler_3_s
+// standard whose_t - 5 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f a 10 ex_client_s
+	f p 2 filler
+f o 8 order_number_u
+f u 2 order_category_n
+f u 1 bin_c
+f u 1 bid_or_ask_c
+// filter_series - standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+//
+//
+m 2007 10 query_missing_trade
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f i 4 sequence_first_i
+f i 4 sequence_last_i
+f a 8 date_s
+//
+//
+m 2008 24 order_trans_mo101_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_u
+f p 3 filler_3_s
+f u 4 quantity_u
+f i 4 premium_i
+f u 2 time_validity_n
+f u 1 bid_or_ask_c
+f u 1 order_type_c
+f u 1 ignore_away_market_c
+f u 1 client_category_c
+f u 1 open_close_req_c
+f a 10 ex_client_s
+f a 5 broker_id_s
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+f p 3 filler
+//
+//
+m 2009 35 alter_trans_mo103_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_u
+f p 3 filler_3_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+// series_new - standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f u 4 quantity_u
+f u 4 condition_quantity_u
+f u 4 premium_i
+f a 10 ex_client_s
+f u 2 time_validity_n
+f u 1 bid_or_ask_c
+f u 1 order_type_c
+f u 1 ignore_away_market_c
+f u 1 client_category_c
+f u 1 open_close_req_c
+f u 1 bid_or_ask_new_c // OM named this bid_or_ask_next_c.. error
+f u 1 action_c
+f p 1 filler_1_s
+f a 5 broker_id_s
+f a 15 free_text_s
+//
+//
+m 2010 18 delete_trans_mo104_mo105_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_u
+f p 3 filler_3_s
+f o 8 order_number_u
+// standard whose_t - 5 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f a 10 ex_client_s
+	f p 2 filler
+f u 2 order_category_n
+f u 1 bid_or_ask_c
+f p 1 filler
+//
+//
+// iq101
+m 2011 12 query_prices_iq101_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 3 filler_3_s
+f u 2 segment_number_n
+f u 1 bin_c
+f p 1 filler_1_s
+//
+//
+m 2012 10 quote_trans_mo106_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 1 filler_1_s
+// repeat, occupies 2 bytes, max value of 192, pad fields b4 repeat 0, # fields repeated 13, name items_n
+f r 2 192 0 13 items_n
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 premium_i
+	f u 4 quantity_u
+	f u 4 open_quantity_u
+	f u 2 step_up_buffer_n
+	f u 1 bid_or_ask_c
+	f p 1 filler_1_s
+//
+//
+m 2013 22 block_order_mo107_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_u
+f p 3 filler_3_s
+f i 4 premium_i
+f u 4 quantity_u
+f u 2 time_validity_n
+f u 1 bid_or_ask_c
+f u 1 client_category_c
+f u 1 open_close_req_c
+f u 1 expose_flag_u
+f a 10 ex_client_s
+f a 5 broker_id_s
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+//
+//
+m 2014 35 facilitation_order_mo108_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_u
+f u 1 allow_price_impr_c
+f u 1 expose_flag_c
+f u 1 special_order_type_c
+f i 4 premium_i
+// originating_side_t - 12 fields
+    f u 4 quantity_u
+    f u 1 bid_or_ask_c
+    f p 1 filler_1_s
+    f u 2 time_validity_n
+    f u 1 client_category_c
+    f u 1 open_close_req_c
+    f a 10 ex_client_s
+    // standard give-up member - 3 fields
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f p 1 filler_1_s
+    f a 5 broker_id_s
+    f a 15 free_text_s
+// counter_party_side_t - 11 fields
+    f u 1 broker_percentage_c
+    f u 1 bid_or_ask_c
+    f u 2 time_validity_n
+    f u 1 client_category_c
+    f u 1 open_close_req_c
+    f a 10 ex_client_s
+    // standard give-up member - 3 fields
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f p 1 filler_1_s
+    f a 5 broker_id_s
+    f a 15 free_text_s
+//
+//
+m 2015 23 block_order_response_mo109_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_u
+f p 3 filler_3_s
+f o 8 order_number_u
+f i 4 premium_i
+f u 4 quantity_u
+f u 2 order_category_n
+f u 1 bid_or_ask_c
+f u 1 open_close_req_c
+f a 10 ex_client_s
+f a 5 broker_id_s
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+f u 1 client_category_c
+f u 1 demand_quantity_c
+//
+//
+m 2016 19 cab_order_mo110_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_u
+f u 1 bid_or_ask_c
+f u 1 client_category_c
+f u 1 open_close_req_c
+f u 4 quantity_u
+f u 2 time_validity_n
+f a 10 ex_client_s
+f a 5 broker_id_s
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+//
+//
+m 2017 20 query_trade_t (cq2)
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// search_series_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_number_n
+f a 8 from_date_s
+f a 6 from_time_s
+f a 8 to_date_s
+f a 6 to_time_s
+f p 2 filler_2_s
+//
+//
+// cd33
+m 2018 14 rectify_trade_occ_us_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 4 trade_number_i
+f a 5 cmta_member_s
+f a 5 sub_account_id_s
+f a 15 customer_info_s (free_text)
+f u 1 account_type_c
+f u 1 open_close_req_c
+f p 1 filler_1_s
+//
+//
+m 2019 8 set_mm_parameters_ui101_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// repeat, occupies 2 bytes, max value of 900, pad fields b4 repeat 1, # fields repeated 19, name items_n
+f r 2 900 1 19 items_n
+	f p 2 filler_2_s
+	// standard set_mm_parameters_ui101_item_t == answer_mm_parameters_ua101_item_t, 19 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	//
+	// standard mm_parameters_t - 9 fields
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 tick_worse_volume_an
+		f u 2 isemm_trade_limie_absolute_n
+		f u 2 firm_trade_limit_absolute_n
+		f u 2 farmm_trade_limit_absolute_n
+		f u 2 step_up_after_regen_buffer_n
+		f u 1 isemm_trade_limit_fraction_c
+		f u 1 firm_trade_limit_fraction_c
+		f u 1 farmm_trade_limit_fraction_c
+		f p 1 filler_1_s
+	f u 1 expiration_group_c
+	f u 1 strike_price_group_c
+	f p 2 filler_2_s
+//
+//
+// query bin/pmms/mms
+m 2020 11 query_bin_dq211_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_n
+f a 2 country_id_s
+f a 5 ex_customer_s
+f p 3 filler_3_s
+//
+//
+m 2021 13 query_ob_mq103_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 1 filler_3_s
+f p 2 filler_2_s
+f o 8 order_number_u
+f u 1 bid_ask_u
+f p 3 filler_3_s
+//
+//
+m 2022 25 query_quote_mq104_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 3 filler_3_s
+// standard whose_t - 5 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f a 10 ex_client_s
+	f p 2 filler
+f o 8 order_number_u
+f u 1 bin_c
+f u 1 bid_or_ask_c
+f p 2 filler_2_s
+// filter_series - standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+//
+//
+m 2023 17 query_locked_order_mq106_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+// standard whose_t - 5 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f a 10 ex_client_s
+	f p 2 filler
+f o 8 order_number_u
+f u 1 bin_c
+f u 1 bid_or_ask_c
+f p 1 filler_2_s
+//
+//
+m2024 12 rotation_request_mo113_mq114
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f u 1 series_status_c
+f u 2 fast_market_level_n
+f p 2 filler_2_s
+// repeat, occupies 2 bytes, max value of 100, pad fields b4 repeat 0, # fields repeated 9, name items_n
+f r 2 100 0 9 items_n
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f u 1 ignore_away_market_c
+	f p 3 filler_3_s
+//
+//
+m 2025 8 set_pmm_parameters_ui102_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// repeat, occupies 2 bytes, max value of 400, pad fields b4 repeat 1, # fields repeated 21, name items_n
+f r 2 400 1 21 items_n
+	f p 2 filler_2_s
+	// standard set_pmm_parameters_ui102_item_t == standard answer_pmm_parameters_ua102_item_t, 21 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	//
+	// standard mm_parameters_t - 9 fields
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 tick_worse_volume_an
+		f u 2 isemm_trade_limie_absolute_n
+		f u 2 firm_trade_limit_absolute_n
+		f u 2 farmm_trade_limit_absolute_n
+		f u 2 step_up_after_regen_buffer_n
+		f u 1 isemm_trade_limit_fraction_c
+		f u 1 firm_trade_limit_fraction_c
+		f u 1 farmm_trade_limit_fraction_c
+		f p 1 filler_1_s
+	// standard pmm_parameters_t - 2 fields
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 derived_order_max_size_an
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 match_away_market_max_size_an
+	f u 1 expiration_group_c
+	f u 1 strike_price_group_c
+	f p 2 filler_2_s
+//
+//
+m 2026 15 pmm_trade_report_trans_mo112_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 3 filler_3_s
+f o 8 order_number_u
+f u 4 quantity_u
+f i 4 premium_i
+f u 2 order_category_n
+f u 1 bid_or_ask_c
+f p 1 filler_1_s
+//
+//
+m 2027 13 pmm_release_locked_order_mo111_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 3 filler_3_s
+f o 8 order_number_u
+f u 1 bid_or_ask_c
+f u 1 lock_type_c
+f p 2 filler_2_s
+//
+//
+m 2028 17 query_opra_prices_iq111_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// search_series_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_number_n
+f u 1 bin_c
+f p 1 filler_1_s
+//
+//
+m 2029 17 query_each_opra_prices_iq112_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// search_series_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_number_n
+f u 1 bin_c
+f p 1 filler_1_s
+//
+//
+// uq11
+m 2030 2 query_bi8_broadcasts_sent_t
+f u 2 segment_number_n
+f p 2 filler_2_s
+//
+//
+// uq12
+m 2031 1 query_business_date_t
+f p 4 filler_4_s
+//
+//
+// cd36
+m 2032 9 rectify_trade_ise_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 4 trade_number_i
+// repeat, occupies 1 bytes, max value of 100, pad fields b4 repeat 1, # fields repeated 7, name items_c
+f r 1 100 1 7 items_c
+	f p 3 filler_3_s
+	// rectify_trade_ise_item_t 7 fields
+	f i 4 trade_quantity_i
+	f u 1 open_close_req_c
+	f u 1 account_type_c
+	f a 15 customer_info_s (free_text)
+	f a 5 sub_account_id_s
+	f a 5 cmta_member_s
+	f p 1 filler_1_s
+//
+//
+// mq101
+m 2033 26 query_order_mq101_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f u 1 bin_c
+f u 1 bid_or_ask_c
+f p 1 filler_1_s
+f u 2 order_category_n
+f u 2 order_select_n
+// standard whose_t - 5 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f a 10 ex_client_s
+	f p 2 filler
+f o 8 order_number_u
+// filter_series - standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+//
+//
+// mq131, MQ132, MQ133
+m 2034 19 query_combo
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f u 1 bin_c
+f u 1 bid_or_ask_c
+f p 1 filler_1_s
+f u 2 order_category_n
+f p 2 filler_2_s
+// standard whose_t - 5 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f a 10 ex_client_s
+	f p 2 filler
+f o 8 order_number_u
+//
+//
+// mo131
+m 2035 30 combo_order_trans_mo131_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f p 3 filler_3_s
+f a 5 cmta_s
+f a 5 sub_account_s
+f u 2 validity_time_n
+f i 4 premium_i
+f i 4 ul_price_low_i
+f i 4 ul_price_high_i
+f u 4 quantity_u
+f u 2 reserved_4_n
+f u 1 order_type_c
+f u 1 interest_order_c
+f u 1 client_category_c
+f a 5 broker_id_5
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+f a 100 message_s
+f a 32 reserved_32_s
+f u 1 ul_price_method_c
+f p 1 filler_2_s
+// repeat, occupies 1 byte, max value 10, pad fields b4 repeat 0, # fields repeated 10, name items_c
+f r 1 10 0 10 items_n
+    // standard series_t - 7 fields
+	    f u 1 country_u
+	    f u 1 market_u
+	    f u 1 instrument_group_u
+	    f u 1 modifier_u
+	    f u 2 commodity_u
+	    f d 2 expiration_date
+	    f i 4 strike_price
+    f u 2 multiplier_n
+    f u 1 bid_or_ask_c
+    f u 1 open_close_req_c
+//
+//
+// mo133
+m 2036 30 alter_combo_trans_mo133_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f u 1 order_type_c
+f u 1 interest_order_c
+f u 1 client_category_c
+f a 5 cmta_s
+f a 5 sub_account_s
+f u 2 reserved_4_n
+f i 4 ul_price_low_i
+f i 4 ul_price_high_i
+f i 4 premium_i
+f o 8 order_number_u
+f u 4 quantity_u
+f u 2 validity_time_n
+f a 5 broker_id_5
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+f u 1 ul_price_method_c
+f p 1 filler_1_s
+f a 32 reserved_32_s
+// repeat, occupies 1 byte, max value 10, pad fields b4 repeat 1, # fields repeated 9, name items_c
+f r 1 10 0 9 items_c
+f p 3 filler_3_s
+    // standard series_t - 7 fields
+	    f u 1 country_u
+	    f u 1 market_u
+	    f u 1 instrument_group_u
+	    f u 1 modifier_u
+	    f u 2 commodity_u
+	    f d 2 expiration_date
+	    f i 4 strike_price
+    f u 1 open_close_req_c
+    f p 3 filler_3_s
+//
+//
+// mo136
+m 2037 24 execute_combo_trans_mo136_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 1 orderbook_c
+f u 1 client_category_c
+f u 1 step_up_to_bbo_c
+f u 1 step_up_odd_tick_c
+f u 4 premium_i
+f a 5 cmta_s
+f a 5 sub_account_s
+f u 2 validity_time_n
+f o 8 order_number_u
+f u 4 quantity_u
+f a 5 broker_id_5
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+// repeat, occupies 1 byte, max value 10, pad fields b4 repeat 1, # fields repeated 9, name items_c
+f r 1 10 0 9 items_c
+f p 3 filler_3_s
+    // standard series_t - 7 fields
+	    f u 1 country_u
+	    f u 1 market_u
+	    f u 1 instrument_group_u
+	    f u 1 modifier_u
+	    f u 2 commodity_u
+	    f d 2 expiration_date
+	    f i 4 strike_price
+    f u 1 open_close_req_c
+    f p 3 filler_3_s
+//
+//
+m 2038 8 set_mm_exposure_limit_ui103_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// repeat, occupies 2 bytes, max value of 1000, pad fields b4 repeat 1, # fields repeated 11, name items_n
+f r 2 1000 1 11 items_n
+	f p 2 filler_2_s
+	// standard answer_mm_exposure_limit_ua103_item_t == answer_mm_exposure_limit_ua103_item_t, 11 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f u 4 curtailment_trading_threshold_u
+	f u 2 curtailment_spread_factor_n
+	f p 2 filler_2_s
+	f u 4 reserved_i
+//
+//
+//
+//
+// the next slab are all CLICK OUTPUT msgs..need to explicitly include trans hdr, if present
+m 2050 0 click_status
+//
+//
+m 2051 5 answer_exchange_da24
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+// repeat, occupies 2 bytes, max value of 100, pad fields b4 repeat 0, # fields repeated 5, name items_n
+f r 2 100 0 5 items_n
+	// standard da24_t - 5 fields
+		f u 1 country_c
+		f i 1 opra_indicator_c
+		f a 32 name_s
+		f a 4 exchange_short_s
+		f a 2 country_id_s
+//
+//
+m 2052 5 click_answer_series_da202
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+// repeat, occupies 2 bytes, max value of 1000, pad fields b4 repeat 0, # fields repeated 13, name items_n
+f r 2 1000 0 13 items_n
+	// standard da202_t - 13 fields
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+		f a 32 ins_id_s
+		f i 4 contract_size_i
+		f a 7 symbol_s
+		f c 1 month_code_c
+		f c 1 strike_code_c
+		f p 3 filler_3_s
+	//
+	//
+m 2053 5 click_answer_instrument_da203
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no
+// repeat, occupies 1 byte, max value of 100, pad fields b4 repeat 1, # fields repeated 10, name items_c
+f r 1 100 1 10 items_c
+	f p 1 filler
+	// standard da203_t
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+		f i 4 bbo_volume_i
+		f i 4 block_order_min_size_i
+		f i 4 block_order_rsptime_i
+//
+//
+m 2054 5 answer_underlying_da204
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+// repeat, occupies 1 bytes, max value of 100, pad fields b4 repeat 1, # fields repeated 24, name items_n
+f r 1 100 1 24 items_c
+	f p 1 filler
+	// standard da204_t - 24 fields
+		f u 2 commodity_n
+		f a 6 com_id_s
+		f u 2 dec_in_price_n
+		f a 8 date_release_s
+		f a 8 date_termination_s
+		f a 32 name_s
+		f a 3 base_cur_s
+		f p 3 filler_3_s
+		f u 8 nominal_value_q
+		f u 8 position_limit_q
+		f u 2 day_count_n
+		f u 2 days_in_interest_year_n
+		f u 4 coupon_interest_i
+		f u 2 coupon_settlement_days_n
+		f u 1 underlying_type_c
+		f u 1 price_unit_c
+		f u 2 dec_in_nominal_n
+		f u 1 bin_c
+		// repeat, occupies 1 bytes, max value of 20, pad fields b4 repeat 0, # fields repeated 2, name items_c
+		f r 1 20 0 2 items_c
+			// struct coupon
+			f a 8 date_coupdiv_s
+			f u 4 dividend_i
+		f u 1 orderbook_c
+		f a 12 cusip_s
+		f u 1 prm_country_c
+		f a 7 prm_mm_customer_s
+		// repeat, occupies 1 bytes, max value of 10, pad fields b4 repeat 1, # fields repeated 3, name items_c
+		f r 1 10 1 3 items2_c
+			f p 2 filler
+			// fast_market_lvl
+			f u 2 level_n
+			f p 2 filler_2_s
+			f i 4 match_interval_i
+//
+//
+m 2055 8 click_answer_query_broker_da206 == answer_broker_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+f a 2 country_id_s
+f a 5 ex_customer_s
+f p 1 filler
+// repeat, occupies 2 byte, max value 50, pad fields b4 repeat 0, # fields repeated 3, name items_n
+f r 2 50 0 3 items_n
+	f a 5 user_id_s
+	f p 1 filler
+	// repeat, occupies 2 byte, max value 100, pad fields b4 repeat 0, # fields repeated 7, name items_n
+	f r 2 100 0 7 items_n
+		// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+//
+//
+m 2056 5 click_answer_market_da207
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+// repeat, occupies 2 bytes, max value of 100, pad fields b4 repeat 0, # fields repeated 4, name items_n
+f r 2 100 0 4 items_n
+	// standard answer_market_da207_item_t - 6 fields
+	f u 1 country_u
+	f u 1 market_u
+	f a 32 name
+	f p 2 filler
+//
+//
+m 2057 5 answer_instrument_group_da208_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+// repeat, occupies 2 bytes, max value of 100, pad fields b4 repeat 0, # fields repeated 3, name items_n
+f r 2 100 0 3 items_n
+	f u 1 instrument_group
+	f a 32 instrument_name
+	f p 3 filler
+//
+//
+m 2058 5 answer_instrument_class_da210
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no
+// repeat, occupies 2 bytes, max value 100, pad fields b4 repeat 0, # fields repeated 54
+f r 2 100 0 54 items_n
+	// standard da210_t - 54 fields
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+		// upper_level_series_t == standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+		f i 4 price_quot_factor_i
+		f i 4 contract_size_i
+		f i 4 exerc_limit_i
+		f i 4 bbo_volume_i
+		f i 4 block_order_min_size_i
+		f i 4 block_order_rsptime_i
+		f u 2 derivate_level_n
+		f u 2 dec_in_strike_price_n
+		f u 2 dec_in_contr_size_n
+		f i 2 spg1_low_limit_n
+		f i 2 spg2_low_limit_n
+		f i 2 spg3_low_limit_n
+		f i 2 spg4_low_limit_n
+		f i 2 spg5_low_limit_n
+		f u 2 rnt_id_n
+		f u 2 dec_in_premium_n
+		f a 3 base_cur_s
+		// repeat, occupies 1 bytes, max value of 20, pad fields b4 repeat 0, # fields repeated 1, name items2_c
+		f r 1 20 0 1 items2_c
+			f u 2 edg_low_limit_n
+		f u 1 exerc_limit_unit_c
+		f u 1 traded_c
+		// repeat, occupies 2 bytes, max value of 12, pad fields b4 repeat 0, # fields repeated 3, name items_c
+		f r 2 12 0 3 items_c
+			// standard tick_size_t into item table
+			f i 4 step_size_i
+			f i 4 lower_limit_i
+			f i 4 upper_limit_i
+		// repeat, occupies 1 bytes, max value of 12, pad fields b4 repeat 1, # fields repeated 3, name items_c
+		f r 1 12 1 3 items_c
+			f p 3 filler_3_s
+			// standard tick_size_t into tss_mm table
+			f i 4 step_size_i
+			f i 4 lower_limit_i
+			f i 4 upper_limit_i
+		// facilitation info - in fac_crossing_order_t - 6 fields
+		    f u 4 min_quantity_u
+		    f u 4 exposure_time_u
+		    f u 2 percentage_n
+		    f u 2 max_allowed_percentage_n
+		    f u 1 trading_allowed_c
+		    f p 3 filler_3_s
+		// solicitation info - in fac_crossing_order_t - 6 fields
+		    f u 4 min_quantity_u
+		    f u 4 exposure_time_u
+		    f u 2 percentage_n
+		    f u 2 max_allowed_percentage_n
+		    f u 1 trading_allowed_c
+		    f p 3 filler_3_s
+		// exposure info - in fac_crossing_order_t - 6 fields
+		    f u 4 min_quantity_u
+		    f u 4 exposure_time_u
+		    f u 2 percentage_n
+		    f u 2 max_allowed_percentage_n
+		    f u 1 trading_allowed_c
+		    f p 3 filler_3_s
+//
+//
+// Bin/PMM/MM responsibilities
+m 2059 5 answer_bin_da211_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no
+// repeat, occupies 2 bytes, max value 500, pad fields b4 repeat 0, # fields repeated 5
+f r 2 500 0 5
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f u 1 bin_c
+	f u 1 cst_type_c
+	f p 3 filler_3_s
+//
+//
+m 2060 5 answer_prices_ia101_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 bytes, max value 840, fields b4 repeat 0, # fields repeated 28
+f r 2 840 0 28 items_n
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f u 4 best_bid_size_u
+	f u 4 best_ask_size_u
+	f u 4 time_received_bid_u
+	f u 4 time_received_ask_u
+	f u 4 volume_u
+	f u 4 turnover_u
+	f u 4 open_balance_u
+	f i 4 best_bid_premium_i
+	f i 4 best_ask_premium_i
+	f i 4 closing_price_i
+	f i 4 opening_price_i
+	f i 4 high_price_i
+	f i 4 low_price_i
+	f i 4 last_price_i
+	f u 2 fast_market_level_n
+	f u 1 series_status_c
+	f u 1 country_bid_c
+	f u 1 country_ask_c
+	f u 1 cust_on_ask_c
+	f u 1 cust_on_bid_c
+	f p 1 filler_1_s
+//
+//
+m 2061 5 answer_underlying_prices_ia121_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 bytes, max value 1000, fields b4 repeat 0, # fields repeated 15
+f r 2 1000 0 15 items_n
+	// answer_underlying_prices_ia121_item_t - 14 fields
+		f i 4 best_bid_premium_i
+		f i 4 best_ask_premium_i
+		f i 4 closing_price_i
+		f i 4 opening_price_i
+		f i 4 high_price_i
+		f i 4 low_price_i
+		f i 4 last_price_i
+		f u 4 volume_u
+		f u 4 turnover_u
+		f u 2 commodity_n
+		f u 1 country_c
+		f u 1 nasdaq_upc_indicator_c
+		f u 1 nasdaq_short_sale_bid_tick_c
+		f u 1 originator_id_c
+		f p 2 filler_2_s
+//
+//
+m 2063 12 answer_order_ma101_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+// repeat, occupies 2 bytes, max value 700, pad fields b4 repeat 2, # fields repeated 27, name items_n
+f r 2 700 2 27 items_n
+f u 1 orderbook_next_c
+f u 1 bid_or_ask_next_c
+	// standard answer_order_ma101_item_t - 27 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f o 8 order_number_u
+	f i 4 premium_i
+	f u 4 quantity_u
+	f u 2 time_validity_n
+	f u 2 order_category_n
+	f u 1 client_category_c
+	f u 1 bid_or_ask_c
+	f u 1 order_type_c
+	f u 1 ignore_away_market_c
+	f u 1 lock_type_c
+	f u 1 open_close_req_c
+	f a 10 ex_client_s
+	f a 5 broker_id_s
+	f a 15 free_text_s
+	// standard give-up member - 3 fields
+	    f a 2 country_id_s
+	    f a 5 ex_customer_s
+	    f p 1 filler_1_s
+//
+//
+// update to ma102 response
+m 2064 12 answer_inactive_ma102_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+// repeat, occupies 2 bytes, max value 700, pad fields b4 repeat 2, # fields repeated 27, name items_n
+f r 2 700 2 27 items_n
+f u 1 orderbook_next_c
+f u 1 bid_or_ask_next_c
+	// standard answer_inactive_ma102_item_t - 27 fields
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+		// standard trading_code_t - 3 fields
+			f a 2 country_id_s
+			f a 5 ex_customer_s
+			f a 5 user_id_s
+		f o 8 order_number_u
+		f i 4 premium_i
+		f u 4 quantity_u
+		f u 2 time_validity
+		f u 2 order_category_n
+		f u 1 client_category_c
+		f u 1 bid_or_ask_c
+		f u 1 order_type_c
+		f u 1 ignore_away_market_c
+		f u 1 open_close_req_c
+		f a 10 ex_client_s
+		f a 5 broker_id_s
+		f a 15 free_text_s
+		// standard give-up member - 3 fields
+		    f a 2 country_id_s
+		    f a 5 ex_customer_s
+		    f p 1 filler_1_s
+		f p 1 filler_1_s
+//
+//
+m 2065 5 answer_underlying_status_us_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 bytes, max value 5000, fields b4 repeat 0, # fields repeated 3
+f r 2 5000 0 3 items_n
+	// answer_underlying_status_us_item_t - 3 fields
+	f u 2 commodity_n
+	f u 1 underlying_trading_status_c
+	f p 1 filler_1_s
+//
+//
+// ca1
+m 2066 5 answer_missing_trade_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f p 2 filler
+// repeat, occupies 2 byte, max value 180, pad fields b4 repeat 0, # fields repeated 84, name items_n
+f r 2 180 0 87 items_n
+    // standard cl_trade_api_t - 84 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	//
+	// standard account_t - 4 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 10 account_id_s
+		f p 3 filler_3_s
+	// standard user_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard countersign_code_t == user_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard new_series_t == series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	// standard party_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f p 1 filler
+	// standard pos_account_t == account_t - 4 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 10 account_id_s
+		f p 3 filler_3_s
+	// standard orig_series_t == series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 sequence_number_i
+	f i 4 trade_number_i
+	f i 4 orig_trade_number_i
+	f i 4 deal_price_i
+	f i 4 trade_quantity_i
+	f i 4 deal_number_i
+	f u 4 global_deal_no_u
+	f i 4 ext_seq_nbr_i
+	f i 4 ext_status_i
+	f i 4 rem_quantity_i
+	f i 4 quantity_i
+	f o 8 order_number_u
+	f u 4 ext_trade_number_u
+	f u 4 orig_ext_trade_number_u
+	f i 4 residual_i
+	f a 8 created_date_s
+	f a 6 created_time_s
+	f a 8 asof_date_s
+	f a 6 asof_time_s
+	f a 8 modified_date_s
+	f a 6 modified_time_s
+	f a 15 customer_info_s
+	f a 8 clearing_date_s
+	f a 32 passthrough_s
+	f p 2 reserved_2_s
+	f u 1 orig_trade_type_c
+	f u 1 bought_or_sold_c
+	f u 1 deal_source_c
+	f u 1 open_close_req_c
+	f u 1 open_close_c
+	f u 1 trade_type_c
+	f u 1 reserved_1_c
+	f u 1 trade_state_c
+	f u 1 attention_c
+	f u 1 account_type_c
+	f u 1 instigant_c
+	f u 1 cab_price_ind_c
+	f u 1 ext_trade_fee_type_c
+	f u 8 nbr_held_q
+	f u 8 nbr_written_q
+	f u 8 total_held_q
+	f u 8 total_written_q
+	f u 4 commission_i
+	// standard give-up member - 3 fields
+	    f a 2 country_id_s
+	    f a 5 ex_customer_s
+	    f p 1 filler_1_s
+//
+//
+// ca2
+m 2067 19 answer_trade_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+// partition_low_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// partition_high_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 180, pad fields b4 repeat 0, # fields repeated 84, name items_n
+f r 2 180 0 87 items_n
+    // standard cl_trade_api_t - 84 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	//
+	// standard account_t - 4 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 10 account_id_s
+		f p 3 filler_3_s
+	// standard user_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard countersign_code_t == user_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard new_series_t == series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	// standard party_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f p 1 filler
+	// standard pos_account_t == account_t - 4 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 10 account_id_s
+		f p 3 filler_3_s
+	// standard orig_series_t == series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 sequence_number_i
+	f i 4 trade_number_i
+	f i 4 orig_trade_number_i
+	f i 4 deal_price_i
+	f i 4 trade_quantity_i
+	f i 4 deal_number_i
+	f u 4 global_deal_no_u
+	f i 4 ext_seq_nbr_i
+	f i 4 ext_status_i
+	f i 4 rem_quantity_i
+	f i 4 quantity_i
+	f o 8 order_number_u
+	f u 4 ext_trade_number_u
+	f u 4 orig_ext_trade_number_u
+	f i 4 residual_i
+	f a 8 created_date_s
+	f a 6 created_time_s
+	f a 8 asof_date_s
+	f a 6 asof_time_s
+	f a 8 modified_date_s
+	f a 6 modified_time_s
+	f a 15 customer_info_s
+	f a 8 clearing_date_s
+	f a 32 passthrough_s
+	f p 2 reserved_2_s
+	f u 1 orig_trade_type_c
+	f u 1 bought_or_sold_c
+	f u 1 deal_source_c
+	f u 1 open_close_req_c
+	f u 1 open_close_c
+	f u 1 trade_type_c
+	f u 1 reserved_1_c
+	f u 1 trade_state_c
+	f u 1 attention_c
+	f u 1 account_type_c
+	f u 1 instigant_c
+	f u 1 cab_price_ind_c
+	f u 1 ext_trade_fee_type_c
+	f u 8 nbr_held_q
+	f u 8 nbr_written_q
+	f u 8 total_held_q
+	f u 8 total_written_q
+	f u 4 commission_i
+	// standard give-up member - 3 fields
+	    f a 2 country_id_s
+	    f a 5 ex_customer_s
+	    f p 1 filler_1_s
+//
+//
+m 2068 5 answer_mm_parameters_ua101_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 900, pad fields b4 repeat 0, # fields repeated 19, name items_n
+f r 2 900 0 19 items_n
+	// standard answer_mm_parameters_ua101_item_t, 19 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	//
+	// standard mm_parameters_t - 9 fields
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 tick_worse_volume_an
+		f u 2 isemm_trade_limie_absolute_n
+		f u 2 firm_trade_limit_absolute_n
+		f u 2 farmm_trade_limit_absolute_n
+		f u 2 step_up_after_regen_buffer_n
+		f u 1 isemm_trade_limit_fraction_c
+		f u 1 firm_trade_limit_fraction_c
+		f u 1 farmm_trade_limit_fraction_c
+		f p 1 filler_1_s
+	f u 1 expiration_group_c
+	f u 1 strike_price_group_c
+	f p 2 filler_2_s
+//
+//
+m 2069 5 answer_pmm_parameters_ua102_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 400, pad fields b4 repeat 0, # fields repeated 21, name items_n
+f r 2 400 0 21 items_n
+	// standard answer_pmm_parameters_ua102_item_t, 21 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	//
+	// standard mm_parameters_t - 9 fields
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 tick_worse_volume_an
+		f u 2 isemm_trade_limie_absolute_n
+		f u 2 firm_trade_limit_absolute_n
+		f u 2 farmm_trade_limit_absolute_n
+		f u 2 step_up_after_regen_buffer_n
+		f u 1 isemm_trade_limit_fraction_c
+		f u 1 firm_trade_limit_fraction_c
+		f u 1 farmm_trade_limit_fraction_c
+		f p 1 filler_1_s
+	// standard pmm_parameters_t - 2 fields
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 derived_order_max_size_an
+		// repeat, occupies 0 bytes, actual value 8, pad fields before repeat 0, # fields repeated 1
+		f r 0 8 0 1
+			f u 2 match_away_market_max_size_an
+	f u 1 expiration_group_c
+	f u 1 strike_price_group_c
+	f p 2 filler_2_s
+//
+//
+m 2070 14 answer_ob_ma103_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+f u 1 bid_or_ask_next_c
+f p 1 filler_1_s
+// repeat, occupies 2 bytes, max value 1000, pad fields b4 repeat 0, # fields repeated 24, name items_n
+f r 2 1000 0 24 items_n
+	// standard answer_ob_ma103_item_t - 24 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f o 8 order_number_u
+	f i 4 premium_i
+	f u 4 quantity_u
+	f u 4 open_quantity_u
+	f u 2 isemm_trade_limit_absolute_n
+	f u 2 firm_trade_limit_absolute_n
+	f u 2 farmm_trade_limit_absolute_n
+	f u 2 time_validity
+	f u 2 order_category_n
+	f u 1 bid_or_ask_c
+	f u 1 lock_type_c
+	f u 1 order_type_c
+	f u 1 client_category_c
+	f u 2 filler_2_s
+//
+//
+m 2071 16 answer_quote_ma104_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 1 orderbook_next_c
+f p 3 filler_3_s [3]
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+f u 1 bid_or_ask_next_c
+f p 1 filler_1_s
+// repeat, occupies 2 bytes, max value 1000, pad fields b4 repeat 0, # fields repeated 21, name items_n
+f r 2 1000 0 21 items_n
+	// standard answer_quote_ma104_item_t - 21 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f o 8 order_number_u
+	f i 4 premium_i
+	f u 4 quantity_y
+	f u 4 open_quantity_u
+	f u 2 isemm_trade_limit_absolute_n
+	f u 2 firm_trade_limit_absolute_n
+	f u 2 farmm_trade_limit_absolute_n
+	f u 2 step_up_buffer_n
+	f u 2 number_of_tick_down_levels_n
+	f u 1 bid_or_ask_c
+	f p 1 char filler_3_s
+//
+//
+m 2072 14 answer_locked_order_ma106_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+f u 1 bid_or_ask_next_c
+f u 1 orderbook_next_c
+// repeat, occupies 2 bytes, max value 1000, pad fields b4 repeat 0, # fields repeated 20, name items_n
+f r 2 1000 0 20 items_n
+	// standard answer_locked_order_ma106_item_t - 20 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f o 8 order_number_u
+	f i 4 premium_i
+	f i 4 premium_guaranteed_i
+	f u 4 quantity_u
+	f u 2 order_category_n
+	f u 2 time_validity_n
+	f u 1 bid_or_ask_c
+	f u 1 lock_type_c
+	f u 1 order_type_c
+	f u 1 client_category_c
+//
+//
+m 2073 4 answer_rotation_ma114_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+// repeat, occupies 2 byte, max value 100, pad fields b4 repeat 1, # fields repeated 13, name items_n
+f r 2 100 1 13 items_n
+	f p 2 filler_2_s
+	// answer_rotation_ma114_item_t - 13 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 opening_price_i
+	f u 4 volume_u
+	f u 4 volume_left_market_orders_u
+	f u 1 series_status_c
+	f u 1 rotation_reason_c
+	f p 2 filler_2_s
+//
+//
+m 2074 5 answer_opra_prices_ia111_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 1000, pad fields b4 repeat 0, # fields repeated 27, name items_n
+f r 2 1000 0 27 items_n
+	// answer_opra_prices_ia111_item_t - 27 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 best_bid_premium_i
+	f i 4 best_ask_premium_i
+	f u 4 best_bid_size_u
+	f u 4 best_ask_size_u
+	f i 4 high_price_i
+	f i 4 low_price_i
+	f i 4 last_price_i
+	f u 4 volume_u
+	f u 4 turnover_u
+	f u 1 country_ask_c
+	f u 1 country_bid_c
+	f u 1 country_last_c
+	f u 1 country_low_c
+	f u 1 country_high_c
+	f u 1 away_market_status_ask_c
+	f u 1 away_market_status_bid_c
+	f u 1 away_market_status_last_c
+	f u 1 away_market_status_low_c
+	f u 1 away_market_status_high_c
+	f p 2 filler_s
+//
+//
+m 2075 5 answer_each_opra_prices_ia112_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 1000, pad fields b4 repeat 0, # fields repeated 19, name items_n
+f r 2 1000 0 19 items_n
+	// answer_each_opra_prices_ia112_item_t - 19 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 best_bid_premium_i
+	f i 4 best_ask_premium_i
+	f u 4 best_bid_size_u
+	f u 4 best_ask_size_u
+	f i 4 high_price_i
+	f i 4 low_price_i
+	f i 4 last_price_i
+	f u 4 volume_u
+	f u 4 turnover_u
+	f u 1 country_c
+	f u 1 away_market_status_c
+	f p 2 filler_s
+//
+//
+// ua15
+m 2076 5 answer_instrument_status_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 1000, pad fields b4 repeat 0, # fields repeated 9, name items_n
+f r 2 1000 0 9 items_n
+	// answer_instrument_status_item_t - 9 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f u 2 state_number_n
+	f p 2 filler_2_s
+//
+//
+// da212
+m 2077 5 answer_dependencies_da212_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 1000, pad fields b4 repeat 0, # fields repeated 4, name items_n
+f r 2 1000 0 4 items_n
+	// standard answer_dependencies_da212_item_t, da212_t, 4 fields
+		f u 2 commodity_n
+		f u 2 depends_on_commodity_n
+		f u 4 number_of_share_i
+		f u 4 cash_amount_i
+//
+//
+// ua11
+m 2078 6 answer_bi8_broadcasts_sent_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_number_n
+f p 1 filler_1_s
+// repeat, occupies 1 byte, max value 50, pad fields b4 repeat 0, # fields repeated 4, name items_c
+f r 1 50 0 4 items_c
+	// standard answer_bi8_broadcasts_sent_item1_t 4 fields
+		f u 2 broadcast_number_n
+		f u 1 country_c
+		f u 1 market_c
+	// repeat, occupies 2 byte, max value 10, pad fields b4 repeat 1, # fields repeated 1, name items_n
+	f r 2 10 1 1 items_n
+		f p 2 filler_2_s
+		f a 80 free_text_80_s
+//
+//
+m 2079 5 ua12_answer_business_date_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+// NB for unknown reasons, omex_version_s appears to be NUL-terminated
+f a 16 omex_version_s
+f a 8 business_date_s
+//
+//
+m 2080 5 answer_trading_state_da245_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+f u 2 segment_number_n
+// repeat, occupies 2 byte, max value 100, pad fields b4 repeat 0, # fields repeated 11, name items_n
+f r 2 100 0 11 items_n
+    // answer_trading_state_da245_item
+   f a 20 char state_name_s
+   f u 2 state_number_n
+   f u 2 fast_market_level_n
+   f u 1 type_of_matching_c
+   f u 1 trading_end_c
+   f u 1 price_quotation_required_c
+   f u 1 market_orders_allowed_c
+   f u 1 fill_or_kill_allowed_c
+   f u 1 fill_and_kill_allowed_c
+   f u 1 edited_ob_changes_avail_c
+   f u 1 ob_changes_avail_c
+//
+//
+m 2081 14 answer_combo_order_ma131_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+f u 1 orderbook_next_c
+f u 1 bid_or_ask_next_c
+// repeat, occupies 2 byte, max value 165, pad fields b4 repeat 0, # fields repeated 24, name items_n
+f r 2 165 0 25 items_n
+    // answer_combo_order_ma131_item_t - 25 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f i 4 premium_i
+	f a 5 cmta_s
+	f a 5 sub_account_s
+	f u 2 time_validity_n
+	f i 4 ul_price_low_i
+	f i 4 ul_price_high_i
+	f o 8 order_number_u
+	f u 4 quantity_u
+	f u 2 commodity_n
+	f u 2 reserved_4_n
+	f u 1 order_type_c
+	f u 1 interest_order_c
+	f u 1 client_category_c
+	f u 1 ul_price_method_c
+	f a 5 broker_id_5
+	f a 15 free_text_s
+	// standard give-up member - 3 fields
+	    f a 2 country_id_s
+	    f a 5 ex_customer_s
+	    f p 1 filler_1_s
+	f a 100 message_s
+	f a 32 reserved_32_s
+	// repeat, occupies 1 byte, max value 10, pad fields b4 repeat 1, # fields repeated 10, name items_c
+	f r 1 10 1 10 items_c
+	    f p 3 filler_3_s
+	    // standard series_t - 7 fields
+		    f u 1 country_u
+		    f u 1 market_u
+		    f u 1 instrument_group_u
+		    f u 1 modifier_u
+		    f u 2 commodity_u
+		    f d 2 expiration_date
+		    f i 4 strike_price
+	    f u 2 multiplier_n
+	    f u 1 bid_or_ask_c
+	    f u 1 open_close_req_c
+//
+//
+m 2082 14 answer_inactive_combo_ma132_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+f u 1 orderbook_next_c
+f u 1 bid_or_ask_next_c
+// repeat, occupies 2 byte, max value 150, pad fields b4 repeat 1, # fields repeated 25, name items_n
+f r 2 150 1 25 items_n
+    f p 3 filler_3_s
+    // answer_inactive_combo_ma132_item_t - 25 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f i 4 premium_i
+	f i 4 ul_price_low_i
+	f i 4 ul_price_high_i
+	f o 8 order_number_u
+	f u 4 quantity_u
+	f u 2 validity_time_n
+	f u 2 reserved_4_n
+	f u 2 commodity_n
+	f u 1 order_type_c
+	f u 1 interest_order_c
+	f u 1 client_category_c
+	f u 1 ul_price_method_c
+	f a 5 cmta_s
+	f a 5 sub_account_s
+	f a 5 broker_id_5
+	f a 15 free_text_s
+	// standard give-up member - 3 fields
+	    f a 2 country_id_s
+	    f a 5 ex_customer_s
+	    f p 1 filler_1_s
+	f a 100 message_s
+	f a 32 reserved_32_s
+	// repeat, occupies 1 byte, max value 10, pad fields b4 repeat 0, # fields repeated 10, name items_c
+	f r 1 10 0 10 items_n
+	    // standard series_t - 7 fields
+		    f u 1 country_u
+		    f u 1 market_u
+		    f u 1 instrument_group_u
+		    f u 1 modifier_u
+		    f u 2 commodity_u
+		    f d 2 expiration_date
+		    f i 4 strike_price
+	    f u 2 multiplier_n
+	    f u 1 bid_or_ask_c
+	    f u 1 open_close_req_c
+//
+//
+m 2083 14 answer_combo_ob_ma133_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number
+// series_next_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_next_u
+f u 1 orderbook_next_c
+f p 1 filler_1_s
+// repeat, occupies 2 byte, max value 177, pad fields b4 repeat 0, # fields repeated 18, name items_n
+f r 2 177 0 18 items_n
+    // answer_combo_ob_ma133_item_t - 24 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	f i 4 premium_i
+	f i 4 ul_price_low_i
+	f i 4 ul_price_high_i
+	f u 4 quantity_u
+	f o 8 order_number_u
+	f u 2 validity_time_n
+	f u 2 reserved_4_n
+	f u 2 commodity_n
+	f u 1 order_type_c
+	f a 100 message_s
+	f a 32 reserved_32_s
+	f u 1 ul_price_method_c
+	f p 2 filler_2_s
+	f u 1 interest_order_c
+	// repeat, occupies 1 byte, max value 10, pad fields b4 repeat 0, # fields repeated 10, name items_c
+	f r 1 10 0 10 items_n
+	    // standard series_t - 7 fields
+		    f u 1 country_u
+		    f u 1 market_u
+		    f u 1 instrument_group_u
+		    f u 1 modifier_u
+		    f u 2 commodity_u
+		    f d 2 expiration_date
+		    f i 4 strike_price
+	    f u 2 multiplier_n
+	    f u 1 bid_or_ask_c
+	    f p 1 filler_1_s
+//
+//
+m 2084 5 answer_user_type_info_t, da30
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+// repeat, occupies 2 bytes, max value of 100, pad fields b4 repeat 6, # fields repeated 5, name items_n
+f r 2 100 6 5 items_n
+    // fields before repeat section
+    f a 5 ust_id_s
+    f u 1 ext_or_int_c
+    f u 1 is_trader_c
+    f p 1 filler_1_s
+    f u 4 min_ord_percent_u
+    f u 4 max_ord_percent_u
+    // answer_user_type_info_item_t - repeated structure
+	// standard transaction header - 3 fields
+		f c 1 central_module_s
+		f c 1 server_type
+		f u 2 trans_type_number   
+	f u 1 trans_or_bdx_c
+	f p 3 filler_3_s
+//
+//
+m 2085 5 answer_mm_exposure_limit_ua103_t
+// standard transaction header - 3 fields
+	f c 1 central_module_s
+	f c 1 server_type
+	f u 2 trans_type_number   
+f u 2 segment_no_u
+// repeat, occupies 2 bytes, max value of 1000, pad fields b4 repeat 0, # fields repeated 11, name items_n
+f r 2 1000 0 11 items_n
+	// standard answer_mm_exposure_limit_ua103_item_t, 11 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f u 4 curtailment_trading_threshold_u
+	f u 2 curtailment_spread_factor_n
+	f p 2 filler_2_s
+	f u 4 reserved_i
+//
+//
+//
+//
+// the next slab are all CLICK BROADCAST msgs..implicit trans hdr at start of all
+m 2100 0 click_broadcast_header
+//
+//
+// BD's - 5, 101, 102, 103
+//
+m 2101 87 directed_trade_t - bd5
+    // standard cl_trade_api_t - 87 fields
+	// standard trading_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	//
+	// standard account_t - 4 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 10 account_id_s
+		f p 3 filler_3_s
+	// standard user_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard countersign_code_t == user_code_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 5 user_id_s
+	// standard new_series_t == series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	// standard party_t - 3 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f p 1 filler
+	// standard pos_account_t == account_t - 4 fields
+		f a 2 country_id_s
+		f a 5 ex_customer_s
+		f a 10 account_id_s
+		f p 3 filler_3_s
+	// standard orig_series_t == series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 sequence_number_i
+	f i 4 trade_number_i
+	f i 4 orig_trade_number_i
+	f i 4 deal_price_i
+	f i 4 trade_quantity_i
+	f i 4 deal_number_i
+	f u 4 global_deal_no_u
+	f i 4 ext_seq_nbr_i
+	f i 4 ext_status_i
+	f i 4 rem_quantity_i
+	f i 4 quantity_i
+	f o 8 order_number_u
+	f u 4 ext_trade_number_u
+	f u 4 orig_ext_trade_number_u
+	f i 4 residual_i
+	f a 8 created_date_s
+	f a 6 created_time_s
+	f a 8 asof_date_s
+	f a 6 asof_time_s
+	f a 8 modified_date_s
+	f a 6 modified_time_s
+	f a 15 customer_info_s
+	f a 8 clearing_date_s
+	f a 32 passthrough_s
+	f p 2 reserved_2_s
+	f u 1 orig_trade_type_c
+	f u 1 bought_or_sold_c
+	f u 1 deal_source_c
+	f u 1 open_close_req_c
+	f u 1 open_close_c
+	f u 1 trade_type_c
+	f u 1 reserved_1_c
+	f u 1 trade_state_c
+	f u 1 attention_c
+	f u 1 account_type_c
+	f u 1 instigant_c
+	f u 1 cab_price_ind_c
+	f u 1 ext_trade_fee_type_c
+	f u 8 nbr_held_q
+	f u 8 nbr_written_q
+	f u 8 total_held_q
+	f u 8 total_written_q
+	f u 4 commission_i
+	// standard give-up member - 3 fields
+	    f a 2 country_id_s
+	    f a 5 ex_customer_s
+	    f p 1 filler_1_s
+//
+//
+m 2102 18 trade_info_bd101_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+	// end standard series
+f i 4 closing_price_i
+f i 4 opening_price_i
+f i 4 high_price_i
+f i 4 low_price_i
+f i 4 last_price_i
+f u 4 volume_u
+f u 4 turnover_u
+f u 4 open_balance_u
+f u 1 out_of_sequence_c
+f p 3 filler_3_s
+f i 4 reserved_i
+//
+//
+m 2103 18 opra_trade_info_bd102_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f i 4 high_price_i
+f i 4 low_price_i
+f i 4 last_price_i
+f u 4 volume_u
+f u 4 turnover_u
+f i 4 reserved_1_i
+f i 4 reserved_2_i
+f u 1 country_c
+f u 1 away_market_status_c
+f u 1 out_of_sequence_c
+f p 1 filler_1_s
+//
+//
+m 2104 13 underlying_trade_info_bd103_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f i 4 high_price_i
+f i 4 low_price_i
+f i 4 last_price_i
+f u 4 volume_u
+f u 4 turnover_u
+// NB the next field is listed as reserved 8 chars.. makes log messy, and it looks like a trans/order ID to me
+f o 8 reserved_8_s
+//
+//
+m 2105 11 deal_user_bd111
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+//
+f i 4 deal_price_i
+f u 4 deal_quantity_u
+f u 1 deal_source_c
+// repeat, occupies 1 byte, max value 80, pad fields b4 repeat 0, # fields repeated 4, name items_c
+f r 1 80 0 4 items_c
+	// deal_user_bd111_item_t, 4 fields
+	f o 8 order_number_u
+	f u 4 quantity_u
+	f u 1 bid_or_ask_c
+	f p 3 filler_1_s
+//
+//
+// BI's - 41, 9, 101, 103, 114, 132, 202, 204, 210
+//
+// bi41 - used to use 2110 for bi2, superceded
+m 2110 1 instrument_status_info_t
+// repeat, occupies 2 bytes, max value 12, pad fields b4 repeat 1, # fields repeated 10, name items_c
+f r 2 12 1 10 items_cn
+	f p 2 filler_2_s
+	// instrument_status_item_t, 10 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f u 2 minutes_to_state_change_n
+	f u 2 state_number_n
+	f a 80 warning_msg_s
+//
+//
+m 2111 5 click_info_heartbeat_bi9
+f u 1 heartbeat_interval_c
+f u 1 instance_c
+f u 1 tot_instances_c
+// for reasons unknown, the 'text' of the msg IS NUL terminated, unlike most CLICK msgs
+f s 40 description_s
+f p 1 filler
+//
+//
+// bi8, formerly bi101
+m 2112 3 general_message_t
+f u 1 country_u
+f u 1 market_u
+// repeat, occupies 2 bytes, max repeat value of 10, pad fields b4 repeat 0, # fields repeated 1
+f r 2 10 0 1 items_n
+	f a 80 text_line_s
+//
+//
+m 2113 1 series_status_change_bi103_t
+// repeat, occupies 2 bytes, max repeat 50, pad fields b4 repeat 1, # fields repeated 12
+f r 2 50 1 12 items_n
+	f p 2 filler_2_s
+	// standard series_status_change_bi103_item_t
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+	f i 4 opening_price_i
+	f u 4 volume_u
+	f u 2 fast_market_level_n
+	f u 1 series_status_c
+	f p 1 filler_1_s
+//
+//
+m 2114 1 away_market_flag_update_us_t - bi114
+// repeat, occupies 2 bytes, max repeat 300, pad fields b4 repeat 1, # fields repeated 3
+f r 2 300 1 3 items_n
+	f p 2 filler_2_s
+	// standard away_market_flag_update_us_item_t - 3 fields
+		f u 2 commodity_n
+		f u 1 country_c
+		f u 1 ignore_away_market_c
+//
+//
+m 2115 4 underlying_trading_status_bi132_t
+f u 2 commodity_n
+f u 1 underlying_trading_status_c
+f p 1 filler
+f p 8 reserved_8_s
+//
+//
+m 2116 15 series_update_bi202_t
+f u 2 chg_type_n
+f p 2 filler_2_s
+// standard da202_t - 13 fields
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f a 32 ins_id_s
+	f i 4 contract_size_i
+	f a 7 symbol_s
+	f c 1 month_code_c
+	f c 1 strike_code_c
+	f p 3 filler_3_s
+//
+//
+m 2117 26 underlying_update_bi204_t
+f u 2 chg_type_n
+f p 2 filler_2_s
+// standard da204_t - 24 fields
+	f u 2 commodity_n
+	f a 6 com_id_s
+	f u 2 dec_in_price_n
+	f a 8 date_release_s
+	f a 8 date_termination_s
+	f a 32 name_s
+	f a 3 base_cur_s
+	f p 3 filler_3_s
+	f u 8 nominal_value_q
+	f u 8 position_limit_q
+	f u 2 day_count_n
+	f u 2 days_in_interest_year_n
+	f u 4 coupon_interest_i
+	f u 2 coupon_settlement_days_n
+	f u 1 underlying_type_c
+	f u 1 price_unit_c
+	f u 2 dec_in_nominal_n
+	f u 1 bin_c
+	// repeat, occupies 1 bytes, max value of 20, pad fields b4 repeat 0, # fields repeated 2, name items_c
+	f r 1 20 0 2 items_c
+		// struct coupon
+		f a 8 date_coupdiv_s
+		f u 4 dividend_i
+	f u 1 orderbook_c
+	f a 12 cusip_s
+	f u 1 prm_country_c
+	f a 7 prm_mm_customer_s
+	// repeat, occupies 1 bytes, max value of 10, pad fields b4 repeat 1, # fields repeated 3, name items_c
+	f r 1 20 1 3 items2_c
+		f p 2 filler
+		// fast_market_lvl
+		f u 2 level_n
+		f p 2 filler_2_s
+		f i 4 match_interval_i
+//
+//
+m 2118 56 instrument_class_update_bi210_t
+f u 2 chg_type_n
+f p 2 filler_2_s
+// standard da210_t - 54 fields
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// upper_level_series_t == standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f i 4 price_quot_factor_i
+f i 4 contract_size_i
+f i 4 exerc_limit_i
+f i 4 bbo_volume_i
+f i 4 block_order_min_size_i
+f i 4 block_order_rsptime_i
+f u 2 derivate_level_n
+f u 2 dec_in_strike_price_n
+f u 2 dec_in_contr_size_n
+f i 2 spg1_low_limit_n
+f i 2 spg2_low_limit_n
+f i 2 spg3_low_limit_n
+f i 2 spg4_low_limit_n
+f i 2 spg5_low_limit_n
+f u 2 rnt_id_n
+f u 2 dec_in_premium_n
+f a 3 base_cur_s
+// repeat, occupies 1 bytes, max value of 20, pad fields b4 repeat 0, # fields repeated 1, name items2_c
+f r 1 20 0 1 items2_c
+	f u 2 edg_low_limit_n
+f u 1 exerc_limit_unit_c
+f u 1 traded_c
+// repeat, occupies 2 bytes, max value of 12, pad fields b4 repeat 0, # fields repeated 3, name items_c
+f r 2 12 0 3 items_c
+	// standard tick_size_t into item table
+	f i 4 step_size_i
+	f i 4 lower_limit_i
+	f i 4 upper_limit_i
+// repeat, occupies 1 bytes, max value of 12, pad fields b4 repeat 1, # fields repeated 3, name items_c
+f r 1 12 1 3 items_c
+	f p 3 filler_3_s
+	// standard tick_size_t into tss_mm table
+	f i 4 step_size_i
+	f i 4 lower_limit_i
+	f i 4 upper_limit_i
+// facilitation info - in fac_crossing_order_t - 6 fields
+    f u 4 min_quantity_u
+    f u 4 exposure_time_u
+    f u 2 percentage_n
+    f u 2 max_allowed_percentage_n
+    f u 1 trading_allowed_c
+    f p 3 filler_3_s
+// solicitation info - in fac_crossing_order_t - 6 fields
+    f u 4 min_quantity_u
+    f u 4 exposure_time_u
+    f u 2 percentage_n
+    f u 2 max_allowed_percentage_n
+    f u 1 trading_allowed_c
+    f p 3 filler_3_s
+// exposure info - in fac_crossing_order_t - 6 fields
+    f u 4 min_quantity_u
+    f u 4 exposure_time_u
+    f u 2 percentage_n
+    f u 2 max_allowed_percentage_n
+    f u 1 trading_allowed_c
+    f p 3 filler_3_s
+//
+//
+// BO's - 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 112, 115
+//
+m 2120 2 best_bid_offer_bo101_t
+f i 4 reserved_i
+// repeat, occupies 2 bytes, max repeat value of 43, pad fields b4 repeat 1, # fields repeated 14
+f r 2 43 1 14 items_n
+	f p 2 filler_2_s
+	// standard best_bid_offer_bo101_item_t - 11 fields
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+	f i 4 best_bid_premium_i
+	f i 4 best_ask_premium_i
+	f u 4 best_bid_size_u
+	f u 4 best_ask_size_u
+	f u 1 cust_on_ask_c
+	f u 1 cust_on_bid_c
+	f p 2 filler_2_s
+//
+//
+m 2121 2 best_bid_offer_extended_bo102_t
+f i 4 reserved_i
+// repeat, occupies 2 bytes, max repeat value of 30, pad fields b4 repeat 1, # fields repeated 16
+f r 2 30 1 16 items_n
+	f p 2 filler_2_s
+	// standard best_bid_offer_extended_bo102_item_t - 16 fields
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+	f i 4 best_bid_premium_i
+	f i 4 best_ask_premium_i
+	f u 4 best_bid_size_u
+	f u 4 best_ask_size_u
+	f u 4 bid_market_order_size_u
+	f u 4 ask_market_order_size_u
+	f u 2 mm_number_n
+	f u 1 cust_on_ask_c
+	f u 1 cust_on_bid_c
+//
+//
+m 2122 2 opra_best_bid_offer_bo103_t
+f p 2 filler_2_s
+// repeat, occupies 2 bytes, max repeat value of 40, pad fields b4 repeat 0, # fields repeated 17
+f r 2 30 0 17 items_n
+	// standard opra_best_bid_offer_bo103_item_t - 15 fields
+		// standard series_t - 7 fields
+			f u 1 country_u
+			f u 1 market_u
+			f u 1 instrument_group_u
+			f u 1 modifier_u
+			f u 2 commodity_u
+			f d 2 expiration_date
+			f i 4 strike_price
+	f i 4 best_bid_premium_i
+	f i 4 best_ask_premium_i
+	f u 4 best_bid_size_u
+	f u 4 best_ask_size_u
+	f i 4 reserved_1_i
+	f i 4 reserved_2_i
+	f u 1 country_bid_c
+	f u 1 country_ask_c
+	f u 1 away_market_status_bid_c
+	f u 1 away_market_status_ask_c
+//
+//
+m 2123 2 opra_all_best_bid_offer_bo104_t
+f p 2 filler_2_s
+// repeat, occupies 2 bytes, max repeat value of 30, pad fields b4 repeat 0, # fields repeated 14
+f r 2 30 0 14 items_n
+	// standard series_t - 7 fields
+		f u 1 country_u
+		f u 1 market_u
+		f u 1 instrument_group_u
+		f u 1 modifier_u
+		f u 2 commodity_u
+		f d 2 expiration_date
+		f i 4 strike_price
+	f i 4 best_bid_premium_i
+	f i 4 best_ask_premium_i
+	f i 4 reserved_1_i
+	f i 4 reserved_2_i
+	f u 1 country_c
+	f u 1 away_market_status_c
+	f p 2 char filler_2_s
+//
+//
+m 2124 14 underlying_best_bid_offer_bo105_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f i 4 best_ask_premium_i
+f i 4 best_bid_premium_i
+f u 1 nasdaq_upc_indicator_c
+f u 1 nasdaq_short_sale_bid_tick_c
+f u 1 originator_id_c
+f p 8 reserved_8_s
+f p 1 filler_1_s
+//
+//
+m 2125 22 special_order_bo106_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f i 4 premium_i
+f u 4 quantity_u
+f u 2 expiration_time_n
+f u 2 time_validity_n
+f u 2 order_category_n
+f u 1 expose_flag_c
+f u 1 broker_percentage_c
+// standard trading_code_t - 3 fields
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f a 5 user_id_s
+f u 1 client_category_c
+f u 1 bid_or_ask_c
+f u 1 client_category_counter_party_c
+f u 1 bid_or_ask_counter_party_c
+//
+//
+m 2126 14 order_quote_deleted_bo107_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f i 4 premium_i
+f u 2 rem_quantity_n
+f u 2 order_category_n
+f u 1 bid_or_ask_c
+f u 1 reason_order_delete_c
+f p 2 filler_2_s
+//
+//
+m 2127 15 quote_rejection_reason_bo108_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f i 4 premium_i
+f u 4 reason_quote_rejected_u
+f u 2 quantity_n
+f u 2 open_quantity_n
+f u 1 bid_or_ask_c
+f u 1 item_number_c
+f p 2 filler_2_s
+//
+//
+m 2128 13 quote_stepped_up_bo109_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f i 4 premium_i
+f u 4 quantity_u
+f u 2 step_up_buffer_n
+f u 1 bid_or_ask_c
+f p 1 filler_1_s
+//
+//
+m 2129 17 quote_tick_worse_bo110_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f i 4 premium_i
+f u 4 quantity_u
+f u 2 isemm_trade_limit_absolute_n
+f u 2 firm_trade_limit_absolute_n
+f u 2 farmm_trade_limit_absolute_n
+f u 2 step_up_buffer_n
+f u 2 tick_worse_level_n
+f u 1 bid_or_ask_c
+f u 1 reason_tick_worse_c
+//
+//
+m 2130 10 special_order_ended_bo112_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f u 2 order_category_n
+f p 2 filler_2_s
+//
+//
+m 2131 26 locked_order_bo115_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// standard trading_code_t - 3 fields
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f a 5 user_id_s
+f o 8 order_number_u
+f i 4 premium_i
+f i 4 premium_best_own_exchange_i
+f i 4 premium_far_away_exchange_i
+f u 4 quantity_u
+f u 2 quantity_at_best_premium_n
+f u 2 time_validity_n
+f u 2 order_category_c
+f u 1 country_c
+f u 1 bid_or_ask_c
+f u 1 order_type_c
+f u 1 ignore_away_market_c
+f u 1 client_category_c
+f u 1 lock_type_c
+f u 1 action_locked_order_c
+f p 3 filler_3_s
+//
+//
+m 2132 13 derived_order_bo116_t
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+f o 8 order_number_u
+f i 4 premium_i
+f u 4 quantity_u
+f u 1 bid_or_ask_c
+f u 1 action_derived_order_c
+f p 2 filler_2_s
+//
+//
+m 2133 27 ob_changes_bo130_t
+// standard trading_code_t - 3 fields
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f a 5 user_id_s
+// standard series_t - 7 fields
+	f u 1 country_u
+	f u 1 market_u
+	f u 1 instrument_group_u
+	f u 1 modifier_u
+	f u 2 commodity_u
+	f d 2 expiration_date
+	f i 4 strike_price
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+f i 4 premium_i
+f o 8 order_number_u
+f u 4 quantity_u
+f u 2 time_validity_n
+f u 2 order_category_n
+f u 1 order_type_c
+f u 1 client_category_c
+f u 1 ignore_away_market_c
+f u 1 change_reason_c
+f u 1 bid_or_ask_c
+f u 1 open_close_req_c
+f a 10 ex_client_s
+f a 5 broker_id_s
+f a 15 free_text_s
+//
+//
+m 2134 16 combo_ob_changes_bo131_t
+// standard trading_code_t - 3 fields
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f a 5 user_id_s
+f i 4 premium_i
+f i 4 ul_price_low_i
+f i 4 ul_price_high_i
+f o 8 order_number_u
+f u 4 quantity_u
+f u 2 time_validity_n
+f u 2 commodity_n
+f a 100 message_s
+f a 32 reserved_32_s
+f u 1 change_reason_c;
+f u 1 order_type_c;
+f u 1 interest_order_c;
+// repeat, occupies 1 bytes, max repeat value of 10, pad fields b4 repeat 2, # fields repeated 10
+f r 1 10 2 10 items_c
+    f u 1 ul_price_method_c
+    f p 3 filler_3_s
+   // combo_ob_changes_bo131_item_t - 10 fields
+    // standard series_t - 7 fields
+	    f u 1 country_u
+	    f u 1 market_u
+	    f u 1 instrument_group_u
+	    f u 1 modifier_u
+	    f u 2 commodity_u
+	    f d 2 expiration_date
+	    f i 4 strike_price
+   f u 2 multiplier_n
+   f u 1 bid_or_ask_c
+   f p 1 filler_1_s
+
+//
+//
+m 2135 24 struct combo_ob_member_bo132_t
+// standard trading_code_t - 3 fields
+	f a 2 country_id_s
+	f a 5 ex_customer_s
+	f a 5 user_id_s
+f i 4 premium_i
+f a 10 ex_client_s
+f u 2 time_validity_n
+f i 4 ul_price_low_i
+f i 4 ul_price_high_i
+f o 8 order_number_u
+f u 4 quantity_u
+f u 2 commodity_n
+f u 2 reserved_4_n
+f u 1 change_reason_c;
+f u 1 order_type_c;
+f u 1 interest_order_c;
+f u 1 client_category_c;
+f a 5 broker_id_s
+f a 15 free_text_s
+// standard give-up member - 3 fields
+    f a 2 country_id_s
+    f a 5 ex_customer_s
+    f p 1 filler_1_s
+f a 100 message_s
+f a 32 reserved_32_s
+// repeat, occupies 1 bytes, max repeat value of 10, pad fields b4 repeat 2, # fields repeated 10
+f r 1 10 2 10 items_c
+    f u 1 ul_price_method_c
+    f p 2 filler_2_s
+    // combo_ob_member_bo132_item_t - 10 fields
+    // standard series_t - 7 fields
+	    f u 1 country_u
+	    f u 1 market_u
+	    f u 1 instrument_group_u
+	    f u 1 modifier_u
+	    f u 2 commodity_u
+	    f d 2 expiration_date
+	    f i 4 strike_price
+   f u 2 multiplier_n
+   f u 1 bid_or_ask_c
+   f u 1 open_close_req_c
+//
+//
+m 2140 3 network_status (in API NOT SPM)
+// standard omni_netwrksts - 3 fields
+    f u 4 status_u
+    f u 2 msglen_n
+	// actually, we don't know how long the string is.. stop loggin after 128
+    f a 128 message_s
+//
+//

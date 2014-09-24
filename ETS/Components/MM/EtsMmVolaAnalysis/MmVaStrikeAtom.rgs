@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmVolaAnalysis.MmVaStrikeAtom.1 = s 'MmVaStrikeAtom Class'
+	{
+		CLSID = s '{09095FCD-D577-4548-BD6B-A7052A677FEC}'
+	}
+	EtsMmVolaAnalysis.MmVaStrikeAtom = s 'MmVaStrikeAtom Class'
+	{
+		CLSID = s '{09095FCD-D577-4548-BD6B-A7052A677FEC}'
+		CurVer = s 'EtsMmVolaAnalysis.MmVaStrikeAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {09095FCD-D577-4548-BD6B-A7052A677FEC} = s 'MmVaStrikeAtom Class'
+		{
+			ProgID = s 'EtsMmVolaAnalysis.MmVaStrikeAtom.1'
+			VersionIndependentProgID = s 'EtsMmVolaAnalysis.MmVaStrikeAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FFE2394C-E154-49F2-838A-9D51EDF17C79}'
+		}
+	}
+}

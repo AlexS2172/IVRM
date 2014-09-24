@@ -1,0 +1,5 @@
+SCC = This is a Source Code Control file
+
+[test.vcproj]
+SCC_Aux_Path = "\\Dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgDebugUtil/test", XAZCAAAA

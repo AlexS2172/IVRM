@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmRisks.MmRvFutColl.1 = s 'MmRvFutColl Class'
+	{
+		CLSID = s '{4BF95EA7-0C15-49F5-BA7C-14756CA0DE63}'
+	}
+	EtsMmRisks.MmRvFutColl = s 'MmRvFutColl Class'
+	{
+		CLSID = s '{4BF95EA7-0C15-49F5-BA7C-14756CA0DE63}'
+		CurVer = s 'EtsMmRisks.MmRvFutColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {4BF95EA7-0C15-49F5-BA7C-14756CA0DE63} = s 'MmRvFutColl Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvFutColl.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvFutColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{92825A3F-98F2-4838-95C9-C1E0214DE015}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.ManualPriceUpdate.1 = s 'ManualPriceUpdate Class'
+	{
+		CLSID = s '{996229A4-9364-4B53-B3D3-6788C0966AE2}'
+	}
+	MsgStruct.ManualPriceUpdate = s 'ManualPriceUpdate Class'
+	{
+		CLSID = s '{996229A4-9364-4B53-B3D3-6788C0966AE2}'
+		CurVer = s 'MsgStruct.ManualPriceUpdate.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {996229A4-9364-4B53-B3D3-6788C0966AE2} = s 'ManualPriceUpdate Class'
+		{
+			ProgID = s 'MsgStruct.ManualPriceUpdate.1'
+			VersionIndependentProgID = s 'MsgStruct.ManualPriceUpdate'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

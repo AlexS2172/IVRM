@@ -1,0 +1,43 @@
+HKCR
+{
+	VME.VolatilitySource.1 = s 'VolatilitySource Class'
+	{
+		CLSID = s '{079EBA0B-CAC8-4210-BD39-36F52BC5C01D}'
+	}
+	VME.VolatilitySource = s 'VolatilitySource Class'
+	{
+		CLSID = s '{079EBA0B-CAC8-4210-BD39-36F52BC5C01D}'
+		CurVer = s 'VME.VolatilitySource.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {079EBA0B-CAC8-4210-BD39-36F52BC5C01D} = s 'VolatilitySource Class'
+		{
+			ProgID = s 'VME.VolatilitySource.1'
+			VersionIndependentProgID = s 'VME.VolatilitySource'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{376AB49D-9D39-4B27-B122-4D22D490FE91}'
+			'TypeLib' = s '{98359542-A5A1-4A74-9E6A-520A4126F41D}'
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Egar
+		{	
+			NoRemove VolatilitySources = s 'Egar Volatility Providers'
+			{
+				ForceRemove '{079EBA0B-CAC8-4210-BD39-36F52BC5C01D}' =  d '0'
+				{
+					val Name =  s 'ETS Default Volatility Source'
+				}
+			}
+		
+		}	
+	}
+
+}

@@ -1,0 +1,12 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\ETS\FirstOptionsConnector]
+"KeepAliveOn"=dword:00000001
+"KeepAliveInterval"=dword:00002710
+"KeepAliveTime"=dword:00002710
+"ServerAddr"="localhost"
+"ServerPort"=dword:00000000
+"UserID"="GBARI"
+"Password"="GBARI"
+"SecurityID"="GBARI"
+

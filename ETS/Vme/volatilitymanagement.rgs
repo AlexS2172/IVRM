@@ -1,0 +1,24 @@
+HKCR
+{
+	VME.VolatilityManagement.1 = s 'VolatilityManagement Class'
+	{
+		CLSID = s '{D6D459C5-9C9E-4B74-8CB3-4E0C4021C9E7}'
+	}
+	VME.VolatilityManagement = s 'VolatilityManagement Class'
+	{
+		CLSID = s '{D6D459C5-9C9E-4B74-8CB3-4E0C4021C9E7}'
+		CurVer = s 'VME.VolatilityManagement.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {D6D459C5-9C9E-4B74-8CB3-4E0C4021C9E7} = s 'VolatilityManagement Class'
+		{
+			ProgID = s 'VME.VolatilityManagement.1'
+			VersionIndependentProgID = s 'VME.VolatilityManagement'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{376AB49D-9D39-4B27-B122-4D22D490FE91}'
+			'TypeLib' = s '{98359542-A5A1-4A74-9E6A-520A4126F41D}'
+		}
+	}
+}

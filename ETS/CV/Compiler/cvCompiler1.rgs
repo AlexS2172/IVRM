@@ -1,0 +1,27 @@
+HKCR
+{
+	cvCompiler.cvCompiler.1 = s 'cvCompiler Class'
+	{
+		CLSID = s '{FAB06E55-A144-45B1-BBDA-225E568B9F78}'
+	}
+	cvCompiler.cvCompiler = s 'cvCompiler Class'
+	{
+		CLSID = s '{FAB06E55-A144-45B1-BBDA-225E568B9F78}'
+		CurVer = s 'cvCompiler.cvCompiler.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FAB06E55-A144-45B1-BBDA-225E568B9F78} = s 'cvCompiler Class'
+		{
+			ProgID = s 'cvCompiler.cvCompiler.1'
+			VersionIndependentProgID = s 'cvCompiler.cvCompiler'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{48FE0F84-E446-430B-8D01-C1AFFCA3FC6B}'
+		}
+	}
+}

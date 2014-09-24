@@ -1,0 +1,264 @@
+<?xml version='1.0'?>
+<project version='5'>
+	<step action='Group' type='0'>
+		<name>Project steps</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>1</indent>
+		<name>Build Project</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>2</indent>
+		<name>Build Common Library</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%COMMON_LIBRARY_ROOT%WebFileLoader.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>3</indent>
+		<name>Build WebFileLoader</name>
+	</step>
+	<step action='Make VC6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Win32 Release</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%COMMON_LIBRARY_ROOT%EgarCommonLibrary.dsw</Filename>
+		<indent type='3'>3</indent>
+		<name>Build Library for VC6</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%COMMON_LIBRARY_ROOT%EgarCommonLibrary.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>3</indent>
+		<name>Build Library for VC.NET</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>2</indent>
+		<name>Build Transport</name>
+	</step>
+	<step action='Make VC6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Win32 Release</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%TRANSPORT_ROOT%EgarTransport.dsw</Filename>
+		<indent type='3'>3</indent>
+		<name>Build Transport</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>2</indent>
+		<name>Build Market Data Adapters</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%MARKET_DATA_ADAPTERS_ROOT%priceproviders.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>3</indent>
+		<name>Build Market Data Adapters</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>2</indent>
+		<name>Build Fix Library</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%FIX_LIBRARY_ROOT%FixInterface.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>3</indent>
+		<name>Build FixInterface</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>2</indent>
+		<name>Build ETS</name>
+	</step>
+	<step action='Make VC6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Win32 Release</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%TransportLayer.dsw</Filename>
+		<indent type='3'>3</indent>
+		<name>Build Transport Layer</name>
+	</step>
+	<step action='Make VC6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Win32 Release</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%ETS.dsw</Filename>
+		<indent type='3'>3</indent>
+		<name>Build ETS</name>
+	</step>
+	<step action='Make VC6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Win32 Release</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%MarketInterfaces\RTTF\RTTF.dsw</Filename>
+		<indent type='3'>3</indent>
+		<name>Build RTTF</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%EtsFixManager.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>3</indent>
+		<name>Build Fix Manager</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>3</indent>
+		<name>Build Volatility Manager</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%VolatilitySources.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>4</indent>
+		<name>Build Volatility Sources</name>
+	</step>
+	<step action='Make VC6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Win32 Release</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%VolatilityManager.dsw</Filename>
+		<indent type='3'>4</indent>
+		<name>Build Volatility Manager</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%Components\Components.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>3</indent>
+		<name>Build Components</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>3</indent>
+		<name>Build Market Maker</name>
+	</step>
+	<step action='Make VB6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Filename>%ETS_ROOT%EtsMM\EtsMM.vbp</Filename>
+		<IncrReason type='11'>-1</IncrReason>
+		<indent type='3'>4</indent>
+		<name>Build EtsMM</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>3</indent>
+		<name>Build Back Office</name>
+	</step>
+	<step action='Make VB6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Filename>%ETS_ROOT%BackOffice\ElladaBO.vbp</Filename>
+		<IncrReason type='11'>-1</IncrReason>
+		<indent type='3'>4</indent>
+		<name>Build ElladaBO</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>3</indent>
+		<name>Build EOD </name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%EtsEod\EtsEod.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>4</indent>
+		<name>Build EtsEod</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>3</indent>
+		<name>Build Hedger</name>
+	</step>
+	<step action='Make VB6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Filename>%ETS_ROOT%Hedger\DHIVFeeder\DHIVFeeder1.vbp</Filename>
+		<IncrReason type='11'>-1</IncrReason>
+		<indent type='3'>4</indent>
+		<name>Build DHIVFeeder1</name>
+	</step>
+	<step action='Make VB6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Filename>%ETS_ROOT%Hedger\DHlButtons\DHlButtons.vbp</Filename>
+		<IncrReason type='11'>-1</IncrReason>
+		<indent type='3'>4</indent>
+		<name>Build DHlButtons</name>
+	</step>
+	<step action='Make VB6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Filename>%ETS_ROOT%Hedger\DHMTFeeder\DHMTFeeder1.vbp</Filename>
+		<IncrReason type='11'>-1</IncrReason>
+		<indent type='3'>4</indent>
+		<name>Build DHMTFeeder1</name>
+	</step>
+	<step action='Make VB6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Filename>%ETS_ROOT%Hedger\FocusFlatControls\FocusFlatControls.vbp</Filename>
+		<IncrReason type='11'>-1</IncrReason>
+		<indent type='3'>4</indent>
+		<name>Build FocusFlatControls</name>
+	</step>
+	<step action='Make VB6' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Filename>%ETS_ROOT%Hedger\EgarHedgerSQL.vbp</Filename>
+		<IncrReason type='11'>-1</IncrReason>
+		<indent type='3'>4</indent>
+		<name>EgarHedgerSQL</name>
+	</step>
+	<step action='Group' type='0'>
+		<indent type='3'>3</indent>
+		<name>Build Version Checker</name>
+	</step>
+	<step action='Make VS.NET' type='0'>
+		<Attr type='11'>-1</Attr>
+		<Config>Release.*</Config>
+		<FileVer type='11'>-1</FileVer>
+		<Filename>%ETS_ROOT%VersionChecker\VersionChecker.sln</Filename>
+		<ParseOutput type='11'>-1</ParseOutput>
+		<indent type='3'>4</indent>
+		<name>Build Version Checker</name>
+	</step>
+	<macro>
+		<name>CLEARCASE_VIEW_FOLDER</name>
+		<value>EG1_ETS_ASP_Release_1_0</value>
+	</macro>
+	<macro>
+		<name>CLEARCASE_VIEWS_DIR</name>
+		<value>C:\ClearCaseViews\</value>
+	</macro>
+	<macro>
+		<name>COMMON_LIBRARY_ROOT</name>
+		<value>%WORK_ROOT%EgarCommonLibrary\</value>
+	</macro>
+	<macro>
+		<name>ETS_ROOT</name>
+		<value>%WORK_ROOT%ETS\</value>
+	</macro>
+	<macro>
+		<name>FIX_LIBRARY_ROOT</name>
+		<value>%WORK_ROOT%EgarFixLibrary\</value>
+	</macro>
+	<macro>
+		<name>MARKET_DATA_ADAPTERS_ROOT</name>
+		<value>%WORK_ROOT%MarketDataAdapters\</value>
+	</macro>
+	<macro>
+		<name>TRANSPORT_ROOT</name>
+		<value>%WORK_ROOT%EgarTransport\</value>
+	</macro>
+	<macro>
+		<name>WORK_ROOT</name>
+		<value>%CLEARCASE_VIEWS_DIR%%CLEARCASE_VIEW_FOLDER%\</value>
+	</macro>
+</project>

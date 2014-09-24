@@ -1,0 +1,37 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "AdapterTest"=".\AdapterTest.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC (2)/MarketInterfaces/RTTF/CIBC/AdapterTest", UBVDAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC (2)/MarketInterfaces/RTTF/CIBC/AdapterTest", UBVDAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

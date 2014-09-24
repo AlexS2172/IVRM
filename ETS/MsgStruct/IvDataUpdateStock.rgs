@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.IvDataUpdateStock.1 = s 'IvDataUpdateStock Class'
+	{
+		CLSID = s '{622D6FF5-C9FD-497F-B749-56E2A2592E04}'
+	}
+	MsgStruct.IvDataUpdateStock = s 'IvDataUpdateStock Class'
+	{
+		CLSID = s '{622D6FF5-C9FD-497F-B749-56E2A2592E04}'
+		CurVer = s 'MsgStruct.IvDataUpdateStock.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {622D6FF5-C9FD-497F-B749-56E2A2592E04} = s 'IvDataUpdateStock Class'
+		{
+			ProgID = s 'MsgStruct.IvDataUpdateStock.1'
+			VersionIndependentProgID = s 'MsgStruct.IvDataUpdateStock'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

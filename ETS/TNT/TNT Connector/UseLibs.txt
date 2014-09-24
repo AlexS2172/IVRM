@@ -1,0 +1,3 @@
+C:\IvRM\IvRm_2.70\ETS\TNT\TNT Connector
+
+progid:TNTSettings.MMHHTSettings

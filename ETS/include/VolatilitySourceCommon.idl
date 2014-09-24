@@ -1,0 +1,94 @@
+[
+	uuid(667A4000-55F0-4B22-A9FD-B53A324E952B)
+]
+struct ExpiryVolaData
+{
+	[helpstring("Expiry")]				DATE				Expiry;
+	[helpstring("Volatility")]			double				Vola;
+};
+
+[
+	uuid(FE9FA037-A9B5-42E3-894A-5A338DBDE722)
+]
+struct ExpiryStrikeVolaData
+{
+	[helpstring("Expiry")]				DATE				Expiry;
+	[helpstring("Strike")]				DOUBLE				Strike;
+	[helpstring("Volatility")]			double				Vola;
+};
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Symbol Volatility getting interface
+/////////////////////////////////////////////////////////////////////////////
+[
+	object,
+	uuid(17A940CF-EE42-4C13-89B2-32A64F61859D),
+	dual,
+	helpstring("Symbol Volatility getting interface"),
+	pointer_default(unique)
+]
+interface IVSSymbolVolatility : IDispatch
+{
+	[propput, id(1), helpstring("Volatility")] HRESULT Volatility([in]double UnderlinePrice, [in]double Strike, [in]DATE ExpDate, [in] LONG SurfaceID, [in]double newVal);
+	[propget, id(1), helpstring("Volatility")] HRESULT Volatility([in]double UnderlinePrice, [in]double Strike, [in]DATE ExpDate, [in] LONG SurfaceID, [out, retval] double *pVal);
+	[id(2), helpstring("method VolatilityShift")] HRESULT VolatilityShift([in] DATE expDate, [in] double shift, [in] LONG SurfaceID);
+	[id(3), helpstring("method VolatilitySet")] HRESULT VolatilitySet([in] DATE expDate, [in] double newVola, [in] LONG SurfaceID);
+	[id(4), helpstring("method VolatilitySetAll")] HRESULT VolatilitySetAll([in] double newVola, [in] LONG SurfaceID);
+	[id(5), helpstring("method VolatilitySetAllByExp")] HRESULT VolatilitySetAllByExp([in] SAFEARRAY(struct ExpiryVolaData)* saData, [in] LONG SurfaceID);
+	[id(6), helpstring("method VolatilitySetAllByExpAndStrike")] HRESULT VolatilitySetAllByExpAndStrike([in] SAFEARRAY(struct ExpiryStrikeVolaData)* saData, [in] LONG SurfaceID);
+	[id(7), helpstring("method VolatilitySave")] HRESULT VolatilitySave(void);
+	[id(8), helpstring("method GetSurfaceByRoot")] HRESULT GetSurfaceByRoot([in] LONG RootID, [out, retval] LONG *pVal);
+};
+[
+	object,
+	uuid(7DA85D43-74DD-4152-943E-27A8CE2DB070),
+	dual,
+	helpstring("Target Volatility getting interface"),
+	pointer_default(unique)
+]
+interface IVSTargetVolatility : IDispatch
+{
+	[propget, id(1), helpstring("property TargetVolatility")] HRESULT TargetVolatility([in] double UnderlinePrice, [in] double Strike, [in] DATE expDate, [out, retval] double *pVal);
+};
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Volatility getting interface
+/////////////////////////////////////////////////////////////////////////////
+[
+	object,
+	uuid(CD248424-0DB1-44F3-935E-B76B01084831),
+	dual,
+	helpstring("IVolatilitySource Interface"),
+	pointer_default(unique)
+]
+interface IVolatilitySource : IDispatch
+{
+	[propputref, id(1), helpstring("DataSource")]		 HRESULT DataSource([in] IVAManagement *newVal);
+	[propput, id(1),	helpstring("DataSource")]		 HRESULT DataSource([in] IVAManagement *newVal);
+	[propget, id(1),	helpstring("DataSource")]		 HRESULT DataSource([out, retval] IVAManagement **pVal);
+	[propget, id(2),	helpstring("SymbolVolatility")]  HRESULT SymbolVolatility([in]BSTR Symbol, [in]SYMBOL_TYPE SymbolType, [out, retval] IVSSymbolVolatility **pVal);
+	[propget, id(3),	helpstring("EnableEvents")]		 HRESULT EnableEvents([out, retval] VARIANT_BOOL *pVal);
+	[propput, id(3),	helpstring("EnableEvents")]		 HRESULT EnableEvents([in] VARIANT_BOOL newVal);
+	[propget, id(4),	helpstring("EnableCache")]		 HRESULT EnableCache([out, retval] VARIANT_BOOL *pVal);
+	[propput, id(4),	helpstring("EnableCache")]		 HRESULT EnableCache([in] VARIANT_BOOL newVal);
+	[propget, id(5),	helpstring("EnableEditing")]	 HRESULT EnableEditing([out, retval] VARIANT_BOOL *pVal);
+	[propput, id(5),	helpstring("EnableEditing")]	 HRESULT EnableEditing([in] VARIANT_BOOL newVal);
+	[propget, id(6),	helpstring("DefaultVolatility")] HRESULT DefaultVolatility([out, retval] double *pVal);
+	[propput, id(6),	helpstring("DefaultVolatility")] HRESULT DefaultVolatility([in] double newVal);
+	[id(7), helpstring("Reload")] HRESULT Reload();
+	[id(8), helpstring("method UnregisterPublisher")] HRESULT UnregisterPublisher();
+	[propget, id(9),	helpstring("SimulatedSymbolVol")]HRESULT SimulatedSymbolVol([in]BSTR Symbol, [in]SYMBOL_TYPE SymbolType, [out, retval] IVSSymbolVolatility **pVal);
+};
+
+[
+	uuid(CDD13781-F93C-4723-A987-5C079253EB6A),
+	helpstring("_IVolatilitySourceEvents Interface")
+]
+dispinterface _IVolatilitySourceEvents
+{
+	properties:
+	methods:
+	[id(1), helpstring("method VolatilityChanged")] HRESULT VolatilityChanged([in]BSTR Symbol);
+};

@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163} = s 'ETSManager'
+		'ETSManager.EXE'
+		{
+			val AppID = s {27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+HKCR
+{
+	ISEProvider.ISEMMManager.1 = s 'ISEMMManager Class'
+	{
+		CLSID = s '{846A4AA7-B0B8-4258-9A1C-DAC58AD9843E}'
+	}
+	ISEProvider.ISEMMManager = s 'ISEMMManager Class'
+	{
+		CLSID = s '{846A4AA7-B0B8-4258-9A1C-DAC58AD9843E}'
+		CurVer = s 'ISEProvider.ISEMMManager.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {846A4AA7-B0B8-4258-9A1C-DAC58AD9843E} = s 'ISEMMManager Class'
+		{
+			ProgID = s 'ISEProvider.ISEMMManager.1'
+			VersionIndependentProgID = s 'ISEProvider.ISEMMManager'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{9848FACF-EB55-4687-8A44-B540CE806C6E}'
+			'TypeLib' = s '{DB12E66D-0F62-4783-855C-383886AA3D22}'
+		}
+	}
+}

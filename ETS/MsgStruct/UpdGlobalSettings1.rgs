@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.UpdGlobalSettings.1 = s 'UpdGlobalSettings Class'
+	{
+		CLSID = s '{A599F3D5-E951-439C-AC77-C6DB71481176}'
+	}
+	MsgStruct.UpdGlobalSettings = s 'UpdGlobalSettings Class'
+	{
+		CLSID = s '{A599F3D5-E951-439C-AC77-C6DB71481176}'
+		CurVer = s 'MsgStruct.UpdGlobalSettings.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A599F3D5-E951-439C-AC77-C6DB71481176} = s 'UpdGlobalSettings Class'
+		{
+			ProgID = s 'MsgStruct.UpdGlobalSettings.1'
+			VersionIndependentProgID = s 'MsgStruct.UpdGlobalSettings'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

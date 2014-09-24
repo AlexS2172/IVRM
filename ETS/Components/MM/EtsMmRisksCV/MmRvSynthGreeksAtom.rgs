@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmRisks.MmRvSynthGreeksAtom.1 = s 'MmRvSynthGreeksAtom Class'
+	{
+		CLSID = s '{528db6ab-8d1c-4795-8c80-79c0232a57b0}'
+	}
+	EtsMmRisks.MmRvSynthGreeksAtom = s 'MmRvSynthGreeksAtom Class'
+	{
+		CLSID = s '{528db6ab-8d1c-4795-8c80-79c0232a57b0}'
+		CurVer = s 'EtsMmRisks.MmRvSynthGreeksAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {528db6ab-8d1c-4795-8c80-79c0232a57b0} = s 'MmRvSynthGreeksAtom Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvSynthGreeksAtom.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvSynthGreeksAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{dcc0c411-74e1-4481-a7ad-336e903474bf}'
+		}
+	}
+}

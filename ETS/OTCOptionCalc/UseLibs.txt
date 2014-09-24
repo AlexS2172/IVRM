@@ -1,0 +1,9 @@
+ADODB.dll
+DevExpress.Data3.dll
+DevExpress.Utils3.dll
+DevExpress.XtraBars3.dll
+DevExpress.XtraEditors3.dll
+DevExpress.XtraGrid3.dll
+DevExpress.XtraNavBar3.dll
+DevExpress.XtraVerticalGrid3.dll
+

@@ -1,0 +1,532 @@
+// FixProviders.idl : IDL source for FixProviders.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (FixProviders.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(AC4400DF-BA4B-480F-84F5-3E0BAB85E857),
+	version(1.0),
+	helpstring("Fix FixProviders 1.0 Type Library")
+]
+library FixProvidersLibrary
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+//	importlib("fixobjs.tlb");
+
+	/* Business Level Fix Messages Struct*/
+	// -----------------------------------------------[ types ]-------------------------------------------------
+	[
+		uuid(73D9C7B1-1093-4e6d-8BE1-A8C36A9E36A9),
+		helpstring("Instructions for order handling on Broker trading floor"),
+		v1_enum
+	]
+	typedef enum FoOrderHandlInstEnum
+	{
+		[helpstring("Automated execution order, private, no Broker intervention")]	enFoOhiAutoNoBrokerIntervention = '1',
+		[helpstring("Automated execution order, public, Broker intervention OK")]	enFoOhiAutoBrokerInterventionOK = '2',
+		[helpstring("Manual order, best execution")]								enFoOhiManualBestExecution      = '3'
+	} FoOrderHandlInstEnum;
+
+	[
+		uuid(A2AADF6F-3F40-43ee-966B-4304E8FD01BD),
+		helpstring("Security type"),
+		v1_enum
+	]
+	typedef enum FoSecurityTypeEnum
+	{
+		[helpstring("Stock")]	enFoStSTK		= 0,	// CS
+		[helpstring("Futures")]	enFoStFUT		= 1,	// FUT
+		enFoStOST		= 2,
+		enFoStOFT		= 3,
+		[helpstring("Index")]	enFoStIDX		= 4,	// INDX
+		[helpstring("Option")]	enFoStOPT		= 5,	// OPT
+		[helpstring("MLEG")]	enFoStMLEG		= 6,	// MLEG
+		[helpstring("USTB")]	enFoStUSTB		= 7		// USTB
+
+	} FoSecurityTypeEnum;
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(05A317DA-2EB7-4fa9-8794-36EDF19DA37E),
+		helpstring("Order type enum"),
+		v1_enum
+	]
+	enum FoOrderTypeEnum
+	{
+		enFoOrdMarket				= '1',
+		enFoOrdLimit				= '2',
+		enFoOrdStop					= '3',
+		enFoOrdStopLimit			= '4',
+		enFoOrdMarketOnClose		= '5',
+		enFoOrdWithOrWithout		= '6',
+		enFoOrdLimitOrBetter		= '7',
+		enFoOrdLimitWithOrWithout	= '8',
+		enFoOrdOnBasis				= '9',
+		enFoOrdOnClose				= 'A',
+		enFoOrdLimitOnClose			= 'B',
+		enFoOrdForexMarket			= 'C',
+		enFoOrdPrevQuoted			= 'D',
+		enFoOrdPrevIndicated		= 'E',
+		enFoOrdForexLimit			= 'F',
+		enFoOrdForexSwap			= 'G',
+		enFoOrdForexPrevQuoted		= 'H',
+		enFoOrdMarketIfTouched		= 'J'
+	} FoOrderTypeEnum;
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(1BB00991-C636-4afd-A03E-AE524CB86FA5),
+		helpstring("Execute transaction type enum"),
+		v1_enum
+	]
+	enum FoExecTransactionTypeEnum
+	{
+		enFoTrnNew				= 0,	//New
+		enFoTrnCancel			= 1,	//Cancel
+		enFoTrnCorrect			= 2,	//Correct
+		enFoTrnStatus			= 3		//Status
+	} FoExecTransactionTypeEnum;
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(B4D94ED9-F10E-4e64-B7C4-76A66D342E8E),
+		helpstring("Order status enum"),
+		v1_enum
+	]
+	enum FoOrderStatusEnum
+	{
+		enFoOsNew					= '0',	// Exchange accepted the order.
+		enFoOsPartiallyFilled		= '1',	// Executed
+		enFoOsFilled				= '2',	// Executed
+		enFoOsDoneForDay			= '3',	// Canceled with nothing done for any remaining open quantity on the order.
+		enFoOsCanceled				= '4',	// Canceled
+		enFoOsReplaced				= '5',	// Replaced
+		enFoOsPendingCancelReplace	= '6',	// Reply on cancel or alter request
+		enFoOsStopped				= '7',	
+		enFoOsRejected				= '8',
+		enFoOsSuspended				= '9',
+		enFoOsPendingNew			= 'A',
+		enFoOsCalculating			= 'B',
+		enFoOsExpired				= 'C'
+	} FoOrderStatusEnum;
+	
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(31BE5528-7C5B-421e-AF16-2C65CBCAEBCC),
+		helpstring("Order side enum"),
+		v1_enum
+	]
+	enum FoOrderSideEnum
+	{
+		enFoOsdBuy					= '1',
+		enFoOsdSell					= '2',
+		enFoOsdBuyMinus				= '3',
+		enFoOsdSellPlus				= '4',
+		enFoOsdSellShort			= '5',
+		enFoOsdSellShortExtempt		= '6',
+		enFoOsdUndisclosed			= '7',
+		enFoOsdCross				= '8'
+	} FoOrderSideEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(CAE714A9-BCA5-4c80-9227-3D55C56FB733),
+		helpstring("Protection scope type enum"),
+		v1_enum
+	]
+	enum FoPriceProtectionScopeEnum
+	{
+		enFoPpsNone				= '0',
+		enFoPpsLocal			= '1',	//Exchange, ECN, ATS
+		enFoPpsNational			= '2',	//Across all national markets
+		enFoPpsGlobal			= '3'	//Across all markets
+	} FoPriceProtectionScopeEnum;
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(5C41A069-872D-44fc-BF4B-CFB10F6DB760),
+		helpstring("Time in force enum"),
+		v1_enum
+	]
+	enum FoTimeInForceEnum
+	{
+		enFoTifDay				= '0',	//Day
+		enFoTifGTC				= '1',	//Good Till Cancel  (GTC)
+		enFoTifOPG				= '2',	//At the Opening  (OPG)
+		enFoTifIOC				= '3',	//Immediate or Cancel  (IOC)
+		enFoTifFOK				= '4',	//Fill or Kill  (FOK)
+		enFoTifGTX				= '5',	//Good Till Crossing  (GTX)
+		enFoTifDTD				= '6'	//Good Till Date
+	} FoTimeInForceEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef
+	[
+		uuid(B6EFBBD9-1001-46b5-9E66-E89884DC0FCE),
+		helpstring("Cancel reject reason enum"),
+		v1_enum
+	]
+	enum FoCancelRejectReasonEnum
+	{
+		enFoCrrTooLate			= 0,	//Too late to cancel
+		enFoCrrUnknownOrder		= 1		//Unknown order
+	} FoCancelRejectReasonEnum;
+
+	[
+		uuid(D2EE9138-3E19-4743-8F57-0F20B093DB93)
+	]
+	struct FoOrder
+	{
+		//Contract Specific
+		[helpstring("SecurityType")]		FoSecurityTypeEnum	SecurityType;
+		[helpstring("Symbol")]				BSTR				Symbol;
+		
+		//Option Specific
+		[helpstring("StrikePrice")]			double				StrikePrice;
+		[helpstring("ExpirationDate")]		DATE				ExpirationDate;
+		[helpstring("IsCall")]				VARIANT_BOOL		IsCall;
+
+		[helpstring("ExecutionBroker")]		BSTR				ExecBroker;
+		[helpstring("HandledInstruction")]	FoOrderHandlInstEnum	HandlInst;
+		[helpstring("MinimumQuantity")]		long				MinQty;
+		[helpstring("Side")]				FoOrderSideEnum		Side;
+		[helpstring("Quantity")]			long				OrderQty;
+		[helpstring("OrderType")]			FoOrderTypeEnum		OrdType;
+		[helpstring("Price")]				double				Price;
+		[helpstring("StopPrice")]			double				StopPrice;
+		[helpstring("TimeInForce")]			FoTimeInForceEnum		TimeInForce;
+		[helpstring("PriceProtectionScope")]	FoPriceProtectionScopeEnum	PriceProtectionScope;
+		[helpstring("Account")]				BSTR				Account;
+		[helpstring("UniqueOrderID")]		BSTR				ClOrdID;
+		[helpstring("OrderID")]				long				OrderID;
+		[helpstring("ExecutionDestination")]	BSTR				ExDestination;
+	};
+	
+	[
+		uuid(1BF9EA11-6D16-4aa3-8156-2E89E816669C)
+	]
+	struct FoExecutionReport
+	{
+		[helpstring("UniqueOrderID")]		BSTR				ClOrdID;
+		[helpstring("OriginalOrderID")]		BSTR				OrigClOrdID;
+		[helpstring("ExecutionBroker")]		BSTR				ExecBroker;
+		[helpstring("ExecutionID")]			BSTR				ExecID;		
+		[helpstring("ExecTransactionType")]	FoExecTransactionTypeEnum	ExecTransType;
+		[helpstring("ReferenceExecID")]		BSTR				ExecRefID;		
+		[helpstring("ExecutionType")]		FoOrderStatusEnum	ExecType;
+		[helpstring("OrderStatus")]			FoOrderStatusEnum	OrdStatus;
+		
+		[helpstring("OrderSide")]			FoOrderSideEnum		Side;
+		[helpstring("OrderQuantity")]		long				OrderQty;
+		[helpstring("OrderType")]			FoOrderTypeEnum		OrderType;
+		[helpstring("Price")]				double				Price;
+		[helpstring("StopPrice")]			double				StopPrice;
+		[helpstring("TimeInForce")]			FoTimeInForceEnum	TimeInForce;
+		[helpstring("LastPrice")]			double				LastPrice;
+		[helpstring("AveragePrice")]		double				AvgPrice;
+		[helpstring("Account")]				BSTR				Account;
+		[helpstring("LastShares")]			long				LastShares;			
+		[helpstring("LeavesQuantity")]		long				LeavesQuantity;			
+		[helpstring("CumQuantity")]			long				CumQuantity;			
+		[helpstring("CanceledQuantity")]	long				CanceledQuantity;			
+		[helpstring("TransactTime")]		DATE				TransactTime;					
+		[helpstring("Text")]				BSTR				Text;
+
+		//Contract Specific
+		[helpstring("SecurityType")]		FoSecurityTypeEnum	SecurityType;
+		[helpstring("Symbol")]				BSTR				Symbol;
+		[helpstring("UndSymbol")]			BSTR				UndSymbol;
+		[helpstring("StockRefPrice")]		double				StockRefPrice;
+
+		//Option Specific
+		[helpstring("StrikePrice")]			double				StrikePrice;
+		[helpstring("ExpirationDate")]		DATE				ExpirationDate;
+		[helpstring("IsCall")]				VARIANT_BOOL		IsCall;
+		[helpstring("Root")]				BSTR				Root;
+	};
+
+	[
+		uuid(85C42884-71DF-416e-A1E0-2B795C34B6A8)
+	]
+	struct FoOrderCancelReplaceRequest
+	{
+		[helpstring("OriginalOrderID")]		BSTR				OrigClOrdID;
+		[helpstring("UniqueOrderID")]		BSTR				ClOrdID;
+		[helpstring("ExecutionBroker")]		BSTR				ExecBroker;
+		[helpstring("HandledInstruction")]	FoOrderHandlInstEnum	HandlInst;
+		//Contract Specific
+		[helpstring("SecurityType")]		FoSecurityTypeEnum	SecurityType;
+		[helpstring("Symbol")]				BSTR				Symbol;
+
+		//Option Specific
+		[helpstring("StrikePrice")]			double				StrikePrice;
+		[helpstring("ExpirationDate")]		DATE				ExpirationDate;
+		[helpstring("IsCall")]				VARIANT_BOOL		IsCall;
+
+		[helpstring("OrderSide")]			FoOrderSideEnum		Side;
+		[helpstring("OrderQuantity")]		long				OrderQty;
+		[helpstring("OrderType")]			FoOrderTypeEnum		OrdType;
+		[helpstring("Price")]				double				Price;
+		[helpstring("StopPrice")]			double				StopPrice;
+		[helpstring("TimeInForce")]			FoTimeInForceEnum	TimeInForce;
+		[helpstring("Account")]				BSTR				Account;
+		[helpstring("ExecutionDestination")]	BSTR				ExDestination;
+	};
+
+	[
+		uuid(85C4526E-2A5F-4087-ABCA-0860F78E8D38)
+	]
+	struct FoOrderCancelRequest
+	{
+		[helpstring("OriginalOrderID")]		BSTR				OrigClOrdID;
+		[helpstring("UniqueOrderID")]		BSTR				ClOrdID;
+		[helpstring("ExecutionBroker")]		BSTR				ExecBroker;
+		//Contract Specific
+		[helpstring("SecurityType")]		FoSecurityTypeEnum	SecurityType;
+		[helpstring("Symbol")]				BSTR				Symbol;
+		//Option Specific
+		[helpstring("StrikePrice")]			double				StrikePrice;
+		[helpstring("ExpirationDate")]		DATE				ExpirationDate;
+		[helpstring("IsCall")]				VARIANT_BOOL		IsCall;
+
+		[helpstring("OrderSide")]			FoOrderSideEnum		Side;
+		[helpstring("OrderQuantity")]		long				OrderQty;
+	};
+
+	[
+		uuid(11D50FA8-D4B1-4f6c-BC83-FCB88843A311)
+	]
+	struct FoOrderCancelReject
+	{
+		[helpstring("UniqueOrderID")]		BSTR				ClOrdID;
+		[helpstring("OriginalOrderID")]		BSTR				OrigClOrdID;
+		[helpstring("OrderStatus")]			FoOrderStatusEnum	OrdStatus;
+		[helpstring("Cancel reject reason")]	FoCancelRejectReasonEnum	CxlRejReason;
+		[helpstring("ExecutionBroker")]		BSTR				ExecBroker;
+		[helpstring("Text")]				BSTR				Text;
+	};
+
+	[
+		uuid(D81FC225-DC41-4c56-8EBF-C35CB839EFC6)
+	]
+	struct FoOrderStatusRequest
+	{
+		[helpstring("UniqueOrderID")]		BSTR				ClOrdID;
+		[helpstring("SecurityType")]		FoSecurityTypeEnum	SecurityType;
+		[helpstring("Symbol")]				BSTR				Symbol;
+		[helpstring("StrikePrice")]			double				StrikePrice;
+		[helpstring("ExpirationDate")]		DATE				ExpirationDate;
+		[helpstring("IsCall")]				VARIANT_BOOL		IsCall;
+		[helpstring("OrderSide")]			FoOrderSideEnum		Side;
+		[helpstring("ExecutionBroker")]		BSTR				ExecBroker;
+	};
+
+
+	typedef	
+	[
+		uuid(40F54A91-E177-4f0f-BF09-9D64923819B3),
+		v1_enum,
+	]	
+	enum FpDispIdEnum
+	{
+		// IOrderProvider
+		DISPID_FpConnect = 1,
+		DISPID_FpDisconnect,
+		DISPID_FpSubmitNewOrder,
+		DISPID_FpAlterOrder,
+		DISPID_FpCancelOrder,
+		DISPID_FpRequestOrderStatus,
+		// _OrderProviderEvents
+		DISPID_FpOnCancelReject = 10,
+		DISPID_FpOnExecReport,
+		DISPID_FpOnOrderError,
+		DISPID_FpOnDisconnect,
+		DISPID_FpOnReLogon,
+		DISPID_FpOnLogonFailed,
+		// IFixProviderInitializer
+		DISPID_FpSetType = 20,
+		DISPID_FpGetType,
+		// IFixProviderSpecifics
+		DISPID_FpGetSpecifics = 30,
+		DISPID_FpSetSpecifics,
+		//IFixProvidersCache
+		DISPID_FpCount = 40,
+		DISPID_FpAttach,
+		DISPID_FpDetach,
+		//IFixProviders
+		DISPID_FpFixProvidersCount = 50,
+		DISPID_FpSpecifics,
+		DISPID_FpInitialize,
+		DISPID_FpGetFixProvider,
+		DISPID_FpGetFixProviderInfo
+	}
+	FpDispIdEnum;
+
+	//-----------------------------------------------------------------------------//
+	typedef 
+	[
+		uuid(C0EEA569-3C19-440b-B632-FC2188993F4B),
+		helpstring("Error states enumeration")
+	]
+	enum
+	{
+		enFeOk = 0,				// S_OK		
+		enFeGenericError,		// another name of E_FAIL
+		enFeRejected,	    	// other side rejected our business-level message
+		enFeDisconnected,		// another Fix Session disconnected
+		enFeLogonFailed
+	} FixErrorStates;
+
+	[
+		object,
+		uuid(4409CB50-6AC8-49E2-AA8F-624D724A3E82),
+		dual,
+		helpstring("IOrderProvider Interface"),
+		pointer_default(unique)
+	]
+	interface IOrderProvider : IDispatch
+	{
+		[id(DISPID_FpConnect), helpstring("method Connect")] HRESULT Connect();
+		[id(DISPID_FpDisconnect), helpstring("method Disconnect")] HRESULT Disconnect();
+		[id(DISPID_FpSubmitNewOrder), helpstring("method SubmitNewOrder")] 
+			HRESULT SubmitNewOrder([in] struct FoOrder* Order, [out, retval] BSTR* OrderID);		
+		[id(DISPID_FpAlterOrder), helpstring("method AlterOrder")] 
+			HRESULT AlterOrder([in] BSTR OrderID, [in] struct FoOrderCancelReplaceRequest* Order, [out, retval] BSTR* AlteredOrderID);
+		[id(DISPID_FpCancelOrder), helpstring("method CancelOrder")] 
+			HRESULT CancelOrder([in] BSTR OrderID, [in] struct FoOrderCancelRequest* Order, [out, retval] BSTR* CanceledOrderID);
+		[id(DISPID_FpRequestOrderStatus), helpstring("method RequestOrderStatus")] 
+			HRESULT RequestOrderStatus([in] BSTR OrderID, [in] struct FoOrderStatusRequest* Order);
+	};
+	// -------------------------------------------------------------------//
+	[
+		uuid(5FE9E193-61EC-4064-9192-3BBEAFB510BF),
+		helpstring ("Events for OrderProvider")
+	]
+	dispinterface _OrderProviderEvents
+	{
+		properties:
+		methods:
+			[id(DISPID_FpOnCancelReject)] void OnCancelReject([in] BSTR Reason, [in] struct FoOrderCancelReject* Report);
+			[id(DISPID_FpOnExecReport)] void OnExecutionReport([in] struct FoExecutionReport* Report);
+			[id(DISPID_FpOnOrderError)] void OnOrderError([in] BSTR ClOrdID, [in] BSTR Description);
+			[id(DISPID_FpOnDisconnect)] void OnDisconnect([in] long ProviderType);
+	};
+	// -------------------------------------------------------------------//
+	[
+		object,
+		uuid(0F2AD7B2-91AC-4fe8-B63E-0ACBB6875266),
+		dual,
+		helpstring("IFixProviderInitializer Interface"),
+		pointer_default(unique)
+	]
+	interface IFixProviderInitializer : IDispatch
+	{
+		[id(DISPID_FpSetType), helpstring("method SetType")] HRESULT SetType([in] long NewType);
+		[id(DISPID_FpGetType), helpstring("method GetType")] HRESULT GetType([out, retval] long* CurrType);
+	};
+	// -------------------------------------------------------------------//
+	[
+		object,
+		uuid(D386DCDE-CDF8-44AB-82AA-AB1E5D6E0AD0),
+	
+		helpstring("IFixProviderSpecifics Interface"),
+		pointer_default(unique)
+	]
+	interface IFixProviderSpecifics : IDispatch
+	{
+		[id(DISPID_FpGetSpecifics), helpstring("method GetSpecifics")] HRESULT GetSpecifics([in, out] long* FixProviderID, 
+																		[in, out] BSTR* ProgId, 
+																		[in, out] BSTR* Description,
+																		[in, out] VARIANT_BOOL * LoginNeeded,
+																		[in, out] BSTR* UserAccount, 
+																		[in, out] BSTR* UserPassword);
+
+		[id(DISPID_FpSetSpecifics), helpstring("method SetSpecifics")] HRESULT SetSpecifics([in, out] long* FixProviderID, 
+																		[in, out] BSTR* Description,
+																		[in, out] BSTR* ProgId, 
+																		[in, out] VARIANT_BOOL * LoginNeeded,
+																		[in, out] BSTR* UserAccount, 
+																		[in, out] BSTR* UserPassword);
+	};
+	// -------------------------------------------------------------------//
+	[
+		object,
+		uuid(04174581-E551-49f0-AD2E-9C4ADD435591),
+		dual,
+		nonextensible,
+		helpstring("IFixProvidersCache Interface"),
+		pointer_default(unique)
+	]
+	interface IFixProvidersCache : IDispatch
+	{
+		[propget, hidden, id(DISPID_NEWENUM), helpstring("_NewEnum")] HRESULT _NewEnum([out, retval] IUnknown **pVal);
+		[propget, id(DISPID_VALUE), helpstring("property Item")] HRESULT Item([in] long index, [out, retval] IFixProviderSpecifics** pVal);
+		[propget, id(DISPID_FpCount), helpstring("property Count")] HRESULT Count([out, retval] long* pVal);
+		[id(DISPID_FpAttach), helpstring("method Attach")] HRESULT Attach(void);
+		[id(DISPID_FpDetach), helpstring("method Detach")] HRESULT Detach(void);
+	};
+	// -------------------------------------------------------------------//
+	[
+		object,
+		uuid(F55C8975-5A69-4B1C-8BA8-A919740A6EDA),
+		dual,
+		helpstring("IFixProviders Interface"),
+		pointer_default(unique)
+	]
+	interface IFixProviders : IDispatch
+	{
+		[propget, id(DISPID_FpFixProvidersCount), helpstring("property Count")] HRESULT Count([out, retval] long *pVal);
+		[propget, id(DISPID_NEWENUM), helpstring("property _NewEnum"), hidden] HRESULT _NewEnum([out, retval] IUnknown* *pVal);
+		[propget, id(DISPID_VALUE), helpstring("property Item")] HRESULT Item([in] long Index, [out, retval] IFixProviderSpecifics* * FixProvider);
+		[propget, id(DISPID_FpSpecifics), helpstring("property Specifics")] HRESULT Specifics([in] long FixProviderId, [out, retval] IFixProviderSpecifics* *pVal);
+		[id(DISPID_FpInitialize), helpstring("method Initialize")] HRESULT Initialize();
+		[id(DISPID_FpGetFixProvider), helpstring("method GetFixProvider")] HRESULT GetFixProvider([in] long FixProviderId, [out, retval] IFixProviderSpecifics** ppFixProvider);
+		[id(DISPID_FpGetFixProviderInfo), helpstring("method GetFixProviderInfo")] HRESULT GetFixProviderInfo([in] long FixProviderID, [in, out] BSTR* FileName, [in, out] BSTR* Version);
+	};
+	// -------------------------------------------------------------------//
+	// Coclasses
+	[
+		uuid(A3FE72F5-8B02-4BEC-BCD0-A1138090771C),
+		helpstring("FixProviders Class")
+	]
+	coclass FixProviders
+	{
+		[default]			interface IFixProviders;
+	};
+	[
+		uuid(B5CC7811-7824-4556-B7A1-BBAD300AE529),
+		helpstring("FixProvider Class")
+	]
+	// -------------------------------------------------------------------//
+	coclass FixProvider
+	{
+		[default]			interface IOrderProvider;
+							interface IFixProviderInitializer;
+		[default, source]	dispinterface _OrderProviderEvents;
+	};
+	[
+		uuid(22E5C4AF-6FCF-4921-A7B9-5095A91747EF),
+		helpstring("FixProviderSpecifics Class")
+	]
+	// -------------------------------------------------------------------//
+	coclass FixProviderSpecifics
+	{
+		[default]			interface IFixProviderSpecifics;
+	};
+	[
+		uuid(1A952C1D-B18F-4b36-8B47-B199D2687967),
+		helpstring("FixProvidersCache Class")
+	]
+	// -------------------------------------------------------------------//
+	coclass FixProvidersCache
+	{
+		[default]			interface IFixProvidersCache;
+	};
+};

@@ -1,0 +1,49 @@
+// cvCompiler.idl : IDL source for cvCompiler
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (cvCompiler.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(533FBF62-A034-4A58-8FB2-19C6E9FA0CDE),
+	dual,
+	nonextensible,
+	helpstring("IcvCompiler Interface"),
+	pointer_default(unique)
+]
+interface IcvCompiler : IDispatch{
+	[propget, id(1), helpstring("property ConnctionString")] HRESULT ConnectionString([out, retval] BSTR* pVal);
+	[propput, id(1), helpstring("property ConnctionString")] HRESULT ConnectionString([in] BSTR newVal);
+	[id(2), helpstring("method Compile")] HRESULT Compile([in] LONG iContext, [in] LONG iLevel, [in] BSTR strVarName, [in] BSTR strCaption, [in] BSTR strFormat,[in] BSTR strSource, [in] BSTR strDescription, [in] SAFEARRAY(LONG)* arrAggregation, [out] SAFEARRAY(BSTR)* arrErrors, [out] SAFEARRAY(BYTE)* arrCode, [out,retval] LONG* iVariableID);
+};
+[
+	uuid(48FE0F84-E446-430B-8D01-C1AFFCA3FC6B),
+	version(1.0),
+	helpstring("cvCompiler 1.0 Type Library")
+]
+library cvCompilerLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(C144615B-B41A-4C2B-BA81-A0F44390FFB7),
+		helpstring("_IcvCompilerEvents Interface")
+	]
+	dispinterface _IcvCompilerEvents
+	{
+		properties:
+		methods:
+	};
+	[
+		uuid(FAB06E55-A144-45B1-BBDA-225E568B9F78),
+		helpstring("cvCompiler Class")
+	]
+	coclass cvCompiler
+	{
+		[default] interface IcvCompiler;
+		[default, source] dispinterface _IcvCompilerEvents;
+	};
+};

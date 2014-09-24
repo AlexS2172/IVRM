@@ -1,0 +1,9 @@
+; EtsMmVolaAnalysis.def : Declares the module parameters.
+
+;LIBRARY      "EtsMmVolaAnalysis.dll"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

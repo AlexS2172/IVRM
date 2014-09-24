@@ -1,0 +1,828 @@
+// MsgStruct.idl : IDL source for MsgStruct.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (MsgStruct.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+#define MSGSTRUCT_PROP_DEF(_dispid, _type, _name)	\
+		[propget, id(_dispid), helpstring(#_name)] HRESULT _name([out, retval] _type* pVal);	\
+		[propput, id(_dispid), helpstring(#_name)] HRESULT _name([in] _type newVal);
+
+#define MSGSTRUCT_PROP_DEF2(_dispid, _type, _name, _helpstring)	\
+		[propget, id(_dispid), helpstring(_helpstring)] HRESULT _name([out, retval] _type* pVal);	\
+		[propput, id(_dispid), helpstring(_helpstring)] HRESULT _name([in] _type newVal);
+
+#define MSGSTRUCT_NAMED_PROP_DEF(_dispid, _type, _name)	\
+		[propget, id(_dispid), helpstring(#_name)] HRESULT _name([in] BSTR PropName, [out, retval] _type* pVal);	\
+		[propput, id(_dispid), helpstring(#_name)] HRESULT _name([in] BSTR PropName, [in] _type newVal);
+	
+
+[
+		uuid(4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A),
+		version(1.0),
+		helpstring("MsgStruct 1.0 Type Library")
+]
+
+library MSGSTRUCTLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	typedef 
+	[
+		uuid(8002C076-2BEB-458F-8D04-D9C007BE4B5B),
+		v1_enum,
+	]
+	enum 
+	{
+		[helpstring("S")] enStStock			= 83,
+		[helpstring("I")] enStIndex			= 73,
+		[helpstring("O")] enStOption		= 79,
+		[helpstring("F")] enStFuture		= 70,
+		[helpstring("A")] enStFutureOption	= 65,
+		[helpstring("U")] enStFutUnd		= 89
+	}
+	SYMBOL_TYPE;
+
+	typedef 
+	[
+		uuid(E3D9986A-3186-4432-9DF3-936B22F52253),
+		v1_enum,
+	]
+	enum 
+	{
+		enTeDelete	= 0,
+		enTeNew		= 1,
+		enTeUpdate	= 2
+	}
+	TRADE_ACTION;
+
+	typedef
+	[
+		uuid(EA4DA985-872C-43d1-A88F-D0FF605F34D6),
+		v1_enum,
+	]
+	enum
+	{
+		enGcmTheoreticalVolatility = 0,
+		enGcmImpliedVolatility = 1
+	}
+	GREEKS_CALCULATION_MODE;
+
+	typedef 
+	[
+		uuid(FE155190-CD0B-4b6c-BEB2-6979C59AF676),
+		v1_enum,
+	]
+	enum 
+	{
+		enRtInserted	= 1,
+		enRtUpdated		= 2,
+		enRtDeleted		= 3
+	}
+	RECORD_TYPE;
+
+	typedef 
+	[
+		uuid(B33D858E-DBCF-4dae-8646-E080C24227C7),
+		v1_enum,
+	]
+	enum 
+	{
+		enRsOk			= 0,
+		enRsEndOfList	= 1,
+		enRsError		= 2
+	}
+	RECORD_STATUS;
+
+	typedef 
+	[
+		uuid(04BDBCDC-E7BD-4eb5-91C6-5E9C2CB3889F),
+		v1_enum,
+	]
+	enum 
+	{
+		enTmssNoChanges				= 0x00,
+		enTmssNewStock				= 0x01,
+		enTmssNewOption				= 0x02,
+		enTmssNewFutureRoot			= 0x04,
+		enTmssNewFuture				= 0x08
+	}
+	TRADE_MS_STATE;
+
+	typedef 
+	[
+		uuid(6B14532A-4817-4413-BCEB-7E46BE0E0B05),
+		v1_enum,
+	]
+	enum 
+	{
+		enUndNoChanges				= 0x00,
+		enUndAggregationUpdate		= 0x01,
+		enUndDividendUpdate			= 0x02,
+		enUndAllTheoCloseUpdate		= 0x04,
+		enUndSettingsUpdate			= 0x08,
+		enHTBRatesUpdated			= 0x10,
+		enGlobalParamsUpdate		= 0x20,
+		enPriceProfileUpdate		= 0x40,
+		enPriceRoundRuleUpdate		= 0x80,
+		enToleranceRangeUpdate		= 0x100
+	}
+	UNDERLYING_UPDATE_STATUS;
+
+	typedef 
+	[
+		uuid(6A152DAE-69FF-487a-8FD2-917466EEA731),
+		v1_enum,
+	]
+	enum 
+	{
+		enUsNone					=   0,
+		enUsAdd						=	1,
+		enUsDelete					=	2,
+		enUsUpdate					=	3
+	}
+	MANUAL_PRICE_UPDATE_STATUS;
+
+	typedef 
+	[
+		uuid(4A604B3C-28C7-48a7-A414-D6F2FFEE9B7A),
+		v1_enum,
+	]
+	enum 
+	{
+		enSevSuccess	= 0,
+		enSevWarning	= 1,
+		enSevInfo		= 2,
+		enSevError		= 3
+	}
+	MSG_SEVERITY;
+
+	typedef 
+	[
+		uuid(FCED547E-7355-4bfe-941B-106A71A1A0CD),
+		v1_enum,
+	]
+	enum 
+	{
+		enFacUnspecified	= 0,
+		enFacRTTF			= 1,
+		enFacBO				= 2,
+		enFacETSMM			= 3,
+		enFacETSFL			= 4,
+		enFacVolaMan		= 5,
+		enFacIVRMDataLoader = 6
+	}
+	MSG_FACILITY;
+
+	typedef 
+	[
+		uuid(A2E032F2-D65B-460d-A254-EA25562F4403),
+		v1_enum,
+	]
+	enum 
+	{
+		enPrUnspecified	= 0,
+		enPrLow			= 1,
+		enPrNormal		= 2,
+		enPrHigh		= 3
+	}
+	MSG_PRIORITY;
+
+	typedef 
+	[
+		uuid(6961DA7B-7213-4685-AC02-4EDCAA86D075),
+		v1_enum,
+	]
+	enum 
+	{
+		enTsRealtime			= 0,
+		enTsSimulated			= 1,
+		enTsManual				= 2,
+		enTsMatchedRealtime		= 3
+	}
+	TRADE_STATUS;
+
+	//////////////////////////////////////////////////////////////////////////
+	// Order enums
+	[
+		uuid(168B2E35-2679-4db5-A928-2877B4F170AC),
+		helpstring("FixProvider enum"),
+		v1_enum
+	]
+	typedef enum MsFixProviderEnum
+	{
+		[helpstring("O'Connor Fix Provider")]	enMsFpOConnor = 0
+	} MsFixProviderEnum;
+
+	typedef
+	[
+		uuid(E48C7959-5D47-4858-8EB4-BB83A3EC81BA),
+		helpstring("Identifies transaction type"),
+		v1_enum
+	]
+	enum MsExecTransactionTypeEnum
+	{
+		enMsTrnNew				= 0,	//New
+		enMsTrnCancel			= 1,	//Cancel
+		enMsTrnCorrect			= 2,	//Correct
+		enMsTrnStatus			= 3		//Status
+	} MsExecTransactionTypeEnum;
+
+	typedef
+	[
+		uuid(B4D94ED9-F10E-4e64-B7C4-76A66D342E8E),
+		helpstring("Exec type enum"),
+		v1_enum
+	]
+	enum MsOrderStatusEnum
+	{
+		[helpstring("0")] enMsOsNew						= 48,	// Exchange accepted the order.
+		[helpstring("1")] enMsOsPartiallyFilled			= 49,	// Executed
+		[helpstring("2")] enMsOsFilled					= 50,	// Executed
+		[helpstring("3")] enMsOsDoneForDay				= 51,	// Canceled with nothing done for any remaining open quantity on the order.
+		[helpstring("4")] enMsOsCanceled				= 52,	// Canceled
+		[helpstring("5")] enMsOsReplaced				= 53,	// Replaced
+		[helpstring("6")] enMsOsPendingCancelReplace	= 54,	// Reply on cancel or alter request
+		[helpstring("7")] enMsOsStopped					= 55,	
+		[helpstring("8")] enMsOsRejected				= 56,
+		[helpstring("9")] enMsOsSuspended				= 57,
+		[helpstring("A")] enMsOsPendingNew				= 65,
+		[helpstring("B")] enMsOsCalculating				= 66,
+		[helpstring("C")] enMsOsExpired					= 67
+	} MsOrderStatusEnum;
+
+	typedef
+	[
+		uuid(05A317DA-2EB7-4fa9-8794-36EDF19DA37E),
+		helpstring("Order type enum"),
+		v1_enum
+	]
+	enum MsOrderTypeEnum
+	{
+		[helpstring("1")] enMsOrdMarket				= 49,
+		[helpstring("2")] enMsOrdLimit				= 50,
+		[helpstring("3")] enMsOrdStop				= 51,
+		[helpstring("4")] enMsOrdStopLimit			= 52,
+		[helpstring("5")] enMsOrdMarketOnClose		= 53,
+		[helpstring("6")] enMsOrdWithOrWithout		= 54,
+		[helpstring("7")] enMsOrdLimitOrBetter		= 55,
+		[helpstring("8")] enMsOrdLimitWithOrWithout	= 56,
+		[helpstring("9")] enMsOrdOnBasis			= 57,
+		[helpstring("A")] enMsOrdOnClose			= 65,
+		[helpstring("B")] enMsOrdLimitOnClose		= 66,
+		[helpstring("C")] enMsOrdForexMarket		= 67,
+		[helpstring("D")] enMsOrdPrevQuoted			= 68,
+		[helpstring("E")] enMsOrdPrevIndicated		= 69,
+		[helpstring("F")] enMsOrdForexLimit			= 70,
+		[helpstring("G")] enMsOrdForexSwap			= 71,
+		[helpstring("H")] enMsOrdForexPrevQuoted	= 72,
+		[helpstring("J")] enMsOrdMarketIfTouched	= 74
+	} MsOrderTypeEnum;
+
+	typedef
+	[
+		uuid(5C41A069-872D-44fc-BF4B-CFB10F6DB760),
+		helpstring("Time in force enum"),
+		v1_enum
+	]
+	enum MsTimeInForceEnum
+	{
+		[helpstring("0")] enMsTifDay				= 48,	//Day
+		[helpstring("1")] enMsTifGTC				= 49,	//Good Till Cancel  (GTC)
+		[helpstring("2")] enMsTifOPG				= 50,	//At the Opening  (OPG)
+		[helpstring("3")] enMsTifIOC				= 51,	//Immediate or Cancel  (IOC)
+		[helpstring("4")] enMsTifFOK				= 52,	//Fill or Kill  (FOK)
+		[helpstring("5")] enMsTifGTX				= 53,	//Good Till Crossing  (GTX)
+		[helpstring("6")] enMsTifDTD				= 54	//Good Till Date
+	} MsTimeInForceEnum;
+	
+ 	//////////////////////////////////////////////////////////////////////////
+	// intefaces
+	[
+		object,
+		uuid(41B7FE2B-2126-47FB-BC0D-A10A8DDEB711),
+		dual,
+		helpstring("INetPacking Interface"),
+		pointer_default(unique)
+	]
+	interface INetPacking : IDispatch
+	{
+		[id(1)] HRESULT Pack([out, retval] BSTR* pRetVal);
+		[id(2)] HRESULT Unpack([in] BSTR Val);
+	};
+
+	[
+		object,
+		uuid(3C3C1A50-B0DE-441D-B925-91B1C42AD280),
+		dual,
+		helpstring("ISymbolObject Interface"),
+		pointer_default(unique)
+	]
+	interface ISymbolObject : IDispatch
+	{
+		MSGSTRUCT_PROP_DEF(1,	SYMBOL_TYPE,	Type)
+		MSGSTRUCT_PROP_DEF(2,	BSTR,			Name)
+		MSGSTRUCT_PROP_DEF(3,	BSTR,			Exchange)
+		MSGSTRUCT_PROP_DEF(4,	BSTR,			Currency)
+		
+		[id(5), helpstring("Set")] HRESULT Set([in] SYMBOL_TYPE Type, [in] BSTR Name, [in] BSTR Exchange, [in] BSTR Currency);
+		[id(6), helpstring("GetString")] HRESULT GetString([out, retval] BSTR* RetVal);
+		[id(7), helpstring("SetFromString")] HRESULT SetFromString([in] BSTR Val);
+	};
+
+	[
+		object,
+		uuid(EC6B6BAD-D5F5-49A8-84BD-E4F2FC7001E2),
+		dual,
+		nonextensible,
+		helpstring("ISettingsUpdate Interface"),
+		pointer_default(unique)
+	]
+	interface ISettingsUpdate : IDispatch{
+		MSGSTRUCT_PROP_DEF(1, GREEKS_CALCULATION_MODE,		GreeksCalculationMode)
+		MSGSTRUCT_PROP_DEF(2, long,							GreeksCalculationModel)
+		MSGSTRUCT_PROP_DEF(3, long,							GreeksCalculationPrecision)
+		MSGSTRUCT_PROP_DEF(4, long,							UseTheoVolaIfNoBid)
+		MSGSTRUCT_PROP_DEF(5, long,							UseTheoVolaIfBadMarketVola)
+		MSGSTRUCT_PROP_DEF(6, long,							PriceRoundingRule)
+		MSGSTRUCT_PROP_DEF(7, DOUBLE,						PriceTolerance)
+	};
+
+	[
+		object,
+		uuid(DC4D14E4-6513-4E39-8AB8-DEFE2D195FF3),
+		dual,
+		nonextensible,
+		helpstring("IManualPriceUpdate Interface"),
+		pointer_default(unique)
+	]
+	interface IManualPriceUpdate : IDispatch{
+		MSGSTRUCT_PROP_DEF(1, long,		ContractType)
+		MSGSTRUCT_PROP_DEF(2, long,		UndID)
+		MSGSTRUCT_PROP_DEF(3, long,		ContractID)
+		MSGSTRUCT_PROP_DEF(4, double,	ActivePrice)
+		MSGSTRUCT_PROP_DEF(5, MANUAL_PRICE_UPDATE_STATUS,		Status)
+	};
+
+	[
+		object,
+		uuid(7FCC823C-FF68-4eb1-B8E6-68EECED8FB01),
+		dual,
+		helpstring("IUIDGenerator Interface"),
+		pointer_default(unique)
+	]
+	interface IUIDGenerator : IDispatch
+	{
+		[id(1)] HRESULT GenerateUID([out, retval] BSTR* pUID);
+	};
+
+	[
+		object,
+		uuid(42F9AF9F-7F38-443B-8464-36B2AE792B4E),
+		dual,
+		helpstring("IVMESurface Interface"),
+		pointer_default(unique)
+	]
+	interface IVMESurface : IDispatch
+	{
+		MSGSTRUCT_PROP_DEF(1,	long,			SurfaceID)
+		MSGSTRUCT_PROP_DEF(2,	long,			OptType)
+		MSGSTRUCT_PROP_DEF(3,	double,			UnderlinePrice)
+		MSGSTRUCT_PROP_DEF(4,	double,			SmileAccelerator)
+		MSGSTRUCT_PROP_DEF(5,	double,			InterpolationFactor)
+		MSGSTRUCT_PROP_DEF(6,	VARIANT_BOOL,	DiscreteAcceleration)
+		MSGSTRUCT_PROP_DEF(7,	VARIANT_BOOL,	PriceOverride)
+		MSGSTRUCT_PROP_DEF(8,	IUnknown*,		Points)
+		MSGSTRUCT_PROP_DEF(9,	BSTR,			Symbol)
+	};
+
+	[
+		object,
+		uuid(C1A2E319-201B-43F4-9848-CEB6AD180201),
+		dual,
+		helpstring("ITradeUpdate Interface"),
+		pointer_default(unique)
+	]
+	interface ITradeUpdate : IDispatch
+	{
+		// trade data
+		MSGSTRUCT_PROP_DEF(1,	long,			SeqNum)
+		MSGSTRUCT_PROP_DEF(2,	long,			TradeID)
+		MSGSTRUCT_PROP_DEF(3,	TRADE_ACTION,	Action)
+		MSGSTRUCT_PROP_DEF(4,	TRADE_STATUS,	TradeStatus)
+		MSGSTRUCT_PROP_DEF(5,	long,			Mark)
+		MSGSTRUCT_PROP_DEF(6,	DATE,			TradeDate)
+		MSGSTRUCT_PROP_DEF(7,	long,			TraderID)
+		MSGSTRUCT_PROP_DEF(8,	long,			SymbolID)
+		MSGSTRUCT_PROP_DEF(9,	long,			Quantity)
+		MSGSTRUCT_PROP_DEF(10,	double,			Price)
+		MSGSTRUCT_PROP_DEF(11,	long,			IsBuy)
+		MSGSTRUCT_PROP_DEF(12,	long,			StrategyID)
+		MSGSTRUCT_PROP_DEF(13,	long,			BrokerID)
+		MSGSTRUCT_PROP_DEF(14,	double,			BrokerCommission)
+		MSGSTRUCT_PROP_DEF(15,	long,			ClearingBrokerID)
+		MSGSTRUCT_PROP_DEF(16,	double,			ClearingBrokerCommission)
+		MSGSTRUCT_PROP_DEF(17,	double,			SpotReference)
+		MSGSTRUCT_PROP_DEF(18,	double,			TradedIV)
+		MSGSTRUCT_PROP_DEF(34,	VARIANT_BOOL,	IsPosition)
+
+		// auxilary data
+		MSGSTRUCT_PROP_DEF(19,	SYMBOL_TYPE,	SymbolType)
+		MSGSTRUCT_PROP_DEF(20,	BSTR,			Symbol)
+		MSGSTRUCT_PROP_DEF(21,	long,			UndSymbolID)
+		MSGSTRUCT_PROP_DEF(22,	BSTR,			UndSymbol)
+		MSGSTRUCT_PROP_DEF(23,	DATE,			Expiry)
+		MSGSTRUCT_PROP_DEF(24,	long,			IsCall)
+		MSGSTRUCT_PROP_DEF(25,	double,			Strike)
+		MSGSTRUCT_PROP_DEF(26,	double,			PriceClose)
+		MSGSTRUCT_PROP_DEF(27,	double,			PriceTheoClose)
+		MSGSTRUCT_PROP_DEF(28,	long,			LotSize)
+		MSGSTRUCT_PROP_DEF(29,	long,			OptionRootID)
+		MSGSTRUCT_PROP_DEF(30,	long,			FutID)
+		MSGSTRUCT_PROP_DEF(31,	long,			FutRootID)
+		MSGSTRUCT_PROP_DEF(32,	TRADE_MS_STATE,	MsState)
+		MSGSTRUCT_PROP_DEF(33,	BSTR,			ImportID)
+		MSGSTRUCT_PROP_DEF(35,	long,			OrderID)
+		MSGSTRUCT_PROP_DEF(36,	long,			ExecStatus)
+		MSGSTRUCT_PROP_DEF(37,	DATE,			ExpiryOV)
+		MSGSTRUCT_PROP_DEF(38,	DATE,			TradingClose)
+	};
+
+	[
+		object,
+		uuid(74589A44-EC71-4931-8699-2567332FE672),
+		dual,
+		nonextensible,
+		helpstring("IPriceUpdate Interface"),
+		pointer_default(unique)
+	]
+	interface IPriceUpdate : IDispatch{
+		MSGSTRUCT_PROP_DEF(1, long,		ContractType)
+		MSGSTRUCT_PROP_DEF(2, long,		UndID)
+		MSGSTRUCT_PROP_DEF(3, long,		ContractID)
+		MSGSTRUCT_PROP_DEF(4, double,	PriceClose)
+		MSGSTRUCT_PROP_DEF(5, double,	TheoPriceClose)
+	};
+
+	[
+		object,
+		uuid(E44D46C2-9287-4397-A99E-C5CC72884FED),
+		dual,
+		nonextensible,
+		helpstring("IUnderlyingUpdate Interface"),
+		pointer_default(unique)
+	]
+	interface IUnderlyingUpdate : IDispatch{
+		MSGSTRUCT_PROP_DEF(1,	long,			UndID)
+
+		// aggregation
+		MSGSTRUCT_PROP_DEF(2,	double,			Coeff)
+		MSGSTRUCT_PROP_DEF(3,	VARIANT_BOOL,	UseHead)
+
+		// dividends
+		MSGSTRUCT_PROP_DEF(4,	double,			DivAmt)
+		MSGSTRUCT_PROP_DEF(5,	double,			DivAmtCust)
+		MSGSTRUCT_PROP_DEF(6,	DATE,			DivDate)
+		MSGSTRUCT_PROP_DEF(7,	DATE,			DivDateCust)
+		MSGSTRUCT_PROP_DEF(8,	double,			DivFreq)
+		MSGSTRUCT_PROP_DEF(9,	double,			DivFreqCust)
+		MSGSTRUCT_PROP_DEF(10,	long,			DivType)
+		MSGSTRUCT_PROP_DEF(11,	double,			Yield)
+
+		// 
+		MSGSTRUCT_PROP_DEF(12,  double,			Skew)
+		MSGSTRUCT_PROP_DEF(13,  double,			Kurt)
+		MSGSTRUCT_PROP_DEF(14,  VARIANT_BOOL,	IsActive)
+		MSGSTRUCT_PROP_DEF(15,  VARIANT_BOOL,	IsHTB)
+		MSGSTRUCT_PROP_DEF(16,  VARIANT_BOOL,	AllowLending)
+		MSGSTRUCT_PROP_DEF(17,  VARIANT_BOOL,	IsHedgeSymbol)
+		MSGSTRUCT_PROP_DEF(18,  double,			SOQ)
+		MSGSTRUCT_PROP_DEF(19,  long,			StkProfile)
+		MSGSTRUCT_PROP_DEF(20,  long,			OptProfile)
+		MSGSTRUCT_PROP_DEF(21,  long,			PrimaryExchange)
+		MSGSTRUCT_PROP_DEF(22,  long,			Region)
+
+		// updated fields
+		MSGSTRUCT_PROP_DEF(90,	UNDERLYING_UPDATE_STATUS,	UpdStatus)
+		
+		// TODO: send updated data structure
+	};
+
+	[
+		object,
+		uuid(A599882F-0556-4AF3-8038-D6F16F4FC039),
+		dual,
+		nonextensible,
+		helpstring("IActiveFuturesChange Interface"),
+		pointer_default(unique)
+	]
+	interface IActiveFuturesChange : IDispatch
+	{
+		MSGSTRUCT_PROP_DEF(1, long,			UndID)
+		MSGSTRUCT_PROP_DEF(2, long,			FutID)
+		MSGSTRUCT_PROP_DEF(3, VARIANT_BOOL,	IsActive)
+		MSGSTRUCT_PROP_DEF(4, DOUBLE,		Basis)
+		MSGSTRUCT_PROP_DEF(5, DOUBLE,		Ratio)
+	};
+
+	[
+		object,
+		uuid(2DC6734C-C30A-41CB-9B86-FAAB6952BC72),
+		dual,
+		nonextensible,
+		helpstring("IFlexOption Interface"),
+		pointer_default(unique)
+	]
+	interface IFlexOption : IDispatch
+	{
+		MSGSTRUCT_PROP_DEF(1,	long,			UndID)
+		MSGSTRUCT_PROP_DEF(2,	long,			RootID)
+		MSGSTRUCT_PROP_DEF(3,	long,			LotSize)
+		MSGSTRUCT_PROP_DEF(4,	BSTR,			RootName)
+		MSGSTRUCT_PROP_DEF(5,	VARIANT_BOOL,	IsFit)
+		MSGSTRUCT_PROP_DEF(6,	VARIANT_BOOL,	IsSynth)
+	};
+	
+	[
+		object,
+		uuid(366F7C2E-147D-4d1c-ABB3-46B6E169FE00),
+		dual,
+		helpstring("IDynamicMessage Interface"),
+		pointer_default(unique)
+	]
+	interface IDynamicMessage : IDispatch
+	{
+		MSGSTRUCT_NAMED_PROP_DEF(1,	VARIANT,	Value)
+	};
+
+	[
+		object,
+		uuid(7DC8FA46-8B8B-46a4-9D8D-6946A8004F11),
+		dual,
+		helpstring("IBroadcastMessage Interface"),
+		pointer_default(unique)
+	]
+	interface IBroadcastMessage : IDispatch
+	{
+		MSGSTRUCT_PROP_DEF(1,	MSG_SEVERITY,	Severity)
+		MSGSTRUCT_PROP_DEF(2,	MSG_FACILITY,	Facility)
+		MSGSTRUCT_PROP_DEF(3,	MSG_PRIORITY,	Priority)
+		MSGSTRUCT_PROP_DEF(4,	long,			Code)
+		MSGSTRUCT_PROP_DEF(5,	BSTR,			Description)
+	};
+
+	//////////////////////////////////////////////////////////////////////////////
+	// Order interfaces
+
+	//////////////////////////////////////////////////////////////////////////////
+	//
+
+	[
+		object,
+		uuid(6A687D4D-94D1-45EE-8F2B-5CB2034722AE),
+		dual,
+		helpstring("IOrder Interface"),
+		pointer_default(unique)
+	]
+	interface IOrder : IDispatch
+	{
+		/******* Fix provider specific fields ******************/
+		MSGSTRUCT_PROP_DEF(1,	MsFixProviderEnum,		FixProvider)
+
+		/****************** Key fields *************************/
+		MSGSTRUCT_PROP_DEF(10,	long,					SeqNum)
+		MSGSTRUCT_PROP_DEF(11,	long,					Id)
+		MSGSTRUCT_PROP_DEF(12,	BSTR,					RequestUid)
+
+		/****************** FIX fields *************************/
+		MSGSTRUCT_PROP_DEF(20,	BSTR,					ClOrdID)
+		MSGSTRUCT_PROP_DEF(21,	SYMBOL_TYPE,			SymbolType)
+		MSGSTRUCT_PROP_DEF(22,	BSTR,					Symbol)
+		MSGSTRUCT_PROP_DEF(23,	long,					IsCall)
+		MSGSTRUCT_PROP_DEF(24,	DATE,					Expiry)
+		MSGSTRUCT_PROP_DEF(25,	double,					Strike)
+		MSGSTRUCT_PROP_DEF(26,	BSTR,					Account)
+		MSGSTRUCT_PROP_DEF(27,	long,					IsBuy)
+		MSGSTRUCT_PROP_DEF(28,	BSTR,					ExecBroker)
+		MSGSTRUCT_PROP_DEF(29,	MsOrderTypeEnum,		OrderType)
+		MSGSTRUCT_PROP_DEF(30,	long,					Qty)
+		MSGSTRUCT_PROP_DEF2(31,	double,					Price, "property Price only for none-market orders")
+		MSGSTRUCT_PROP_DEF(32,	DATE,					SendingTime)
+		MSGSTRUCT_PROP_DEF(33,	DATE,					TransactTime)
+		MSGSTRUCT_PROP_DEF(34,	BSTR,					ExDestination)
+		MSGSTRUCT_PROP_DEF(35,	double,					AvgPrice)
+		MSGSTRUCT_PROP_DEF(36,	long,					CumQty)
+		MSGSTRUCT_PROP_DEF(37,	long,					LeavesQty)
+		MSGSTRUCT_PROP_DEF(38,	BSTR,					Text)
+		MSGSTRUCT_PROP_DEF(39,	MsOrderStatusEnum,		ExecType)
+		MSGSTRUCT_PROP_DEF(40,	MsOrderStatusEnum,		OrdStatus)
+		MSGSTRUCT_PROP_DEF(41,	BSTR,					OptionRootSymbol)
+
+		/****************** Fields for ETS MM *****************/
+		MSGSTRUCT_PROP_DEF(50,	long,					UndID)
+		MSGSTRUCT_PROP_DEF(51,	long,					OptionID)
+		MSGSTRUCT_PROP_DEF(52,	long,					OptionRootID)
+		MSGSTRUCT_PROP_DEF(53,	long,					TraderID)
+		MSGSTRUCT_PROP_DEF(54,	long,					DestID)
+	};
+
+	[
+		object,
+		uuid(81CB34DD-811B-44d8-8B15-0DC3DF29836E),
+		dual,
+		helpstring("IExecutionReport Interface"),
+		pointer_default(unique)
+	]
+	interface IExecutionReport : IDispatch
+	{
+		/****************** Key fields *************************/
+		MSGSTRUCT_PROP_DEF(1,	long,					SeqNum)
+		MSGSTRUCT_PROP_DEF(2,	long,					Id)
+		MSGSTRUCT_PROP_DEF(3,	long,					OrderId)
+
+		/****************** FIX fields *************************/
+		MSGSTRUCT_PROP_DEF(10,	BSTR,					ExecID)
+		MSGSTRUCT_PROP_DEF(11,	BSTR,					ExecRefID)
+		MSGSTRUCT_PROP_DEF(12,	MsOrderStatusEnum,		ExecType)
+		MSGSTRUCT_PROP_DEF(13,	MsOrderStatusEnum,		OrdStatus)
+		MSGSTRUCT_PROP_DEF(14,	double,					LastPrice)
+		MSGSTRUCT_PROP_DEF(15,	long,					LastShares)
+		MSGSTRUCT_PROP_DEF(16,	double,					AvgPrice)
+		MSGSTRUCT_PROP_DEF(17,	long,					CumQty)
+		MSGSTRUCT_PROP_DEF(18,	long,					LeavesQty)
+		MSGSTRUCT_PROP_DEF(19,	DATE,					TransactTime)
+		MSGSTRUCT_PROP_DEF(20,	BSTR,					Text)
+	};
+
+	[
+		object,
+		uuid(9A7C413B-D586-4E97-9182-CDAA95926F8F),
+		dual,
+		nonextensible,
+		helpstring("IFixGatewayStatusRequest Interface"),
+		pointer_default(unique)
+	]
+	interface IFixGatewayStatusRequest : IDispatch
+	{
+		MSGSTRUCT_PROP_DEF(1,	long,	ClientType)
+	};
+
+	[
+		object,
+		uuid(044C9D17-D323-45B5-B86E-65C83E34FDAC),
+		dual,
+		nonextensible,
+		helpstring("IFixGatewayStatus Interface"),
+		pointer_default(unique)
+	]
+	interface IFixGatewayStatus : IDispatch
+	{
+		MSGSTRUCT_PROP_DEF(1,	BSTR,			IP)
+		MSGSTRUCT_PROP_DEF(2,	BSTR,			Host)
+		MSGSTRUCT_PROP_DEF(3,	VARIANT_BOOL,	IsOnline)
+	};
+
+	//////////////////////////////////////////////////////////////////////////////
+	// Coclasses
+	[
+		uuid(204F70CC-F92F-4AC8-BB2F-83A10407F702),
+		helpstring("VMESurface Class")
+	]
+	coclass VMESurface
+	{
+		[default] interface IVMESurface;
+				  interface INetPacking;
+	};
+	[
+		uuid(5B7B0165-1126-4C59-B85C-C0C6B4E8642F),
+		helpstring("SymbolObject Class")
+	]
+	coclass SymbolObject
+	{
+		[default] interface ISymbolObject;
+	};
+	[
+		uuid(531FC407-3C8A-4FDB-8ECE-0E2B9256424B),
+		helpstring("TradeUpdate Class")
+	]
+	coclass TradeUpdate
+	{
+		[default] interface ITradeUpdate;
+				  interface INetPacking;
+	};
+
+	[
+		uuid(5108CF51-A344-4327-90E0-D26A9B47DFA6),
+		helpstring("DynamicMessage Class")
+	]
+	coclass DynamicMessage
+	{
+		[default] interface IDynamicMessage;
+				  interface INetPacking;
+	};
+
+	[
+		uuid(E4C5752D-B01D-4ea2-8795-FB73D542ACB8),
+		helpstring("BroadcastMessage Class")
+	]
+	coclass BroadcastMessage
+	{
+		[default] interface IBroadcastMessage;
+				  interface INetPacking;
+	};
+
+	[
+		uuid(28D6473A-F133-4B46-877C-C6A4EB3BC116),
+		helpstring("Order Class")
+	]
+	coclass Order
+	{
+		[default]	interface IOrder;
+					interface INetPacking;
+					interface IUIDGenerator;
+	};
+
+	[
+		uuid(66B35889-E0FA-4af7-A6E5-C235C3182F83),
+		helpstring("ExecutionReport Class")
+	]
+	coclass ExecutionReport
+	{
+		[default]	interface IExecutionReport;
+					interface INetPacking;
+	};
+	
+	[
+		uuid(DB5ED9A9-456E-4A3B-943C-A6DBC187EBDF),
+		helpstring("FixGatewayStatusRequest Class")
+	]
+	coclass FixGatewayStatusRequest
+	{
+		[default]	interface IFixGatewayStatusRequest;
+					interface INetPacking;
+	};
+	[
+		uuid(C5312B99-79F0-4AAC-9317-167025B5E93D),
+		helpstring("FixGatewayStatus Class")
+	]
+	coclass FixGatewayStatus
+	{
+		[default]	interface IFixGatewayStatus;
+					interface INetPacking;
+	};
+	[
+		uuid(CDFC0020-DB7E-4A0F-982D-7516D064A667),
+		helpstring("PriceUpdate Class")
+	]
+	coclass PriceUpdate
+	{
+		[default]	interface IPriceUpdate;
+					interface INetPacking;
+
+	};
+	[
+		uuid(4B251EB1-0D26-43C2-8A00-5C62FD395373),
+		helpstring("ActiveFuturesChange Class")
+	]
+	coclass ActiveFuturesChange
+	{
+		[default] interface IActiveFuturesChange;
+	};
+	[
+		uuid(C3819CD8-9677-499B-B7F7-72037D7D2423),
+		helpstring("FlexOption Class")
+	]
+	coclass FlexOption
+	{
+		[default] interface IFlexOption;
+	};
+	[
+		uuid(13960A69-9021-46D0-87D4-383C98C2D011),
+		helpstring("UnderlyingUpdate Class")
+	]
+	coclass UnderlyingUpdate
+	{
+		[default]	interface IUnderlyingUpdate;
+					interface INetPacking;
+	};
+	[
+		uuid(996229A4-9364-4B53-B3D3-6788C0966AE2),
+		helpstring("ManualPriceUpdate Class")
+	]
+	coclass ManualPriceUpdate
+	{
+		[default] interface IManualPriceUpdate;
+	};
+	[
+		uuid(2B2E7B03-A0A3-471A-8082-A40039C2761D),
+		helpstring("SettingsUpdate Class")
+	]
+	coclass SettingsUpdate
+	{
+		[default] interface ISettingsUpdate;
+	};
+};

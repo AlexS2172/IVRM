@@ -1,0 +1,24 @@
+HKCR
+{
+	TrackDataProviders.TrackDataStructureInfo.1 = s 'TrackDataStructureInfo Class'
+	{
+		CLSID = s '{9400AA5E-77C9-4C5B-8B2A-AF6419733F3B}'
+	}
+	TrackDataProviders.TrackDataStructureInfo = s 'TrackDataStructureInfo Class'
+	{
+		CLSID = s '{9400AA5E-77C9-4C5B-8B2A-AF6419733F3B}'
+		CurVer = s 'TrackDataProviders.TrackDataStructureInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9400AA5E-77C9-4C5B-8B2A-AF6419733F3B} = s 'TrackDataStructureInfo Class'
+		{
+			ProgID = s 'TrackDataProviders.TrackDataStructureInfo.1'
+			VersionIndependentProgID = s 'TrackDataProviders.TrackDataStructureInfo'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{208D10D7-30AA-476B-B3C8-ECD417B47FEA}'
+			'TypeLib' = s '{001B9044-9A9D-4C58-B8AE-A034C0DF8B49}'
+		}
+	}
+}

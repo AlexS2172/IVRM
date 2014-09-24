@@ -1,0 +1,7 @@
+HKCR
+{
+	VolaManager.EngineInstance = s 'Vola Management Engine Instance'
+	{
+		CLSID = s '{D885704B-2CD2-4260-86FC-54297135E830}'
+	}
+}

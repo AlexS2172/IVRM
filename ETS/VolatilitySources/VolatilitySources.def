@@ -1,0 +1,9 @@
+; VolatilitySources.def : Declares the module parameters.
+
+;LIBRARY      "VolatilitySources.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

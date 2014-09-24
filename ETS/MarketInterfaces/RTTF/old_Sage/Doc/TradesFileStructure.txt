@@ -1,0 +1,40 @@
+1. DATE
+
+2. STATUS = {OK | ALREADYEXISTS | NOTFOUND | ERROR}
+	OK - Trade was stored in DB
+	ALREADYEXISTS - Trade with the same ExecID already exists in DB
+	NOTFOUND - Trade with the ExecID was not found in DB
+	ERROR - Trades was not stored in DB due to SQL error
+
+3. ExecTransType = {NEW, CANCEL}
+
+4. Last Price
+
+5. Shares
+
+6. Order Status = {PARTIALLY FILLED | FILLED}
+
+7. Exec ID
+
+8. Account
+
+9. Side = { SELL | BUY }
+
+10. Symbol
+
+11. Security Type = {OPT | CS | MF | PS}
+	OPT - Option
+	CS, MF, PS - Stocks
+
+12. Transact Time
+
+13. Trade Date
+
+14. Maturity Month Year Day 
+
+15. PutOrCall = {PUT | CALL}
+
+16. Strike
+
+17. Underlying symbol
+

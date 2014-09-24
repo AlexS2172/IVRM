@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.MarketSimulationScenario.1 = s 'MarketSimulationScenario Class'
+	{
+		CLSID = s '{B0D6C267-19B3-41A3-9EA9-D873038407A6}'
+	}
+	EtsGeneral.MarketSimulationScenario = s 'MarketSimulationScenario Class'
+	{
+		CLSID = s '{B0D6C267-19B3-41A3-9EA9-D873038407A6}'
+		CurVer = s 'EtsGeneral.MarketSimulationScenario.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B0D6C267-19B3-41A3-9EA9-D873038407A6} = s 'MarketSimulationScenario Class'
+		{
+			ProgID = s 'EtsGeneral.MarketSimulationScenario.1'
+			VersionIndependentProgID = s 'EtsGeneral.MarketSimulationScenario'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

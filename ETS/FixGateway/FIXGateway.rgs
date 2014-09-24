@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{080EA18E-762A-4212-8524-7124036C8223} = s 'FixGSrv'
+		'FixGSrv.EXE'
+		{
+			val AppID = s {080EA18E-762A-4212-8524-7124036C8223}
+		}
+	}
+}

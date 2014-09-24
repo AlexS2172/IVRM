@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpGreeksSummaryColl.1 = s 'MmRpGreeksSummaryColl Class'
+	{
+		CLSID = s '{62C407A6-4DAF-41FE-A7DC-58A4CB8E5C5E}'
+	}
+	EtsMmReports.MmRpGreeksSummaryColl = s 'MmRpGreeksSummaryColl Class'
+	{
+		CLSID = s '{62C407A6-4DAF-41FE-A7DC-58A4CB8E5C5E}'
+		CurVer = s 'EtsMmReports.MmRpGreeksSummaryColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {62C407A6-4DAF-41FE-A7DC-58A4CB8E5C5E} = s 'MmRpGreeksSummaryColl Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpGreeksSummaryColl.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpGreeksSummaryColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

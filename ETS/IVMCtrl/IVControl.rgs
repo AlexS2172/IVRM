@@ -1,0 +1,24 @@
+HKCR
+{
+	IVMCtrl.IVControl.1 = s 'IVControl Class'
+	{
+		CLSID = s '{D778F36E-8D7D-4909-9623-ABE567BBBB55}'
+	}
+	IVMCtrl.IVControl = s 'IVControl Class'
+	{
+		CLSID = s '{D778F36E-8D7D-4909-9623-ABE567BBBB55}'
+		CurVer = s 'IVMCtrl.IVControl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {D778F36E-8D7D-4909-9623-ABE567BBBB55} = s 'IVControl Class'
+		{
+			ProgID = s 'IVMCtrl.IVControl.1'
+			VersionIndependentProgID = s 'IVMCtrl.IVControl'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{66F65A70-5316-4434-B114-0A53EA104873}'
+			'TypeLib' = s '{2F00C5BD-7B0E-498D-86B6-61241FCC120C}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpExercisedStockAtom.1 = s 'MmRpExercisedStockAtom Class'
+	{
+		CLSID = s '{E52E5A74-9486-4ED6-850F-40EC73FC6394}'
+	}
+	EtsMmReports.MmRpExercisedStockAtom = s 'MmRpExercisedStockAtom Class'
+	{
+		CLSID = s '{E52E5A74-9486-4ED6-850F-40EC73FC6394}'
+		CurVer = s 'EtsMmReports.MmRpExercisedStockAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {E52E5A74-9486-4ED6-850F-40EC73FC6394} = s 'MmRpExercisedStockAtom Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpExercisedStockAtom.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpExercisedStockAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{CF819161-9305-4B34-A7B6-61F2A5786002} = s 'ATFDataProvider'
+		'ATFDataProvider.EXE'
+		{
+			val AppID = s {CF819161-9305-4B34-A7B6-61F2A5786002}
+		}
+	}
+}

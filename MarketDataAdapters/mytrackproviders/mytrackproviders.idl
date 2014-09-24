@@ -1,0 +1,98 @@
+// MyTrackProviders.idl : IDL source for MyTrackProviders.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (MyTrackProviders.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(68EEE16F-1128-462D-8C6B-B489ED69D6C9),
+	version(1.0),
+	helpstring("MyTrackProviders 1.0 Type Library")
+]
+library MYTRACKPROVIDERSLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("PriceProviders.tlb");
+
+	//-----------------------------------------------------------------------------//
+
+	[
+		object,
+		uuid(0F21D6BF-18FF-4768-AD3F-BAE7C4367204),
+		dual,
+		helpstring("IMyTrackInfo Interface"),
+		pointer_default(unique)
+	]
+	interface IMyTrackInfo : IDispatch
+	{
+
+		[propget, id(1), helpstring("property PriceProviderMode")] HRESULT PriceProviderMode([out, retval] enum PriceProviderTypeEnum *pVal);
+		[propput, id(1), helpstring("property PriceProviderMode")] HRESULT PriceProviderMode([in] enum PriceProviderTypeEnum newVal);
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(FD68F05A-247C-4D19-B12D-852691429151),
+		helpstring("PriceProvider Class")
+	]
+	coclass MyTrackPriceProvider
+	{
+		[default] interface IPriceProvider;
+				  interface IMyTrackInfo;	
+
+		[default, source] dispinterface _IPriceProviderEvents;
+	};
+
+	[
+		uuid(267BA1D1-1E0C-475A-9C4E-9618376B61FB),
+		helpstring("StructureProvider Class")
+	]
+	coclass MyTrackStructureProvider
+	{
+		[default] interface IStructureProvider;
+				  interface IMyTrackInfo;	
+		[default, source] dispinterface _IStructureProviderEvents;
+	};
+
+	[
+		uuid(F6CCC1D5-3F07-4F8B-BD83-A120189E22C5),
+		helpstring("MyTrackStructureInfo Class")
+	]
+	coclass MyTrackStructureInfo
+	{
+		[default] interface IStructureProvider;
+				  interface IMyTrackInfo;	
+		[default, source] dispinterface _IMyTrackStructureInfoEvents;
+	};
+
+	[
+		uuid(266203B3-D1DC-4808-A5C7-265F7C312629),
+		helpstring("MyTrackPriceInfo Class")
+	]
+	coclass MyTrackPriceInfo
+	{
+		[default] interface IPriceProvider;
+		[default, source] dispinterface _IPriceInfoEvents;
+	};
+	[
+		uuid(6A80D291-101F-49C0-B91D-A19ECBC14D62),
+		helpstring("ProviderInfo Class")
+	]
+	coclass ProviderInfo
+	{
+		[default] interface IProviderInfo;
+	};
+
+	[
+		uuid(53FB75DB-D170-4d4e-8460-8C19EBE59726),
+		helpstring("MyTrackPriceInfoWithNotify Class")
+	]
+	coclass MyTrackPriceInfoWithNotify
+	{
+		[default] interface IPriceProvider;
+		[default, source] dispinterface _IPriceInfoWithNotifyEvents;
+	};
+};

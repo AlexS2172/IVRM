@@ -1,0 +1,9 @@
+; ActivFeedProviders.def : Declares the module parameters.
+
+LIBRARY      "ActivFeedProviders.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

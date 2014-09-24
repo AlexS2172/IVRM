@@ -1,0 +1,141 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""EtsMmGeneral.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,134,0
+ PRODUCTVERSION 2,0,134,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology, Inc."
+            VALUE "FileVersion", "2, 0,134, 0"
+            VALUE "InternalName", "EtsMmGeneral.dll"
+            VALUE "LegalCopyright", "© EGAR Technology Inc. All rights reserved."
+            VALUE "OriginalFilename", "EtsMmGeneral.dll"
+            VALUE "ProductName", "Equity Trading System"
+            VALUE "ProductVersion", "2, 0,134, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ETSMMGENERAL        REGISTRY                "EtsMmGeneral.rgs"
+//IDR_MMTRADEINFOATOM     REGISTRY                "MmTradeInfoAtom.rgs"
+//IDR_MMTRADEINFOCOLL     REGISTRY                "MmTradeInfoColl.rgs"
+IDR_MMORDERATOM         REGISTRY                "MmOrderAtom.rgs"
+IDR_MMORDERCOLL         REGISTRY                "MmOrderColl.rgs"
+IDR_MMORDEREXECATOM     REGISTRY                "MmOrderExecAtom.rgs"
+IDR_MMORDEREXECCOLL     REGISTRY                "MmOrderExecColl.rgs"
+IDR_MMORDEREXECDESTATOM REGISTRY                "MmOrderExecDestAtom.rgs"
+IDR_MMORDEREXECDESTCOLL REGISTRY                "MmOrderExecDestColl.rgs"
+IDR_MMORDERBYREQCOLL    REGISTRY                "MmOrderByReqColl.rgs"
+IDR_MMTNTCOUNTERPARTYATOM REGISTRY                "MmTntCounterPartyAtom.rgs"
+IDR_MMTNTCOUNTERPARTYCOLL REGISTRY                "MmTntCounterPartyColl.rgs"
+IDR_MMTNTCARDATOM       REGISTRY                "MmTntCardAtom.rgs"
+IDR_MMTNTCARDCOLL       REGISTRY                "MmTntCardColl.rgs"
+IDR_MMTNTCARDBYSEQCOLL  REGISTRY                "MmTntCardBySeqColl.rgs"
+IDR_MMTNTCOUNTERPARTYBYNAMECOLL REGISTRY                "MmTntCounterPartyByNameColl.rgs"
+//IDR_MMTRADEBYUNDATOM    REGISTRY                "MmTradeByUndAtom.rgs"
+//IDR_MMTRADEBYUNDCOLL    REGISTRY                "MmTradeByUndColl.rgs"
+//IDR_MMTRADEMATCHATOM    REGISTRY                "MmTradeMatchAtom.rgs"
+//IDR_MMTRADEMATCHCOLL    REGISTRY                "MmTradeMatchColl.rgs"
+//IDR_MMTRADECHANNEL      REGISTRY                "MmTradeChannel.rgs"
+IDR_MMTRADEVIEW         REGISTRY                "MmTradeView.rgs"
+//IDR_MMTRADEUPDATECOLL   REGISTRY                "MmTradeUpdateColl.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "EtsMmGeneral"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "EtsMmGeneral.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

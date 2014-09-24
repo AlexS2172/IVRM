@@ -1,0 +1,72 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "ETSManager"=.\ETSManager\ETSManager.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Work/ETSManager", YLBAAAAA
+    .\ETSManager
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VADBLayout"=.\VADBLayout\VADBLayout.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/VADBLayout", GTADAAAA
+    .\VADBLayout
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "VME"=.\VME\VME.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/VME", SRADAAAA
+    .\VME
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name VADBLayout
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    ETS
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

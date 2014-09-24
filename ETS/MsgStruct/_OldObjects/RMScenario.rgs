@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.RMScenario.1 = s 'RMScenario Class'
+	{
+		CLSID = s '{2CCF625C-6DB0-4D93-9727-F3BDB85D8680}'
+	}
+	MsgStruct.RMScenario = s 'RMScenario Class'
+	{
+		CLSID = s '{2CCF625C-6DB0-4D93-9727-F3BDB85D8680}'
+		CurVer = s 'MsgStruct.RMScenario.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2CCF625C-6DB0-4D93-9727-F3BDB85D8680} = s 'RMScenario Class'
+		{
+			ProgID = s 'MsgStruct.RMScenario.1'
+			VersionIndependentProgID = s 'MsgStruct.RMScenario'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

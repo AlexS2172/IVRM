@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.VDataUpdate.1 = s 'VDataUpdate Class'
+	{
+		CLSID = s '{24FC1AD7-24E8-4A2F-97AD-695E50AF9CBB}'
+	}
+	MsgStruct.VDataUpdate = s 'VDataUpdate Class'
+	{
+		CLSID = s '{24FC1AD7-24E8-4A2F-97AD-695E50AF9CBB}'
+		CurVer = s 'MsgStruct.VDataUpdate.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {24FC1AD7-24E8-4A2F-97AD-695E50AF9CBB} = s 'VDataUpdate Class'
+		{
+			ProgID = s 'MsgStruct.VDataUpdate.1'
+			VersionIndependentProgID = s 'MsgStruct.VDataUpdate'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

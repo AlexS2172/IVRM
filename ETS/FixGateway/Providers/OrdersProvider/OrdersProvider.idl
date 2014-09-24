@@ -1,0 +1,29 @@
+// OrdersProvider.idl : IDL source for OrdersProvider
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (OrdersProvider.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(4B4F8BA5-7C64-4995-948F-ABCB97272CBC),
+	version(1.0),
+	helpstring("OrdersProvider 1.0 Type Library")
+]
+library OrdersProviderLib
+{
+	importlib("stdole2.tlb");
+	importlib("fixproviders.tlb");
+
+	[
+		uuid(B0E66FF1-7058-4D48-AFA2-26CEE92CF452),
+		helpstring("OrdersFixProvider Class")
+	]
+	coclass OrdersFixProvider
+	{
+		[default] interface IOrderProvider;
+		[default, source] dispinterface _OrderProviderEvents;
+	};
+};

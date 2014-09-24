@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.IrCurve.1 = s 'IrCurve Class'
+	{
+		CLSID = s '{3CF3120E-93DB-45F3-A9E0-2DC6BF3C4644}'
+	}
+	MsgStruct.IrCurve = s 'IrCurve Class'
+	{
+		CLSID = s '{3CF3120E-93DB-45F3-A9E0-2DC6BF3C4644}'
+		CurVer = s 'MsgStruct.IrCurve.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3CF3120E-93DB-45F3-A9E0-2DC6BF3C4644} = s 'IrCurve Class'
+		{
+			ProgID = s 'MsgStruct.IrCurve.1'
+			VersionIndependentProgID = s 'MsgStruct.IrCurve'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

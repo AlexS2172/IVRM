@@ -1,0 +1,69 @@
+// ComponentsCommon.idl : IDL source for common definitions for ETS components
+
+/////////////////////////////////////////////////////////////////////////////
+//
+#define ETSGENERAL_PROP_DEF(_dispid, _type, _name)	\
+		[propget, id(_dispid), helpstring(#_name)] HRESULT _name([out, retval] _type* pVal);	\
+		[propput, id(_dispid), helpstring(#_name)] HRESULT _name([in] _type newVal);
+
+/////////////////////////////////////////////////////////////////////////////
+//
+#define ETSGENERAL_PROPREADONLY_DEF(_dispid, _type, _name)	\
+		[propget, id(_dispid), helpstring(#_name)] HRESULT _name([out, retval] _type* pVal);
+
+/////////////////////////////////////////////////////////////////////////////
+//
+#define ETSGENERAL_PROPPUTREF_DEF(_dispid, _type, _name)	\
+		[propget, id(_dispid), helpstring(#_name)] HRESULT _name([out, retval] _type* pVal);	\
+		[propputref, id(_dispid), helpstring(#_name)] HRESULT _name([in] _type newVal);
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+#define ETSGENERAL_COMMON_COLLECTION_DEF(_KeyType, _ItemType)															\
+		[propget, id(DISPID_NEWENUM), hidden, helpstring("_NewEnum")]													\
+		HRESULT _NewEnum([out,retval] IUnknown** ppUnk);																\
+																														\
+		[propget, id(DISPID_VALUE), defaultcollelem, helpstring("Item")]												\
+		HRESULT Item([in] _KeyType Key, [out, retval] _ItemType* pVal);													\
+																														\
+		[id(2), helpstring("Add")]																						\
+		HRESULT Add([in] _KeyType Key, [in, defaultvalue(0)] _ItemType Value, [out,retval] _ItemType* pRetVal);			\
+																														\
+		[id(4), helpstring("Remove")]																					\
+		HRESULT Remove([in] _KeyType Key);																				\
+																														\
+		[id(5), helpstring("Clear")]																					\
+		HRESULT Clear(void);																							\
+																														\
+		[propget, id(6), helpstring("Count")]																			\
+		HRESULT Count([out, retval] LONG* pVal);
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+#define ETSGENERAL_EXTENDED_COLLECTION_DEF(_KeyType, _SortKeyType, _ItemType)											\
+		[propget, id(DISPID_NEWENUM), hidden, helpstring("_NewEnum")]													\
+		HRESULT _NewEnum([out,retval] IUnknown** ppUnk);																\
+																														\
+		[propget, id(DISPID_VALUE), defaultcollelem, helpstring("Item")]												\
+		HRESULT Item([in] _KeyType Key, [out, retval] _ItemType* pVal);													\
+																														\
+		[id(2), helpstring("Add")]																						\
+		HRESULT Add([in] _KeyType Key, [in] _SortKeyType SortKey,														\
+					[in, defaultvalue(0)] _ItemType Value, [out,retval] _ItemType* pRetVal);							\
+																														\
+		[id(4), helpstring("Remove")]																					\
+		HRESULT Remove([in] _KeyType Key);																				\
+																														\
+		[id(5), helpstring("Clear")]																					\
+		HRESULT Clear(void);																							\
+																														\
+		[propget, id(6), helpstring("Count")]																			\
+		HRESULT Count([out, retval] LONG* pVal);																		\
+																														\
+		[propget, id(77), helpstring("BySortKey")]																		\
+		HRESULT BySortKey([in] _SortKeyType Key,  [out, retval] _ItemType* pVal);										\
+
+
+

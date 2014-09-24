@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.DynamicMessage.1 = s 'DynamicMessage Class'
+	{
+		CLSID = s '{5108CF51-A344-4327-90E0-D26A9B47DFA6}'
+	}
+	MsgStruct.DynamicMessage = s 'DynamicMessage Class'
+	{
+		CLSID = s '{5108CF51-A344-4327-90E0-D26A9B47DFA6}'
+		CurVer = s 'MsgStruct.DynamicMessage.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5108CF51-A344-4327-90E0-D26A9B47DFA6} = s 'DynamicMessage Class'
+		{
+			ProgID = s 'MsgStruct.DynamicMessage.1'
+			VersionIndependentProgID = s 'MsgStruct.DynamicMessage'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

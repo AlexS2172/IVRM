@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsTraderGroupColl.1 = s 'EtsTraderGroupColl Class'
+	{
+		CLSID = s '{8147E9BB-3E30-431B-A7BC-27C1BD9D6D2E}'
+	}
+	EtsGeneral.EtsTraderGroupColl = s 'EtsTraderGroupColl Class'
+	{
+		CLSID = s '{8147E9BB-3E30-431B-A7BC-27C1BD9D6D2E}'
+		CurVer = s 'EtsGeneral.EtsTraderGroupColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8147E9BB-3E30-431B-A7BC-27C1BD9D6D2E} = s 'EtsTraderGroupColl Class'
+		{
+			ProgID = s 'EtsGeneral.EtsTraderGroupColl.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsTraderGroupColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

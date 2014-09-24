@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.UpdateGlobalUserSettings.1 = s 'UpdateGlobalUserSettings Class'
+	{
+		CLSID = s '{6FFA036F-C5CB-4A02-9EE8-A37E3890812E}'
+	}
+	MsgStruct.UpdateGlobalUserSettings = s 'UpdateGlobalUserSettings Class'
+	{
+		CLSID = s '{6FFA036F-C5CB-4A02-9EE8-A37E3890812E}'
+		CurVer = s 'MsgStruct.UpdateGlobalUserSettings.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6FFA036F-C5CB-4A02-9EE8-A37E3890812E} = s 'UpdateGlobalUserSettings Class'
+		{
+			ProgID = s 'MsgStruct.UpdateGlobalUserSettings.1'
+			VersionIndependentProgID = s 'MsgStruct.UpdateGlobalUserSettings'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

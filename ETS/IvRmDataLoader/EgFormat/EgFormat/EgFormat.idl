@@ -1,0 +1,37 @@
+// EgFormat.idl : IDL source for EgFormat
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EgFormat.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(31883796-9186-4C1A-A7C7-DC354CA02697),
+	dual,
+	nonextensible,
+	helpstring("IDateTimeFormat Interface"),
+	pointer_default(unique)
+]
+interface IDateTimeFormat : IDispatch{
+	[id(1), helpstring("method egStrftime")] HRESULT egStrftime([in] BSTR sFormat,	[out,retval] BSTR* sRet);
+};
+[
+	uuid(802B484C-53F8-4682-9CDF-5C2F4270B547),
+	version(1.0),
+	helpstring("EgFormat 1.0 Type Library")
+]
+library EgFormatLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(43A37F0D-91C7-4922-BE55-BA48964EA3E1),
+		helpstring("DateTimeFormat Class")
+	]
+	coclass DateTimeFormat
+	{
+		[default] interface IDateTimeFormat;
+	};
+};

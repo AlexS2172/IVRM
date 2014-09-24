@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.VolaSurfaceData.1 = s 'VolaSurfaceData Class'
+	{
+		CLSID = s '{FAB93965-8DA2-45B4-9E6F-0C4E0B532E93}'
+	}
+	MsgStruct.VolaSurfaceData = s 'VolaSurfaceData Class'
+	{
+		CLSID = s '{FAB93965-8DA2-45B4-9E6F-0C4E0B532E93}'
+		CurVer = s 'MsgStruct.VolaSurfaceData.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FAB93965-8DA2-45B4-9E6F-0C4E0B532E93} = s 'VolaSurfaceData Class'
+		{
+			ProgID = s 'MsgStruct.VolaSurfaceData.1'
+			VersionIndependentProgID = s 'MsgStruct.VolaSurfaceData'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'EtsIvUpdate'
+		'EtsIvUpdate.EXE'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

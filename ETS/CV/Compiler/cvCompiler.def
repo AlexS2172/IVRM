@@ -1,0 +1,9 @@
+; cvCompiler.def : Declares the module parameters.
+
+LIBRARY      "cvCompiler.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

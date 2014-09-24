@@ -1,0 +1,9 @@
+; EtsMmQuotes.def : Declares the module parameters.
+
+;LIBRARY      "EtsMmQuotesCV.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

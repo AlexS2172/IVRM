@@ -1,0 +1,24 @@
+HKCR
+{
+	VME.StrikeSkewVolatilities.1 = s 'StrikeSkewVolatilities Class'
+	{
+		CLSID = s '{9051B1CC-509F-4BB3-9070-C33BEE4253BC}'
+	}
+	VME.StrikeSkewVolatilities = s 'StrikeSkewVolatilities Class'
+	{
+		CLSID = s '{9051B1CC-509F-4BB3-9070-C33BEE4253BC}'
+		CurVer = s 'VME.StrikeSkewVolatilities.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9051B1CC-509F-4BB3-9070-C33BEE4253BC} = s 'StrikeSkewVolatilities Class'
+		{
+			ProgID = s 'VME.StrikeSkewVolatilities.1'
+			VersionIndependentProgID = s 'VME.StrikeSkewVolatilities'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{376AB49D-9D39-4B27-B122-4D22D490FE91}'
+			'TypeLib' = s '{98359542-A5A1-4A74-9E6A-520A4126F41D}'
+		}
+	}
+}

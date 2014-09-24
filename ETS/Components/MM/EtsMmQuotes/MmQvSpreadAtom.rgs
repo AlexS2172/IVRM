@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmQuotes.MmQvSpreadAtom.1 = s 'MmQvSpreadAtom Class'
+	{
+		CLSID = s '{921028FB-1D4D-4542-ABB3-F6655FB7605A}'
+	}
+	EtsMmQuotes.MmQvSpreadAtom = s 'MmQvSpreadAtom Class'
+	{
+		CLSID = s '{921028FB-1D4D-4542-ABB3-F6655FB7605A}'
+		CurVer = s 'EtsMmQuotes.MmQvSpreadAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {921028FB-1D4D-4542-ABB3-F6655FB7605A} = s 'MmQvSpreadAtom Class'
+		{
+			ProgID = s 'EtsMmQuotes.MmQvSpreadAtom.1'
+			VersionIndependentProgID = s 'EtsMmQuotes.MmQvSpreadAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{B8AA7F7B-AEEE-4597-A39D-4D2538112A69}'
+		}
+	}
+}

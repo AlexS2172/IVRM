@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsCalculateTracer.1 = s 'EtsCalculateTracer Class'
+	{
+		CLSID = s '{A8C12307-E202-4556-9CF7-611C6A41E316}'
+	}
+	EtsGeneral.EtsCalculateTracer = s 'EtsCalculateTracer Class'
+	{
+		CLSID = s '{A8C12307-E202-4556-9CF7-611C6A41E316}'
+		CurVer = s 'EtsGeneral.EtsCalculateTracer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A8C12307-E202-4556-9CF7-611C6A41E316} = s 'EtsCalculateTracer Class'
+		{
+			ProgID = s 'EtsGeneral.EtsCalculateTracer.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsCalculateTracer'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

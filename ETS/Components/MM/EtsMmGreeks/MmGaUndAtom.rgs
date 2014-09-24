@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmGreeks.MmGaUndAtom.1 = s 'MmGaUndAtom Class'
+	{
+		CLSID = s '{F397035A-207B-47CB-9656-9B2A4C3B0A12}'
+	}
+	EtsMmGreeks.MmGaUndAtom = s 'MmGaUndAtom Class'
+	{
+		CLSID = s '{F397035A-207B-47CB-9656-9B2A4C3B0A12}'
+		CurVer = s 'EtsMmGreeks.MmGaUndAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F397035A-207B-47CB-9656-9B2A4C3B0A12} = s 'MmGaUndAtom Class'
+		{
+			ProgID = s 'EtsMmGreeks.MmGaUndAtom.1'
+			VersionIndependentProgID = s 'EtsMmGreeks.MmGaUndAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{B4A726AD-9406-4A24-9E8A-D8ADD9CAC4DC}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Strategy.1 = s 'Strategy Class'
+	{
+		CLSID = s '{BC1A8E56-580A-4748-8D0C-7830351CA626}'
+	}
+	MsgStruct.Strategy = s 'Strategy Class'
+	{
+		CLSID = s '{BC1A8E56-580A-4748-8D0C-7830351CA626}'
+		CurVer = s 'MsgStruct.Strategy.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {BC1A8E56-580A-4748-8D0C-7830351CA626} = s 'Strategy Class'
+		{
+			ProgID = s 'MsgStruct.Strategy.1'
+			VersionIndependentProgID = s 'MsgStruct.Strategy'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

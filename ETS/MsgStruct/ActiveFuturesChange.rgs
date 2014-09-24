@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.ActiveFuturesChange.1 = s 'ActiveFuturesChange Class'
+	{
+		CLSID = s '{4B251EB1-0D26-43C2-8A00-5C62FD395373}'
+	}
+	MsgStruct.ActiveFuturesChange = s 'ActiveFuturesChange Class'
+	{
+		CLSID = s '{4B251EB1-0D26-43C2-8A00-5C62FD395373}'
+		CurVer = s 'MsgStruct.ActiveFuturesChange.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {4B251EB1-0D26-43C2-8A00-5C62FD395373} = s 'ActiveFuturesChange Class'
+		{
+			ProgID = s 'MsgStruct.ActiveFuturesChange.1'
+			VersionIndependentProgID = s 'MsgStruct.ActiveFuturesChange'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

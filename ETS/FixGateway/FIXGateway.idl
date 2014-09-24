@@ -1,0 +1,114 @@
+// FIXGateway.idl : IDL source for FIXGateway.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (FIXGateway.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(1B57EF46-EA94-4D5A-B3A5-CCA2E48C9DAB),
+	version(1.0),
+	helpstring("FIXGateway 1.0 Type Library")
+]
+library FIXGATEWAYLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	typedef	
+	[
+		uuid(0AD36E18-7666-49ce-89BF-0AC931A77A57),
+		v1_enum,
+	]	
+	enum FgDispIdEnum
+	{
+		// IFixGServer
+		// methods
+		DISPID_StartFix = 1,
+		DISPID_StopFix,
+		// properties
+		DISPID_Status,
+		DISPID_StartTime,
+		DISPID_StopTime,
+		DISPID_AutoStartStop,
+		//_IFixGServerEvents
+		DISPID_OnLogMessage = 10,
+		DISPID_OnStatusChanged
+	}
+	FgDispIdEnum;
+	
+	typedef
+	[
+		uuid(BA64D7C4-0228-478c-842A-456994E49A63),
+		helpstring("Log Message type"),
+		v1_enum
+	]
+	enum FgLogMessageTypeEnum
+	{
+		enFgLogStart		= 0,
+		enFgLogStop			= 1,
+		enFgLogInfo			= 2,
+		enFgLogWarning		= 3,
+		enFgLogError		= 4
+	} 
+	FgLogMessageTypeEnum;
+
+	typedef
+	[
+		uuid(E26020AE-411D-4f6b-873D-44AB075A1244),
+		helpstring("FIX Gateway status"),
+		v1_enum
+	]
+	enum FgServerStatusEnum
+	{
+		enFgSsStarted			= 0,
+		enFgSsStopped			= 1,
+		enFgSsStartPending		= 2,
+		enFgSsStopPending		= 3
+	} 
+	FgServerStatusEnum;
+
+	[
+		object,
+		uuid(44B90D1B-9EDF-4C6B-8A10-9149F1B8C8C3),
+		dual,
+		helpstring("IFixGServer Interface"),
+		pointer_default(unique)
+	]
+	interface IFixGServer : IDispatch
+	{
+		[id(DISPID_StartFix), helpstring("method StartFix")] HRESULT StartFix(void);
+		[id(DISPID_StopFix), helpstring("method StopFix")] HRESULT StopFix(void);
+		[propget, id(DISPID_Status), helpstring("property Status")] HRESULT Status([out, retval] FgServerStatusEnum* pVal);
+		[propget, id(DISPID_StartTime), helpstring("property StartTime")] HRESULT StartTime([out, retval] DATE* pVal);
+		[propput, id(DISPID_StartTime), helpstring("property StartTime")] HRESULT StartTime([in] DATE dtStart);
+		[propget, id(DISPID_StopTime), helpstring("property StopTime")] HRESULT StopTime([out, retval] DATE* pVal);
+		[propput, id(DISPID_StopTime), helpstring("property StopTime")] HRESULT StopTime([in] DATE dtStop);
+		[propget, id(DISPID_AutoStartStop), helpstring("property AutoStartStop")] HRESULT AutoStartStop([out, retval] VARIANT_BOOL* pVal);
+		[propput, id(DISPID_AutoStartStop), helpstring("property AutoStartStop")] HRESULT AutoStartStop([in] VARIANT_BOOL bVal);
+	};
+
+	[
+		uuid(9CF6BFDB-ACE9-4d18-99D6-90ECE994FAB2),
+		helpstring("_IFixGServerEvents Interface")
+	]
+	dispinterface _IFixGServerEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_OnLogMessage), helpstring("method OnLogMessage")] HRESULT OnLogMessage(
+			[in] DATE dtTime, [in] FgLogMessageTypeEnum enType, [in] BSTR bsMessage);
+		[id(DISPID_OnStatusChanged), helpstring("method OnStatusChanged")] HRESULT OnStatusChanged([in] FgServerStatusEnum enStatus);
+	};
+
+	[
+		uuid(3B8EEAB2-D463-4BA3-B058-D570C74D0EBC),
+		helpstring("FixGServer Class")
+	]
+	coclass FixGServer
+	{
+		[default]			interface		IFixGServer;
+		[default, source]	dispinterface	_IFixGServerEvents;
+	};
+};

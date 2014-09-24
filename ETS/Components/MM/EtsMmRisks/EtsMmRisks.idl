@@ -1,0 +1,1716 @@
+// EtsMmRisks.idl : IDL source for EtsMmRisks
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EtsMmRisks.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "ComponentsCommon.idl"
+
+// ignore "warning MIDL2362 : too many methods in the interface, requires Windows NT 4.0 SP3 or greater"
+#if __midl >= 501
+	midl_pragma warning(disable: 2362)
+#endif
+
+//interface IBatchPriceProvider;
+
+/////////////////////////////////////////////////////////////////////////////
+//
+[
+	uuid(92825A3F-98F2-4838-95C9-C1E0214DE015),
+	version(1.0),
+	helpstring("EtsMmRisks 1.0 Type Library")
+]
+library EtsMmRisksLib
+{
+	importlib("stdole2.tlb");
+	importlib("EtsGeneral.tlb");
+	importlib("EtsMMGeneral.tlb");
+	importlib("PriceProviders.tlb");
+	importlib("..\..\..\tlb\VolatilitySources.tlb");
+	importlib("../../../tlb/CV.tlb");
+	importlib("vsflex8.ocx");
+
+	interface IMmRvUndColl;
+	interface IMmRvExpColl;
+	interface IMmRvUndAtom;
+	interface IMmRvPosColl;
+	interface IMmRvSynthGreeksColl;
+
+	[
+		uuid(4740329D-5AC2-47d1-8503-280EB6B34B36),
+		helpstring("CvLevelEnum"),
+		v1_enum
+	]
+	typedef enum CvLevelEnum
+	{
+		CVLEVEL_GRP  = 0,
+		CVLEVEL_UND  = 1,
+		CVLEVEL_POS  = 2,
+		CVLEVEL_EXPIRY_TOTAL = 3,
+		CVLEVEL_EXPIRY_ASSET = 4,
+		CVLEVEL_COUNT = 5,
+		CVLEVEL_LAST = CVLEVEL_COUNT - 1
+	}CvLevelEnum;
+
+	[uuid(5BE2FBB7-07CA-4f4a-95B8-2ACA61B49D13)]
+	typedef enum MmRvFitToImpCurveTypeEnum
+	{
+		[helpstring("Fit To Calls")] enFitToImpCurveCalls = 0,
+		[helpstring("Fit To Puts")] enFitToImpCurvePuts = 1,
+		[helpstring("Fit To OTM")] enFitToImpCurveOTM = 2,
+		[helpstring("Fit To ATM")] enFitToImpCurveATM = 3
+	} MmRvFitToImpCurveTypeEnum;
+
+	[
+		uuid(A9482092-8AE9-445a-B71F-D487C7873ECF),
+		helpstring("EtsMm RiskViewModeEnum"),
+		v1_enum
+	]
+	typedef enum RiskViewModeEnum
+	{
+		RV_RISKS      = 0,
+		RV_RISKMATRIX = 1,
+		RV_GREEKS     = 2,
+		RV_VME        = 3
+	} RiskViewModeEnum;
+
+	[
+		uuid(C8EF00FA-BB30-495e-832A-DCDABAD6C53F),
+		helpstring("EtsMm Risks AggregationTypeEnum"),
+		v1_enum
+	]
+	typedef enum AggregationTypeEnum
+	{
+		RAT_NONE   = 0,
+		RAT_SECTOR = 1
+	} AggregationTypeEnum;
+
+	//[
+	//	uuid(FE8BE52B-5575-4efd-9E72-4766E578A23F),
+	//	helpstring("EtsMm RvAggTypeEnum. Identifies type of aggregation for Risk's view aggregation atom"),
+	//	v1_enum
+	//]
+	//typedef enum RvAggTypeEnum
+	//{
+	//	RAT_NONE   = 0,
+	//	RAT_FUTURE = 1,		// aggregation data for future symbol
+	//	RAT_EXPIRY = 2			// aggregation data for expiry	
+	//} RvAggTypeEnum;
+
+	[
+		uuid(321DEACD-1D23-4b21-A603-19B9215ED959),
+		helpstring("EtsMm Greeks FilterColumnEnum"),
+		v1_enum
+	]
+	typedef enum GreeksFilterColumnEnum
+	{
+		GFC_NONE			= -1,
+		GFC_SYMBOL			= 0,
+		GFC_TRADES			= 1,
+		GFC_GROUPS			= 2,
+		GFC_TRADER_GROUPS	= 3,
+		GFC_TRADER			= 4,
+		GFC_STRATEGY		= 5,
+		GFC_MODEL           = 6,
+		GFC_COLUMN_COUNT    = 7, 
+		GFC_LAST_COLUMN = GFC_COLUMN_COUNT - 1
+	} GreeksFilterColumnEnum;
+
+	[
+		uuid(023105C1-451B-4b75-BD99-DE650C20D9DB),
+		helpstring("EtsMm Risks SubAggregationTypeEnum"),
+		v1_enum
+	]
+	typedef enum SubAggregationTypeEnum
+	{
+		RSAT_UNDERLYING   = 0,
+		RSAT_STRATEGY   = 1
+	} SubAggregationTypeEnum;
+
+	[
+		uuid(17D4B871-AE48-4129-886B-D92F258E7EE9),
+		helpstring("EtsMm Risks RisksFilterColumnEnum"),
+		v1_enum
+	]
+	typedef enum RisksFilterColumnEnum
+	{
+		RFC_NONE									= -1,
+		RFC_SYMBOL								= 0,
+		RFC_TRADES								= 1,
+		RFC_GROUPS								= 2,
+		RFC_TRADER_GROUP						= 3,
+		RFC_TRADER								= 4,
+		RFC_STRATEGY							= 5,
+		RFC_EXPIRY								= 6,
+		RFC_INDEX								= 7,
+		RFC_MODEL								= 8,
+		RFC_SIM_DATE							= 9,
+
+		RFC_COLUMN_COUNT						= 10,
+		RFC_LAST_COLUMN						= RFC_COLUMN_COUNT - 1
+	} RisksFilterColumnEnum;
+	
+	[
+		uuid(C22CF162-DBC6-4108-8C60-314526D08A90),
+		helpstring("EtsMm Risks RisksTotalColumnEnum"),
+		v1_enum
+	]
+	typedef enum RisksTotalColumnEnum
+	{
+		RTC_NONE							= -1,
+
+		RTC_PNL_MTM						= 0,
+		RTC_PNL_THEO					= 1,
+		RTC_PNL_EDGE					= 2,
+		RTC_VEGA							= 3,
+		RTC_WTD_VEGA					= 4,
+		RTC_THETA						= 5,
+		RTC_DELTA_EQ					= 6,
+		RTC_GAMMA_EQ					= 7,
+		RTC_RHO							= 8,
+		RTC_INDEX_DELTA_EQ			= 9,
+		RTC_BETA_WTD_DELTA			= 10,
+		RTC_OPT_DELTA					= 11,
+		//RTC_NET_DELTA					= 12,
+		//RTC_NET_GAMMA					= 13,
+		RTC_BETA_WTD_DELTA_USD		= 12,
+
+		RTC_NET_EXPOSURE_LONG       = 13,
+		RTC_NET_EXPOSURE_SHORT      = 14,
+		RTC_NET_EXPOSURE            = 15,
+
+		RTC_COLUMN_COUNT			= 16,
+		RTC_LAST_COLUMN				= RTC_COLUMN_COUNT - 1
+	}RisksTotalColumnEnum;
+
+	[
+		uuid(CDE1E95A-1F30-4fe0-9998-3508C3C14E3B),
+		helpstring("EtsMm Risks RowOutlineLevelEnum"),
+		v1_enum
+	]
+	typedef enum RisksRowOutlineLevelEnum
+	{
+		USD_ID  = 0,
+		ROL_TOP = 1,
+		ROL_UND = 2,
+		ROL_POS = 3
+	}RisksRowOutlineLevelEnum;
+
+	[
+		uuid(52080051-BED2-4e3c-B8D0-FD25BBE692CD),
+		helpstring("EtsMm Risks RisksPosColumnEnum"),
+		v1_enum
+	]
+	typedef enum RisksPosColumnEnum
+	{
+		RPC_NONE						= -1,
+		RPC_KEY						= 0,
+
+		RPC_SYMBOL					= 1,
+		RPC_OPT_TYPE				= 2,
+		RPC_EXPIRY					= 3,
+		RPC_STRIKE					= 4,
+		RPC_BID						= 5,
+		RPC_ASK						= 6,
+		RPC_LAST						= 7,
+		RPC_UND_POS					= 8,
+		RPC_OPT_QTY					= 9,
+		RPC_PNL_MTM					= 10,
+		RPC_PNL_THEO				= 11,
+		RPC_PNL_EDGE				= 12,
+		RPC_NET_DELTA				= 13,
+		RPC_OPT_DELTA				= 14,
+		RPC_GAMMA					= 15,
+		RPC_NET_GAMMA				= 16,
+		RPC_GAMMA_SHARES			= 17,
+		RPC_VEGA						= 18,
+		RPC_WTD_VEGA				= 19,
+		RPC_THETA					= 20,
+		RPC_RHO						= 21,
+		RPC_VEGA_DELTA				= 22,
+		RPC_VEGA_GAMMA				= 23,
+		RPC_THETA_DELTA			= 24,
+		RPC_THETA_GAMMA			= 25,
+		RPC_UND						= 26,
+		RPC_DEL_UNIT				= 27,
+		RPC_TIME_VALUE				= 28,
+		RPC_NET_DELTA_USD			= 29,
+		RPC_BETA_WTD_DELTA_USD	= 30,
+		RPC_CLOSE					= 31,
+		RPC_FUT_ROOT				= 32,
+		RPC_FUTURES					= 33,
+		RPC_FUT_MATURITY			= 34,
+		RPC_FUT_QTY					= 35,
+		RPC_IMPORT_ID				= 36,
+		RPC_NETCHANGE				= 37,
+		RPC_DELTAP					= 38,
+		RPC_GAMMAP					= 39,
+		RPC_VEGAP					= 40,
+		RPC_THETAP					= 41,
+		RPC_RHOP						= 42,
+		/*RPC_MIV						= 43,
+		RPC_MIV_CALC_DATE			= 44,
+		RPC_EXT_POSITION			= 45,
+		RPC_DISTANSE_TO_STRIKE	= 46,
+		RPC_SYNTHETIC_PRICE		= 47,
+		RPC_CALCPRICE				= 48,*/
+		RPC_FPRICE_FORMAT			= 43,
+		//RPC_FCNTR_SIZE				= 45,
+		RPC_FQUOT_UNIT				= 44,
+		RPC_THEO_VOL				= 45,
+		RPC_ACTIVEPRC				= 46,
+		/*RPC_FOPT_DELTA				= 47,
+		RPC_FNET_DELTA				= 48,
+		RPC_FGAMMA_USD				= 49,
+		RPC_FGAMMAP					= 50,
+		RPC_FBETA_WTD_DELTA		= 51,
+		RPC_FINDEX_DELTA_EQ		= 52,
+		RPC_FNET_DELTA_USD		= 53,
+		RPC_FVEGA_DELTA			= 54,
+		RPC_FVEGA_GAMMA			= 55,
+		RPC_FTHETA_DELTA			= 56,
+		RPC_FTHETA_GAMMA			= 57,*/
+		RPC_NET_EXPOSURE				= 47,
+		RPC_OPT_DELTA_USD				= 48,
+		RPC_THEO_PRICE_VALUE			= 49,
+		RPC_THEO_PRICE_CLOSE			= 50,
+		RPC_EXPIRY_OV					= 51,
+		RPC_IMPLIED_VOLA				= 52,
+		RPC_COLUMN_COUNT		= 53,
+		RPC_LAST_COLUMN			= RPC_COLUMN_COUNT - 1
+	}RisksPosColumnEnum;
+	/////////////////////////////////////////////////////////////////////////////
+	[uuid(85052959-85AC-4381-A760-E4E6BB62418B) ]
+	struct MmRvMatrixCalcResultType{
+		DOUBLE		ShiftX;
+		DOUBLE		ShiftY;
+		DOUBLE		PnL;
+		DOUBLE		Delta;
+		DOUBLE		NetDelta;
+		DOUBLE		Gamma;
+		DOUBLE		GammaPerc;
+		DOUBLE		NetGamma;
+		DOUBLE		Theta;
+		DOUBLE		Vega;
+		DOUBLE		Rho;
+		DOUBLE		WtdVega;
+
+		DOUBLE		BadPnL;
+		DOUBLE		BadDelta;
+		DOUBLE		BadNetDelta;
+		DOUBLE		BadGamma;
+		DOUBLE		BadGammaPerc;
+		DOUBLE		BadNetGamma;
+		DOUBLE		BadTheta;
+		DOUBLE		BadVega;
+		DOUBLE		BadRho;
+		DOUBLE		BadWtdVega;
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(74393042-86FE-48BE-A71E-B8BD7821766D),
+		dual,
+		nonextensible,
+		helpstring("IMmRvExpTotalAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvExpTotalAtom : IDispatch
+	{
+			ETSGENERAL_PROP_DEF(1,			LONG,						ExpiryMonth)
+			ETSGENERAL_PROPREADONLY_DEF(2,	IMmRvExpColl*,				Expiry)
+			ETSGENERAL_PROP_DEF(3,			DOUBLE,						DeltaInShares)
+			ETSGENERAL_PROP_DEF(4,			DOUBLE,						DeltaEq)
+			ETSGENERAL_PROP_DEF(5,			DOUBLE,						GammaInShares)
+			ETSGENERAL_PROP_DEF(6,			DOUBLE,						GammaEq)
+			ETSGENERAL_PROP_DEF(7,			DOUBLE,						VegaInShares)
+			ETSGENERAL_PROP_DEF(8,			DOUBLE,						TimeValueInShares)
+			ETSGENERAL_PROP_DEF(9,			VARIANT_BOOL,				BadDeltaInShares)
+			ETSGENERAL_PROP_DEF(10,			VARIANT_BOOL,				BadDeltaEq)
+			ETSGENERAL_PROP_DEF(11,			VARIANT_BOOL,				BadGammaInShares)
+			ETSGENERAL_PROP_DEF(12,			VARIANT_BOOL,				BadGammaEq)
+			ETSGENERAL_PROP_DEF(13,			VARIANT_BOOL,				BadVegaInShares)
+			ETSGENERAL_PROP_DEF(14,			VARIANT_BOOL,				BadTimeValueInShares)
+			ETSGENERAL_PROP_DEF(15,			DOUBLE,						RhoInShares)
+			ETSGENERAL_PROP_DEF(16,			VARIANT_BOOL,				BadRhoInShares)
+			ETSGENERAL_PROP_DEF(17,			DOUBLE,						ThetaInShares)
+			ETSGENERAL_PROP_DEF(18,			VARIANT_BOOL,				BadThetaInShares)
+
+			[id(21), helpstring("method ClearValues")]
+			HRESULT ClearValues();
+
+			[id(22), helpstring("method CalcTotals")]
+			HRESULT CalcTotals();
+
+			// custom variables
+			ETSGENERAL_PROP_DEF(23,			LONG,						cvPoolID)
+			ETSGENERAL_PROPPUTREF_DEF(24,	IcvRTContext*,				cvRTContext)
+	};
+	[
+		object,
+		uuid(523B76D3-EF60-4507-8293-FFEDCC9CCED2),
+		dual,
+		nonextensible,
+		helpstring("IMmRvExpAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvExpAtom : IDispatch
+	{
+			ETSGENERAL_PROP_DEF(1,			LONG,						ExpiryMonth)
+			ETSGENERAL_PROP_DEF(2,			DATE,						Expiry)
+			ETSGENERAL_PROP_DEF(21,			DATE,						ExpiryOV)
+			ETSGENERAL_PROP_DEF(22,			DATE,						TradingClose)
+			ETSGENERAL_PROP_DEF(3,			DOUBLE,						Rate)
+			ETSGENERAL_PROPREADONLY_DEF(4,	IMmRvPosColl*,				Pos)
+			ETSGENERAL_PROP_DEF(5,			DOUBLE,						DeltaInShares)
+			ETSGENERAL_PROP_DEF(6,			DOUBLE,						DeltaEq)
+			ETSGENERAL_PROP_DEF(7,			DOUBLE,						GammaInShares)
+			ETSGENERAL_PROP_DEF(8,			DOUBLE,						GammaEq)
+			ETSGENERAL_PROP_DEF(9,			DOUBLE,						VegaInShares)
+			ETSGENERAL_PROP_DEF(10,			DOUBLE,						TimeValueInShares)
+			ETSGENERAL_PROP_DEF(11,			VARIANT_BOOL,				BadDeltaInShares)
+			ETSGENERAL_PROP_DEF(12,			VARIANT_BOOL,				BadDeltaEq)
+			ETSGENERAL_PROP_DEF(13,			VARIANT_BOOL,				BadGammaInShares)
+			ETSGENERAL_PROP_DEF(14,			VARIANT_BOOL,				BadGammaEq)
+			ETSGENERAL_PROP_DEF(15,			VARIANT_BOOL,				BadVegaInShares)
+			ETSGENERAL_PROP_DEF(16,			VARIANT_BOOL,				BadTimeValueInShares)
+			ETSGENERAL_PROP_DEF(17,			VARIANT_BOOL,				HasSynth)
+			ETSGENERAL_PROPREADONLY_DEF(18,	IMmRvSynthGreeksColl*,		SynthGreek)
+			ETSGENERAL_PROP_DEF(19,			DOUBLE,						RhoInShares)
+			ETSGENERAL_PROP_DEF(20,			VARIANT_BOOL,				BadRhoInShares)
+			ETSGENERAL_PROP_DEF(23,			DOUBLE,						ThetaInShares)
+			ETSGENERAL_PROP_DEF(24,			VARIANT_BOOL,				BadThetaInShares)
+			[id(39), helpstring("method ClearValues")]
+			HRESULT ClearValues();
+
+			// custom variables
+			ETSGENERAL_PROP_DEF(40,			LONG,							cvPoolID)
+			ETSGENERAL_PROPPUTREF_DEF(41,	IcvRTContext*,					cvRTContext)
+	};
+	[
+		object,
+		uuid(45173218-3D0D-4C4F-8619-D56A1E92BCC9),
+		dual,
+		nonextensible,
+		helpstring("IMmRvExpColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvExpColl : IDispatch
+	{
+				ETSGENERAL_COMMON_COLLECTION_DEF(DATE, IMmRvExpAtom*)
+	};
+
+	[
+		object,
+		uuid(B800350A-5FC7-416A-97C4-2E04FFF4C0DA),
+		dual,
+		nonextensible,
+		helpstring("IMmRvExpTotalColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvExpTotalColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(DATE, IMmRvExpTotalAtom*)
+	};
+
+	[
+		uuid(B84A8CA1-1E86-448b-AC36-968258D793D6),
+		helpstring("EtsMm RisksMatrix FilterColumnEnum"),
+		v1_enum
+	]
+	typedef enum MatrixFilterColumnEnum
+	{
+		MFC_NONE			= -1,
+		MFC_SYMBOL			= 0,
+		MFC_TRADES			= 1,
+		MFC_GROUPS			= 2,
+		MFC_TRADER_GROUP	= 3,
+		MFC_TRADER			= 4,
+		MFC_STRATEGY		= 5,
+		MFC_EXPIRY			= 6, 
+		MFC_PNL				= 7,
+		MFC_DELTA			= 8,
+		MFC_NET_DELTA		= 9,
+		MFC_GAMMA			= 10,
+		MFC_GAMMA_PERC		= 11,
+		MFC_NET_GAMMA		= 12,
+		MFC_VEGA			= 13,       
+		MFC_THETA			= 14, 
+		MFC_RHO				= 15,      
+		MFC_WTD_VEGA		= 16,
+		MFC_COLUMN_COUNT	= 17,
+		MFC_LAST_COLUMN		= MFC_COLUMN_COUNT - 1
+	} MatrixFilterColumnEnum;
+
+	[
+		object,
+		uuid(ABDBAA4F-791C-4AE4-BE5E-86E26AC8D622),
+		dual,
+		nonextensible,
+		helpstring("IMmRvPrice Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvPrice : IDispatch
+	{
+			ETSGENERAL_PROP_DEF(1,	DOUBLE,				Bid)
+			ETSGENERAL_PROP_DEF(2,	DOUBLE,				Ask)
+			ETSGENERAL_PROP_DEF(3,	DOUBLE,				Last)
+			ETSGENERAL_PROP_DEF(4,	DOUBLE,				Close)
+			ETSGENERAL_PROP_DEF(5,	DOUBLE,				NetChange)
+			ETSGENERAL_PROP_DEF(6,	DOUBLE,				Active)
+			ETSGENERAL_PROP_DEF(7,	VARIANT_BOOL,		IsDirty)
+			ETSGENERAL_PROP_DEF(8,  VARIANT_BOOL,		IsUseManualActive)
+			ETSGENERAL_PROP_DEF(9,	DOUBLE,				TheoClose)
+	};
+
+
+	[
+		object,
+		uuid(0AE4C6E2-2CE9-498B-B1E6-1873FA5BAAD1),
+		dual,
+		nonextensible,
+		helpstring("IRvMmQuoteAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IRvMmQuoteAtom : IDispatch
+	{
+		// price info
+		ETSGENERAL_PROPREADONLY_DEF(	1,		IMmRvPrice*,								Price)
+		ETSGENERAL_PROPREADONLY_DEF(	2,		IMmRvPrice*,								SuPrice)
+		ETSGENERAL_PROP_DEF(				7,		enum EtsReplacePriceStatusEnum,		ReplacePriceStatus)
+		// position	info
+		ETSGENERAL_PROP_DEF(				8,		LONG,											LotSize)
+		// theo info
+		ETSGENERAL_PROP_DEF(				9,		DOUBLE,										PriceTheo)
+		ETSGENERAL_PROP_DEF(				10,	DOUBLE,										Delta)
+		ETSGENERAL_PROP_DEF(				11,	DOUBLE,										Gamma)
+		ETSGENERAL_PROP_DEF(				12,	DOUBLE,										Vega)
+		ETSGENERAL_PROP_DEF(				13,	DOUBLE,										Theta)
+		ETSGENERAL_PROP_DEF(				14,	DOUBLE,										Rho)
+		ETSGENERAL_PROP_DEF(				15,	DOUBLE,										ThetaDelta)
+		ETSGENERAL_PROP_DEF(				16,	DOUBLE,										ThetaGamma)
+		ETSGENERAL_PROP_DEF(				17,	DOUBLE,										VegaDelta)
+		ETSGENERAL_PROP_DEF(				18,	DOUBLE,										VegaGamma)
+		ETSGENERAL_PROP_DEF(				19,	DOUBLE,										Vola)
+
+		//ETSGENERAL_PROP_DEF(				20,	VARIANT_BOOL,								IsVolaManual)
+		ETSGENERAL_PROP_DEF(				21,	DOUBLE,										ImpliedVola)
+		ETSGENERAL_PROP_DEF(				22,	DOUBLE,										MIV)
+		ETSGENERAL_PROP_DEF(				23,	VARIANT_BOOL,								IsVolaCalculatedWell)
+		//ETSGENERAL_PROP_DEF(				24,	VARIANT_BOOL,								VolatilityEnginrCalculation)
+		ETSGENERAL_PROP_DEF(				25,	BSTR,										VolaCalculatedParametrs)
+		ETSGENERAL_PROP_DEF(				26,	DOUBLE,										CalcPrice)
+
+		ETSGENERAL_PROP_DEF(				27,	VARIANT_BOOL,								IsDirty)
+	};
+
+	[
+		object,
+		uuid(F86F13FB-B267-4540-98B3-883FDCD62626),
+		dual,
+		nonextensible,
+		helpstring("IMmRvAggregationDataAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvAggregationDataAtom : IDispatch
+	{
+		ETSGENERAL_PROPREADONLY_DEF(1,	IMmRvPrice*,				Price)
+		ETSGENERAL_PROPREADONLY_DEF(2,	IMmRvPrice*,			    SuPrice)
+
+		ETSGENERAL_PROP_DEF(15,			DOUBLE,							Beta)
+
+		ETSGENERAL_PROP_DEF(16,			LONG,							Qty)
+		ETSGENERAL_PROP_DEF(17,			LONG,							OptQty)
+		ETSGENERAL_PROP_DEF(18,			DOUBLE,							UndPosForRates)
+		ETSGENERAL_PROP_DEF(19,			LONG,							FutQty)
+
+		ETSGENERAL_PROP_DEF(20,			DOUBLE,							PnlMtm)
+		ETSGENERAL_PROP_DEF(21,			DOUBLE,							PnlTheo)
+
+		ETSGENERAL_PROP_DEF(22,			DOUBLE,							NetDelta)
+		ETSGENERAL_PROP_DEF(23,			DOUBLE,							OptDelta)
+		ETSGENERAL_PROP_DEF(24,			DOUBLE,							Gamma)
+		ETSGENERAL_PROP_DEF(25,			DOUBLE,							GammaPerc)
+		ETSGENERAL_PROP_DEF(26,			DOUBLE,							Vega)
+		ETSGENERAL_PROP_DEF(27,			DOUBLE,							WtdVega)
+		ETSGENERAL_PROP_DEF(28,			DOUBLE,							Theta)
+		ETSGENERAL_PROP_DEF(29,			DOUBLE,							DeltaEq)
+		ETSGENERAL_PROP_DEF(30,			DOUBLE,							GammaEq)
+		ETSGENERAL_PROP_DEF(31,			DOUBLE,							Rho)
+		ETSGENERAL_PROP_DEF(32,			DOUBLE,							ThetaDelta)
+		ETSGENERAL_PROP_DEF(33,			DOUBLE,							ThetaGamma)
+		ETSGENERAL_PROP_DEF(34,			DOUBLE,							VegaDelta)
+		ETSGENERAL_PROP_DEF(35,			DOUBLE,							VegaGamma)
+		ETSGENERAL_PROP_DEF(36,			DOUBLE,							TimeValue)
+		ETSGENERAL_PROP_DEF(37,			DOUBLE,							BetaWtdDeltaEq)
+
+		ETSGENERAL_PROP_DEF(38,			VARIANT_BOOL,					BadPnlMtm)
+		ETSGENERAL_PROP_DEF(39,			VARIANT_BOOL,					BadPnlTheo)
+		ETSGENERAL_PROP_DEF(40,			VARIANT_BOOL,					BadNetDelta)
+		ETSGENERAL_PROP_DEF(41,			VARIANT_BOOL,					BadOptDelta)
+		ETSGENERAL_PROP_DEF(42,			VARIANT_BOOL,					BadGamma)
+		ETSGENERAL_PROP_DEF(43,			VARIANT_BOOL,					BadGammaPerc)
+		ETSGENERAL_PROP_DEF(44,			VARIANT_BOOL,					BadVega)
+		ETSGENERAL_PROP_DEF(45,			VARIANT_BOOL,					BadWtdVega)
+		ETSGENERAL_PROP_DEF(46,			VARIANT_BOOL,					BadTheta)
+		ETSGENERAL_PROP_DEF(47,			VARIANT_BOOL,					BadDeltaEq)
+		ETSGENERAL_PROP_DEF(48,			VARIANT_BOOL,					BadGammaEq)
+		ETSGENERAL_PROP_DEF(49,			VARIANT_BOOL,					BadRho)
+		ETSGENERAL_PROP_DEF(50,			VARIANT_BOOL,					BadThetaDelta)
+		ETSGENERAL_PROP_DEF(51,			VARIANT_BOOL,					BadThetaGamma)
+		ETSGENERAL_PROP_DEF(52,			VARIANT_BOOL,					BadVegaDelta)
+		ETSGENERAL_PROP_DEF(53,			VARIANT_BOOL,					BadVegaGamma)
+		ETSGENERAL_PROP_DEF(54,			VARIANT_BOOL,					BadTimeValue)
+		ETSGENERAL_PROP_DEF(55,			VARIANT_BOOL,					BadBetaWtdDeltaEq)
+		ETSGENERAL_PROP_DEF(56,			enum EtsReplacePriceStatusEnum,	ReplacePriceStatus)
+		ETSGENERAL_PROP_DEF(58,			DOUBLE,							NetGamma)
+		ETSGENERAL_PROP_DEF(59,			VARIANT_BOOL,					BadNetGamma)
+		//ETSGENERAL_PROP_DEF(60,			LONG,							ExternalPosition)
+		ETSGENERAL_PROP_DEF(61,			VARIANT_BOOL,					IsSyntheticAggregation)
+
+		ETSGENERAL_PROPREADONLY_DEF(62,			DOUBLE,							NetExposure)
+		ETSGENERAL_PROPREADONLY_DEF(63,			VARIANT_BOOL,					BadNetExposure)
+
+	}
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(195F7426-42A5-423D-9990-787ABDCF9BC2),
+		dual,
+		nonextensible,
+		helpstring("IMmRvSynthGreeksAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvSynthGreeksAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ContractID)
+		ETSGENERAL_PROP_DEF(2,			enum EtsContractTypeEnum,	ContractType)
+		ETSGENERAL_PROP_DEF(3,			BSTR,						Symbol)
+
+		ETSGENERAL_PROP_DEF(4,			LONG,						SynthUndID)
+		ETSGENERAL_PROP_DEF(5,			BSTR,						SynthUndSymbol)
+		ETSGENERAL_PROP_DEF(6,			VARIANT_BOOL,				IsTotal)
+
+		ETSGENERAL_PROP_DEF(7,			VARIANT_BOOL,				Visible)
+
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,						DeliveryUnits)
+		    
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,						DeltaInShares)
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,						GammaInShares)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,						GammaInSharesPerc)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,						DeltaInMoney)
+		ETSGENERAL_PROP_DEF(13,			DOUBLE,						BetaWtdDeltaInMoney)
+		    
+		ETSGENERAL_PROP_DEF(14,			VARIANT_BOOL,				BadDelta)
+		ETSGENERAL_PROP_DEF(15,			VARIANT_BOOL,				BadGamma)
+		ETSGENERAL_PROP_DEF(16,			VARIANT_BOOL,				BadGammaPerc)
+		ETSGENERAL_PROP_DEF(17,			VARIANT_BOOL,				BadDeltaInMoney)
+		ETSGENERAL_PROP_DEF(18,			VARIANT_BOOL,				BadBetaWtdDeltaInMoney)
+		ETSGENERAL_PROPREADONLY_DEF(19,	IMmRvPrice*,			    SuPrice)
+
+		ETSGENERAL_PROP_DEF(20,			DOUBLE,						NetGamma)
+		ETSGENERAL_PROP_DEF(21,			VARIANT_BOOL,				BadNetGamma)
+		ETSGENERAL_PROP_DEF(22,			DOUBLE,						NetDelta)
+		ETSGENERAL_PROP_DEF(23,			VARIANT_BOOL,				BadNetDelta)
+
+		ETSGENERAL_PROP_DEF(24,			DOUBLE,						RhoInShares)
+		ETSGENERAL_PROP_DEF(25,			VARIANT_BOOL,				BadRhoInShares)
+
+		ETSGENERAL_PROP_DEF(26,			DOUBLE,						NetExposure)
+		ETSGENERAL_PROP_DEF(27,			VARIANT_BOOL,				BadNetExposure)
+
+		ETSGENERAL_PROP_DEF(28,			DOUBLE,						ThetaInShares)
+		ETSGENERAL_PROP_DEF(29,			VARIANT_BOOL,				BadThetaInShares)
+
+		[id(51), helpstring("method ClearValuesInShares")]
+		HRESULT ClearValuesInShares();
+	};
+
+	[
+		uuid(EF6F3B44-90CE-4b3b-A3D8-C66AC1846D1E),
+		helpstring("EtsMm Risks RowDataType"),
+		v1_enum
+	]
+	typedef enum RisksRowDataType
+	{
+		RDT_POS							= 1,
+		RDT_AGG							= 2,
+		RDT_UNDAGG						= 3,
+	}RisksRowDataType;
+	/*[
+		object,
+		uuid(195F7426-42A5-423D-9990-787ABDCF9BC2),
+		dual,
+		nonextensible,
+		helpstring("IMmRvSynthGreeksAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvSynthGreeksAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ContractID)
+		ETSGENERAL_PROP_DEF(2,			enum EtsContractTypeEnum,	ContractType)
+		ETSGENERAL_PROP_DEF(3,			BSTR,						Symbol)
+
+		ETSGENERAL_PROP_DEF(4,			LONG,						SynthUndID)
+		ETSGENERAL_PROP_DEF(5,			BSTR,						SynthUndSymbol)
+		ETSGENERAL_PROP_DEF(6,			VARIANT_BOOL,				IsTotal)
+
+		ETSGENERAL_PROP_DEF(7,			VARIANT_BOOL,				Visible)
+
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,						DeliveryUnits)
+		    
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,						DeltaInShares)
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,						GammaInShares)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,						GammaInSharesPerc)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,						DeltaInMoney)
+		ETSGENERAL_PROP_DEF(13,			DOUBLE,						BetaWtdDeltaInMoney)
+		    
+		ETSGENERAL_PROP_DEF(14,			VARIANT_BOOL,				BadDelta)
+		ETSGENERAL_PROP_DEF(15,			VARIANT_BOOL,				BadGamma)
+		ETSGENERAL_PROP_DEF(16,			VARIANT_BOOL,				BadGammaPerc)
+		ETSGENERAL_PROP_DEF(17,			VARIANT_BOOL,				BadDeltaInMoney)
+		ETSGENERAL_PROP_DEF(18,			VARIANT_BOOL,				BadBetaWtdDeltaInMoney)
+		ETSGENERAL_PROPREADONLY_DEF(19,	IMmRvPrice*,			    SuPrice)
+
+		ETSGENERAL_PROP_DEF(20,			DOUBLE,						NetGamma)
+		ETSGENERAL_PROP_DEF(21,			VARIANT_BOOL,				BadNetGamma)
+		ETSGENERAL_PROP_DEF(22,			DOUBLE,						NetDelta)
+		ETSGENERAL_PROP_DEF(23,			VARIANT_BOOL,				BadNetDelta)
+
+		ETSGENERAL_PROP_DEF(24,			DOUBLE,						RhoInShares)
+		ETSGENERAL_PROP_DEF(25,			VARIANT_BOOL,				BadRhoInShares)
+
+		[id(51), helpstring("method ClearValuesInShares")]
+		HRESULT ClearValuesInShares();
+	};*/
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(24DE5B3A-E2D9-4504-961F-59682B0D50B4),
+		dual,
+		nonextensible,
+		helpstring("IMmRvSynthGreeksColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvSynthGreeksColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmRvSynthGreeksAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(D6FD7F9F-086D-4F5D-97B7-62EC86725A9C),
+		dual,
+		nonextensible,
+		helpstring("IMmRvFutAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvFutAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,				LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,				BSTR,							Symbol)
+		ETSGENERAL_PROP_DEF(3,				DATE,							Maturity)
+		ETSGENERAL_PROP_DEF(4,				VARIANT_BOOL,					IsAmerican)
+		ETSGENERAL_PROPPUTREF_DEF(5,		IEtsPriceProfileAtom*,			UndPriceProfile)
+		ETSGENERAL_PROPPUTREF_DEF(6,		IEtsPriceProfileAtom*,			OptPriceProfile)
+
+		ETSGENERAL_PROP_DEF(8,				LONG,							FutRootID)
+		ETSGENERAL_PROP_DEF(9,				BSTR,							FutRootSymbol)
+
+		ETSGENERAL_PROP_DEF(10,				LONG,							UndID)
+
+		ETSGENERAL_PROP_DEF(11,				VARIANT_BOOL,					CalcGreeks)
+
+		ETSGENERAL_PROPREADONLY_DEF(12,		IMmRvPrice*,					Price)
+
+		//ETSGENERAL_PROP_DEF(12,				DOUBLE,									PriceBid)
+		//ETSGENERAL_PROP_DEF(13,				DOUBLE,									PriceAsk)
+		//ETSGENERAL_PROP_DEF(14,				DOUBLE,									PriceLast)
+		//ETSGENERAL_PROP_DEF(15,				DOUBLE,									PriceClose)
+		//ETSGENERAL_PROP_DEF(20,				DOUBLE,									NetChange)
+
+		ETSGENERAL_PROP_DEF(16,				LONG,									OptLotSize)
+		ETSGENERAL_PROP_DEF(17,				LONG,									FutLotSize)
+
+		ETSGENERAL_PROP_DEF(18,				BSTR,									ContractName)
+		ETSGENERAL_PROP_DEF(19,				enum EtsReplacePriceStatusEnum,			ReplacePriceStatus)
+		ETSGENERAL_PROPPUTREF_DEF(21,		IMmRvUndAtom*,							Underlying)
+		
+		ETSGENERAL_PROP_DEF(22,				BSTR,									QuotationUnitName)
+		ETSGENERAL_PROP_DEF(23,				BSTR,									QuotePriceFormat)
+
+		ETSGENERAL_PROP_DEF(24,				DOUBLE,									K)
+		ETSGENERAL_PROP_DEF(25,				DOUBLE,									KEq)
+		ETSGENERAL_PROP_DEF(26,				VARIANT_BOOL,							MultOptDltEq)
+		ETSGENERAL_PROP_DEF(27,				DOUBLE,									Basis)
+		ETSGENERAL_PROP_DEF(28,				DOUBLE,									Ratio)
+
+
+		[id(80), helpstring("method GetFuturePrice")]		
+			HRESULT GetFuturePrice(	[in]DOUBLE dTolerance, 
+											[in]enum EtsPriceRoundingRuleEnum enPriceRound,
+											[in, out ] enum EtsReplacePriceStatusEnum * penPriceStatus,
+											[out] VARIANT_BOOL *bFutureUsed, 
+											[out,retval]DOUBLE	*pPrice);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(8797B93B-970F-42D0-96FD-7645E6138D7A),
+		dual,
+		nonextensible,
+		helpstring("IMmRvFutColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvFutColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmRvFutAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(DCE1C119-5A98-4190-844A-31EF0DC0166E),
+		dual,
+		nonextensible,
+		helpstring("IMmRvPosAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvPosAtom : IDispatch
+	{
+		// main info
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			enum EtsContractTypeEnum,		ContractType)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Symbol)
+
+		// option related info
+		ETSGENERAL_PROP_DEF(4,			enum EtsOptionTypeEnum,			OptType)
+		ETSGENERAL_PROP_DEF(5,			DATE,							Expiry)
+		ETSGENERAL_PROP_DEF(70,			DATE,							ExpiryOV)
+		ETSGENERAL_PROP_DEF(71,			DATE,							TradingClose)
+		ETSGENERAL_PROP_DEF(6,			DOUBLE,							Strike)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,							Rate)
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,							VegaWeight)
+		//ETSGENERAL_PROP_DEF(9,			LONG,							ExpiryMonth)
+		ETSGENERAL_PROP_DEF(10,			LONG,							OptionRootID)
+
+		// auxilary	info
+		ETSGENERAL_PROP_DEF(12,			VARIANT_BOOL,					Visible)
+		ETSGENERAL_PROP_DEF(13,			VARIANT_BOOL,					CalcGreeks)
+		ETSGENERAL_PROP_DEF(14,			BSTR,							ImportId)
+
+		// position	info
+		ETSGENERAL_PROP_DEF(15,			LONG,							Qty)
+		ETSGENERAL_PROP_DEF(16,			LONG,							QtyInShares)
+
+		ETSGENERAL_PROP_DEF(17,			LONG,							QtyLTDBuy)
+		ETSGENERAL_PROP_DEF(18,			LONG,							QtyLTDSell)
+		ETSGENERAL_PROP_DEF(19,			DOUBLE,							PosLTDBuy)
+		ETSGENERAL_PROP_DEF(20,			DOUBLE,							PosLTDSell)
+
+		ETSGENERAL_PROP_DEF(21,			LONG,							QtyDailyPrevDateBuy)
+		ETSGENERAL_PROP_DEF(22,			LONG,							QtyDailyPrevDateSell)
+		ETSGENERAL_PROP_DEF(23,			DOUBLE,							PosDailyPrevDateBuy)
+		ETSGENERAL_PROP_DEF(24,			DOUBLE,							PosDailyPrevDateSell)
+
+		ETSGENERAL_PROP_DEF(25,			LONG,							QtyDailyTodayBuy)
+		ETSGENERAL_PROP_DEF(26,			LONG,							QtyDailyTodaySell)
+		ETSGENERAL_PROP_DEF(27,			DOUBLE,							PosDailyTodayBuy)
+		ETSGENERAL_PROP_DEF(28,			DOUBLE,							PosDailyTodaySell)
+
+		// pnl info
+		ETSGENERAL_PROP_DEF(29,			DOUBLE,							PnlMtm)
+		ETSGENERAL_PROP_DEF(30,			DOUBLE,							PnlTheo)
+	
+		// theo in shares info
+		ETSGENERAL_PROP_DEF(31,			DOUBLE,							DeltaInShares)
+		ETSGENERAL_PROP_DEF(32,			DOUBLE,							GammaInShares)
+		ETSGENERAL_PROP_DEF(33,			DOUBLE,							GammaInSharesPerc)
+		ETSGENERAL_PROP_DEF(34,			DOUBLE,							VegaInShares)
+		ETSGENERAL_PROP_DEF(35,			DOUBLE,							WtdVega)
+		ETSGENERAL_PROP_DEF(36,			DOUBLE,							ThetaInShares)
+		ETSGENERAL_PROP_DEF(37,			DOUBLE,							RhoInShares)
+		ETSGENERAL_PROP_DEF(38,			DOUBLE,							ThetaDeltaInShares)
+		ETSGENERAL_PROP_DEF(39,			DOUBLE,							ThetaGammaInShares)
+		ETSGENERAL_PROP_DEF(40,			DOUBLE,							VegaDeltaInShares)
+		ETSGENERAL_PROP_DEF(41,			DOUBLE,							VegaGammaInShares)
+		ETSGENERAL_PROP_DEF(42,			DOUBLE,							TimeValue)
+
+		// synthetic info
+		ETSGENERAL_PROP_DEF(43,			VARIANT_BOOL,					IsSynthetic)
+		ETSGENERAL_PROPPUTREF_DEF(44,	IMmRvSynthGreeksColl*,			SynthGreeks)
+		ETSGENERAL_PROP_DEF(45,			LONG,							UndID)
+		//ETSGENERAL_PROP_DEF(61,		DOUBLE,							SynthBeta)
+
+		ETSGENERAL_PROPPUTREF_DEF(47,	IMmRvFutAtom*,					Fut)
+
+		ETSGENERAL_PROP_DEF(48,			DOUBLE,							NetGamma)
+		ETSGENERAL_PROP_DEF(49,			DOUBLE,							DeltaEq)
+		ETSGENERAL_PROP_DEF(50,			DOUBLE,							NetDelta)
+		ETSGENERAL_PROP_DEF(51,			DOUBLE,							BetaWtdDeltaEq)
+		ETSGENERAL_PROP_DEF(52,			VARIANT_BOOL,					BadNetGamma)
+		ETSGENERAL_PROP_DEF(53,			VARIANT_BOOL,					BadNetDelta)
+		ETSGENERAL_PROP_DEF(54,			VARIANT_BOOL,					BadDeltaEq)
+		ETSGENERAL_PROP_DEF(55,			VARIANT_BOOL,					BadBetaWtdDeltaEq)
+
+		ETSGENERAL_PROP_DEF(60,			BSTR,							LogEnhansement)
+		ETSGENERAL_PROP_DEF(61,			LONG,							ExternalPosition)
+		ETSGENERAL_PROPREADONLY_DEF(62,	IEtsStrategyAtom*,				Strategy)
+		ETSGENERAL_PROPREADONLY_DEF(63,	IRvMmQuoteAtom*,				Quote)
+		ETSGENERAL_PROPPUTREF_DEF(64,	IMmRvFutAtom*,					ActiveFuture)
+		ETSGENERAL_PROP_DEF(65,			VARIANT_BOOL,					IsSyntheticAggregation)
+
+		ETSGENERAL_PROPREADONLY_DEF(66,			DOUBLE,					NetExposure)
+		ETSGENERAL_PROPREADONLY_DEF(67,			VARIANT_BOOL,			BadNetExposure)
+                ETSGENERAL_PROP_DEF(68,			DOUBLE,						HTBRate)
+		[id(80), helpstring("method DistanceToStrike")]		HRESULT DistanceToStrike([in]DOUBLE Price,[out,retval]DOUBLE*pDistance);
+		//ETSGENERAL_PROP_DEF(67,			DOUBLE,						SuPrice)
+
+		[id(81), helpstring("method ClearValues")]
+		HRESULT ClearValues();
+
+		[id(82), helpstring("method ClearValuesInShares")]
+		HRESULT ClearValuesInShares();
+
+		[id(83), helpstring("method CalcOptionGreeks")]
+		HRESULT CalcOptionGreeks([in] IMmRvUndColl* aUndColl,
+								[in] IMmRvUndAtom* aUnd,
+								[in] DOUBLE dUndMidPrice,
+								[in] LONG nMask,
+								[in] VARIANT_BOOL bIsPnlLTD,
+								[in] enum EtsCalcModelTypeEnum enCalcModel,
+								[in] VARIANT_BOOL bUseTheoVolatility,
+								[in] VARIANT_BOOL bUseTheoVolaNoBid,
+								[in] VARIANT_BOOL bUseTheoVolaBadMarket,
+								[in] DOUBLE dUndPriceTolerance,
+								[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+								[in] DATE dtCalcDate,
+								[in] ICalculationParametrs* pParams);
+
+		[id(84), helpstring("method CalcFutOptionGreeks")]
+		HRESULT CalcFutOptionGreeks([in] IMmRvUndAtom* aUnd,
+								[in] DOUBLE dUndMidPrice,
+								[in] LONG nMask,
+								[in] VARIANT_BOOL bIsPnlLTD,
+								[in] enum EtsCalcModelTypeEnum enCalcModel,
+								[in] VARIANT_BOOL bUseTheoVolatility,
+								[in] VARIANT_BOOL bUseTheoVolaNoBid,
+								[in] VARIANT_BOOL bUseTheoVolaBadMarket,
+								[in] DOUBLE dUndPriceTolerance,
+								[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+								[in] DATE dtCalcDate,
+								[in] ICalculationParametrs* pParams);
+
+		[id(85), helpstring("method CalcPnlMtm")]
+		HRESULT CalcPnlMtm([in] VARIANT_BOOL bIsPnlLTD,
+							[in] DOUBLE dPriceBid,
+							[in] DOUBLE dPriceAsk,
+							[in] VARIANT_BOOL bSetToTheoPnlAlso,
+							[in] DATE dtCalculationDate);
+
+
+		//[id(86), helpstring("method AddTrade")]
+		//HRESULT AddTrade([in] IMmTradeInfoAtom* pTrade, [in]IMmRvUndAtom* pUnd);
+
+		[id(87), helpstring("method GetOpositOption")]	HRESULT GetOpositOption([out,retval]BSTR*vSymbol);
+		[id(88), helpstring("method GetCopyOfObject")]	HRESULT GetCopyOfObject([in] VARIANT_BOOL bNewQuote ,[out,retval]IMmRvPosAtom**ppCopy);
+		[id(89), helpstring("method InitSyntAndFut")]	HRESULT InitSyntAndFut ( [in]IMmRvSynthGreeksColl* , [in]IMmRvFutAtom*,[in]IMmRvFutAtom*  ) ;
+
+		[id(90), helpstring("method IsOTM")]		HRESULT IsOTM(DOUBLE dUndPriceTolerance, enum EtsPriceRoundingRuleEnum enPriceRoundingRule,[out,retval]VARIANT_BOOL*pVal);
+		
+		[id(91), helpstring("method GetFormatedXMLForDBUpdate")]		HRESULT GetFormatedXMLForDBUpdate([in] LONG vUndID, [out,retval]BSTR*pVal);
+		
+		ETSGENERAL_PROP_DEF(92,	VARIANT_BOOL,	IsUseManualActivePrice)
+		ETSGENERAL_PROPPUTREF_DEF(93,	IMmRvUndAtom*,					Und)
+
+		ETSGENERAL_PROP_DEF(94,			VARIANT_BOOL,					IsFlex)
+
+		[id(95), helpstring("FitToMarketVolatility")]
+		HRESULT FitToMarketVolatility([in, defaultvalue(0)] DOUBLE Value);
+
+		// custom variables
+		ETSGENERAL_PROP_DEF(96,			LONG,						cvPoolID)
+		ETSGENERAL_PROPPUTREF_DEF(97,	IcvRTContext*,				cvRTContext)
+		
+		[id(98), helpstring("method CalcCV")]
+		HRESULT CalcCV(void);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(081960D7-088F-4905-85E2-958F7FBA658D),
+		dual,
+		nonextensible,
+		helpstring("IMmRvPosColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvPosColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmRvPosAtom*)
+	};
+
+	
+	[
+		object,
+		uuid(F0258D1D-3421-4EDC-B388-AB5314867ED9),
+		dual,
+		nonextensible,
+		helpstring("IMmRvUndAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvUndAtom : IDispatch
+	{
+		// main info
+		ETSGENERAL_PROP_DEF        (1, LONG,			ID)
+		ETSGENERAL_PROP_DEF        (2, BSTR,			Symbol)
+
+		ETSGENERAL_PROP_DEF(3,			enum EtsContractTypeEnum,		ContractType)
+
+		ETSGENERAL_PROP_DEF(4,			DOUBLE,							Yield)
+		ETSGENERAL_PROPREADONLY_DEF(5,	IMmRvPrice*,					Price)
+
+
+		ETSGENERAL_PROP_DEF(8,			VARIANT_BOOL,					IsAmerican)
+		ETSGENERAL_PROP_DEF(9,			VARIANT_BOOL,					IsHTB)
+
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,							Skew)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,							Kurt)
+
+		ETSGENERAL_PROP_DEF(13,			VARIANT_BOOL,					CalcGreeks)
+		ETSGENERAL_PROP_DEF(14,			VARIANT_BOOL,					CalcTotals)
+
+		ETSGENERAL_PROP_DEF(15,			VARIANT_BOOL,					VolaUpdated)
+
+		ETSGENERAL_PROP_DEF(20,			LONG,							LotSize)
+
+		ETSGENERAL_PROP_DEF(21,			DOUBLE,							Beta)
+
+		ETSGENERAL_PROP_DEF(22,			LONG,							Qty)
+		ETSGENERAL_PROP_DEF(23,			LONG,							OptQty)
+		ETSGENERAL_PROP_DEF(24,			DOUBLE,							UndPosForRates)
+		ETSGENERAL_PROP_DEF(25,			LONG,							FutQty)
+
+		ETSGENERAL_PROP_DEF(26,			DOUBLE,							PnlMtm)
+		ETSGENERAL_PROP_DEF(27,			DOUBLE,							PnlTheo)
+
+		ETSGENERAL_PROP_DEF(28,			DOUBLE,							NetDelta)
+		ETSGENERAL_PROP_DEF(29,			DOUBLE,							OptDelta)
+		ETSGENERAL_PROP_DEF(30,			DOUBLE,							Gamma)
+		ETSGENERAL_PROP_DEF(31,			DOUBLE,							GammaPerc)
+		ETSGENERAL_PROP_DEF(32,			DOUBLE,							Vega)
+		ETSGENERAL_PROP_DEF(33,			DOUBLE,							WtdVega)
+		ETSGENERAL_PROP_DEF(34,			DOUBLE,							Theta)
+		ETSGENERAL_PROP_DEF(35,			DOUBLE,							DeltaEq)
+		ETSGENERAL_PROP_DEF(36,			DOUBLE,							GammaEq)
+		ETSGENERAL_PROP_DEF(37,			DOUBLE,							Rho)
+		ETSGENERAL_PROP_DEF(38,			DOUBLE,							ThetaDelta)
+		ETSGENERAL_PROP_DEF(39,			DOUBLE,							ThetaGamma)
+		ETSGENERAL_PROP_DEF(40,			DOUBLE,							VegaDelta)
+		ETSGENERAL_PROP_DEF(41,			DOUBLE,							VegaGamma)
+		ETSGENERAL_PROP_DEF(42,			DOUBLE,							TimeValue)
+		ETSGENERAL_PROP_DEF(43,			DOUBLE,							TimeValueInShares)
+		ETSGENERAL_PROP_DEF(44,			DOUBLE,							BetaWtdDeltaEq)
+
+		ETSGENERAL_PROP_DEF(45,			VARIANT_BOOL,					BadPnlMtm)
+		ETSGENERAL_PROP_DEF(46,			VARIANT_BOOL,					BadPnlTheo)
+		ETSGENERAL_PROP_DEF(47,			VARIANT_BOOL,					BadNetDelta)
+		ETSGENERAL_PROP_DEF(48,			VARIANT_BOOL,					BadOptDelta)
+		ETSGENERAL_PROP_DEF(49,			VARIANT_BOOL,					BadGamma)
+		ETSGENERAL_PROP_DEF(50,			VARIANT_BOOL,					BadGammaPerc)
+		ETSGENERAL_PROP_DEF(51,			VARIANT_BOOL,					BadVega)
+		ETSGENERAL_PROP_DEF(52,			VARIANT_BOOL,					BadWtdVega)
+		ETSGENERAL_PROP_DEF(53,			VARIANT_BOOL,					BadTheta)
+		ETSGENERAL_PROP_DEF(54,			VARIANT_BOOL,					BadDeltaEq)
+		ETSGENERAL_PROP_DEF(55,			VARIANT_BOOL,					BadGammaEq)
+		ETSGENERAL_PROP_DEF(56,			VARIANT_BOOL,					BadRho)
+		ETSGENERAL_PROP_DEF(57,			VARIANT_BOOL,					BadThetaDelta)
+		ETSGENERAL_PROP_DEF(58,			VARIANT_BOOL,					BadThetaGamma)
+		ETSGENERAL_PROP_DEF(59,			VARIANT_BOOL,					BadVegaDelta)
+		ETSGENERAL_PROP_DEF(60,			VARIANT_BOOL,					BadVegaGamma)
+		ETSGENERAL_PROP_DEF(61,			VARIANT_BOOL,					BadTimeValue)
+		ETSGENERAL_PROP_DEF(62,			VARIANT_BOOL,					BadBetaWtdDeltaEq)
+
+		ETSGENERAL_PROPREADONLY_DEF(63,	IMmRvPosColl*,					Pos)
+		ETSGENERAL_PROP_DEF(64,			VARIANT_BOOL,					HasOptPos)
+		ETSGENERAL_PROPREADONLY_DEF(65,	IVolaControl*,					VolaSrv)
+
+		ETSGENERAL_PROPPUTREF_DEF(66,	IIndexAtom*,					BasketIndex)
+
+		ETSGENERAL_PROP_DEF(67,			VARIANT_BOOL,					UseMidRates)
+
+		ETSGENERAL_PROP_DEF(68,			VARIANT_BOOL,					HasSynthetic)
+
+		ETSGENERAL_PROPPUTREF_DEF(69,	ISynthRootColl*,				SynthRoots)
+		ETSGENERAL_PROPPUTREF_DEF(70,	IMmRvSynthGreeksColl*,			SynthGreeks)
+		ETSGENERAL_PROPPUTREF_DEF(71,	IMmRvPosColl*,					SynthPos)
+		ETSGENERAL_PROPPUTREF_DEF(72,	IEtsPriceProfileAtom*,			UndPriceProfile)
+		ETSGENERAL_PROPPUTREF_DEF(73,	IEtsPriceProfileAtom*,			OptPriceProfile)
+		ETSGENERAL_PROP_DEF(74,			enum EtsReplacePriceStatusEnum,	ReplacePriceStatus)
+
+		ETSGENERAL_PROPPUTREF_DEF(75,	IMmRvFutColl*,					Fut)
+		ETSGENERAL_PROPPUTREF_DEF(76,	IEtsIndexDivAtom*,				Dividend)
+		ETSGENERAL_PROP_DEF(77,			DOUBLE,							SuPrice)
+		
+		//ETSGENERAL_PROP_DEF(77,			DOUBLE,							STDValue)
+		ETSGENERAL_PROPPUTREF_DEF(78,	IMmRvFutAtom*,				ActiveFuture)
+
+		ETSGENERAL_PROPREADONLY_DEF(79, IMmRvExpColl*,				ExpColl)		
+
+
+		ETSGENERAL_PROP_DEF(82,			DOUBLE,						NetGamma)
+		ETSGENERAL_PROP_DEF(83,			VARIANT_BOOL,				BadNetGamma)
+		//ETSGENERAL_PROP_DEF(84,			LONG,						ExternalPosition)
+
+		ETSGENERAL_PROP_DEF(85,			DOUBLE,						OptDeltaEq)
+		ETSGENERAL_PROP_DEF(86,			VARIANT_BOOL,				BadOptDeltaEq)
+		ETSGENERAL_PROP_DEF(87,			LONG,						PrimaryExchangeID)
+		ETSGENERAL_PROP_DEF(88,			BSTR,						PrimaryExchangeCode)
+
+		[id(100), helpstring("method Clear")]
+		HRESULT Clear();
+
+		[id(101), helpstring("method ClearValues")]
+		HRESULT ClearValues();
+
+		[id(102), helpstring("method SetAllValuesAsBad")]
+		HRESULT SetAllValuesAsBad();
+
+		[id(103), helpstring("method GetSyntheticUnderlyingPrice")]
+		HRESULT GetSyntheticUnderlyingPrice([in] IMmRvUndColl* aUndColl,
+											[in] ISynthRootAtom* aSynthRoot,
+											[in, out] DOUBLE* pdSynthBid,
+											[in, out] DOUBLE* pdSynthAsk,
+											[in, out] DOUBLE* pdSynthLast);
+
+		[id(104), helpstring("method Calc")]
+		HRESULT Calc([in] IMmRvUndColl* aUndColl,
+					[in] LONG nMask,
+					[in] VARIANT_BOOL bCalcGreeks,
+					[in] VARIANT_BOOL bUpdateVola,
+					[in] VARIANT_BOOL bRealtimeCalc,
+					[in] VARIANT_BOOL bClearSynthGreeks,
+					[in] IEtsProcessDelay* aDelay,
+					[in] VARIANT_BOOL bIsPnlLTD,
+					[in] enum EtsCalcModelTypeEnum enCalcModel,
+					[in] VARIANT_BOOL bUseTheoVolatility,
+					[in] VARIANT_BOOL bUseTheoVolaNoBid,
+					[in] VARIANT_BOOL bUseTheoVolaBadMarket,
+					[in] DOUBLE dUndPriceTolerance,
+					[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+					[in, out] LONG* pnOptUpdated,
+					[in, out] LONG* pnUndUpdated,
+					[in, out] LONG* pnFutUpdated,
+					[in] DATE dtCalcDate,
+					[in] ICalculationParametrs* pParams);
+
+		[id(105), helpstring("method CalcWtdVega")]
+		HRESULT CalcWtdVega([in] IEtsExpCalColl* aExpCalColl);
+
+		[id(106), helpstring("method FindPosition")]
+		HRESULT FindPosition([in] DOUBLE dStrike, [in] DATE dtExpiration, [in]enum EtsOptionTypeEnum enType, [out, retval] IMmRvPosAtom** pPosAtom);
+
+
+		[id(107), helpstring("method CalcSyntheticUnderlying")]
+		HRESULT CalcSyntheticUnderlying([in] IMmRvUndColl* aUndColl,
+					[in] LONG nMask,
+					[in] VARIANT_BOOL bIsPnlLTD,
+					[in] enum EtsCalcModelTypeEnum enCalcModel,
+					[in] VARIANT_BOOL bUseTheoVolatility,
+					[in] VARIANT_BOOL bUseTheoVolaNoBid,
+					[in] VARIANT_BOOL bUseTheoVolaBadMarket,
+					[in] DOUBLE dUndPriceTolerance,
+					[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+					[in] DATE dtCalcDate,
+					[in] ICalculationParametrs* pParams);
+
+		[id(180), helpstring("method GetUnderlyingPrice")]		
+		HRESULT GetUnderlyingPrice(	[in]DOUBLE dTolerance, 
+											[in]enum EtsPriceRoundingRuleEnum enPriceRound,
+											[in, out ] enum EtsReplacePriceStatusEnum * penPriceStatus,
+											[out] VARIANT_BOOL *bFutureUsed, 
+											[out,retval]DOUBLE	*pPrice);
+		
+        ETSGENERAL_PROP_DEF(181, VARIANT_BOOL, bShouldMultOptDeltaEq)
+        ETSGENERAL_PROP_DEF(182, DOUBLE, dKOptDeltaEq)
+
+		[id(183), helpstring("method ClearRatios")]
+		HRESULT ClearRatios();
+
+		ETSGENERAL_PROPPUTREF_DEF(184,		IMmRvUndAtom*,				HeadComponent)
+		ETSGENERAL_PROP_DEF(185,			DOUBLE,						Coeff)
+		ETSGENERAL_PROP_DEF(186,			VARIANT_BOOL,				IsHead)
+		ETSGENERAL_PROP_DEF(187,			VARIANT_BOOL,				PriceByHead)
+
+		// custom variables
+		ETSGENERAL_PROP_DEF(188,			LONG,							cvPoolID)
+		ETSGENERAL_PROPPUTREF_DEF(189,		IcvRTContext*,					cvRTContext)
+
+		[id(190), helpstring("method CalcCV")]
+		HRESULT CalcCV(void);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(FF13AB6A-27F2-4158-9E09-ABF8B49D6CB7),
+		dual,
+		nonextensible,
+		helpstring("IMmRvUndColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvUndColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmRvUndAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	//[
+	//	object,
+	//	uuid(3605F928-0EB7-4016-94FA-919F43CA892C),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmRvGrpAtom Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmRvGrpAtom : IDispatch
+	//{
+	//	ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+	//	ETSGENERAL_PROP_DEF(2,			LONG,							GroupType)
+	//	ETSGENERAL_PROP_DEF(3,			BSTR,							Name)
+	//	    
+	//	ETSGENERAL_PROP_DEF(4,			DOUBLE,							PnlMtm)
+	//	ETSGENERAL_PROP_DEF(5,			DOUBLE,							PnlTheo)
+	//	ETSGENERAL_PROP_DEF(6,			DOUBLE,							Vega)
+	//	ETSGENERAL_PROP_DEF(7,			DOUBLE,							WtdVega)
+	//	ETSGENERAL_PROP_DEF(8,			DOUBLE,							Theta)
+	//	ETSGENERAL_PROP_DEF(9,			DOUBLE,							DeltaEq)
+	//	ETSGENERAL_PROP_DEF(10,			DOUBLE,							GammaEq)
+	//	ETSGENERAL_PROP_DEF(11,			DOUBLE,							Rho)
+	//	ETSGENERAL_PROP_DEF(12,			DOUBLE,							IdxDeltaEq)
+	//	ETSGENERAL_PROP_DEF(13,			DOUBLE,							BetaWtdDelta)
+	//	ETSGENERAL_PROP_DEF(14,			DOUBLE,							OptDelta)
+	//	ETSGENERAL_PROP_DEF(15,			DOUBLE,							NetDelta)
+	//	ETSGENERAL_PROP_DEF(16,			DOUBLE,							NetGamma)
+	//	ETSGENERAL_PROP_DEF(17,			DOUBLE,							BetaWtdDeltaEq)
+
+	//	ETSGENERAL_PROP_DEF(18,			VARIANT_BOOL,					BadPnlMtm)
+	//	ETSGENERAL_PROP_DEF(19,			VARIANT_BOOL,					BadPnlTheo)
+	//	ETSGENERAL_PROP_DEF(20,			VARIANT_BOOL,					BadVega)
+	//	ETSGENERAL_PROP_DEF(21,			VARIANT_BOOL,					BadWtdVega)
+	//	ETSGENERAL_PROP_DEF(22,			VARIANT_BOOL,					BadTheta)
+	//	ETSGENERAL_PROP_DEF(23,			VARIANT_BOOL,					BadDeltaEq)
+	//	ETSGENERAL_PROP_DEF(24,			VARIANT_BOOL,					BadGammaEq)
+	//	ETSGENERAL_PROP_DEF(25,			VARIANT_BOOL,					BadRho)
+	//	ETSGENERAL_PROP_DEF(26,			VARIANT_BOOL,					BadIdxDeltaEq)
+	//	ETSGENERAL_PROP_DEF(27,			VARIANT_BOOL,					BadBetaWtdDelta)
+	//	ETSGENERAL_PROP_DEF(28,			VARIANT_BOOL,					BadOptDelta)
+	//	ETSGENERAL_PROP_DEF(29,			VARIANT_BOOL,					BadNetDelta)
+	//	ETSGENERAL_PROP_DEF(30,			VARIANT_BOOL,					BadNetGamma)
+	//	ETSGENERAL_PROP_DEF(31,			VARIANT_BOOL,					BadBetaWtdDeltaEq)
+
+	////	ETSGENERAL_PROP_DEF(32,			DOUBLE,						NetGamma)
+	////	ETSGENERAL_PROP_DEF(33,			VARIANT_BOOL,				BadNetGamma)
+
+
+	//	[id(51), helpstring("method Clear")]
+	//	HRESULT Clear();
+
+	//	[id(52), helpstring("method ClearValues")]
+	//	HRESULT ClearValues();
+
+	//	[id(53), helpstring("method Calc")]
+	//	HRESULT Calc([in] IMmRvUndColl* aUndColl,
+	//				[in] IMmRvUndAtom* aIdx,
+	//				[in] VARIANT_BOOL bTotals,
+	//				[in] LONG nMask,
+	//				[in] VARIANT_BOOL bCalcGreeks,
+	//				[in] VARIANT_BOOL bUpdateVola,
+	//				[in] VARIANT_BOOL bRealtimeCalc,
+	//				[in] IEtsProcessDelay* aDelay,
+	//				[in] VARIANT_BOOL bIsPnlLTD,
+	//				[in] enum EtsCalcModelTypeEnum enCalcModel,
+	//				[in] VARIANT_BOOL bUseTheoVolatility,
+	//				[in] VARIANT_BOOL bUseTheoVolaNoBid,
+	//				[in] VARIANT_BOOL bUseTheoVolaBadMarket,
+	//				[in] DOUBLE dUndPriceTolerance,
+	//				[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+	//				[in, out, defaultvalue(0)] LONG* pnOptUpdated,
+	//				[in, out, defaultvalue(0)] LONG* pnUndUpdated,
+	//				[in, out, defaultvalue(0)] LONG* pnFutUpdated);
+
+	//	[id(54), helpstring("method CalcWtdVega")]
+	//	HRESULT CalcWtdVega([in] IMmRvUndColl* aUndColl,
+	//				[in] IEtsExpCalColl* aExpCalColl);
+
+
+	//};
+	[
+		object,
+		uuid(3605F928-0EB7-4016-94FA-919F43CA892C),
+		dual,
+		nonextensible,
+		helpstring("IMmRvGrpAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvGrpAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			LONG,							GroupType)
+		ETSGENERAL_PROP_DEF(3,			BSTR,							Name)
+		    
+		ETSGENERAL_PROP_DEF(4,			DOUBLE,							PnlMtm)
+		ETSGENERAL_PROP_DEF(5,			DOUBLE,							PnlTheo)
+		ETSGENERAL_PROP_DEF(6,			DOUBLE,							Vega)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,							WtdVega)
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,							Theta)
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,							DeltaEq)
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,							GammaEq)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,							Rho)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,							IdxDeltaEq)
+		ETSGENERAL_PROP_DEF(13,			DOUBLE,							BetaWtdDelta)
+		ETSGENERAL_PROP_DEF(14,			DOUBLE,							OptDelta)
+		ETSGENERAL_PROP_DEF(15,			DOUBLE,							NetDelta)
+		ETSGENERAL_PROP_DEF(16,			DOUBLE,							NetGamma)
+		ETSGENERAL_PROP_DEF(17,			DOUBLE,							BetaWtdDeltaEq)
+
+		ETSGENERAL_PROP_DEF(18,			VARIANT_BOOL,					BadPnlMtm)
+		ETSGENERAL_PROP_DEF(19,			VARIANT_BOOL,					BadPnlTheo)
+		ETSGENERAL_PROP_DEF(20,			VARIANT_BOOL,					BadVega)
+		ETSGENERAL_PROP_DEF(21,			VARIANT_BOOL,					BadWtdVega)
+		ETSGENERAL_PROP_DEF(22,			VARIANT_BOOL,					BadTheta)
+		ETSGENERAL_PROP_DEF(23,			VARIANT_BOOL,					BadDeltaEq)
+		ETSGENERAL_PROP_DEF(24,			VARIANT_BOOL,					BadGammaEq)
+		ETSGENERAL_PROP_DEF(25,			VARIANT_BOOL,					BadRho)
+		ETSGENERAL_PROP_DEF(26,			VARIANT_BOOL,					BadIdxDeltaEq)
+		ETSGENERAL_PROP_DEF(27,			VARIANT_BOOL,					BadBetaWtdDelta)
+		ETSGENERAL_PROP_DEF(28,			VARIANT_BOOL,					BadOptDelta)
+		ETSGENERAL_PROP_DEF(29,			VARIANT_BOOL,					BadNetDelta)
+		ETSGENERAL_PROP_DEF(30,			VARIANT_BOOL,					BadNetGamma)
+		ETSGENERAL_PROP_DEF(31,			VARIANT_BOOL,					BadBetaWtdDeltaEq)
+
+		ETSGENERAL_PROP_DEF(32,			DOUBLE,						NetGammaEq)
+		ETSGENERAL_PROP_DEF(33,			VARIANT_BOOL,				BadNetGammaEq)
+
+		ETSGENERAL_PROPREADONLY_DEF(34,			DOUBLE,					NetExposure)
+		ETSGENERAL_PROPREADONLY_DEF(35,			VARIANT_BOOL,			BadNetExposure)
+		ETSGENERAL_PROPREADONLY_DEF(36,			DOUBLE,					NetExposureShort)
+		ETSGENERAL_PROPREADONLY_DEF(38,			DOUBLE,					NetExposureLong)
+
+		ETSGENERAL_PROP_DEF(40,					DOUBLE,					NetExposureAUM)
+		[id(51), helpstring("method Clear")]
+		HRESULT Clear();
+
+		[id(52), helpstring("method ClearValues")]
+		HRESULT ClearValues();
+
+		[id(54), helpstring("method CalcWtdVega")]
+		HRESULT CalcWtdVega([in] IMmRvUndColl* aUndColl,
+					[in] IEtsExpCalColl* aExpCalColl);
+
+		// custom variables
+		ETSGENERAL_PROP_DEF(55,			LONG,							cvPoolID)
+		ETSGENERAL_PROPPUTREF_DEF(56,	IcvRTContext*,					cvRTContext)
+
+		ETSGENERAL_PROP_DEF(57,			DOUBLE,							OptDeltaEq)
+		ETSGENERAL_PROP_DEF(58,			VARIANT_BOOL,					BadOptDeltaEq)
+		ETSGENERAL_PROP_DEF(59,			DOUBLE,							TimeValue)
+		ETSGENERAL_PROP_DEF(60,			VARIANT_BOOL,					BadTimeValue)
+
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(C85612A9-651C-4684-8C70-649C3522AB22),
+		dual,
+		nonextensible,
+		helpstring("IMmRvReqAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvReqAtom : IDispatch
+	{
+		ETSGENERAL_PROPPUTREF_DEF(1,	IMmRvUndAtom*,					Und)
+		ETSGENERAL_PROPPUTREF_DEF(2,	IMmRvPosAtom*,					Pos)
+		ETSGENERAL_PROPPUTREF_DEF(3,	IMmRvFutAtom*,					Fut)
+		ETSGENERAL_PROP_DEF(4,			VARIANT_BOOL,					IndexOnly)
+
+		[id(51), helpstring("method GetQuoteUpdateParam")]
+		HRESULT GetQuoteUpdateParam([out, retval] struct QuoteUpdateParams* pRetVal);
+
+		[id(52), helpstring("method GetGroupQuoteUpdateParam")]
+		HRESULT GetGroupQuoteUpdateParam([out, retval] struct QuoteUpdateParams* pRetVal);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(C0465ADE-B973-460D-86E5-CF35BC8217D2),
+		dual,
+		nonextensible,
+		helpstring("IMmRvReqColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvReqColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IMmRvReqAtom*)
+		[id(128), helpstring("method Load   Quotes View")]			HRESULT RequestLastQuotes([in]IBatchPriceProvider* spProvider);
+		[id(129), helpstring("method Load   Quotes View")]			HRESULT StartRealtime([in]IBatchPriceProvider* spProvider);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(FA830E34-F987-4117-9763-6CAAD1719DCC),
+		dual,
+		nonextensible,
+		helpstring("IMmRvRowData Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRvRowData : IDispatch
+	{
+		ETSGENERAL_PROPPUTREF_DEF  (1,	IMmRvUndAtom*,				Und)
+		ETSGENERAL_PROPPUTREF_DEF  (2,	IMmRvPosAtom*,				Pos)
+		ETSGENERAL_PROPREADONLY_DEF(3,	IMmRvFutAtom*,				Fut)
+		ETSGENERAL_PROPPUTREF_DEF  (4,	IMmRvSynthGreeksAtom*,		SynthGreeks)
+		//ETSGENERAL_PROPPUTREF_DEF  (5,	IMmRvGroupAtom*,			Group)
+
+		ETSGENERAL_PROPREADONLY_DEF(6,	LONG,						OutlineLevel)
+		[propget, id(100), helpstring("property Get IsAggregation")] HRESULT IsAggregation([out, retval] VARIANT_BOOL*);
+
+		[id(101), helpstring("returns ID for trade for aggregation")] HRESULT GetAggregationTradeSymbolID([out, retval] LONG* pID);
+		[id(102), helpstring("returns price replace status")] HRESULT GetAggregationPriceReplaceStatus( [out, retval]  enum EtsReplacePriceStatusEnum *pRetVal);
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(AB67AE28-32A0-435B-BEF8-40E9710F6286),
+		dual,
+		nonextensible,
+		helpstring("IMmRiskView Interface"),
+		pointer_default(unique)
+	]
+	interface IMmRiskView : IDispatch
+	{
+		ETSGENERAL_PROPREADONLY_DEF(1,	IMmRvUndAtom*,			Idx)
+		ETSGENERAL_PROPREADONLY_DEF(2,	IMmRvGrpAtom*,			Grp)
+		ETSGENERAL_PROPREADONLY_DEF(3,	IMmRvUndColl*,			Und)
+		ETSGENERAL_PROPPUTREF_DEF  (4,	IEtsMain*,  			EtsMain)
+		ETSGENERAL_PROPREADONLY_DEF(5,	IMmRvReqColl*,			QuoteReqsAll)
+		
+
+		ETSGENERAL_PROPPUTREF_DEF  (7,	IVolatilitySource*,  	VolaSource)
+		ETSGENERAL_PROPREADONLY_DEF(8,	IEtsMmEntityAtomColl*,	Exp)
+
+		ETSGENERAL_PROPREADONLY_DEF(9,	LONG,					OptionPositions)
+		ETSGENERAL_PROPREADONLY_DEF(10,	LONG,					UndPositions)
+
+		ETSGENERAL_PROP_DEF(12, RiskViewModeEnum,				ViewMode)		
+
+		[propput, id(13), helpstring("PosColumnsOrder")] HRESULT PosColumnsOrder([in] SAFEARRAY(LONG)* colOrder);
+		[propget, id(14), helpstring("PosRowData")]	  HRESULT PosRowData([in] LONG lRow, [out, retval] IMmRvRowData** ppVal);
+		[propget, id(15), helpstring("propget IsRowExpanded")]	  HRESULT IsRowExpanded([in] LONG lRow, [out, retval] VARIANT_BOOL * pVal);
+		[propput, id(15), helpstring("propput IsRowExpanded")]	  HRESULT IsRowExpanded([in] LONG lRow, [in] VARIANT_BOOL pVal );
+
+		ETSGENERAL_PROP_DEF(16, enum RisksPosColumnEnum,				SortField)		
+		ETSGENERAL_PROPREADONLY_DEF(17,	enum EtsSortingEnum,		SortOrder)
+
+		ETSGENERAL_PROPREADONLY_DEF(20, IMmRvExpTotalColl*,		ExpTotal)		
+		ETSGENERAL_PROP_DEF(21,					DOUBLE,				NetExposureAUM)
+
+		[id(50), helpstring("method PositionsLoad")]
+		HRESULT PositionsLoad([in] IMmTradeInfoColl* pTradesColl);
+
+		[id(51), helpstring("method AddNewUnderlying")]
+		HRESULT AddNewUnderlying([in] IMmTradeInfoAtom* spTradeAtom, [in]IMmRvReqColl* pRequests, [out, retval]IMmRvUndAtom** ppRet);
+
+		[id(52), helpstring("method AddNewPosition")]
+		HRESULT AddNewPosition([in] IMmTradeInfoAtom* pTradeAtom, [in] IMmRvUndAtom* pUndAtom, [in] IMmRvReqColl* pRequestColl, [in] LONG lOptionOposit, [in] VARIANT_BOOL bUpdateVola, [out,retval] IMmRvPosAtom** ppPosition);
+
+		[id(53), helpstring("method AddNewPosition")]
+		HRESULT AddNewTradeToPosition([in] IMmRvUndAtom* pUndAtom, [in] IMmRvPosAtom* pPosAtom, [in] IMmTradeInfoAtom* pTradeAtom);
+
+		[id(54), helpstring("method Stop")]
+		HRESULT Stop();
+
+		[id(55), helpstring("method Refresh")]
+		HRESULT Refresh([in] RisksPosColumnEnum SortField, [in] long lExpiryFilter, [in] SAFEARRAY(LONG)* arrAggregationCols/*[in] AggregationTypeEnum enAggregation, [in] SubAggregationTypeEnum enSubAggregation*/, [in] DOUBLE dUndPriceToleranceValue, [in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule);
+
+		[id(56), helpstring("method RemoveOldTradeFromPosition")]
+		HRESULT RemoveOldTradeFromPosition([in] IMmRvUndAtom* pUndAtom, [in]IMmRvPosAtom* pPosAtom, [in] IMmTradeInfoAtom* pTrd);
+
+
+		[id(57), helpstring("method AddNewActiveFutures")]
+		HRESULT AddNewActiveFutures([in] IMmRvUndAtom* spUndAtom, [in]IMmRvReqColl* pRequests);
+
+		[id(58), helpstring("method Calc")]
+		HRESULT Calc(
+					[in] VARIANT_BOOL bTotals,
+					[in] LONG nMask,
+					[in] VARIANT_BOOL bCalcGreeks,
+					[in] VARIANT_BOOL bUpdateVola,
+					[in] VARIANT_BOOL bRealtimeCalc,
+					[in] IEtsProcessDelay* aDelay,
+					[in] VARIANT_BOOL bIsPnlLTD,
+					[in] enum EtsCalcModelTypeEnum enCalcModel,
+					[in] VARIANT_BOOL bUseTheoVolatility,
+					[in] VARIANT_BOOL bUseTheoVolaNoBid,
+					[in] VARIANT_BOOL bUseTheoVolaBadMarket,
+					[in] DOUBLE dUndPriceTolerance,
+					[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+					[in, out] LONG* pnOptUpdated,
+					[in, out] LONG* pnUndUpdated,
+					[in, out] LONG* pnFutUpdated,
+					[in] DATE dtCalcDate,
+					[in] ICalculationParametrs* pParams);
+
+		[id(61), helpstring("method SetAllRowsCollapsed - sets all aggregations rows collapsed")]
+		HRESULT SetAllRowsCollapsed();
+		[id(62), helpstring("method SetAllRowsExpanded - sets all aggregations rows expanded")]
+		HRESULT SetAllRowsExpanded();
+		[id(63), helpstring("method SetDirty")]
+		HRESULT SetDirty();
+
+		[id(64), helpstring("method SaveTheoPricesAsClose")]
+		HRESULT SaveTheoPricesAsClose([in] IMmTradeInfoColl* pTradesColl);
+
+		ETSGENERAL_PROP_DEF(65,	 BSTR,	ConnectionString)
+
+		[id(66), helpstring("method FitToMarketVolatility")]
+		HRESULT FitToMarketVolatility();
+
+		ETSGENERAL_PROPPUTREF_DEF  (67,	IMmTradeChannel*,  		TradesCache)
+
+		[id(68), helpstring("method LoadPositions")]
+		HRESULT LoadPositions([in] IEtsFilterData* Filter);
+
+
+		[id(69), helpstring("method InitializeCvContext")]
+		HRESULT InitializeCvContext([in] BSTR ContextName);
+
+		[id(70), helpstring("method setCvID2Column")]
+		HRESULT setCvID2Column(	[in] CvLevelEnum cvLevel,
+								[in] LONG columnID,
+								[in] LONG cvID);
+
+		[id(71), helpstring("method getCvIDbyColumn")]
+		HRESULT getCvIDbyColumn([in] CvLevelEnum cvLevel,
+								[in] LONG columnID,
+								[out, retval] LONG* cvID);
+
+		ETSGENERAL_PROPREADONLY_DEF(72, IcvRTContext*,	cvRTContext)
+
+		[id(73), helpstring("method getCvLevelID")]
+		HRESULT getCvLevelID(	[in] CvLevelEnum cvLevel,
+								[out, retval] LONG* levelID);
+
+		[id(74), helpstring("method getIsCvInitialized")]
+		HRESULT getIsCvInitialized(	[in] CvLevelEnum cvLevel,
+									[in] LONG cvID,
+									[out, retval] LONG* isInit);
+
+		[id(75), helpstring("method setRealtime")]
+		HRESULT setRealtime([in] VARIANT_BOOL Flag);
+
+		[id(76), helpstring("method setRealtimeCalculateCv")]
+		HRESULT setRealtimeCalculateCv([in] VARIANT_BOOL Flag);
+
+		ETSGENERAL_PROPPUTREF_DEF(77, IMarketSimulationScenario*, SimulationScenario)
+
+	};
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(F4072675-2CEB-4B39-9346-BF4A7FC245BC),
+		helpstring("MmRvPrice Class")
+	]
+	coclass MmRvPrice
+	{
+		[default] interface IMmRvPrice;
+	};
+	[
+		uuid(6168AF7A-802D-49C0-BB4B-63CDBA536AC5),
+		helpstring("RvMmQuoteAtom Class")
+	]
+	coclass RvMmQuoteAtom
+	{
+		[default] interface IRvMmQuoteAtom;
+	};
+
+	[
+		uuid(F05188F6-B7DF-4332-8306-BE00640A90F5),
+		helpstring("MmRvUndAtom Class")
+	]
+	coclass MmRvUndAtom
+	{
+		[default] interface IMmRvUndAtom;
+		interface IMmRvAggregationDataAtom;
+	};
+
+	[
+		uuid(932596E0-E80D-408D-8BC6-640F6C9033DE),
+		helpstring("MmRvPosAtom Class")
+	]
+	coclass MmRvPosAtom
+	{
+		[default] interface IMmRvPosAtom;
+	};
+	[
+		uuid(A5AEAD77-B3FC-47C2-ACFD-B9016EB284F8),
+		helpstring("MmRvSynthGreeksAtom Class")
+	]
+	coclass MmRvSynthGreeksAtom
+	{
+		[default] interface IMmRvSynthGreeksAtom;
+	};
+	[
+		uuid(06E5D897-7575-4B2B-BFEE-8490420453B9),
+		helpstring("MmRvSynthGreeksColl Class")
+	]
+	coclass MmRvSynthGreeksColl
+	{
+		[default] interface IMmRvSynthGreeksColl;
+	};
+	[
+		uuid(D1D75B9C-2BFF-487A-A0CA-7ECE1A926F98),
+		helpstring("MmRvFutAtom Class")
+	]
+	coclass MmRvFutAtom
+	{
+		[default] interface IMmRvFutAtom;
+	};
+	[
+		uuid(4BF95EA7-0C15-49F5-BA7C-14756CA0DE63),
+		helpstring("MmRvFutColl Class")
+	]
+	coclass MmRvFutColl
+	{
+		[default] interface IMmRvFutColl;
+	};
+	/*[
+		uuid(F05188F6-B7DF-4332-8306-BE00640A90F5),
+		helpstring("MmRvUndAtom Class")
+	]
+	coclass MmRvUndAtom
+	{
+		[default] interface IMmRvUndAtom;
+	};*/
+
+	[
+		uuid(A7E2BEA2-8DA1-4B4F-BA27-CA5F44000C98),
+		helpstring("MmRvPosColl Class")
+	]
+	coclass MmRvPosColl
+	{
+		[default] interface IMmRvPosColl;
+	};
+	[
+		uuid(580F911B-5648-42FD-970A-7BE7556154AE),
+		helpstring("MmRvUndColl Class")
+	]
+	coclass MmRvUndColl
+	{
+		[default] interface IMmRvUndColl;
+	};
+	[
+		uuid(E80B67A5-CC66-4346-80D7-BC13229D70E1),
+		helpstring("MmRvGrpAtom Class")
+	]
+	coclass MmRvGrpAtom
+	{
+		[default] interface IMmRvGrpAtom;
+	};
+	[
+		uuid(2320F9F9-16DC-4BF0-BF15-CA55C1413853),
+		helpstring("MmRvReqAtom Class")
+	]
+	coclass MmRvReqAtom
+	{
+		[default] interface IMmRvReqAtom;
+	};
+	[
+		uuid(C189E56C-45B1-4472-98D0-AF133C88C630),
+		helpstring("MmRvReqColl Class")
+	]
+	coclass MmRvReqColl
+	{
+		[default] interface IMmRvReqColl;
+	};
+
+	[
+		uuid(4238E0A2-D9BC-4102-A4E4-2E04CD3B560C),
+		helpstring("MmRvRowData Class")
+	]
+	coclass MmRvRowData
+	{
+		[default] interface IMmRvRowData;
+	};
+	[
+		uuid(EFD359D9-9E53-4392-927F-A6DF1E4CAD49),
+		helpstring("_IMmRiskViewEvents Interface")
+	]
+	dispinterface _IMmRiskViewEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method Progress")]	HRESULT Progress(BSTR bsDescription, DOUBLE Precent);
+	};
+	[
+		uuid(2B79D596-793B-43A8-8A14-35E48E4A2B05),
+		helpstring("MmRiskView Class")
+	]
+	coclass MmRiskView
+	{
+		[default] interface IMmRiskView;
+				  interface IVSFlexDataSource;	
+		[default, source] dispinterface _IMmRiskViewEvents;
+	};
+	[
+		uuid(87894E4A-F6B6-4F03-B1E2-D93F9C5EE47F),
+		helpstring("MmRvExpTotalAtom Class")
+	]
+	coclass MmRvExpTotalAtom
+	{
+		[default] interface IMmRvExpTotalAtom;
+	};
+	[
+		uuid(2247CC90-CC69-425F-A9D2-6F62C0D274B8),
+		helpstring("MmRvExpColl Class")
+	]
+	coclass MmRvExpColl
+	{
+		[default] interface IMmRvExpColl;
+	};
+	[
+		uuid(EC0BF6A5-24FC-4EF7-8838-EB60B2A15100),
+		helpstring("MmRvExpAtom Class")
+	]
+	coclass MmRvExpAtom
+	{
+		[default] interface IMmRvExpAtom;
+	};
+	[
+		uuid(00FCB9D8-5BDE-46CA-88CD-F7D24D0FDB7A),
+		helpstring("MmRvExpTotalColl Class")
+	]
+	coclass MmRvExpTotalColl
+	{
+		[default] interface IMmRvExpTotalColl;
+	};
+};

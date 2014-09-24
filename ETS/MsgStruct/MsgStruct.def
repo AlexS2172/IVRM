@@ -1,0 +1,9 @@
+; MsgStruct.def : Declares the module parameters.
+
+;LIBRARY      "MsgStruct.DLL"
+
+EXPORTS
+	DllCanUnloadNow     PRIVATE
+	DllGetClassObject   PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer	PRIVATE

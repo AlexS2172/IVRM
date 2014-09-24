@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{9848FACF-EB55-4687-8A44-B540CE806C6E} = s 'ISEProvider'
+		'ISEProvider.EXE'
+		{
+			val AppID = s {9848FACF-EB55-4687-8A44-B540CE806C6E}
+		}
+	}
+}

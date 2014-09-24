@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.HHRequest.1 = s 'HHRequest Class'
+	{
+		CLSID = s '{B74250CF-986D-46F8-AD62-FFF3EF2B7786}'
+	}
+	MsgStruct.HHRequest = s 'HHRequest Class'
+	{
+		CLSID = s '{B74250CF-986D-46F8-AD62-FFF3EF2B7786}'
+		CurVer = s 'MsgStruct.HHRequest.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B74250CF-986D-46F8-AD62-FFF3EF2B7786} = s 'HHRequest Class'
+		{
+			ProgID = s 'MsgStruct.HHRequest.1'
+			VersionIndependentProgID = s 'MsgStruct.HHRequest'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

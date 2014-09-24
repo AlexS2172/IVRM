@@ -1,0 +1,24 @@
+HKCR
+{
+	VME.DualQuadraticData.1 = s 'DualQuadraticData Class'
+	{
+		CLSID = s '{605209A2-4730-42CC-AD16-C31E89BD66A2}'
+	}
+	VME.DualQuadraticData = s 'DualQuadraticData Class'
+	{
+		CLSID = s '{605209A2-4730-42CC-AD16-C31E89BD66A2}'
+		CurVer = s 'VME.DualQuadraticData.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {605209A2-4730-42CC-AD16-C31E89BD66A2} = s 'DualQuadraticData Class'
+		{
+			ProgID = s 'VME.DualQuadraticData.1'
+			VersionIndependentProgID = s 'VME.DualQuadraticData'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{376AB49D-9D39-4B27-B122-4D22D490FE91}'
+			'TypeLib' = s '{98359542-A5A1-4A74-9E6A-520A4126F41D}'
+		}
+	}
+}

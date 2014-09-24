@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{66F65A70-5316-4434-B114-0A53EA104873} = s 'IVMCtrl'
+		'IVMCtrl.EXE'
+		{
+			val AppID = s {66F65A70-5316-4434-B114-0A53EA104873}
+		}
+	}
+}

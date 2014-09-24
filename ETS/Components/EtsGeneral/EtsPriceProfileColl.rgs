@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsPriceProfileColl.1 = s 'EtsPriceProfileColl Class'
+	{
+		CLSID = s '{05EDD54C-569E-4188-949B-DB9E7F588802}'
+	}
+	EtsGeneral.EtsPriceProfileColl = s 'EtsPriceProfileColl Class'
+	{
+		CLSID = s '{05EDD54C-569E-4188-949B-DB9E7F588802}'
+		CurVer = s 'EtsGeneral.EtsPriceProfileColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {05EDD54C-569E-4188-949B-DB9E7F588802} = s 'EtsPriceProfileColl Class'
+		{
+			ProgID = s 'EtsGeneral.EtsPriceProfileColl.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsPriceProfileColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

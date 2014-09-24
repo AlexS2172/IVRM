@@ -1,0 +1,31 @@
+Exchanges codes
+Currently we use MyTrack exchanges codes in BO and convert these tickers into AT or HF exchange codes ourselves. Thus in BO we have MYTRACK codes always.
+Here is table with correspondence.
+
+ETSCode	MyTrack Code	stock/option	AT F	HF	exchange
+P	P		stock/option	P	P	PACIFIC
+X	X		stock/option	X	X	PHILADELPHIA
+A	A		stock/option	A	A	AMEX
+B	B		stock		B	B	BOSTON
+H	H		stock/option	W/C	/C	CBOE
+C	C		stock		C	C	CINCINNATI
+M	M		stock		M	M	MIDWEST
+// S	// S		stock		// T	// T	NASDAQ
+N	N		stock		N	N	NEW York
+K	K		option		I	I	ISE
+
+[Helen] The following table shows exchange codes for NADAQ used by MyTrack, HyperFeed, ATF
+
+ETS	HyperFeed				ATF				MyTrack
+Code	Code	Description			Code	Description		Code	Description
+S	Q	Nasdaq NMS			Q	Nasdaq NASD		S	Nasdaq National market
+Q	S	Nasdaq Small Cap		S	Nasdaq Small Cap		
+R	T	Nasaq Intermarket		T	Nasdaq Third Market		
+8	U	Nasdaq Bulletin Board 		V	Nasdaq Bulletin Board	8	Nasdaq Bulletin Board
+D	V	Nasdaq OTC “Other”		D	Pink Sheets
+						
+						
+ 
+More
+ Information about ATF codes can be found at  http://www.ilx.com/ATattitude/support/faq.htm
+More information about MyTrack codes can be found here->  

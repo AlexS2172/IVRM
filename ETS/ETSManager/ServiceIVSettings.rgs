@@ -1,0 +1,24 @@
+HKCR
+{
+	ETSManager.ServiceIVSettings.1 = s 'ServiceIVSettings Class'
+	{
+		CLSID = s '{43948DEB-0A6F-4041-95CB-BA3A40C7D697}'
+	}
+	ETSManager.ServiceIVSettings = s 'ServiceIVSettings Class'
+	{
+		CLSID = s '{43948DEB-0A6F-4041-95CB-BA3A40C7D697}'
+		CurVer = s 'ETSManager.ServiceIVSettings.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {43948DEB-0A6F-4041-95CB-BA3A40C7D697} = s 'ServiceIVSettings Class'
+		{
+			ProgID = s 'ETSManager.ServiceIVSettings.1'
+			VersionIndependentProgID = s 'ETSManager.ServiceIVSettings'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163}'
+			'TypeLib' = s '{27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163}'
+		}
+	}
+}

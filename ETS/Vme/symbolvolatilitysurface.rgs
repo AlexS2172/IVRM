@@ -1,0 +1,24 @@
+HKCR
+{
+	VME.SymbolVolatilitySurface.1 = s 'SymbolVolatilitySurface Class'
+	{
+		CLSID = s '{4A625D7C-209F-4E26-A651-24474EA66C3B}'
+	}
+	VME.SymbolVolatilitySurface = s 'SymbolVolatilitySurface Class'
+	{
+		CLSID = s '{4A625D7C-209F-4E26-A651-24474EA66C3B}'
+		CurVer = s 'VME.SymbolVolatilitySurface.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {4A625D7C-209F-4E26-A651-24474EA66C3B} = s 'SymbolVolatilitySurface Class'
+		{
+			ProgID = s 'VME.SymbolVolatilitySurface.1'
+			VersionIndependentProgID = s 'VME.SymbolVolatilitySurface'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{376AB49D-9D39-4B27-B122-4D22D490FE91}'
+			'TypeLib' = s '{98359542-A5A1-4A74-9E6A-520A4126F41D}'
+		}
+	}
+}

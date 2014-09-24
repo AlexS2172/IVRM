@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsIndexDivColl.1 = s 'EtsIndexDivColl Class'
+	{
+		CLSID = s '{29B05E97-CEE9-4707-80F3-202B547D3737}'
+	}
+	EtsGeneral.EtsIndexDivColl = s 'EtsIndexDivColl Class'
+	{
+		CLSID = s '{29B05E97-CEE9-4707-80F3-202B547D3737}'
+		CurVer = s 'EtsGeneral.EtsIndexDivColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {29B05E97-CEE9-4707-80F3-202B547D3737} = s 'EtsIndexDivColl Class'
+		{
+			ProgID = s 'EtsGeneral.EtsIndexDivColl.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsIndexDivColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

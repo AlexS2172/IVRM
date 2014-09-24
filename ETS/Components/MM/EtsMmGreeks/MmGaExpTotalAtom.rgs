@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmGreeks.MmGaExpTotalAtom.1 = s 'MmGaExpTotalAtom Class'
+	{
+		CLSID = s '{80DFA91A-AB60-4783-8E50-163336E86870}'
+	}
+	EtsMmGreeks.MmGaExpTotalAtom = s 'MmGaExpTotalAtom Class'
+	{
+		CLSID = s '{80DFA91A-AB60-4783-8E50-163336E86870}'
+		CurVer = s 'EtsMmGreeks.MmGaExpTotalAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {80DFA91A-AB60-4783-8E50-163336E86870} = s 'MmGaExpTotalAtom Class'
+		{
+			ProgID = s 'EtsMmGreeks.MmGaExpTotalAtom.1'
+			VersionIndependentProgID = s 'EtsMmGreeks.MmGaExpTotalAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{B4A726AD-9406-4A24-9E8A-D8ADD9CAC4DC}'
+		}
+	}
+}

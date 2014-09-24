@@ -1,0 +1,27 @@
+HKCR
+{
+	DataFeedProviders.DataFeedBatchPriceI.1 = s 'DataFeedBatchPriceInfo Class'
+	{
+		CLSID = s '{19C184C5-38D7-4921-8168-46D5AF46E1CD}'
+	}
+	DataFeedProviders.DataFeedBatchPriceInf = s 'DataFeedBatchPriceInfo Class'
+	{
+		CLSID = s '{19C184C5-38D7-4921-8168-46D5AF46E1CD}'
+		CurVer = s 'DataFeedProviders.DataFeedBatchPriceI.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {19C184C5-38D7-4921-8168-46D5AF46E1CD} = s 'DataFeedBatchPriceInfo Class'
+		{
+			ProgID = s 'DataFeedProviders.DataFeedBatchPriceI.1'
+			VersionIndependentProgID = s 'DataFeedProviders.DataFeedBatchPriceInf'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ACF65312-1D51-47B8-9860-8FA52F45A4DC}'
+		}
+	}
+}

@@ -1,0 +1,80 @@
+// ETSXMLParams.idl : IDL source for ETSXMLParams
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ETSXMLParams.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+
+[
+	uuid(A0E5EDFE-8B12-4361-9CD2-0424D0350AEE),
+	version(1.0),
+	helpstring("ETSXMLParams 1.0 Type Library")
+]
+library ETSXMLParamsLib
+{
+	importlib("stdole2.tlb");
+
+	interface IXMLLoader;
+	interface IXMLParams;
+	
+	
+	[
+		object,
+		uuid(FC7C1FE3-F5C3-4E36-8144-D4F1BEEF0177),
+		dual,
+		nonextensible,
+		helpstring("IXMLLoader Interface"),
+		pointer_default(unique)
+	]
+	interface IXMLLoader : IDispatch{
+
+		HRESULT Load([in] BSTR bsFileName, [out,retval] IXMLParams** ppParams);
+		HRESULT Save([in] BSTR bsFileName, [in] IXMLParams* pParams);
+	};
+
+
+	[
+		object,
+		uuid(DFFB4B28-A1ED-4BE1-8B1C-09F046DCB1E9),
+		dual,
+		nonextensible,
+		helpstring("IXMLParams Interface"),
+		pointer_default(unique)
+	]
+	interface IXMLParams : IDispatch{
+
+		HRESULT SetLongValue([in] BSTR bsPath, [in] BSTR bsName, [in] long nValue);
+		HRESULT SetStringValue([in] BSTR bsPath, [in] BSTR bsName, [in] BSTR bsValue);
+
+		HRESULT GetLongValue([in] BSTR bsPath, [in] BSTR bsName, [in] long nDefValue, [out,retval] long* pnValue);
+		HRESULT GetStringValue([in] BSTR bsPath, [in] BSTR bsName, [in] BSTR bsDefValue, [out,retval] BSTR* pbsValue);
+
+		[propget] HRESULT Count([out, retval] long* pCount);
+		[propget] HRESULT Item([in]long idx, [out] BSTR* pbsFullName, [out] VARIANT* pvtParameter, [out] VARIANT_BOOL* pIsChanged);
+
+		HRESULT Add([in] BSTR bsFullName, [in] VARIANT vtParameter);
+	};	
+	
+	
+	
+	[
+		uuid(72C9B320-7F8A-4004-BF53-0C7D2125AC49),
+		helpstring("XMLLoader Class")
+	]
+	coclass XMLLoader
+	{
+		[default] interface IXMLLoader;
+	};
+
+	[
+		uuid(EB67BE5C-26B8-4F1E-8A88-3244FFD9EDCC),
+		helpstring("XMLParams Class")
+	]
+	coclass XMLParams
+	{
+		[default] interface IXMLParams;
+	};
+};

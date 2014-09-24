@@ -1,0 +1,291 @@
+// HyperFeedProviders.idl : IDL source for HyperFeedProviders.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (HyperFeedProviders.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(AD59A81D-7749-4597-A38F-913E16C4519A),
+	version(1.0),
+	helpstring("HyperFeedProviders 1.0 Type Library")
+]
+library HYPERFEEDPROVIDERSLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("PriceProviders.tlb");
+
+	[
+		object,
+		uuid(D67576A5-A2E0-41EF-964F-F8800BF68257),
+		dual,
+		nonextensible,
+		helpstring("ISettingsManager Interface"),
+		pointer_default(unique)
+	]
+	interface ISettingsManager : IDispatch{
+		[propget, id(1), helpstring("property MinLogLevel")] HRESULT MinLogLevel([out, retval] long* pVal);
+		[propput, id(1), helpstring("property MinLogLevel")] HRESULT MinLogLevel([in] long newVal);
+		[propget, id(2), helpstring("property SymbolFilter")] HRESULT SymbolFilter([out, retval] BSTR* pVal);
+		[propput, id(2), helpstring("property SymbolFilter")] HRESULT SymbolFilter([in] BSTR newVal);
+		[propget, id(3), helpstring("property ThreadPoolCapacity")] HRESULT ThreadPoolCapacity([out, retval] long* pVal);
+		[propput, id(3), helpstring("property ThreadPoolCapacity")] HRESULT ThreadPoolCapacity([in] long newVal);
+	};
+
+	[
+		uuid(F9B96C5F-290E-4B9C-9F7D-A33F4F63D77B),
+		helpstring("HyperFeedStructureProvider Class")
+	]
+	coclass HyperFeedStructureProvider
+	{
+		[default]	interface IStructureProvider;
+					interface IStructureProvider2;
+		[default, source] dispinterface _IStructureProviderEvents;
+	};
+
+	[
+		uuid(33B33D14-1B45-46AA-9CB9-87E58283A553),
+		helpstring("HyperFeedStructureInfo Class")
+	]
+	coclass HyperFeedStructureInfo
+	{
+		[default] interface IStructureProvider;
+		[default, source] dispinterface _IMyTrackStructureInfoEvents;
+	};
+
+	[
+		uuid(00879BB4-C5DF-4207-94FC-22C5D8F5B405),
+		helpstring("HyperFeedPriceProvider Class")
+	]
+	coclass HyperFeedPriceProvider
+	{
+		[default] interface IPriceProvider;
+				  interface IGroupPrice;
+		[default, source] dispinterface _IPriceProviderEvents;
+	};
+
+	[
+		uuid(15F78302-5620-4AAE-822D-99C15DCFBFB8),
+		helpstring("HyperFeedPriceInfo Class")
+	]
+	coclass HyperFeedPriceInfo
+	{
+		[default] interface IPriceProvider;
+				  interface IGroupPrice;
+ 				  interface IUserInformation;
+
+		[default, source] dispinterface _IPriceInfoEvents;
+	};
+	[
+		uuid(42FE7587-9CB4-46A8-A2BB-3FAED4B00840),
+		helpstring("ProviderInfo Class")
+	]
+	coclass ProviderInfo
+	{
+		[default] interface IProviderInfo;
+	};
+
+	[
+		uuid(D1A7B5BB-C0C6-493c-BC9E-264E238AFCA8),
+		helpstring("HyperFeedPriceInfoWithNotify Class")
+	]
+	coclass HyperFeedPriceInfoWithNotify
+	{
+		[default]	interface IPriceProvider;
+		interface IGroupPriceWithNotify;
+		[default, source] dispinterface _IPriceInfoWithNotifyEvents;
+	};
+
+	[
+		uuid(AD90C549-C53A-4DC9-B079-39670DE75C7A),
+		helpstring("HyperFeedBatchPriceInfo Class")
+	]
+	coclass HyperFeedBatchPriceInfo
+	{
+		[default]	interface IPriceProvider;
+					interface IBatchPriceProvider;
+					interface IGroupPriceWithNotify;
+					interface IUserInformation;
+		[default, source] dispinterface _IBatchPriceInfoEvents;
+	};
+
+	/**************************************************************************************************
+	/	IV specific data
+	/***************************************************************************************************/
+	typedef	
+	[
+		uuid(41670065-6045-433b-A5A4-6F4B457FE0C6),
+		v1_enum,
+	]	
+	enum HfDispIdEnum
+	{
+		//IMarketDataForIv
+		DISPID_HfMdConnect = 1,
+		DISPID_HfMdDisconnect,
+		DISPID_HfMdRequestData,
+		DISPID_HfMdCancelRequest,
+		//_IMarketDataForIvEvents
+		DISPID_HfMeOnOption = 101,
+		DISPID_HfMeOnStock,
+		DISPID_HfMeOnError = 3,
+	}
+	HfDispIdEnum;
+
+	[
+		uuid(E650CBD7-0F55-41e7-97E5-7A1EC1E063A9),
+		helpstring("Options exercise style"),
+		v1_enum
+	]
+	typedef enum OptionExersiseType
+	{
+		[helpstring("American = A")]	enOetAmerican	=	65,
+		[helpstring("European = E")]	enOetEuropean	=	69,
+	} OptionExersiseType;
+
+	[
+		uuid(43380A7C-5911-41c8-95BF-47E644A0402A),
+		helpstring("HyperFeed USA Options Exchanges"),
+		v1_enum
+	]
+	typedef enum HfUsaOptionsExchanges
+	{
+		[helpstring("Not specified")]								enHfoeNone	=	32,
+		[helpstring("American Stock Exchange (AMEX) = A")]			enHfoeAmex	=	65,
+		[helpstring("Chicago Board Options Exchange (CBOE) = C")]	enHfoeCboe	=	67,
+		[helpstring("International Securities Exchange (ISE) = I")]	enHfoeIse	=	73,
+		[helpstring("Pasific Stock Exchange (PSE) = P")]			enHfoePse	=	80,
+		[helpstring("Philadelphia Stock Exchange (PHLX) = X")]		enHfoePhlx	=	88,
+		[helpstring("Boston Option Exchange (BOX) = B")]			enHfoeBox	=	66,
+	} HfUsaOptionsExchanges;
+
+	[
+		uuid(840D53DB-BD2B-4633-82CD-B3B085F648C0),
+		helpstring("Option Delivery Type"),
+		v1_enum
+	]
+	typedef enum OptionDeliveryType
+	{
+		[helpstring("No complex deliverable")]			enOdGeneral	=			0,
+		[helpstring("Single stock deliverable, SPC or Multiplier <> 100")]		
+														enOdSingleStock	=		1,
+		[helpstring("Single stock deliverable, SPC or Multiplier maybe <> 100, cash is included")]
+														enOdSingleWithCash	=	2,
+		[helpstring("Two stocks")]						enOdTwoStock =			9,
+		[helpstring("Three or more stocks and/or cash")]	enOdThreeOrMoreStock =	10,
+	} OptionDeliveryType;
+	
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(6DCCE4C3-E9BE-4020-9107-F26EE29D8463)
+	]
+	struct OptionForIvResult 
+	{
+		[helpstring("Ticker")]				BSTR				Ticker;
+		[helpstring("Type")]				enum OptionTypeEnum	OptionType;
+		[helpstring("Underlying Symbol")]	BSTR				UnderlyingSymbol;
+		[helpstring("Strike")]				double				Strike;
+		[helpstring("Expiration date")]		DATE				ExpirationDate;
+		[helpstring("Multiplier")]			long				Multiplier;
+		[helpstring("Shares per contract")]	long				SPC;
+		[helpstring("Cash settlement")]		double				Cash;
+		[helpstring("Exercise type")]		OptionExersiseType	ExersiseType;
+		[helpstring("Delivery type")]		OptionDeliveryType	DeliveryType;
+		[helpstring("Exchanges")]			BSTR				Exchanges;
+
+		[helpstring("Best bid")]			double				BestBid;
+		[helpstring("Best bid exchange")]	HfUsaOptionsExchanges	BestBidExchange;
+		[helpstring("Best bid size")]		long				BestBidSize;
+		[helpstring("Best ask")]			double				BestAsk;
+		[helpstring("Best ask exchange")]	HfUsaOptionsExchanges	BestAskExchange;
+		[helpstring("Best ask size")]		long				BestAskSize;
+		[helpstring("Last sale")]			double				LastSale;
+		[helpstring("Last sale exchange")]	HfUsaOptionsExchanges	LastSaleExchange;
+		[helpstring("Last sale size")]		long				LastSaleSize;
+		[helpstring("Volume")]				long				Volume;
+		[helpstring("Open interest")]		long				OpenInterest;
+	};
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(2F280736-EB69-4f21-BC35-24A86C080253)
+	]
+	struct StockForIvResult
+	{
+		[helpstring("Symbol")]				BSTR				Symbol;
+		[helpstring("Bid")]					double				Bid;
+		[helpstring("Ask")]					double				Ask;
+		[helpstring("Open")]				double				Open;
+		[helpstring("High")]				double				High;
+		[helpstring("Low")]					double				Low;
+		[helpstring("Close")]				double				Close;
+		[helpstring("Volume")]				long				Volume;
+	};
+	//-----------------------------------------------------------------------------//
+	typedef enum MarketDataForIvRequests
+	{
+		[helpstring("Nothing")]							enIvReqNone		=	0x0000,
+		[helpstring("Start of day options")]			enIvReqSODO		=	0x0001,
+		[helpstring("End of day optionable stocks")]	enIvReqEODSO	=	0x0002,
+		[helpstring("End of day options")]				enIvReqEODO		=	0x0004,
+	} MarketDataForIvRequests;
+	//-----------------------------------------------------------------------------//
+	[
+		object,
+		uuid(8570EA44-2FD7-48cf-B735-4BADD7BA01CB),
+		dual,
+		helpstring("IMarketDataForIv Interface"),
+		pointer_default(unique)
+	]
+	interface IMarketDataForIv : IDispatch
+	{
+		[id(DISPID_HfMdConnect), helpstring("method Connect")] HRESULT Connect();
+		[id(DISPID_HfMdDisconnect), helpstring("method Disconnect")] HRESULT Disconnect();
+		[id(DISPID_HfMdRequestData), helpstring("method RequestData")] HRESULT RequestData([in] short RequestDataTypes);
+		[id(DISPID_HfMdCancelRequest), helpstring("method CancelRequest")] HRESULT CancelRequest();
+	};
+	
+	[
+		uuid(EAAEC0AB-880C-46b3-86E5-0FE22B41F732),
+		helpstring("_IMarketDataForIvEvents Interface")
+	]
+	dispinterface _IMarketDataForIvEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_HfMeOnOption), helpstring("event OnOption")] HRESULT OnOption([in] struct OptionForIvResult *Results, [in] VARIANT_BOOL IsLastOption);
+		[id(DISPID_HfMeOnStock), helpstring("event OnStock")] HRESULT OnStock([in] struct StockForIvResult *Results);
+		[id(3), helpstring("method OnError")] HRESULT OnError([in] enum ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] enum RequestsTypeEnum ReqType, [in] VARIANT Request);
+	};
+
+	[
+		uuid(5811738B-01D0-41c1-9261-D0CE15B904B7),
+		helpstring("HyperFeedMarketDataForIv Class")
+	]
+	coclass HyperFeedMarketDataForIv
+	{
+		[default]	interface IMarketDataForIv;
+		[default, source] dispinterface _IMarketDataForIvEvents;
+	};
+	[
+		uuid(A8CC46CD-AC07-4370-A8BF-FAA207477473),
+		helpstring("HyperFeedStructureProviderEx Class")
+	]
+	coclass HyperFeedStructureProviderEx
+	{
+		[default]	interface IStructureProvider;
+					interface IStructureProvider2;
+		[default, source] dispinterface _IStructureProviderEvents;
+	};
+
+	[
+		uuid(A9521DE9-14AF-409A-BF66-C8ADEFE9F43C),
+		helpstring("SettingsManager Class")
+	]
+	coclass SettingsManager
+	{
+		[default] interface ISettingsManager;
+	};
+};

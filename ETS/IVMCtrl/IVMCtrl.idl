@@ -1,0 +1,64 @@
+// IVMCtrl.idl : IDL source for IVMCtrl.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (IVMCtrl.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	typedef
+	[
+		uuid(76721CC3-AA43-46f9-8E49-50C5E66115F0),
+		helpstring("Command types enum"),
+		v1_enum
+	]
+	enum IVMCommandTypeEnum
+	{
+		[helpstring("None")]	enIVMNone = 0,
+		[helpstring("Symbol")]	enIVMSymbol
+	} IVMCommandTypeEnum;
+
+
+	[
+		object,
+		uuid(1538FEC4-2287-4CF8-AF33-A1D6BBE6E78F),
+		dual,
+		helpstring("IIVControl Interface"),
+		pointer_default(unique)
+	]
+	interface IIVControl : IDispatch
+	{
+		[id(1), helpstring("method SetActiveSymbol")] HRESULT SetActiveSymbol([in] BSTR SymbolName);
+	};
+
+[
+	uuid(2F00C5BD-7B0E-498D-86B6-61241FCC120C),
+	version(1.0),
+	helpstring("IVMCtrl 1.0 Type Library")
+]
+library IVMCTRLLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(641A05A3-F671-44F4-831A-9324F0FD34F6),
+		helpstring("_IIVControlEvents Interface")
+	]
+	dispinterface _IIVControlEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method CommandEvent")] HRESULT CommandEvent([in] IVMCommandTypeEnum type, [in] VARIANT data);
+	};
+
+	[
+		uuid(D778F36E-8D7D-4909-9623-ABE567BBBB55),
+		helpstring("IVControl Class")
+	]
+	coclass IVControl
+	{
+		[default] interface IIVControl;
+		[default, source] dispinterface _IIVControlEvents;
+	};
+};

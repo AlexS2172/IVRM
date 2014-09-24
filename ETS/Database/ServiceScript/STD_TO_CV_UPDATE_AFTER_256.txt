@@ -1,0 +1,2369 @@
+--Script need to apply after 256 version client DB
+
+GO
+if NOT Exists (select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='Stock' and COLUMN_NAME='isAllowLending')
+ALTER TABLE [Stock]
+	ADD [isAllowLending] [tinyint] NULL DEFAULT (0)
+GO
+
+if NOT Exists (select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='Index' and COLUMN_NAME='isAllowLending')
+ALTER TABLE [Index]
+	ADD [isAllowLending] [tinyint] NULL DEFAULT (0)
+GO
+
+if NOT Exists (select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='ContractPrice' and COLUMN_NAME='priceOriginalClose')
+ALTER TABLE [ContractPrice]
+	ADD [priceOriginalClose] [float] NULL
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[cvSysFunc]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [cvSysFunc]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[cvSysVars]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [cvSysVars]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[CV]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [CV]
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[cvLevel]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [cvLevel]
+GO
+
+CREATE TABLE [dbo].[CV] (
+   [ID] [int] IDENTITY (1, 1) NOT NULL,
+   [Name] [nvarchar] (50) COLLATE Latin1_General_CI_AS NOT NULL,
+   [contextID] [int] NOT NULL,
+   [levelID] [int] NOT NULL,
+   [Caption] [nvarchar] (20) COLLATE Latin1_General_CI_AS NOT NULL,
+   [Format] [nvarchar] (20) COLLATE Latin1_General_CI_AS NOT NULL,
+   [Source] [nvarchar] (1000) COLLATE Latin1_General_CI_AS NOT NULL,
+   [Code] [image] NOT NULL,
+   [aggLevels] [nvarchar] (400) COLLATE Latin1_General_CI_AS NULL,
+   [Type] [int] NULL,
+   [Weight] [int] NOT NULL,
+   [Description] [nvarchar] (256) COLLATE Latin1_General_CI_AS NULL
+)
+GO
+-- Indexes & Constraints
+ALTER TABLE [dbo].[CV] ADD CONSTRAINT [PK_CV] PRIMARY KEY CLUSTERED ([ID])
+GO
+-- Table Structure
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[cvContext]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [cvContext]
+GO
+
+CREATE TABLE [dbo].[cvContext] (
+   [ID] [int] IDENTITY (1, 1) NOT NULL,
+   [Name] [nvarchar] (50) COLLATE Latin1_General_CI_AS NOT NULL
+)
+GO
+-- Indexes & Constraints
+ALTER TABLE [dbo].[cvContext] ADD CONSTRAINT [PK_cvContext] PRIMARY KEY CLUSTERED ([ID])
+GO
+ALTER TABLE [dbo].[cvContext] ADD CONSTRAINT [UQ_cvContext_Name] UNIQUE NONCLUSTERED ([Name])
+GO
+-- Table Structure
+
+CREATE TABLE [dbo].[cvLevel] (
+   [ID] [int] IDENTITY (1, 1) NOT NULL,
+   [Name] [nvarchar] (50) COLLATE Latin1_General_CI_AS NOT NULL,
+   [contextID] [int] NOT NULL,
+   [Weight] [int] NOT NULL
+)
+GO
+-- Indexes & Constraints
+ALTER TABLE [dbo].[cvLevel] ADD CONSTRAINT [PK_cvLevel] PRIMARY KEY CLUSTERED ([ID])
+GO
+-- Foreign Keys
+ALTER TABLE [dbo].[cvLevel] ADD CONSTRAINT [FK_cvLevel_cvContext] FOREIGN KEY ([contextID]) REFERENCES [dbo].[cvContext] ([ID])
+GO
+-- Foreign Keys
+ALTER TABLE [dbo].[CV] ADD CONSTRAINT [FK_CV_cvContext] FOREIGN KEY ([contextID]) REFERENCES [dbo].[cvContext] ([ID])
+GO
+ALTER TABLE [dbo].[CV] ADD CONSTRAINT [FK_CV_cvLevel] FOREIGN KEY ([levelID]) REFERENCES [dbo].[cvLevel] ([ID])
+GO
+-- Table Structure
+
+CREATE TABLE [dbo].[cvSysFunc] (
+   [ID] [int] IDENTITY (1, 1) NOT NULL,
+   [contextID] [int] NOT NULL,
+   [levelID] [int] NOT NULL,
+   [Name] [nvarchar] (50) COLLATE Latin1_General_CI_AS NOT NULL,
+   [Type] [int] NOT NULL,
+   [Global] [bit] NOT NULL DEFAULT (0),
+   [Params] [nvarchar] (100) COLLATE Latin1_General_CI_AS NULL,
+   [Description] [nvarchar] (256) COLLATE Latin1_General_CI_AS NULL
+)
+GO
+
+-- Indexes & Constraints
+ALTER TABLE [dbo].[cvSysFunc] ADD CONSTRAINT [PK_cvSysFunc] PRIMARY KEY CLUSTERED ([ID])
+GO
+-- Foreign Keys
+ALTER TABLE [dbo].[cvSysFunc] ADD CONSTRAINT [FK_cvSysFunc_cvContext] FOREIGN KEY ([contextID]) REFERENCES [dbo].[cvContext] ([ID])
+GO
+ALTER TABLE [dbo].[cvSysFunc] ADD CONSTRAINT [FK_cvSysFunc_cvLevel] FOREIGN KEY ([levelID]) REFERENCES [dbo].[cvLevel] ([ID])
+GO
+
+-- Table Structure
+
+
+CREATE TABLE [dbo].[cvSysVars] (
+   [ID] [int] IDENTITY (1, 1) NOT NULL,
+   [contextID] [int] NOT NULL,
+   [levelID] [int] NOT NULL,
+   [Name] [nvarchar] (50) COLLATE Latin1_General_CI_AS NOT NULL,
+   [Type] [int] NOT NULL,
+   [Global] [bit] NULL,
+   [Description] [nvarchar] (256) COLLATE Latin1_General_CI_AS NULL
+)
+GO
+
+-- Indexes & Constraints
+ALTER TABLE [dbo].[cvSysVars] ADD CONSTRAINT [PK_cvSysVars] PRIMARY KEY CLUSTERED ([ID])
+GO
+-- Foreign Keys
+ALTER TABLE [dbo].[cvSysVars] ADD CONSTRAINT [FK_cvSysVars_cvContext] FOREIGN KEY ([contextID]) REFERENCES [dbo].[cvContext] ([ID])
+GO
+ALTER TABLE [dbo].[cvSysVars] ADD CONSTRAINT [FK_cvSysVars_cvLevel] FOREIGN KEY ([levelID]) REFERENCES [dbo].[cvLevel] ([ID])
+GO
+
+-- Table Structure
+if exists (select * from dbo.sysobjects where id = object_id(N'[ProjectionShedule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [ProjectionShedule]
+GO
+
+CREATE TABLE [dbo].[ProjectionShedule] (
+   [ID] [int] IDENTITY (1, 1) NOT NULL,
+   [UserName] [varchar] (80) COLLATE Latin1_General_CI_AS NOT NULL,
+   [ProjectionFile] [varchar] (260) COLLATE Latin1_General_CI_AS NOT NULL,
+   [LayoutFile] [varchar] (260) COLLATE Latin1_General_CI_AS NOT NULL,
+   [Enabled] [tinyint] NOT NULL,
+   [StartTime] [datetime] NOT NULL,
+   [Daily] [tinyint] NOT NULL,
+   [LastCalcDate] [datetime] NULL,
+   [ResultFile] [varchar] (260) COLLATE Latin1_General_CI_AS NULL
+)
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+ALTER     View dbo.IndexDefinitionView
+as
+	Select 
+		d.indexID,
+		d.stockID,
+		d.weight,
+		d.correlationPrice,
+		d.correlationVola,
+		d.actionID,
+		d.actionDate,
+		cp.priceOriginalClose as componentPrice
+	from IndexDefinition d
+		join ContractPrice cp on cp.contractID = d.stockID
+	where d.actionID < 3
+
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+
+-- Alter index view
+ALTER        VIEW dbo.IndexView
+AS
+	select  indexID, 
+			yield, 
+			isHTB, 
+			actionID,
+			actionDate, 
+			CalcOptionType, 
+			CalcModelType, 
+			isBasket, 
+			isActive,
+			skew,
+			kurt,
+			SOQ,
+			isHedgeSymbol,
+			primaryExchangeID,
+			isDivCustom,
+			divFreq, 
+			divAmt, 
+			divDate, 
+			divAmtCustom, 
+            		divDateCustom, 
+			divFreqCustom,
+			isAllowLending
+		from [Index]
+		where actionID < 3
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+ALTER   VIEW dbo.StockView
+AS
+	select	stockID, 
+			divFreq, 
+			isHTB, 
+			primaryExchangeID, 
+			divAmt, 
+			divDate, 
+			divAmtCustom, 
+            		divDateCustom, 
+			divFreqCustom, 
+			isDivCustom, 
+			actionID, 
+			actionDate, 
+			calcOptionType, 
+			calcModelType, 
+			isActive,
+			skew,
+			kurt,
+			isHedgeSymbol,
+			isAllowLending
+		from dbo.Stock
+		where actionID < 3
+GO
+
+if NOT Exists (select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='IRPoint' and COLUMN_NAME='ContractID')
+ALTER TABLE [IRPoint]
+	ADD    [ContractID] [int] NULL
+GO
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_cvContext_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_cvContext_Del]
+GO
+-- Procedure
+CREATE PROCEDURE [dbo].[usp_cvContext_Del] @ID int
+AS
+	DELETE FROM CV WHERE contextID = @ID
+	DELETE FROM cvSysFunc WHERE contextID = @ID
+	DELETE FROM cvSysVars WHERE contextID = @ID 	
+	DELETE FROM cvLevels WHERE contextID = @ID 	
+	DELETE FROM cvContext WHERE [ID] = @ID
+GO
+
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_cvContext_Get]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_cvContext_Get]
+GO
+CREATE  PROCEDURE [dbo].[usp_cvContext_Get] @ID int, @iInfoLevel int
+AS
+/* This procedure returns info about requested contenxt.
+ It returns several recordsets which count depends on  iInfoLevel parameter. 
+ Recordsets returned in -- next order:
+ 1. Context info
+ 2. Levels info
+ 3. System variables info
+ 4. System function info
+ 5. Variables info
+ The procedure stops collecting info when number of recordset becames equal to iInfoLevel*/
+	--
+	-- context
+	IF @iInfoLevel > 1 
+	BEGIN
+		SELECT * 
+		FROM cvContext C
+		WHERE C.[ID] = @ID
+	END
+
+	-- levels
+	IF @iInfoLevel > 2 
+	BEGIN
+		SELECT * 
+		FROM cvLevel
+		WHERE contextID = @ID
+		ORDER BY contextID, [ID]
+	END
+
+	-- system variables
+	IF @iInfoLevel > 3 
+	BEGIN
+		SELECT * 
+		FROM cvSysVars
+		WHERE contextID = @ID
+		ORDER BY contextID, levelID, [ID]
+	END
+	
+	-- system variables
+	IF @iInfoLevel > 4 
+	BEGIN
+		SELECT * 
+		FROM cvSysFunc  
+		WHERE contextID = @ID
+		ORDER BY contextID, levelID, [ID]	
+	END	
+
+	-- system variables
+	IF @iInfoLevel > 5 
+	BEGIN
+		SELECT * 
+		FROM CV 
+		WHERE contextID = @ID
+		ORDER BY contextID, LevelID, [ID]	
+	END
+GO
+
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_cvContext_Save]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_cvContext_Save]
+GO
+
+CREATE PROCEDURE [dbo].[usp_cvContext_Save] @ID int, @Name nvarchar
+AS
+--Creates or updates CV context
+	IF @ID IS NULL
+	BEGIN
+		-- create new
+		INSERT INTO cvContext ( [Name] ) VALUES ( @Name )
+		RETURN @@IDENTITY
+	END
+	ELSE
+	BEGIN
+		-- update existing
+		UPDATE cvContext SET [Name] = @Name
+WHERE [ID] = @ID	
+		RETURN @ID
+	END
+GO
+
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_cvContextID_Get]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_cvContextID_Get]
+GO
+
+CREATE PROCEDURE [dbo].[usp_cvContextID_Get] @strContextName NVARCHAR(100)
+AS
+BEGIN
+	DECLARE @iContextID AS INT
+	SET @iContextID = 0
+	SELECT @iContextID = [ID] FROM cvContext WHERE [Name] = @strContextName
+	RETURN @iContextID
+END
+GO
+
+-- Procedure
+-----------------------------------------------------------------------------------------
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_cvCV_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_cvCV_Del]
+GO
+
+CREATE   PROC [dbo].[usp_cvCV_Del] @CVID AS INT
+AS
+BEGIN
+	DECLARE @ContextID AS INT
+	DECLARE @cvName AS nvarchar(50)
+	SELECT @cvName=[Name], @ContextID=[ContextID] FROM CV WHERE [ID] = @CVID
+
+
+	DECLARE @cvCount AS int
+	SELECT @cvCount = count([ID]) 
+		FROM cv 
+		WHERE (' ' + Source + ' ') like '%[^a-z0-9_]' + @cvName + '[^a-z0-9_]%' AND
+		      [ContextID]=@ContextID
+
+	IF (@cvCount = 1)
+	BEGIN
+		DELETE FROM CV WHERE [ID] = @CVID
+		RETURN @CVID
+	END
+	RETURN 0
+END
+GO
+
+-- Procedure
+-----------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_cvCV_Save]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_cvCV_Save]
+GO
+
+CREATE    PROCEDURE [dbo].[usp_cvCV_Save] 
+	@Name NVARCHAR(50), 
+	@contextID INT, 	
+	@levelID INT, 
+	@Type INT, 
+	@Source NVARCHAR(1000),	
+	@Caption NVARCHAR(20),
+	@Format NVARCHAR(20),	
+	@aggLevels NVARCHAR(400),
+	@Code IMAGE,
+	@Weight INT,
+	@Desc NVARCHAR(256) = NULL
+AS
+BEGIN
+	DECLARE @ID INT, @ExistType INT, @ExistWeight INT
+
+	--SET @ID = 0  
+	SET @ExistType = 0
+	SET @ExistWeight = 0
+ 
+	IF @Type < 1 OR @Type > 3
+		RAISERROR( 'Cannot save variable: incorrect type value', 16,10 )
+	ELSE
+		SELECT @ID = [ID] FROM CV WHERE [Name] = @Name AND [ContextID] = @contextID
+ 
+	IF @ID IS NOT NULL
+	BEGIN
+		-- check that if type of varible has been changed, no dependencies exists
+		SELECT @ExistType = Type, @ExistWeight = Weight 
+		FROM CV 
+		WHERE [ID] = @ID
+ 
+		IF @ExistType <> @Type 
+			IF EXISTS	( 
+						SELECT * 
+						FROM CV 
+						WHERE Weight > @ExistWeight AND levelID = @levelID AND contextID = @contextID
+					)
+					BEGIN
+						RAISERROR( 'Cannot save variable: dependant variables expecting other type of variable being saved rather than specified', 16,10)
+						RETURN @ID
+					END
+ 
+		UPDATE           CV 
+		SET	[Name] = @Name, contextID=@contextID, 
+			levelID=@levelID, Type = @Type, 
+			Source = @Source, Caption = @Caption,
+			[Format] = @Format,aggLevels = @aggLevels,
+			Code = @Code, Weight = @Weight, [Description] = @Desc
+			WHERE	[ID] = @ID
+		END
+		ELSE
+		BEGIN
+			INSERT INTO CV ( [Name], contextID, levelID, Type, Source, Caption, [Format],aggLevels,Code, Weight, [Description] )
+				 VALUES( @Name, @contextID, @levelID, @Type, @Source, @Caption, @Format,@aggLevels,@Code, @Weight, @Desc )
+			SET @ID = @@IDENTITY
+		END                 
+	RETURN @ID
+END
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if NOT Exists (select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='IRPoint' and COLUMN_NAME='ContractID')
+ALTER TABLE [IRPoint]
+	ADD    [ContractID] [int] NULL
+GO
+----------------------------------------------------------------------------------------------
+ALTER  View dbo.IRPointView
+as
+	Select 
+		IRpointID,
+		curveID,
+		periodTypeID,
+		num,
+		shortRate,
+		HTBRate,
+		longRate,
+		actionID,
+		actionDate,
+		neutralRate,
+		ContractID
+	from IRPoint
+	where actionID < 3
+GO
+
+
+--PROC
+ALTER    PROC [dbo].[usp_IRPoint_Get]
+	@iCurveID 	int = null,
+	@bIsGlobalRates bit = null,
+	@iContractID	int = null
+as
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+	
+	set @bIsGlobalRates = isnull(@bIsGlobalRates, 1)
+
+	if @iCurveID is not null
+		select
+			IRpointID as iIRpointID, 
+			curveID as iCurveID, 
+			periodTypeID as iPeriodTypeID, 
+			num as iNum, 
+			shortRate as fShortRate, 
+			HTBRate as fHTBRate, 
+			longRate as fLongRate,
+			actionDate as dtActionDate,
+			actionID as tiActionID,
+			neutralRate as neutralRate,
+			ContractID as iContractID
+		from
+			IRPointView
+		where
+			curveID = @iCurveID and ((@bIsGlobalRates = 1 and ContractID is null) or 
+						 (@bIsGlobalRates = 0 and (@iContractID = ContractID or @iContractID is null or ContractID is null)))
+		order by periodTypeID, num 
+	else
+		select
+			IRpointID as iIRpointID, 
+			curveID as iCurveID, 
+			periodTypeID as iPeriodTypeID, 
+			num as iNum, 
+			shortRate as fShortRate, 
+			HTBRate as fHTBRate, 
+			longRate as fLongRate,
+			actionDate as dtActionDate,
+			actionID as tiActionID,
+			neutralRate as neutralRate,
+			ContractID as iContractID
+		from
+			IRPointView
+		where
+			(@bIsGlobalRates = 1 and ContractID is null) or 
+			(@bIsGlobalRates = 0 and (@iContractID = ContractID or @iContractID is null or ContractID is null))
+		order by periodTypeID, num 
+
+	set @error = @@error
+Return(@error)
+GO
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+ALTER            PROC usp_MmUnderlying_Get
+	@iTraderID int = null
+AS
+	set nocount on
+
+	if isnull(@iTraderID, 0) = 0
+		select
+		    c.contractID as iContractID,
+		    c.contractTypeID as iContractTypeID,
+		    c.Symbol as vcSymbol,
+			c.expCalendarID as iExpCalendarID,
+			case when i.indexID is null then s.calcOptionType else i.calcOptionType end as tiCalcOptionType,
+			case when i.indexID is null then s.isHTB else i.isHTB end as tiIsHTB,
+			case when i.indexID is null then s.isAllowLending else i.isAllowLending end as tiIsAllowLending,
+		    i.yield as fYield,
+	            i.isBasket as tiIsBasket,
+		    case when i.indexID is null then s.divFreq else i.divFreq end as iDivFreq,
+		    case when i.indexID is null then s.divDate else i.divDate end as dtDivDate,
+		    case when i.indexID is null then s.divAmt else i.divAmt end as fDivAmt,
+		
+--		    s.isDivCustom as tiIsDivCustom,
+		    case when i.indexID is null then s.isDivCustom else i.isDivCustom end as tiIsDivCustom,
+		    case when i.indexID is null then s.divFreqCustom else i.divFreqCustom end as iDivFreqCustom,
+		    case when i.indexID is null then s.divDateCustom else i.divDateCustom end as dtDivDateCustom,
+		    case when i.indexID is null then s.divAmtCustom else i.divAmtCustom end as fDivAmtCustom,
+		
+		    cp.priceClose as fPriceClose,
+		    cp.priceTheo as fPriceTheoClose,
+
+			null as iTraderID,
+
+			case when i.indexID is null then s.skew else i.skew end as fSkew,
+			case when i.indexID is null then s.kurt else i.kurt end as fKurt,
+			case when i.indexID is null then s.isHedgeSymbol else i.isHedgeSymbol end as tiIsHedgeSymbol,
+		    c.contractName as vcContractName,
+			
+			c.undPriceProfileID as iUndPriceProfileID,
+			c.optPriceProfileID as iOptPriceProfileID,
+			case when i.indexID is null then s.isActive else i.isActive end as tiIsActive,
+
+		    cp.volume10Day as iVolume10Day,
+		    cp.volume5Expiration as iVolume5Expiration,
+		    i.SOQ As SOQ,
+		    	case when i.IndexID is null then isnull(s.primaryExchangeID,0) else isnull(i.primaryExchangeID,0) end as iPrimaryExchangeID,
+		    mp.manualPrice as dManualActivePrice,
+		    vsd.IsManualVol as fManualVol
+		from ContractView c 
+		    left join ContractPrice cp on c.contractID = cp.contractID and cp.exchangeID is null
+		    left join StockView s on s.stockID = c.contractID
+		    left join IndexView i on i.indexID = c.contractID
+		    left join ManualPrice mp on mp.contractID = c.contractID
+		    left join VolaSurfaceData vsd on vsd.contractID = c.contractID 
+		where
+			c.contractTypeID in (1,2,6) and not c.Symbol is null
+	else
+		select
+		    c.contractID as iContractID,
+		    c.contractTypeID as iContractTypeID,
+		    c.Symbol as vcSymbol,
+			c.expCalendarID as iExpCalendarID,
+			case when i.indexID is null then s.calcOptionType else i.calcOptionType end as tiCalcOptionType,
+			case when i.indexID is null then s.isHTB else i.isHTB end as tiIsHTB,
+			case when i.indexID is null then s.isAllowLending else i.isAllowLending end as tiIsAllowLending,
+		    i.yield as fYield,
+			i.isBasket as tiIsBasket,
+		    case when i.indexID is null then s.divFreq else i.divFreq end as iDivFreq,
+		    case when i.indexID is null then s.divDate else i.divDate end as dtDivDate,
+		    case when i.indexID is null then s.divAmt else i.divAmt end as fDivAmt,
+		
+--		    s.isDivCustom as tiIsDivCustom,
+			case when i.indexID is null then s.isDivCustom else i.isDivCustom end as tiIsDivCustom,
+		    case when i.indexID is null then s.divFreqCustom else i.divFreqCustom end as iDivFreqCustom,
+		    case when i.indexID is null then s.divDateCustom else i.divDateCustom end as dtDivDateCustom,
+		    case when i.indexID is null then s.divAmtCustom else i.divAmtCustom end as fDivAmtCustom,
+		
+		    cp.priceClose as fPriceClose,
+			cp.priceTheo as fPriceTheoClose,
+
+			tc.traderID as iTraderID,
+
+			case when i.indexID is null then s.skew else i.skew end as fSkew,
+			case when i.indexID is null then s.kurt else i.kurt end as fKurt,
+			case when i.indexID is null then s.isHedgeSymbol else i.isHedgeSymbol end as tiIsHedgeSymbol,
+		    c.contractName as vcContractName,
+			
+			c.undPriceProfileID as iUndPriceProfileID,
+			c.optPriceProfileID as iOptPriceProfileID,
+			case when i.indexID is null then s.isActive else i.isActive end as tiIsActive,
+
+		    cp.volume10Day as iVolume10Day,
+		    cp.volume5Expiration as iVolume5Expiration,
+		    i.SOQ As SOQ,
+		    	case when i.IndexID is null then isnull(s.primaryExchangeID,0) else isnull(i.primaryExchangeID,0) end as iPrimaryExchangeID,
+		    mp.manualPrice as dManualActivePrice,
+		    vsd.IsManualVol as fManualVol
+		from ContractView c 
+		    left join ContractPrice cp on c.contractID = cp.contractID and cp.exchangeID is null
+		    left join StockView s on s.stockID = c.contractID
+		    left join IndexView i on i.indexID = c.contractID
+		    left join TraderContractView tc on c.contractID = tc.contractID and tc.traderID = @iTraderID
+		    left join ManualPrice mp on mp.contractID = c.contractID
+		    left join VolaSurfaceData vsd on vsd.contractID = c.contractID 
+		where
+			c.contractTypeID in (1,2,6) and not c.Symbol is null
+
+	return @@error
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_MmOppositeOptionByOption_Get]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_MmOppositeOptionByOption_Get]
+GO
+
+CREATE	PROC [dbo].[usp_MmOppositeOptionByOption_Get]
+	@iOptionID 	int
+AS
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @isCall 	tinyint
+	declare @strike		float
+	declare @expiryDate	datetime
+	declare @optionRootID	int
+
+	select @isCall = isCall, @strike = strike, @expiryDate = expiryDate, @optionRootID = optionRootID
+	from OptionView
+	where optionID = @iOptionID
+
+	if @isCall = 0
+		set @isCall = 1
+	else
+		set @isCall = 0
+
+
+	select cv.Symbol as Symbol, cv.contractID as contractID
+	from OptionView ov
+		inner join ContractView cv on cv.contractID = ov.optionID
+	where 
+		ov.isCall = @isCall and ov.strike = @strike and 
+		ov.expiryDate = @expiryDate and ov.optionRootID = @optionRootID
+
+
+	return @@error
+GO
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_ProjectionShedule_Save]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_ProjectionShedule_Save]
+GO
+
+CREATE	PROC [dbo].[usp_ProjectionShedule_Save]
+	@iSheduleID 		int,
+	@vcUserName		varchar(80),
+	@vcProjectionFile	varchar(260),
+	@vcLayoutFile		varchar(260),
+	@tiEnabled		tinyint,
+	@dtStartTime		datetime,
+	@tiDaily		tinyint
+AS
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+
+	declare @LastCalcDate as datetime
+	if isnull(@tiDaily, 0) = 0
+		set @LastCalcDate = null
+	else
+		set @LastCalcDate = current_timestamp
+
+	if @iSheduleID is null
+		begin
+			insert into ProjectionShedule(  UserName,
+							ProjectionFile,
+							LayoutFile,
+							Enabled,
+							StartTime,
+							Daily,
+							LastCalcDate )
+					values( @vcUserName,
+						isnull(@vcProjectionFile, '--'),
+						isnull(@vcLayoutFile, '--'),
+						isnull(@tiEnabled, 0),
+						isnull(@dtStartTime, current_timestamp),
+						isnull(@tiDaily, 0),
+						@LastCalcDate )
+		end
+	else
+		begin
+			update ProjectionShedule set 	UserName = @vcUserName,
+							ProjectionFile = isnull(@vcProjectionFile, '--'),
+							LayoutFile = isnull(@vcLayoutFile, '--'),
+							Enabled = isnull(@tiEnabled, 0),
+							StartTime = isnull(@dtStartTime, current_timestamp),
+							Daily = isnull(@tiDaily, 0),
+							LastCalcDate = @LastCalcDate,
+							ResultFile = null
+			where [ID] = @iSheduleID
+		end
+ 
+	return @@error
+GO
+
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_ProjectionShedule_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_ProjectionShedule_Del]
+GO
+
+CREATE	PROC [dbo].[usp_ProjectionShedule_Del]
+	@iSheduleID 	int
+AS
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+
+	delete ProjectionShedule where [ID] = @iSheduleID
+ 
+	return @@error
+GO
+
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_ProjectionShedule_CalcComplete]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_ProjectionShedule_CalcComplete]
+GO
+
+CREATE	PROC [dbo].[usp_ProjectionShedule_CalcComplete]
+	@iSheduleID 	int,
+	@dtCalcDate	datetime,
+	@vcFileName	varchar(260)
+AS
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+
+	update ProjectionShedule set LastCalcDate = @dtCalcDate, ResultFile = @vcFileName
+	where [ID] = @iSheduleID
+
+	return @@error
+GO
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_PositionsForExportToFormat1_Get]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_PositionsForExportToFormat1_Get]
+GO
+
+CREATE PROC [dbo].[usp_PositionsForExportToFormat1_Get]
+AS
+BEGIN
+SELECT
+			MAX(RTRIM( LTRIM( CONVERT( NCHAR(2), DATEPART( mm, tr.tradeDate ) ))) + '/' +
+			RTRIM( LTRIM( CONVERT( NCHAR(2), DATEPART( dd, tr.tradeDate ) ))) + '/' + 
+			RTRIM( LTRIM( CONVERT( NCHAR(4), DATEPART( yyyy, tr.tradeDate) )))) AS sTradeDate, 
+			trd.acronym AS sAcronym, 
+			uc.symbol AS sSymbol, 
+			CASE 	WHEN c.contractTypeID = 3 
+				THEN 
+					ort.symbol + 
+					UPPER( SUBSTRING( DATENAME( m, o.expiryDate ), 1, 3 ) )+
+					RTRIM( LTRIM( CONVERT( NCHAR(20), o.strike ))) +
+					CASE WHEN o.isCall = 1 THEN 'C' ELSE 'P' END					
+				ELSE 	
+					fr.futureRootSymbol + 
+					UPPER( SUBSTRING( DATENAME( m, fo.expiryDate ), 1, 3 ) ) +
+					LTRIM( RTRIM( CONVERT( NCHAR(20), fo.strike ))) +
+					CASE WHEN fo.isCall = 1 THEN 'C' ELSE 'P' END					
+			END AS sFullSymbol, 
+			CASE 	WHEN c.contractTypeID = 3 THEN ort.symbol ELSE fr.futureRootSymbol 
+			END AS sRootSymbol,
+			CASE 	WHEN c.contractTypeID = 3 
+				THEN 
+					UPPER( SUBSTRING( DATENAME( m, o.expiryDate ), 1, 3 ) )
+				ELSE 	
+					UPPER( SUBSTRING( DATENAME( m, fo.expiryDate ), 1, 3 ) )
+			END AS sMonthName, 
+			CASE 	WHEN c.contractTypeID = 3 
+				THEN 
+					RTRIM( LTRIM( CONVERT( NCHAR(20), ROUND( o.strike, 2) )))
+				ELSE 	
+					LTRIM( RTRIM( CONVERT( NCHAR(20), ROUND( fo.strike, 2 ) )))
+			END AS sStrike, 
+			CASE 	WHEN c.contractTypeID = 3 
+				THEN 
+					CASE WHEN o.isCall = 1 THEN 'C' ELSE 'P' END
+			     	WHEN c.contractTypeID = 5 
+				THEN
+					CASE WHEN fo.isCall = 1 THEN 'C' ELSE 'P' END					
+			END AS cOptType, 
+			sum( CASE WHEN tr.isBuy = 0 THEN  -tr.quantity    ELSE tr.quantity END ) as  iQuantity, 
+			CASE 	WHEN c.contractTypeID = 3 THEN 
+					LTRIM(RTRIM( CONVERT( NVARCHAR(20), ROUND( cp.priceClose , 2 ) ) ) )
+			 	WHEN c.contractTypeID = 5 THEN 
+					LTRIM(RTRIM( CONVERT( NVARCHAR(20), ROUND( cp.priceClose , 2 ) ) ) )
+				END AS sOptPrice, 
+			CASE 	WHEN c.contractTypeID = 3 THEN 
+					LTRIM(RTRIM( CONVERT( NVARCHAR(20), ROUND( ucp.priceClose , 2 ) ) ) )
+				WHEN c.contractTypeID = 5 THEN 
+					LTRIM(RTRIM( CONVERT( NVARCHAR(20), ROUND( ucp.priceClose , 2 ) ) ) )
+				ELSE LTRIM(RTRIM( CONVERT( NVARCHAR(20), ROUND( cp.priceClose , 2 ) ) ) )
+				END AS fUndPrice, 
+ 			CASE	WHEN c.contractTypeID = 3 THEN ort.lotSize
+				ELSE fr.optionLotSize
+				END AS iLotSize, -- iLotSize
+			CASE  	WHEN c.contractTypeID = 1 THEN 'STOCK'
+				WHEN c.contractTypeID = 2 THEN 'INDEX'
+				WHEN c.contractTypeID = 3 THEN 'OPTION'
+				WHEN c.contractTypeID = 4 THEN 'FUTURE'
+				WHEN c.contractTypeID = 5 THEN 'FUTURE OPTION'
+				END AS sContractType,
+			CASE 	WHEN c.contractTypeID = 3 
+				THEN	
+					RTRIM( LTRIM( CONVERT( NCHAR(2), DATEPART( mm, o.expiryDate  ) ))) + '/' +
+					RTRIM( LTRIM( CONVERT( NCHAR(2), DATEPART( dd, o.expiryDate ) ))) + '/' + 
+					RTRIM( LTRIM( CONVERT( NCHAR(4), DATEPART( yyyy, o.expiryDate ) ))) 
+				ELSE 
+					RTRIM( LTRIM( CONVERT( NCHAR(2), DATEPART( mm, fo.expiryDate  ) ))) + '/' +
+					RTRIM( LTRIM( CONVERT( NCHAR(2), DATEPART( dd, fo.expiryDate ) ))) + '/' + 
+					RTRIM( LTRIM( CONVERT( NCHAR(4), DATEPART( yyyy, fo.expiryDate ) ))) 
+			END AS sExpiry,
+			CASE 	WHEN o.isManualyEntered = 1 THEN '1' ELSE NULL END AS sIsFlex
+		FROM TradeView tr 
+			-- contract and underlying contract
+			INNER JOIN Contract c ON tr.contractID = c.contractID
+			INNER JOIN Contract uc ON tr.underlyingID = uc.contractID
+			LEFT JOIN ContractPrice cp ON tr.contractID = cp.contractID and cp.exchangeID is null
+			LEFT JOIN ContractPrice ucp ON uc.contractID = ucp.contractID
+			-- regular option
+			LEFT JOIN [Option] o ON tr.contractID = o.optionID
+			LEFT JOIN OptionRoot ort ON tr.optionRootID = ort.optionRootID
+			--LEFT JOIN ExpiryInCalendarView ec ON o.expiryID = ec.expiryID AND ec.expCalendarID = ISNULL( c.expCalendarID, uc.expCalendarID )
+			-- futures part
+			LEFT JOIN ContractView fc ON tr.futureID = fc.contractID
+			LEFT JOIN FutureRoot fr ON tr.futureRootID = fr.futureRootID
+			LEFT JOIN Future f ON tr.futureID = f.futureID
+			LEFT JOIN FutureOption fo ON tr.contractID = fo.futureOptionID
+			--LEFT JOIN ExpiryInCalendarView fec ON fo.expiryID = fec.expiryID AND fec.expCalendarID = fc.expCalendarID
+			LEFT JOIN Trader trd ON trd.traderID = tr.traderID 
+		WHERE tr.isPosition = 1 OR ( tr.isPosition = 0 AND tr.status = 0 )
+		GROUP BY trd.acronym,uc.symbol, ort.symbol,o.expiryDate,o.strike,o.isCall,
+			c.contractTypeID, fr.futureRootSymbol, fo.expiryDate, fo.strike,fo.isCall, cp.priceClose, ucp.priceClose,
+			ort.lotSize, fr.optionLotSize, o.isManualyEntered 
+  		ORDER BY trd.acronym
+END
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_FlexOptionsVola_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_FlexOptionsVola_Del]
+GO
+
+SET QUOTED_IDENTIFIER OFF
+GO
+CREATE PROC [dbo].[usp_FlexOptionsVola_Del]
+	@vcUndSymbol AS NVARCHAR(20) = NULL,
+	@iOptionID AS INT = NULL
+AS
+	IF @iOptionID IS NULL AND @vcUndSymbol IS NULL
+	BEGIN
+		RAISERROR( 'Bad parameters passed to usp', 16, 10 )
+		RETURN 1
+	END
+	IF @iOptionID IS NULL 
+	BEGIN
+		DELETE FROM CustomStrikeSkewPoint 
+		WHERE customStrikeSkewPointID IN (
+			SELECT DISTINCT CSSP.customStrikeSkewPointID
+			FROM [option] o
+			JOIN OptionRoot ort ON o.optionRootID = ort.optionRootID
+			--JOIN Contract c ON c.contractID = o.optionID
+			JOIN Contract uc ON uc.contractID = ort.underlyingID
+			--JOIN ExpiryInCalendar eic ON eic.expiryID = o.expiryID AND eic.expCalendarID = isnull( c.expCalendarID, uc.expCalendarID )
+			--JOIN ContractPrice cp ON uc.contractID = cp.contractID
+			JOIN VolaSurfaceData VSD ON VSD.ContractID = uc.ContractID
+			JOIN CustomStrikeSkewPoint CSSP ON CSSP.volaSurfaceDataID = VSD.volaSurfaceDataID 
+			AND CSSP.strike = o.strike AND CSSP.expiryDate = o.expiryDate -- AND CSSP.expiryInCalendarID = eic.expiryInCalendarID
+			WHERE o.isManualyEntered = 1 AND o.expiryDate > GETDATE() AND uc.symbol = @vcUndSymbol
+		)
+	END
+	ELSE
+	BEGIN
+		DELETE FROM CustomStrikeSkewPoint 
+		WHERE customStrikeSkewPointID IN (
+			SELECT DISTINCT CSSP.customStrikeSkewPointID
+			FROM [option] o
+			JOIN OptionRoot ort ON o.optionRootID = ort.optionRootID
+			--JOIN Contract c ON c.contractID = o.optionID
+			JOIN Contract uc ON uc.contractID = ort.underlyingID
+			--JOIN ExpiryInCalendar eic ON eic.expiryID = o.expiryID AND eic.expCalendarID = isnull( c.expCalendarID, uc.expCalendarID )
+			--JOIN ContractPrice cp ON uc.contractID = cp.contractID
+			JOIN VolaSurfaceData VSD ON VSD.ContractID = uc.ContractID
+			JOIN CustomStrikeSkewPoint CSSP ON CSSP.volaSurfaceDataID = VSD.volaSurfaceDataID 
+			AND CSSP.strike = o.strike AND CSSP.expiryDate = o.expiryDate --AND CSSP.expiryInCalendarID = eic.expiryInCalendarID
+			WHERE o.optionID = @iOptionID
+		)
+	END
+	RETURN @@ROWCOUNT
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+ALTER  Procedure [dbo].[usp_ContractPrice_Get] 
+	@iContractPriceID int = Null output,
+	@iContractID int = Null,
+	@iExchangeID int = Null 
+AS
+/*
+	Created by Zaur Nuraliev
+	[Description]:	this procedure save information into 
+					ContractPrice table
+*/
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+
+	select	contractID as iContractID,
+			exchangeID as iExchangeID, 
+			priceBid as fPriceBid,
+			priceAsk as fPriceAsk,
+			case when ort.lotSize is null then 1 else ort.lotSize end iLotSize,
+			priceLast as fPriceLast,
+			priceOpen as fPriceOpen,
+			priceClose as fPriceClose,
+			priceLow as fPriceLow,
+			priceHigh as fPriceHigh,
+			volume as iVolume,
+			openInterest as iOpenInterest,
+			priceOriginalClose as fpriceOriginalClose
+			from ContractPrice	
+				left join OptionRoot ort on ContractPrice.contractID = ort.underlyingID
+			where	(@iContractPriceID is not Null and contractPriceID = @iContractPriceID) or 
+					(@iContractID is not Null and contractID=@iContractID and isnull(exchangeID,0)=isnull(@iExchangeID,0))
+
+/*
+	select	contractID as iContractID,
+			exchangeID as iExchangeID, 
+			priceBid as fPriceBid,
+			priceAsk as fPriceAsk,
+			lotSize as iLotSize,
+			priceLast as fPriceLast,
+			priceOpen as fPriceOpen,
+			priceClose as fPriceClose,
+			priceLow as fPriceLow,
+			priceHigh as fPriceHigh,
+			volume as iVolume,
+			openInterest as iOpenInterest
+			from ContractPrice	
+			where	(@iContractPriceID is not Null and contractPriceID = @iContractPriceID) or 
+					(@iContractID is not Null and contractID=@iContractID and exchangeID=@iExchangeID)
+*/
+
+	set @error = @@error
+Return(@error)
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_BoFuture_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_BoFuture_Save_CV]
+GO
+
+CREATE PROC [dbo].[usp_BoFuture_Save_CV]
+	@iFutureID int out,
+	@iFutureRootID int, -- should be specified for new future (ignored for update)
+	@vcFutureSymbol varchar(20) = null,
+	@vcFutureName varchar(255) = null,
+	@vcExportSymbol varchar(20) = null,
+	@iMaturityID int = null, -- calculated by @dtMaturityDate if not specified
+	@dtMaturityDate datetime = null, -- ignored if @iMaturityID is specified
+	@iExpCalendarID int = null,
+	@tiCalcOptionType tinyint = null,
+	@tiIsActive tinyint = null,
+	@iUndPriceProfileID int = null out,
+	@iOptPriceProfileID int = null out,
+	@tiIsRaiseError tinyint = 1 
+
+
+
+
+AS
+	-- create/update future
+
+	set nocount on
+	
+	declare @error int		set @error = 0
+
+	if @iFutureID is null -- new future
+	begin
+		-- check new future root ID
+		if @iFutureRootID is null
+		begin
+			if @tiIsRaiseError = 1 raiserror('Future root for new future is not specified!', 16, 1)
+			set @error = -1
+			goto finish
+		end
+
+		-- check future symbol
+		set @vcFutureSymbol = isnull(@vcFutureSymbol, '')
+		if len(ltrim(@vcFutureSymbol)) = 0
+		begin
+			if @tiIsRaiseError = 1 raiserror('Symbol for new future is not specified!', 16, 1)
+			set @error = -2
+			goto finish
+		end
+
+		-- check future
+		if exists(select 1 from ContractView where contractTypeID = 4 and symbol = @vcFutureSymbol)
+		begin
+			if @tiIsRaiseError = 1 raiserror('Future with symbol ''%s'' is already exists!', 16, 1, @vcFutureSymbol)
+			set @error = -3
+			goto finish
+		end
+
+		-- correct expiry calendar ID
+		if isnull(@iExpCalendarID, 0) = 0
+			set @iExpCalendarID = 1
+
+		-- check expiry calendar ID
+		if not exists(select 1 from ExpiryCalendarView where expCalendarID = @iExpCalendarID)
+		begin
+			if @tiIsRaiseError = 1 raiserror('Invalid future options expiry calendar specified!', 16, 1)
+			set @error = -4
+			goto finish
+		end
+
+		-- calculate maturity ID by maturity date if maturity ID is not specified
+
+		if @dtMaturityDate is not null
+			set @iMaturityID = null
+
+		if @iMaturityID is null and @dtMaturityDate is not null
+			set @iMaturityID = (year(@dtMaturityDate) - 2000) * 12 + month(@dtMaturityDate)
+
+		-- check maturity ID
+		if not exists(select 1 from ExpiryView where expiryID = @iMaturityID)
+		begin
+			if @tiIsRaiseError = 1 raiserror('Invalid future maturity specified!', 16, 1)
+			set @error = -5
+			goto finish
+		end
+
+		-- correct default underlying price profile
+		if isnull(@iUndPriceProfileID, 0) = 0
+			select
+				@iUndPriceProfileID = priceProfileID
+			from
+				PriceProfileView
+			where
+				defaultID = 1
+				and isOptionProfile = 0
+
+		-- check underlying price profile
+		if not exists(select 1 from PriceProfileView where priceProfileID = @iUndPriceProfileID)
+		begin
+			if @tiIsRaiseError = 1 raiserror('Invalid future underlying price profile specified!', 16, 1)
+			set @error = -6
+			goto finish
+		end
+	
+		-- correct default option price profile
+		if isnull(@iOptPriceProfileID, 0) = 0
+			select
+				@iOptPriceProfileID = priceProfileID
+			from
+				PriceProfileView
+			where
+				defaultID = 1
+				and isOptionProfile = 1
+
+		-- check options price profile
+		if not exists(select 1 from PriceProfileView where priceProfileID = @iOptPriceProfileID)
+		begin
+			if @tiIsRaiseError = 1 raiserror('Invalid future options price profile specified!', 16, 1)
+			set @error = -7
+			goto finish
+		end
+
+		-- correct option style
+		if isnull(@tiCalcOptionType, 0) = 0
+			set @tiCalcOptionType = 1	-- american
+
+		-- correct 'is active'
+		if isnull(@tiIsActive, 0) = 0
+			set @tiIsActive = 1	-- active by default
+
+		begin tran
+
+		-- save new contract data
+		insert into Contract
+			(contractTypeID, symbol, contractName, expCalendarID, undPriceProfileID, optPriceProfileID)
+		values
+			(4, @vcFutureSymbol, @vcFutureName, @iExpCalendarID, @iUndPriceProfileID, @iOptPriceProfileID)
+		if @@error <> 0 begin set @error = -8 if @@trancount = 1 rollback tran goto finish end
+
+		set @iFutureID = @@identity
+
+
+		-- save new future data
+		insert into Future
+			(futureID, futureRootID, maturityDate, calcOptionType, isActive)
+		values
+			(@iFutureID, @iFutureRootID, @dtMaturityDate, @tiCalcOptionType, @tiIsActive)
+		if @@error <> 0 begin set @error = -9 if @@trancount = 1 rollback tran goto finish end
+
+		-- save price record for default exchange
+		if not exists(select 1 from ContractPrice where exchangeID is null and contractID = @iFutureID)
+		begin
+			insert into ContractPrice
+				(contractID, exchangeID)
+			values
+				(@iFutureID, null)
+			if @@error <> 0 begin set @error = -10 if @@trancount = 1 rollback tran goto finish end
+		end
+
+		commit tran
+	end
+	else
+	begin -- existing future
+
+		-- correct future name (prevent updates to empty string)
+		if len(ltrim(@vcFutureSymbol)) = 0
+			set @vcFutureSymbol = null
+
+		-- check future name
+		if @vcFutureSymbol is not null
+			if exists(select 1 from ContractView where contractTypeID = 4 and contractID <> @iFutureID and symbol = @vcFutureSymbol)
+			begin
+				if @tiIsRaiseError = 1 raiserror('Future with symbol ''%s'' is already exists!', 16, 1, @vcFutureSymbol)
+				set @error = -11
+				goto finish
+			end
+
+		-- correct expiry calendar ID (prevent updates to zero calendar)
+-- 		if @iExpCalendarID = 0
+-- 			set @iExpCalendarID = null
+
+		-- check expiry calendar
+-- 		if @iExpCalendarID is not null
+-- 		begin
+-- 			if not exists(select 1 from ExpiryCalendar where expCalendarID = @iExpCalendarID)
+-- 			begin
+-- 				if @tiIsRaiseError = 1 raiserror('Invalid future options expiry calendar specified!', 16, 1, @vcFutureSymbol)
+-- 				set @error = -12
+-- 				goto finish
+-- 			end
+-- 		end
+
+		-- correct maturity ID (prevent updates to zero)
+		if @iMaturityID = 0
+			set @iMaturityID = null
+		if @dtMaturityDate is not null
+			set @iMaturityID = null
+		-- calculate maturity ID by maturity date if maturity ID is not specified
+		if @iMaturityID is null and @dtMaturityDate is not null
+			set @iMaturityID = (year(@dtMaturityDate) - 2000) * 12 + month(@dtMaturityDate)
+
+		-- check maturity ID
+-- 		if @iMaturityID is not null
+-- 			if not exists(select 1 from ExpiryView where expiryID = @iMaturityID)
+-- 			begin
+-- 				if @tiIsRaiseError = 1 raiserror('Invalid future maturity specified!', 16, 1)
+-- 				set @error = -13
+-- 				goto finish
+-- 			end
+
+		-- correct underlying price profile (prevent updates to zero)
+		if @iUndPriceProfileID = 0
+			set @iUndPriceProfileID = null
+
+		-- check underlying price profile
+		if @iUndPriceProfileID is not null
+			if not exists(select 1 from PriceProfileView where priceProfileID = @iUndPriceProfileID)
+			begin
+				if @tiIsRaiseError = 1 raiserror('Invalid future underlying price profile specified!', 16, 1)
+				set @error = -14
+				goto finish
+			end
+
+		-- correct option price profile (prevent updates to zero)
+		if @iOptPriceProfileID = 0
+			set @iOptPriceProfileID = null
+
+		-- check option price profile
+		if @iOptPriceProfileID is not null
+			if not exists(select 1 from PriceProfileView where priceProfileID = @iOptPriceProfileID)
+			begin
+				if @tiIsRaiseError = 1 raiserror('Invalid future options price profile specified!', 16, 1)
+				set @error = -15
+				goto finish
+			end
+
+		begin tran
+
+		-- update contract data
+		update Contract
+		set symbol = isnull(@vcFutureSymbol, symbol),
+			contractName = isnull(@vcFutureName, contractName),
+			expCalendarID = isnull(@iExpCalendarID, expCalendarID),
+			undPriceProfileID = isnull(@iUndPriceProfileID, undPriceProfileID),
+			optPriceProfileID = isnull(@iOptPriceProfileID, optPriceProfileID)
+		where contractID = @iFutureID
+		if @@error <> 0 begin set @error = -16 if @@trancount = 1 rollback tran goto finish end
+
+		-- save future data
+		update Future
+			set maturityDate = isnull(@dtMaturityDate, maturityDate),
+			calcOptionType = isnull(@tiCalcOptionType, calcOptionType),
+			isActive = isnull(@tiIsActive, isActive)
+
+
+
+		where futureID = @iFutureID
+		if @@error <> 0 begin set @error = -17 if @@trancount = 1 rollback tran goto finish end
+
+		commit tran
+	end
+finish:
+	return @error
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_ContractPrice_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_ContractPrice_Save_CV]
+GO
+
+CREATE      proc [dbo].[usp_ContractPrice_Save_CV]
+
+
+	@iContractPriceID int = Null output,
+	@iContractID int = Null,
+	@iExchangeID int = Null, 
+	@fPriceBid float = Null,
+	@fPriceAsk float = Null,
+	@iLotSize int = Null,	-- currently not used !!!
+	@fPriceLast float = Null,
+	@fPriceOpen float = Null,
+	@fPriceClose float = Null,
+	@fPriceLow float = Null,
+	@fPriceHigh float = Null,
+	@iVolume int = Null,
+	@iOpenInterest int = Null,
+	@vcSymbol varchar(20) = Null,
+	@iContractTypeID int = Null, --2-stock 3-option
+	@vcExchangeCode varchar(10) = Null,
+	@fpriceOriginalClose float = Null
+as
+/*
+	Created by Zaur Nuraliev
+	[Description]:	this procedure save information into 
+					ContractPrice table
+*/
+	-------------------------------------------------
+	set nocount on
+	set ANSI_NULLS OFF --(exchangeID may be null)
+	-------------------------------------------------
+	declare @error int		set @error = -1
+	if @vcSymbol is not null and @iContractTypeID is not null 
+		begin
+			Select @iContractID = contractID from Contract where symbol=@vcSymbol and contractTypeID=@iContractTypeID
+			if @iContractID is null goto finish 
+		end
+	if @vcExchangeCode is not null
+		begin
+			Select @iExchangeID=exchangeID from Exchange where exchangeCode=@vcExchangeCode
+		end
+
+	Begin Transaction
+		if (not exists (select * from ContractPrice(nolock) where contractPriceID = @iContractPriceID) and @iContractPriceID is not Null)
+		or (@iContractID is not Null and not exists(select * from ContractPrice where contractID=@iContractID and isnull(exchangeID,0)=isnull(@iExchangeID,0)))
+		 begin
+			insert into ContractPrice (contractID,
+						exchangeID, 
+						priceBid,
+						priceAsk,
+						priceLast,
+						priceOpen,
+						priceClose,
+						priceLow,
+						priceHigh,
+						volume,
+						openInterest,
+						priceOriginalClose)
+				  values (@iContractID,
+						@iExchangeID, 
+						@fPriceBid,
+						@fPriceAsk,
+						@fPriceLast,
+						@fPriceOpen,
+						@fPriceClose,
+						@fPriceLow,
+						@fPriceHigh,
+						@iVolume,
+						@iOpenInterest,
+						@fpriceOriginalClose)
+			if @@error <> 0 begin set @error = 1 if @@TranCount = 1 Rollback Transaction goto finish end
+
+			select @iContractPriceID = @@identity
+
+		 end
+	   else
+		 begin
+			update ContractPrice
+				set contractID = isNull(@iContractID,contractID),
+					exchangeID = isNull(@iExchangeID,exchangeID),
+					priceBid = isNull(@fPriceBid,priceBid),
+					priceAsk = isNull(@fPriceAsk,priceAsk),
+					priceLast = isNull(@fPriceLast,priceLast),
+					priceOpen = isNull(@fPriceOpen,priceOpen),
+					priceClose = isNull(@fPriceClose,priceClose),
+					priceLow = isNull(@fPriceLow,priceLow),
+					priceHigh = isNull(@fPriceHigh,priceHigh),
+					volume = isNull(@iVolume,volume),
+					openInterest = isNull(@iOpenInterest,openInterest),
+					priceOriginalClose = isNull(@fpriceOriginalClose,priceOriginalClose),
+					actionDate = GetDate()
+					where (@iContractPriceID is not Null and contractPriceID = @iContractPriceID) or 
+						(@iContractID is not Null and contractID=@iContractID and isnull(exchangeID,0)=isnull(@iExchangeID,0))
+			if @@error <> 0 begin set @error = 2 if @@TranCount = 1 Rollback Transaction goto finish end
+		 end
+		--===========================================================================================
+		-- create record with Null ExchangeID
+		--===========================================================================================
+		if not exists(select * from ContractPrice where ContractID=@iContractID and exchangeID is null)
+			begin
+				insert into ContractPrice (contractID,
+							exchangeID, 
+							priceBid,
+							priceAsk,
+							priceLast,
+							priceOpen,
+							priceClose,
+							priceLow,
+							priceHigh,
+							volume,
+							openInterest,
+							priceOriginalClose)
+					  values (@iContractID,
+							Null, 
+							@fPriceBid,
+							@fPriceAsk,
+							@fPriceLast,
+							@fPriceOpen,
+							@fPriceClose,
+							@fPriceLow,
+							@fPriceHigh,
+							@iVolume,
+							@iOpenInterest,
+							@fpriceOriginalClose)
+			end
+	Commit Transaction
+	set @error = 0
+finish:
+
+
+
+Return(@error)
+
+
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_EodMsOptionCache_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_EodMsOptionCache_Save_CV]
+GO
+
+CREATE   PROCEDURE [dbo].[usp_EodMsOptionCache_Save_CV]
+	@iUnderlyingID int,
+	@vcSymbol varchar(20),
+	@dtExpiry datetime,
+
+
+	@fStrike float,
+	@tiIsCall tinyint,
+	@iLotSize int
+AS
+/*
+	Created by Michael Malyshkin
+*/
+	----------------------------------------------------------------------
+	set nocount on
+	----------------------------------------------------------------------
+	declare @error int		set @error = 0
+	declare @vcUnderlyingSymbol varchar(20)
+	declare @vcError as varchar(8000)
+
+	-- check parameter
+	if @iUnderlyingID is null or @vcSymbol is null or @dtExpiry is null or isnull(@fStrike, 0) <= 0
+
+	begin
+		raiserror ('Invalid parameter!', 16, 1)
+		set @error = -1
+		goto finish 
+	end
+
+	-- check underlying existance
+	if not exists (select 1 from MsUnderlyingCache where underlyingID = @iUnderlyingID)
+	begin
+		raiserror ('Invalid underlying contract!', 16, 1)
+		set @error = -2
+		goto finish 
+	end
+
+	-- check the Expiry
+-- 	declare @iExpiryID int
+-- 	set @iExpiryID = (year(@dtExpiry) - 2000) * 12 + month(@dtExpiry)
+-- 
+-- 	if not exists (select 1 from ExpiryView where expiryID = @iExpiryID)
+-- 	begin
+-- 		set @vcError = 'Invalid expiry ''' + Convert(varchar(50),@dtExpiry) + ''' for option ''' + @vcSymbol + ''' !'
+-- 		Raiserror(@vcError, 16, 1)
+-- 		set @error = -3
+-- 		goto finish 
+-- 	end
+
+	-- check option root symbol
+	if len(@vcSymbol) < 3
+	begin
+		set @vcError = 'Invalid option symbol ''' + @vcSymbol + ''': at least 3 characters expected!'
+		Raiserror(@vcError, 16, 1)
+		set @error = -4
+		goto finish 
+	end
+
+	-- correct lotsize
+	if isnull(@iLotSize, 0) <= 0
+		set @iLotSize = 100
+
+	insert into MsOptionCache
+		(underlyingID, symbol, expiryDate, strike, isCall, lotSize)
+	values
+		(@iUnderlyingID, @vcSymbol, @dtExpiry, @fStrike, @tiIsCall, @iLotSize)
+	
+	if @@error <> 0 begin set @error = -5 goto finish end
+
+finish:
+	return @error
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+----------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_Index_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_Index_Save_CV]
+GO
+
+CREATE    PROCEDURE [dbo].[usp_Index_Save_CV]
+
+		@iIndexID int,
+		@vcSymbol varchar(20) = null,
+		@vcContractName varchar(255) = null,
+		@fYield float = Null,
+		@bIsHTB bit = Null,
+		@tiCalcOptionType tinyint = null,
+		@tiCalcModelType tinyint = null,
+		@iExpCalendarID int = null,
+		@tiIsBasket tinyint = null,
+		@tiIsActive tinyint = null,
+		@fSkew float = null,
+		@fKurt float = null,
+		@tiCheckExistance tinyint = 1,
+		@SOQ as integer = 0,
+		@bIsAllowLending  bit = Null,
+		@bIsHedgeSymbol  bit = Null,
+		@iUndPriceProfileID int = null output,
+		@iOptPriceProfileID int = null output
+   as
+	---------------
+	set nocount on
+	---------------
+
+	if exists (select * from Contract where symbol = @vcSymbol and ContractTypeID in (1, 2) and actionID < 3 and (@iIndexID <> contractID or @iIndexID is null))
+		begin
+			if isnull(@tiCheckExistance, 1) <> 0
+				Raiserror ('Index or stock with this ticker already exists!', 16, 1)
+			Return (-1)
+		end   
+
+   if (@iIndexID is Null)  
+	 begin
+		--Michael Malyshkin
+-- 		if @iExpCalendarID is null or @iExpCalendarID = 0
+-- 			set @iExpCalendarID = 2
+		--Michael Malyshkin
+		 
+		 begin tran
+			if @iUndPriceProfileID is null
+			begin
+				select
+					@iUndPriceProfileID = priceProfileID
+				from
+					PriceProfileView
+				where
+					defaultID = 3
+					and isOptionProfile = 0
+			end
+
+			if @iOptPriceProfileID is null
+			begin
+				select
+					@iOptPriceProfileID = priceProfileID
+				from
+					PriceProfileView
+				where
+					defaultID = 1
+					and isOptionProfile = 1
+			end
+
+            insert into Contract (contractTypeID, Symbol, contractName, expCalendarID, undPriceProfileID, optPriceProfileID)
+                  values (1, @vcSymbol, @vcContractName, null, @iUndPriceProfileID, @iOptPriceProfileID)
+
+			 select @iIndexID = @@identity			 
+				 if (@@error <> 0)
+					  begin
+						RAISERROR ('Error. Can''t insert into Contract!', 16, 1)
+						ROLLBACK TRAN
+						RETURN (-1)
+					  end
+			 insert into [Index] (
+							indexID, 
+							yield,
+							IsHTB,
+							calcOptionType,
+							calcModelType,
+							isBasket, 
+							isActive,
+							skew,
+							kurt,
+							SOQ,
+							isAllowLending,
+							isHedgeSymbol)
+					 values (
+							@iIndexID, 
+							@fYield,
+							isNull(@bIsHTB,0),
+							@tiCalcOptionType,
+							@tiCalcModelType,
+							isnull(@tiIsBasket,0), 
+							@tiIsActive,
+							@fSkew,
+							@fKurt,
+							@SOQ,
+							@bIsAllowLending,
+							@bIsHedgeSymbol)
+
+				 if (@@error <> 0)
+					begin
+					   RAISERROR ('Error. Can''t insert into [Index]!', 16, 1)
+					   ROLLBACK TRAN
+					   RETURN (-1)
+					end 			
+		 commit tran
+	 end
+   else
+	 begin
+		begin tran
+		   update Contract
+				set symbol = isNull(@vcSymbol,symbol),
+					contractName = isNull(@vcContractName,contractName),
+					--expCalendarID = isNull(@iExpCalendarID, expCalendarID),
+					undPriceProfileID = isnull(@iUndPriceProfileID, undPriceProfileID),
+					optPriceProfileID = isnull(@iOptPriceProfileID, optPriceProfileID)
+				where contractID = @iIndexID
+			if (@@error <> 0)
+				 begin
+					RAISERROR ('Error. Can''t update Contract!', 16, 1)
+					ROLLBACK TRAN
+					RETURN (-1)
+				 end
+		  update [Index]
+			   set	yield = isnull(@fYield,yield),
+					isHTB = isnull(@bIsHTB,isHTB),
+					calcOptionType = isnull(@tiCalcOptionType, calcOptionType),
+					calcModelType = isnull(@tiCalcModelType, calcModelType),
+					isBasket = isnull(@tiIsBasket,isBasket),
+					isActive = isnull(@tiIsActive, isActive),
+					skew = isnull(@fSkew,Skew),
+					kurt = isnull(@fKurt,Kurt),
+					SOQ = isnull(@SOQ,SOQ),
+					isAllowLending = isnull(@bIsAllowLending, isAllowLending),
+					isHedgeSymbol = isnull(@bIsHedgeSymbol, isHedgeSymbol)
+			   where indexID = @iIndexID
+		   if (@@error <> 0)
+			   begin
+				  RAISERROR ('Error. Can''t update [Index]!', 16, 1)
+				  ROLLBACK TRAN
+				  RETURN (-1)
+			   end		   
+		 commit tran
+	 end
+
+	--========================================================================
+	-- make record with null exchange for this index
+	--========================================================================
+	if not exists(select * from ContractPrice where exchangeID is null and contractID = @iIndexID)
+		begin
+			insert into ContractPrice(contractID,exchangeID)
+				values(@iIndexID,null)
+			if (@@error <> 0) begin rollback tran return(-1) end           		
+		end		
+
+if (@@error <> 0)
+	return (-1)
+else	
+	return @iIndexID
+
+
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+ALTER      Procedure [dbo].[usp_IndexDefinition_Get] 
+	@iIndexID int = Null, 
+	@iStockID int = Null
+AS
+/*
+	Created by Zaur Nuraliev
+	Description: this procedure is getting information from IndexDefinition table
+*/
+	------------------------------------------------
+	set nocount on
+	------------------------------------------------
+	declare @error int		set @error = -1
+	select Idv.indexID as iIndexID,
+			Idv.stockID as iStockID,
+			Idv.weight as fWeight,
+			null as fBeta,
+			Idv.actionDate as dtActionDate,
+			Idv.actionID as tiActionID,
+			Idv.componentPrice as fComponentPrice
+		from IndexDefinitionView idv
+
+		where (@iIndexID is null or idv.indexID = @iIndexID) and (@iStockID is null or idv.stockID = @iStockID)
+
+	set @error = @@error
+Return(@error)
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_IndexUnderlyingBeta_Get_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_IndexUnderlyingBeta_Get_CV]
+GO
+
+CREATE   PROCEDURE [dbo].[usp_IndexUnderlyingBeta_Get_CV] 
+	@iIndexID int = null, 
+	@iContractID int = null
+AS
+/*
+	Created by: Zaur
+	Description: this procedure created with template, desined by Zaur Nuraliev
+*/
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+
+	select 
+		ib.contractBetaID as iContractBetaID, 
+		ib.indexID as iIndexID, 
+		c.symbol as vcIndexSymbol, 
+		ib.contractID as iContractID, 
+		ib.beta as fBeta,
+		ib.actionID as tiActionID, 
+		ib.actionDate as dtActionDate
+	from IndexBetaView ib
+	inner join Contract c on c.contractID = ib.indexID
+	left join [StockView] sv on sv.stockID = c.contractID
+	left join [IndexView] iv on iv.indexID = c.contractID
+	where (ib.indexID = @iIndexID or @iIndexID is null) and (ib.contractID = @iContractID or @iContractID is null) and
+	      (iv.isHedgeSymbol = 1 or sv.isHedgeSymbol = 1)
+		
+	set @error = @@error
+Return(@error)
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+----------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_IndexUnderlyingBeta_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_IndexUnderlyingBeta_Save_CV]
+GO
+
+CREATE          Procedure [dbo].[usp_IndexUnderlyingBeta_Save_CV] 
+	@iIndexID int = null, --the index identifier
+	@iUnderlyingID int = null, --the underlying identifier
+	@fBeta float,
+	@vcIndexSymbol varchar(8) = null,
+	@vcUnderlyingSymbol varchar(8) = null,
+	@bSkipSymbols bit = null
+as
+/*
+	Created by Mike Malyshkin
+	Description: this procedure save data into IndexBeta table
+*/
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+
+
+
+	if @iIndexID is null and @iUnderlyingID is null and @vcIndexSymbol is null and @vcUnderlyingSymbol is null 
+		begin
+			Raiserror ('Impossible define identifiers of the Underlying and Index!', 16, 1)
+			Return (-1)
+		end   
+
+	if @vcIndexSymbol is not null and @iIndexID is null
+		select	@iIndexID = contractID from Contract where symbol = @vcIndexSymbol and contractTypeID in (1,2) and actionID < 3
+		if @iIndexID is null 
+			begin
+				if isnull(@bSkipSymbols, 0) = 0
+					Raiserror ('Impossible define identifier of the Index!', 16, 1)
+				Return (-1)
+			end   
+
+	if @vcUnderlyingSymbol is not null and @iUnderlyingID is null 
+		select	@iUnderlyingID = contractID from Contract where symbol = @vcUnderlyingSymbol and contractTypeID in (1,2) and actionID < 3
+		if @iUnderlyingID is null 
+			begin
+				if isnull(@bSkipSymbols, 0) = 0
+					Raiserror ('Impossible define identifier of the Underlying!', 16, 1)
+				Return (-1)
+			end   
+
+	Begin Transaction
+
+		if not exists(select * From IndexBetaView where indexID = @iIndexID and contractID = @iUnderlyingID) 
+			begin
+				insert into IndexBeta (indexID,contractID,beta) 
+				values (@iIndexID,@iUnderlyingID,@fBeta)
+	
+				if @@error <> 0 begin set @error = 1 if @@TranCount = 1 Rollback Transaction goto finish end
+			end
+		else
+			begin
+				update IndexBeta
+					set beta = isnull(@fBeta, beta)
+					where indexID = @iIndexID and contractID = @iUnderlyingID
+	
+	   			if @@error <> 0 begin set @error = 2 if @@TranCount = 1 Rollback Transaction goto finish end
+			end
+
+
+
+	Commit Transaction
+    set @error = 0
+
+finish:
+Return(@error)
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+----------------------------------------------------------------------------------------------
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_IRPoint_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_IRPoint_Save_CV]
+GO
+
+CREATE    Procedure [dbo].[usp_IRPoint_Save_CV]
+	@iIRpointID int = Null,
+	@iCurveID int = Null,
+	@iPeriodTypeID int = Null,
+	@iNum int = Null,
+	@fShortRate float = Null,
+	@fHTBRate float = Null,
+	@fLongRate float = Null,
+	@fNeutralRate float = Null,
+	@iContractID int = Null
+
+as
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+	if exists (select * from IRPoint where Num = @iNum and PeriodTypeID=@iPeriodTypeID and actionID < 3 and (@iIRpointID <> IRpointID or @iIRpointID is null)
+											   and isnull(ContractID, -1) = isnull(@iContractID, -1))
+		begin
+			Raiserror ('IRPoint with this period already exists!', 16, 1)
+			Return (-1)
+		end   
+	if @iCurveID is not Null and @iIRpointID is Null
+		begin
+			insert into IRPoint
+					(
+					curveID,
+					periodTypeID,
+					num,
+					shortRate,
+					HTBRate,
+					longRate,
+					neutralRate,
+					ContractID
+					) 
+				values (
+					@iCurveID,
+					@iPeriodTypeID,
+					@iNum,
+					@fShortRate,
+					@fHTBRate,
+					@fLongRate,
+					isNull(@fNeutralRate, (@fShortRate+@fLongRate)/2),
+					@iContractID
+										)
+			select @iIRpointID = @@identity
+		end
+	else if @iIRpointID is not Null
+		begin
+			update IRPoint set
+				curveID = isNull(@iCurveID, curveID),
+				periodTypeID = isNull(@iPeriodTypeID, periodTypeID),
+				num = isNull(@iNum, num),
+				shortRate = isNull(@fShortRate, shortRate),
+				HTBRate = isNull(@fHTBRate, HTBRate),
+				longRate = isNull(@fLongRate, longRate),
+				neutralRate = isNull(@fNeutralRate, neutralRate),
+				ContractID = isNull(@iContractID, ContractID)
+			where IRpointID = @iIRpointID
+		end
+	set @error = @@error
+	if (@error = 0) set @error = @iIRpointID
+Return(@error)
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+-- Procedure
+----------------------------------------------------------------------------------------------
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_IRPoint_Update_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_IRPoint_Update_CV]
+GO
+
+CREATE    PROC [dbo].[usp_IRPoint_Update_CV]
+	@iPeriodTypeID int = Null,
+	@iNum int = Null,
+	@fShortRate float = Null,
+	@fLongRate float = Null,
+	@fNeutralRate float = Null,
+	@iContractID int = Null
+
+as
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+
+	declare @iIRpointID int		set @iIRpointID = -1
+
+	if exists (select * from IRPoint where Num = @iNum and PeriodTypeID=@iPeriodTypeID 
+							   and isnull(ContractID, -1) = isnull(@iContractID, -1))
+	begin
+		update IRPoint set
+			actionID = 1,
+			shortRate = isNull(@fShortRate, shortRate),
+			longRate = isNull(@fLongRate, longRate),
+			neutralRate = isNull(@fNeutralRate, neutralRate),
+			ContractID = isNull(@iContractID, ContractID),
+			@iIRpointID = IRpointID
+		where @iNum = num AND @iPeriodTypeID = periodTypeID and isnull(ContractID, -1) = isnull(@iContractID, -1)
+	end	
+ 	else
+		begin
+			declare @curveID  int
+	
+			DECLARE curs1 CURSOR FOR
+			select curveID
+			from IRCurve
+			
+			OPEN curs1
+			FETCH NEXT FROM curs1 
+			INTO @curveID
+			
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+				exec @iIRpointID = dbo.usp_IRPoint_Save_CV null,@curveID,@iPeriodTypeID,@iNum, @fShortRate,0,@fLongRate,@fNeutralRate,@iContractID
+				FETCH NEXT FROM curs1 INTO @curveID
+			END
+		
+			CLOSE curs1
+			DEALLOCATE curs1
+
+		end
+
+	if @iContractID is not Null and isnull(@fLongRate, 0) <> 0
+	begin
+		update [Index] set isAllowLending = 1 where indexID = @iContractID
+		update [Stock] set isAllowLending = 1 where stockID = @iContractID
+	end
+
+	update [Index] set isHTB = 1 where indexID = @iContractID
+	update [Stock] set isHTB = 1 where stockID = @iContractID
+
+
+	set @error = @@error
+Return(@iIRpointID)
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+----------------------------------------------------------------------------------------------
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_IRPoints_Import_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_IRPoints_Import_CV]
+GO
+
+CREATE   PROC [dbo].[usp_IRPoints_Import_CV]
+	@txXmlUpdateData as ntext,
+	@tiIsGlobalRates as tinyint
+as
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+		
+	Declare @idoc int
+	--Create an internal representation of the XML document.
+	Exec sp_xml_preparedocument @idoc OUTPUT, @txXmlUpdateData
+	
+	-- SELECT statement using OPENXML rowset provider
+
+	begin tran
+	
+	if isnull(@tiIsGlobalRates, 0) <> 0
+	begin
+		update IRPoint set actionID=3 where ContractID is null
+	end
+	else
+	begin
+		update IRPoint set actionID=3 where ContractID is not null
+	end
+
+	declare @Num  int,
+		@NeutralRate float,
+		@ShortRate float,
+		@LongRate float,
+		@Symbol varchar(20),
+		@ContractID int
+
+	DECLARE curs CURSOR FOR
+	SELECT Num, NeutralRate, ShortRate, LongRate, Symbol
+	FROM       OPENXML (@idoc, '/IRCurve/IRPoint')
+			WITH (Num  int,
+				NeutralRate float,
+				ShortRate float,
+				LongRate float,
+				Symbol varchar(20))
+	
+	OPEN curs
+	FETCH NEXT FROM curs 
+	INTO @Num,
+		@NeutralRate,
+		@ShortRate,
+		@LongRate,
+		@Symbol
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+		set @ContractID = null
+		if isnull(@tiIsGlobalRates, 0) = 0
+		begin
+			set @ContractID = (select contractID from ContractView where symbol = @Symbol and contractTypeID in (1, 2))
+
+			if @ContractID is null
+			begin
+				raiserror('Error. Can''t find symbol %s. Please update market structure.', 16, 1, @Symbol)
+				rollback tran
+
+				CLOSE curs
+				DEALLOCATE curs
+				Exec sp_xml_removedocument @idoc
+
+				return (-1)
+			end
+		end
+				
+		exec dbo.usp_IRPoint_Update_CV 1, @Num, @ShortRate, @LongRate, @NeutralRate, @ContractID
+		FETCH NEXT FROM curs 
+		INTO @Num,
+			@NeutralRate,
+			@ShortRate,
+			@LongRate,
+			@Symbol
+	END
+	CLOSE curs
+	DEALLOCATE curs
+
+	commit tran
+
+	--And finaly to release allocated XML datatable - following code must be executed
+	Exec sp_xml_removedocument @idoc
+	set @error = @@error
+Return(@error)
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_MmEtsCustomDividend_Get_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_MmEtsCustomDividend_Get_CV]
+GO
+
+CREATE   PROC [dbo].[usp_MmEtsCustomDividend_Get_CV] 
+	@iStockID int = null
+AS
+	set nocount on
+
+	if isnull(@iStockID, 0) = 0
+		select [ID], 
+                       StockID, 
+                       DivYtes as [Dividend Date] ,
+		       datediff(d, GetDate(),DivYtes) as [DTD],
+		       DivAmnt as [Dividend Amount] 
+                from CustomDividend
+		order by StockID, DivYtes, DivAmnt
+	else
+		select 
+		       [ID], 
+                       StockID, 
+                       DivYtes as [Dividend Date] ,
+		       datediff(d, GetDate(),DivYtes) as [DTD],
+		       DivAmnt as [Dividend Amount]
+		 from CustomDividend 
+		where StockID = @iStockID
+		order by DivYtes, DivAmnt
+	return @@error
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_MmFuture_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_MmFuture_Save_CV]
+GO
+
+CREATE PROC [dbo].[usp_MmFuture_Save_CV]
+	@iFutureID int,
+	@vcFutureName varchar(255) = null,
+	@iExpCalendarID int = null,
+	@tiCalcOptionType tinyint = null,
+	@tiIsActive tinyint = null,
+	@iUndPriceProfileID int = null,
+	@iOptPriceProfileID int = null
+
+AS
+	-- update future
+
+	set nocount on
+	
+	declare @error int		set @error = 0
+
+	exec @error = usp_BoFuture_Save_CV @iFutureID,
+									null,
+									null,
+									@vcFutureName,
+									null,
+
+									null,
+									null,
+									@iExpCalendarID,
+									@tiCalcOptionType,
+									@tiIsActive,
+									@iUndPriceProfileID,
+									@iOptPriceProfileID,
+									1
+
+
+	if @@error <> 0 set @error = -20
+
+	return @error
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ALTER PROC dbo.usp_MmIndexDefinition_Get
+AS
+	------------------------------------------------
+	set nocount on
+	------------------------------------------------
+
+	select
+		indexID as iIndexID,
+		stockID as iStockID,
+		weight as fWeight
+	from IndexDefinitionView
+
+	return @@error
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Procedure
+----------------------------------------------------------------------------------------------
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_Stock_Save_CV]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_Stock_Save_CV]
+GO
+
+CREATE   PROCEDURE [dbo].[usp_Stock_Save_CV]
+        @iStockID int,
+        @iExchangeID int = Null,
+        @vcSymbol varchar(20) = Null,
+        @vcContractName varchar(255) = Null,
+		@bIsHTB  bit = Null,
+        @iDivFreq int = Null,
+		@fDivAmt float = Null,
+		@dtDivDate smalldatetime = Null,
+		@tiIsDivCustom tinyint = 0,
+		@fDivAmtCustom float = Null,
+		@iDivFreqCustom int = Null,
+		@dtDivDateCustom smalldatetime = Null,
+		@tiCalcOptionType tinyint = null,
+		@tiCalcModelType tinyint = null,
+		@iExpCalendarID int = null,
+		@tiIsActive tinyint = null,
+		@fSkew float = null,
+		@fKurt float = null,
+		@bIsAllowLending  bit = Null,
+		@bIsHedgeSymbol  bit = Null,
+		@tiCheckExistance tinyint = 1,
+		@iUndPriceProfileID int = null output,
+		@iOptPriceProfileID int = null output
+
+  as
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+
+	if @bIsHTB is null 
+		set @bIsHTB=0
+
+	--if @iExpCalendarID is null or @iExpCalendarID = 0
+	--	set @iExpCalendarID = 1
+
+	if len(ltrim(@vcSymbol)) = 0
+		begin
+			Raiserror ('Empty stock ticker!', 16, 1)
+			Return (-1)
+		end   
+   
+	if exists (select * from Contract where symbol = @vcSymbol and ContractTypeID in (1, 2) and actionID < 3 and (@iStockID <> contractID or @iStockID is null))
+		begin
+			if isnull(@tiCheckExistance, 1) <> 0
+				Raiserror ('Stock or index with this ticker already exists!', 16, 1)
+			Return (-1)
+		end   
+   if (@iStockID is Null)  
+     begin
+         begin tran
+			if @iUndPriceProfileID is null
+			begin
+				select
+					@iUndPriceProfileID = priceProfileID
+				from
+					PriceProfileView
+				where
+					defaultID = 1
+					and isOptionProfile = 0
+			end
+
+			if @iOptPriceProfileID is null
+			begin
+				select
+					@iOptPriceProfileID = priceProfileID
+				from
+					PriceProfileView
+				where
+					defaultID = 1
+					and isOptionProfile = 1
+			end
+
+            insert into Contract (contractTypeID, Symbol, contractName, expCalendarID, undPriceProfileID, optPriceProfileID)
+                  values (2, @vcSymbol, @vcContractName, null, @iUndPriceProfileID, @iOptPriceProfileID)
+			if (@@error <> 0) begin rollback tran return(-1) end        
+
+            set @iStockID = @@identity         
+ 
+            insert into Stock (
+				stockID, 
+                divFreq, 
+				isHTB,
+				primaryExchangeID,
+				divAmt,
+				divDate,
+				isDivCustom,
+				divAmtCustom,
+				divFreqCustom,
+				divDateCustom,
+				calcOptionType,
+				calcModelType,
+				isActive,
+				skew,
+				kurt,
+				isAllowLending,
+				isHedgeSymbol)
+            values (
+				@iStockID, 
+                @iDivFreq, 
+				@bIsHTB,
+				@iExchangeID,
+				@fDivAmt,
+				@dtDivDate,
+				@tiIsDivCustom,
+				@fDivAmtCustom,
+				@iDivFreqCustom,
+				@dtDivDateCustom,
+				@tiCalcOptionType,
+				@tiCalcModelType,
+				@tiIsActive,
+				@fSkew,
+				@fKurt,
+				@bIsAllowLending,
+				@bIsHedgeSymbol)
+			if (@@error <> 0) begin rollback tran return(-1) end           
+			--========================================================================
+			-- make record with null exchange for this stock
+			--========================================================================
+			if not exists(select * from ContractPrice where exchangeID is null and contractID = @iStockID)
+				begin
+					insert into ContractPrice(contractID,exchangeID)
+						values(@iStockID,null)
+					if (@@error <> 0) begin rollback tran return(-1) end           
+				end 
+         commit tran
+     end
+   else
+     begin
+
+        declare @df int
+
+        select @df = DivFreq from Stock where stockID = @iStockID        
+        begin tran
+           update Contract
+                set symbol = isNull(@vcSymbol,symbol),
+                    contractName = isNull(@vcContractName,contractName),
+					--expCalendarID = isNull(@iExpCalendarID,expCalendarID),
+					undPriceProfileID = isnull(@iUndPriceProfileID, undPriceProfileID),
+					optPriceProfileID = isnull(@iOptPriceProfileID, optPriceProfileID)
+	            where contractID = @iStockID
+			if (@@error <> 0) begin rollback tran return(-1) end         
+
+			update Stock
+	               set  
+	                    divFreq = isNull(@iDivFreq,divFreq), 
+						isHTB = isNull(@bIsHTB, isHTB),
+						primaryExchangeID = isNull(@iExchangeID,primaryExchangeID),
+						DivAmt = isNull(@fDivAmt, DivAmt),
+						DivDate = isNull(@dtDivDate, DivDate),
+						isDivCustom = isNull(@tiIsDivCustom, isDivCustom),
+						divAmtCustom = isNull(@fDivAmtCustom, divAmtCustom),
+						divFreqCustom = isNull(@iDivFreqCustom, divFreqCustom),
+						divDateCustom = isNull(@dtDivDateCustom, divDateCustom),
+						calcOptionType = isNull(@tiCalcOptionType, calcOptionType),
+						calcModelType = isNull(@tiCalcModelType, calcModelType),
+						isActive = isnull(@tiIsActive, isActive),
+						skew = isNull(@fSkew,skew),
+						kurt = isNull(@fKurt,kurt),
+						isAllowLending = isNull(@bIsAllowLending, isAllowLending),
+						isHedgeSymbol = isNull(@bIsHedgeSymbol, isHedgeSymbol)
+		          where stockID = @iStockID
+    	       if (@@error <> 0) begin rollback tran return(-1) end         
+
+			if @iDivFreq = 0 
+				begin
+					update Stock set divAmt = null, divDate = null where stockID = @iStockID
+				end
+
+			if @iDivFreqCustom = 0 
+				begin
+					update Stock set divAmtCustom = null, divDateCustom = null where stockID = @iStockID
+				end
+
+         commit tran
+     end        
+
+ if (@@error <> 0)
+    return (-1)
+  else  
+    return @iStockID
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+
+
+ALTER   PROC dbo.usp_MmOptionByFuture_Get
+	@iFutureID int,
+	@dtMinExpiry datetime = Null
+as
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	if @dtMinExpiry is null set @dtMinExpiry = 0
+
+	select
+		foc.contractID as iContractID,
+		foc.contractTypeID as iContractTypeID,
+		foc.symbol as vcSymbol,
+		fo.strike as fStrike, 
+		fo.expiryDate as dtExpiry,
+		fo.isCall as tiIsCall,
+		f.futureID as iFutureID,
+		fo.ExpiryOV as dtExpiryOV,
+		fo.TradingClose as dtTradingClose
+	from Future f
+		inner join ContractView fc on f.futureID = fc.contractID
+		inner join FutureOption fo on f.futureID = fo.futureID
+		inner join ContractView foc on fo.futureOptionID = foc.contractID
+	where f.futureID = @iFutureID
+		and datediff(d,@dtMinExpiry, fo.expiryDate) >= 0
+
+	return @@error
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,87 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FIXGateway", "FixGateway\FIXGateway.vcproj", "{A928375A-B72A-4536-B94D-7E0E95864682}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256} = {19EFAB93-92E7-4EAA-A475-341D15DCB256}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EtsFixManager", "EtsFixManager\EtsFixManager.vcproj", "{9E55EA08-964A-4BF4-9331-6619D37F3591}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A928375A-B72A-4536-B94D-7E0E95864682} = {A928375A-B72A-4536-B94D-7E0E95864682}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FixProviders", "FixGateway\Providers\FixProviders\FixProviders.vcproj", "{19EFAB93-92E7-4EAA-A475-341D15DCB256}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OrdersProvider", "FixGateway\Providers\OrdersProvider\OrdersProvider.vcproj", "{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}"
+	ProjectSection(ProjectDependencies) = postProject
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256} = {19EFAB93-92E7-4EAA-A475-341D15DCB256}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 5
+		SccProjectName0 = EtsFixManager
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:ClearCase
+		CanCheckoutShared = false
+		SccProjectUniqueName1 = FixGateway\\FIXGateway.vcproj
+		SccProjectName1 = \u0022$/ETS/Production\u00202.1\u0020CIBC/FixGateway\u0022,\u0020OYPDAAAA
+		SccLocalPath1 = FixGateway
+		CanCheckoutShared = false
+		SccProjectUniqueName2 = EtsFixManager\\EtsFixManager.vcproj
+		SccProjectName2 = \u0022$/ETS/Production\u00202.1\u0020CIBC/EtsFixManager\u0022,\u0020ABQDAAAA
+		SccLocalPath2 = EtsFixManager
+		CanCheckoutShared = false
+		SccProjectUniqueName3 = FixGateway\\Providers\\FixProviders\\FixProviders.vcproj
+		SccProjectName3 = \u0022$/EgFix/Providers/FixProviders\u0022,\u0020QNNCAAAA
+		SccLocalPath3 = FixGateway\\Providers\\FixProviders
+		CanCheckoutShared = false
+		SccProjectUniqueName4 = FixGateway\\Providers\\OrdersProvider\\OrdersProvider.vcproj
+		SccLocalPath4 = .
+		CanCheckoutShared = false
+		SccProjectFilePathRelativizedFromConnection4 = FixGateway\\Providers\\OrdersProvider\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release MinDependency|Win32 = Release MinDependency|Win32
+		Release MinSize|Win32 = Release MinSize|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Debug|Win32.Build.0 = Debug|Win32
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Release MinDependency|Win32.ActiveCfg = Release|Win32
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Release MinDependency|Win32.Build.0 = Release|Win32
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Release MinSize|Win32.ActiveCfg = Release|Win32
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Release MinSize|Win32.Build.0 = Release|Win32
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Release|Win32.ActiveCfg = Release|Win32
+		{A928375A-B72A-4536-B94D-7E0E95864682}.Release|Win32.Build.0 = Release|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Debug|Win32.Build.0 = Debug|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Release MinDependency|Win32.ActiveCfg = Release|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Release MinDependency|Win32.Build.0 = Release|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Release MinSize|Win32.ActiveCfg = Release|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Release MinSize|Win32.Build.0 = Release|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Release|Win32.ActiveCfg = Release|Win32
+		{9E55EA08-964A-4BF4-9331-6619D37F3591}.Release|Win32.Build.0 = Release|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Debug|Win32.ActiveCfg = Debug|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Debug|Win32.Build.0 = Debug|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Release MinDependency|Win32.ActiveCfg = Release|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Release MinDependency|Win32.Build.0 = Release|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Release MinSize|Win32.ActiveCfg = Release|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Release MinSize|Win32.Build.0 = Release|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Release|Win32.ActiveCfg = Release|Win32
+		{19EFAB93-92E7-4EAA-A475-341D15DCB256}.Release|Win32.Build.0 = Release|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Debug|Win32.Build.0 = Debug|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Release MinDependency|Win32.ActiveCfg = Release|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Release MinDependency|Win32.Build.0 = Release|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Release MinSize|Win32.ActiveCfg = Release|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Release MinSize|Win32.Build.0 = Release|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Release|Win32.ActiveCfg = Release|Win32
+		{9A9C7E56-D731-4AE9-9134-B3DE30B37F60}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.FixGatewayStatusRequest.1 = s 'FixGatewayStatusRequest Class'
+	{
+		CLSID = s '{DB5ED9A9-456E-4A3B-943C-A6DBC187EBDF}'
+	}
+	MsgStruct.FixGatewayStatusRequest = s 'FixGatewayStatusRequest Class'
+	{
+		CLSID = s '{DB5ED9A9-456E-4A3B-943C-A6DBC187EBDF}'
+		CurVer = s 'MsgStruct.FixGatewayStatusRequest.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {DB5ED9A9-456E-4A3B-943C-A6DBC187EBDF} = s 'FixGatewayStatusRequest Class'
+		{
+			ProgID = s 'MsgStruct.FixGatewayStatusRequest.1'
+			VersionIndependentProgID = s 'MsgStruct.FixGatewayStatusRequest'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmRisks.MmRiskView.1 = s 'MmRiskView Class'
+	{
+		CLSID = s '{2B79D596-793B-43A8-8A14-35E48E4A2B05}'
+	}
+	EtsMmRisks.MmRiskView = s 'MmRiskView Class'
+	{
+		CLSID = s '{2B79D596-793B-43A8-8A14-35E48E4A2B05}'
+		CurVer = s 'EtsMmRisks.MmRiskView.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2B79D596-793B-43A8-8A14-35E48E4A2B05} = s 'MmRiskView Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRiskView.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRiskView'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{92825A3F-98F2-4838-95C9-C1E0214DE015}'
+		}
+	}
+}

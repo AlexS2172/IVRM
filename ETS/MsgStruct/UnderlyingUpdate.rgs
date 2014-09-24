@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.UnderlyingUpdate.1 = s 'UnderlyingUpdate Class'
+	{
+		CLSID = s '{13960A69-9021-46D0-87D4-383C98C2D011}'
+	}
+	MsgStruct.UnderlyingUpdate = s 'UnderlyingUpdate Class'
+	{
+		CLSID = s '{13960A69-9021-46D0-87D4-383C98C2D011}'
+		CurVer = s 'MsgStruct.UnderlyingUpdate.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {13960A69-9021-46D0-87D4-383C98C2D011} = s 'UnderlyingUpdate Class'
+		{
+			ProgID = s 'MsgStruct.UnderlyingUpdate.1'
+			VersionIndependentProgID = s 'MsgStruct.UnderlyingUpdate'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

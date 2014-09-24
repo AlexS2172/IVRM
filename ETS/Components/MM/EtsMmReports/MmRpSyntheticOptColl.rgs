@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpSyntheticOptColl.1 = s 'MmRpSyntheticOptColl Class'
+	{
+		CLSID = s '{5E280115-E028-4E00-8EF7-BE3FAC92A48B}'
+	}
+	EtsMmReports.MmRpSyntheticOptColl = s 'MmRpSyntheticOptColl Class'
+	{
+		CLSID = s '{5E280115-E028-4E00-8EF7-BE3FAC92A48B}'
+		CurVer = s 'EtsMmReports.MmRpSyntheticOptColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5E280115-E028-4E00-8EF7-BE3FAC92A48B} = s 'MmRpSyntheticOptColl Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpSyntheticOptColl.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpSyntheticOptColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

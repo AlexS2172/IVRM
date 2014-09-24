@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmRisks.MmRvGroupingTotalColl.1 = s 'MmRvGroupingTotalColl Class'
+	{
+		CLSID = s '{c790a5c9-b72a-4c14-a1f1-fd5f3debedef}'
+	}
+	EtsMmRisks.MmRvGroupingTotalColl = s 'MmRvGroupingTotalColl Class'
+	{
+		CLSID = s '{c790a5c9-b72a-4c14-a1f1-fd5f3debedef}'
+		CurVer = s 'EtsMmRisks.MmRvGroupingTotalColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {c790a5c9-b72a-4c14-a1f1-fd5f3debedef} = s 'MmRvGroupingTotalColl Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvGroupingTotalColl.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvGroupingTotalColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{dcc0c411-74e1-4481-a7ad-336e903474bf}'
+		}
+	}
+}

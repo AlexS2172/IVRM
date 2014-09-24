@@ -1,0 +1,24 @@
+HKCR
+{
+	FIXGateway.FixGServer.1 = s 'FixGServer Class'
+	{
+		CLSID = s '{3B8EEAB2-D463-4BA3-B058-D570C74D0EBC}'
+	}
+	FIXGateway.FixGServer = s 'FixGServer Class'
+	{
+		CLSID = s '{3B8EEAB2-D463-4BA3-B058-D570C74D0EBC}'
+		CurVer = s 'FIXGateway.FixGServer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3B8EEAB2-D463-4BA3-B058-D570C74D0EBC} = s 'FixGServer Class'
+		{
+			ProgID = s 'FIXGateway.FixGServer.1'
+			VersionIndependentProgID = s 'FIXGateway.FixGServer'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{080EA18E-762A-4212-8524-7124036C8223}'
+			'TypeLib' = s '{1B57EF46-EA94-4D5A-B3A5-CCA2E48C9DAB}'
+		}
+	}
+}

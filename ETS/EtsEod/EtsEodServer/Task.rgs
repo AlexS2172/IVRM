@@ -1,0 +1,24 @@
+HKCR
+{
+	EtsEodServer.Task.1 = s 'Task Class'
+	{
+		CLSID = s '{83A7C6A1-2560-441E-BE96-FF4D78D1D834}'
+	}
+	EtsEodServer.Task = s 'Task Class'
+	{
+		CLSID = s '{83A7C6A1-2560-441E-BE96-FF4D78D1D834}'
+		CurVer = s 'EtsEodServer.Task.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {83A7C6A1-2560-441E-BE96-FF4D78D1D834} = s 'Task Class'
+		{
+			ProgID = s 'EtsEodServer.Task.1'
+			VersionIndependentProgID = s 'EtsEodServer.Task'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{9333D65D-A4C2-454E-8336-F825E6E3DC7B}'
+		}
+	}
+}

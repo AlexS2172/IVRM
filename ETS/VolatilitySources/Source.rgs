@@ -1,0 +1,28 @@
+HKCR
+{
+	VolatilitySources.Source.1 = s 'Source Class'
+	{
+		CLSID = s '{A53B3209-BDB9-4DF2-B956-777A38C1606D}'
+	}
+	VolatilitySources.Source = s 'Source Class'
+	{
+		CLSID = s '{A53B3209-BDB9-4DF2-B956-777A38C1606D}'
+		CurVer = s 'VolatilitySources.Source.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A53B3209-BDB9-4DF2-B956-777A38C1606D} = s 'Source Class'
+		{
+			ProgID = s 'VolatilitySources.Source.1'
+			VersionIndependentProgID = s 'VolatilitySources.Source'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{9411CFF5-92B2-411E-B222-C587570DAD5A}'
+		}
+	}
+}
+

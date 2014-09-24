@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.ExchangeHoliday.1 = s 'ExchangeHoliday Class'
+	{
+		CLSID = s '{61CC5498-8E31-4FEF-8180-490A521E0C79}'
+	}
+	MsgStruct.ExchangeHoliday = s 'ExchangeHoliday Class'
+	{
+		CLSID = s '{61CC5498-8E31-4FEF-8180-490A521E0C79}'
+		CurVer = s 'MsgStruct.ExchangeHoliday.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {61CC5498-8E31-4FEF-8180-490A521E0C79} = s 'ExchangeHoliday Class'
+		{
+			ProgID = s 'MsgStruct.ExchangeHoliday.1'
+			VersionIndependentProgID = s 'MsgStruct.ExchangeHoliday'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

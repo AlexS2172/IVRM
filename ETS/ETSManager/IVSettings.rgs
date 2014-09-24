@@ -1,0 +1,24 @@
+HKCR
+{
+	ETSManager.IVSettings.1 = s 'IVSettings Class'
+	{
+		CLSID = s '{6153474C-B28C-42E2-B105-5D4AAAF86191}'
+	}
+	ETSManager.IVSettings = s 'IVSettings Class'
+	{
+		CLSID = s '{6153474C-B28C-42E2-B105-5D4AAAF86191}'
+		CurVer = s 'ETSManager.IVSettings.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6153474C-B28C-42E2-B105-5D4AAAF86191} = s 'IVSettings Class'
+		{
+			ProgID = s 'ETSManager.IVSettings.1'
+			VersionIndependentProgID = s 'ETSManager.IVSettings'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163}'
+			'TypeLib' = s '{27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163}'
+		}
+	}
+}

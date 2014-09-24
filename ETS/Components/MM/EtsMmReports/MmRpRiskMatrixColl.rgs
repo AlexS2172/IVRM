@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpRiskMatrixColl.1 = s 'MmRpRiskMatrixColl Class'
+	{
+		CLSID = s '{D863E6C1-B3B3-4242-ABAE-8F4CAE373A11}'
+	}
+	EtsMmReports.MmRpRiskMatrixColl = s 'MmRpRiskMatrixColl Class'
+	{
+		CLSID = s '{D863E6C1-B3B3-4242-ABAE-8F4CAE373A11}'
+		CurVer = s 'EtsMmReports.MmRpRiskMatrixColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {D863E6C1-B3B3-4242-ABAE-8F4CAE373A11} = s 'MmRpRiskMatrixColl Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpRiskMatrixColl.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpRiskMatrixColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

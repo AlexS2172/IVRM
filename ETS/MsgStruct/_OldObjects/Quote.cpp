@@ -1,0 +1,7 @@
+// Quote.cpp : Implementation of CQuote
+#include "stdafx.h"
+#include "MsgStruct.h"
+#include "Quote.h"
+
+/////////////////////////////////////////////////////////////////////////////
+// CQuote

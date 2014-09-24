@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmRisks.MmRvExpAtom.1 = s 'MmRvExpAtom Class'
+	{
+		CLSID = s '{EC0BF6A5-24FC-4EF7-8838-EB60B2A15100}'
+	}
+	EtsMmRisks.MmRvExpAtom = s 'MmRvExpAtom Class'
+	{
+		CLSID = s '{EC0BF6A5-24FC-4EF7-8838-EB60B2A15100}'
+		CurVer = s 'EtsMmRisks.MmRvExpAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EC0BF6A5-24FC-4EF7-8838-EB60B2A15100} = s 'MmRvExpAtom Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvExpAtom.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvExpAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{92825A3F-98F2-4838-95C9-C1E0214DE015}'
+		}
+	}
+}

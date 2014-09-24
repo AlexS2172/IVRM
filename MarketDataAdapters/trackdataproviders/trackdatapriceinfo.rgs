@@ -1,0 +1,24 @@
+HKCR
+{
+	TrackDataProviders.TrackDataPriceInfo.1 = s 'TrackDataPriceInfo Class'
+	{
+		CLSID = s '{6B0F8362-4C54-4602-99A1-246089E287C8}'
+	}
+	TrackDataProviders.TrackDataPriceInfo = s 'TrackDataPriceInfo Class'
+	{
+		CLSID = s '{6B0F8362-4C54-4602-99A1-246089E287C8}'
+		CurVer = s 'TrackDataProviders.TrackDataPriceInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6B0F8362-4C54-4602-99A1-246089E287C8} = s 'TrackDataPriceInfo Class'
+		{
+			ProgID = s 'TrackDataProviders.TrackDataPriceInfo.1'
+			VersionIndependentProgID = s 'TrackDataProviders.TrackDataPriceInfo'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{208D10D7-30AA-476B-B3C8-ECD417B47FEA}'
+			'TypeLib' = s '{001B9044-9A9D-4C58-B8AE-A034C0DF8B49}'
+		}
+	}
+}

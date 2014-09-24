@@ -1,0 +1,24 @@
+HKCR
+{
+	ETSManager.Settings.1 = s 'Settings Class'
+	{
+		CLSID = s '{C213BE7D-AFAE-4F1C-8E9D-A7D248FA987B}'
+	}
+	ETSManager.Settings = s 'Settings Class'
+	{
+		CLSID = s '{C213BE7D-AFAE-4F1C-8E9D-A7D248FA987B}'
+		CurVer = s 'ETSManager.Settings.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C213BE7D-AFAE-4F1C-8E9D-A7D248FA987B} = s 'Settings Class'
+		{
+			ProgID = s 'ETSManager.Settings.1'
+			VersionIndependentProgID = s 'ETSManager.Settings'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163}'
+			'TypeLib' = s '{27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163}'
+		}
+	}
+}

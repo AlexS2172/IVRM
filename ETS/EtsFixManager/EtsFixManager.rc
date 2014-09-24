@@ -1,0 +1,541 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\EtsFixManager.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\EtsFixManager.ico"
+IDI_TYPE_END            ICON                    "res\\TypeEnd.ico"
+IDR_EtsFixManagerTYPE   ICON                    "res\\EtsFixManagerDoc.ico"
+IDI_TYPE_ERROR          ICON                    "res\\TypeError.ico"
+IDI_TYPE_INFO           ICON                    "res\\TypeInfo.ico"
+IDI_TYPE_START          ICON                    "res\\TypeStart.ico"
+IDI_TYPE_WARNING        ICON                    "res\\TypeWarning.ico"
+IDI_TYPE                ICON                    "res\\Type.ico"
+IDI_START               ICON                    "res\\Run.ico"
+IDI_STOP                ICON                    "res\\Stop.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_FILE_START_FIX
+    BUTTON      ID_FILE_STOP_FIX
+    SEPARATOR
+    BUTTON      ID_EDIT_COPY
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "Start FIX Gateway",           ID_FILE_START_FIX
+        MENUITEM "Stop FIX Gateway",            ID_FILE_STOP_FIX
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Type's Colors",              ID_VIEW_SHOW_COLOR_CODES
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Settings...",                ID_OPTIONS_SETTINGS
+        MENUITEM "&Connections...",             ID_OPTIONS_CONNECTIONS
+    END
+    POPUP "&?"
+    BEGIN
+        MENUITEM "&About ETS FIX Gateway Manager...", ID_APP_ABOUT
+    END
+END
+
+IDR_POPUPMENU MENU 
+BEGIN
+    POPUP "<popup>"
+    BEGIN
+        MENUITEM "Open FIX Gateway Manager",    ID_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "Start FIX Gateway",           ID_FILE_START_FIX
+        MENUITEM "Stop FIX Gateway",            ID_FILE_STOP_FIX
+        MENUITEM SEPARATOR
+        MENUITEM "Exit\tAlt+F4",                ID_APP_EXIT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 268, 202
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About <App>"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_APP_ICON,7,7,20,20
+    LTEXT           "<App Name>",IDC_APP_NAME,42,6,216,8,SS_NOPREFIX
+    LTEXT           "<App Version>",IDC_APP_VERSION,42,18,216,8,SS_NOPREFIX
+    LTEXT           "<App Desc>",IDC_APP_DESC,42,30,216,8
+    LTEXT           "<App Copyright>",IDC_APP_COPYRIGHT,42,42,216,8
+    EDITTEXT        IDC_APP_COMPONENTS,42,57,215,122,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+    PUSHBUTTON      "&System Info...",IDC_BUTTON_SYS_INFO,124,185,64,12
+    DEFPUSHBUTTON   "OK",IDOK,194,185,64,12,WS_GROUP
+END
+
+IDD_FIXMANAGERVIEW DIALOGEX 0, 0, 260, 168
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_CLIPCHILDREN
+EXSTYLE WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_FG_REPORT,"{D76D712E-4A96-11D3-BD95-D296DC2DD072}",WS_TABSTOP,7,7,130,91
+END
+
+IDD_FIXSETTINGS DIALOGEX 0, 0, 179, 87
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Fix Gateway Settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Run FIX Manager when OS starts",IDC_SETTINGS_RUN_AT_STATUP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,10,123,10
+    CONTROL         "Run FIX Gateway Server Automatically at:",IDC_SETTINGS_AUTOSTART_AT_STATUP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,22,151,10
+    CONTROL         "",IDC_DT_START_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP,112,34,60,12
+    CONTROL         "",IDC_DT_STOP_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP,112,50,60,12
+    RTEXT           "Start time :",IDC_STATIC_SETTING_START_TIME,8,34,101,12,SS_CENTERIMAGE
+    RTEXT           "Stop time :",IDC_STATIC_SETTING_STOP_TIME,8,50,101,12,SS_CENTERIMAGE
+    RTEXT           "Check running gateways time :",IDC_STATIC_SETTING_CHECK_TIME,8,66,101,12,SS_CENTERIMAGE | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_SETTING_CHECK_TIME,112,66,60,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    DEFPUSHBUTTON   "OK",IDOK,68,69,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,122,69,50,14
+END
+
+IDD_CONNECTIONS DIALOGEX 0, 0, 258, 103
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Connections"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        " Database ",IDC_STATIC_DB,6,4,246,28
+    EDITTEXT        IDC_EDIT_DB,14,15,229,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Setup...",IDC_BUTTON_DB_SETUP,203,15,40,12,NOT WS_VISIBLE
+    GROUPBOX        "FIX Providers :",IDC_STATIC_FP,6,36,246,45
+    RTEXT           "Type :",IDC_STATIC_FP_TYPE,29,48,40,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO_FP_TYPE,73,48,169,36,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Address :",IDC_STATIC_FP_SOCKCONNHOST,30,86,40,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDIT_FP_SOCKCONNHOST,74,86,93,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "Port :",IDC_STATIC_FP_SOCKCONNPORT,168,86,24,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDIT_FP_SOCKCONNPORT,195,86,48,12,ES_AUTOHSCROLL | ES_NUMBER | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "Sender computer :",IDC_STATIC_FP_SENDERID,10,86,60,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDIT_FP_SENDERID,74,86,48,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "Target computer :",IDC_STATIC_FP_TARGETID,133,86,59,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDIT_FP_TARGETID,195,86,48,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "Logon timeout :",IDC_STATIC_FP_LOGONTIMEOUT,16,86,54,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDIT_FP_LOGONTIMEOUT,74,86,48,12,ES_AUTOHSCROLL | ES_NUMBER | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "Reconnect Interval :",IDC_STATIC_FP_RECONNECTINT,126,86,66,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDIT_FP_RECONNECTINT,195,86,48,12,ES_AUTOHSCROLL | ES_NUMBER | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "Heartbeat :",IDC_STATIC_FP_HEARTBEAT,16,86,54,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_EDIT_FP_HEARTBEAT,74,86,48,12,ES_AUTOHSCROLL | ES_NUMBER | NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "Check Latency :",IDC_CHECK_FP_LATENCY,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,128,88,65,10
+    EDITTEXT        IDC_EDIT_FP_MAXLATENCY,195,86,48,12,ES_AUTOHSCROLL | ES_NUMBER | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "Reset on disc. :",IDC_STATIC_FP_RESETONDISC,15,86,55,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "Yes",IDC_RADIO_FP_RESETONDIS_YES,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_DISABLED | WS_GROUP,74,86,24,12
+    CONTROL         "No",IDC_RADIO_FP_RESETONDIS_NO,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_DISABLED,100,86,23,12
+    RTEXT           "Reset on logout :",IDC_STATIC_FP_RESETONLOGOUT,136,86,55,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "Yes",IDC_RADIO_FP_RESETONLOG_YES,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_DISABLED | WS_GROUP,195,86,24,12
+    CONTROL         "No",IDC_RADIO_FP_RESETONLOG_NO,"Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_DISABLED,221,86,23,12
+    EDITTEXT        IDC_EDIT_FP_FILEPATH,74,86,123,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "Browse...",IDC_BUTTON_FP_FILEPATH,203,86,40,12,NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "File store path :",IDC_STATIC_FP_FILEPATH,15,86,55,12,SS_CENTERIMAGE | NOT WS_VISIBLE | WS_DISABLED
+    RTEXT           "OrderID prefix :",IDC_STATIC_FP_ORDERIDPREF,9,65,60,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_FP_ORDERIDPREF,73,64,77,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,147,86,50,12
+    PUSHBUTTON      "Cancel",IDCANCEL,202,86,50,12
+END
+
+IDD_DBCONNECTION DIALOGEX 0, 0, 178, 134
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Database Connection"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "SQL &Server name :",IDC_STATIC,7,3,159,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO_SERVER,23,16,148,92,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Log on information :",IDC_STATIC,7,30,159,12,SS_CENTERIMAGE
+    CONTROL         "Use &Windows NT integrated security",IDC_CHECK_NT_SECURITY,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,23,44,144,10
+    RTEXT           "&User Name :",IDC_STATIC_USERNAME,9,56,55,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_USERNAME,67,56,104,12,ES_AUTOHSCROLL
+    RTEXT           "&Password :",IDC_STATIC_PASSWORD,9,71,55,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PASSWORD,67,72,104,12,ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "&Database name :",IDC_STATIC,7,86,159,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO_DATABASE,23,99,148,92,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,65,117,50,12
+    PUSHBUTTON      "Cancel",IDCANCEL,121,117,50,12
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,1,51,0
+ PRODUCTVERSION 1,1,51,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileDescription", "ETS FIX Gateway Management Application"
+            VALUE "FileVersion", "1, 1,51, 0"
+            VALUE "InternalName", "EtsFixManager.exe"
+            VALUE "LegalCopyright", "© 2003 EGAR Technology Inc. All rights reserved."
+            VALUE "OriginalFilename", "EtsFixManager.exe"
+            VALUE "ProductName", "Equity Trading System"
+            VALUE "ProductVersion", "1, 1,51, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_FIXSETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 172
+        BOTTOMMARGIN, 83
+    END
+
+    IDD_CONNECTIONS, DIALOG
+    BEGIN
+        RIGHTMARGIN, 252
+        BOTTOMMARGIN, 98
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+IDR_MANIFEST            RT_MANIFEST             "res\\EtsFixManager.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_FIXMANAGERVIEW DLGINIT
+BEGIN
+    IDC_FG_REPORT, 0x37a, 612, 0
+0x0000, 0x0000, 0x0029, 0x0000, 0x0001, 0x0000, 0x0021, 0x0000, 0x0045, 
+0x0000, 0x0000, 0x0001, 0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0002, 0x8001, 0x0001, 0x0000, 0x0000, 0x0003, 0x2700, 0x0014, 0x4c00, 
+0x000f, 0x0300, 0x0100, 0x0000, 0x0300, 0x0100, 0x0000, 0x0300, 0x0100, 
+0x0000, 0x0b00, 0xff00, 0x09ff, 0x0300, 0xe352, 0x910b, 0xce8f, 0x9d11, 
+0x00e3, 0x00aa, 0xb84b, 0x0151, 0x00cc, 0x9000, 0x4401, 0x0142, 0x0600, 
+0x6154, 0x6f68, 0x616d, 0x0003, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0005, 0x8000, 
+0x0003, 0x0008, 0x8000, 0x0003, 0x000f, 0x8000, 0x0003, 0x0012, 0x8000, 
+0x0003, 0x000d, 0x8000, 0x0003, 0x000e, 0x8000, 0x0003, 0x000c, 0x8000, 
+0x0003, 0x0005, 0x8000, 0x0003, 0x000f, 0x8000, 0x0003, 0x0010, 0x8000, 
+0x0003, 0x0010, 0x8000, 0x0003, 0x00c0, 0x0000, 0x0003, 0x0006, 0x8000, 
+0x0003, 0x0001, 0x0000, 0x0003, 0x0001, 0x0000, 0x000b, 0xffff, 0x000b, 
+0xffff, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0001, 
+0x0000, 0x0003, 0x0002, 0x0000, 0x0002, 0x0001, 0x0003, 0x0032, 0x0000, 
+0x0003, 0x000a, 0x0000, 0x0003, 0x0001, 0x0000, 0x0003, 0x0001, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x000b, 0x0000, 0x0008, 0x0000, 0x0000, 0x000b, 
+0x0000, 0x0003, 0x0003, 0x0000, 0x000b, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x000b, 0xffff, 0x0003, 0x0000, 0x0000, 0x0003, 
+0x0000, 0x0000, 0x0004, 0x0000, 0x4000, 0x000b, 0xffff, 0x0003, 0x0001, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x000b, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x000b, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 
+0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0001, 0x0000, 0x000b, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x000b, 0xffff, 
+0x0008, 0x0002, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0003, 0x0000, 0x000b, 0xffff, 
+0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0009, 0x0000, 
+
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "ETS FIX Gateway Manager\n\nETS FIX Gateway Manager\n\n\n\n"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "ETS FIX Gateway Manager"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\EtsFixManager.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

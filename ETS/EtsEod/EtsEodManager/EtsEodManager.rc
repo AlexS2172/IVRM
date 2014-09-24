@@ -1,0 +1,647 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""res\\EtsEodManager.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\EtsEodManager.ico"
+IDI_TYPE_START          ICON                    "res\\TypeStart.ico"
+IDI_TYPE_END            ICON                    "res\\TypeEnd.ico"
+IDI_TYPE_INFO           ICON                    "res\\TypeInfo.ico"
+IDI_TYPE_END_WITH_ERRORS ICON                    "res\\TypeEndWithErrors.ico"
+IDI_TYPE                ICON                    "res\\Type.ico"
+IDI_TYPE_WARNING        ICON                    "res\\TypeWarning.ico"
+IDI_TYPE_ERROR          ICON                    "res\\TypeError.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_FILE_START_EOD
+    BUTTON      ID_FILE_STOP_EOD
+    SEPARATOR
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_VIEW_EXPAND_ALL
+    BUTTON      ID_VIEW_COLLAPSE_ALL
+    SEPARATOR
+    BUTTON      ID_EDIT_COPY
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "Start End of Day",            ID_FILE_START_EOD
+        MENUITEM "Stop End of Day",             ID_FILE_STOP_EOD
+        MENUITEM SEPARATOR
+        MENUITEM "&Current\tCtrl+N",            ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Save As...\tCtrl+S",         ID_FILE_SAVE
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           57607
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Expand All\tCtrl+Num +",     32777
+        MENUITEM "&Collapse All\tCtrl+Num -",   32778
+        MENUITEM SEPARATOR
+        MENUITEM "&Type's Colors",              32779
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Settings...",                ID_OPTIONS_SETTINGS
+        MENUITEM "&Connections...",             ID_OPTIONS_CONNECTIONS
+    END
+    POPUP "&?"
+    BEGIN
+        MENUITEM "&About ETS End of Day Manager...", ID_APP_ABOUT
+    END
+END
+
+IDR_POPUPMENU MENU 
+BEGIN
+    POPUP "<popup>"
+    BEGIN
+        MENUITEM "Open End of Day Manager",     ID_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "Start End of Day",            32773
+        MENUITEM "Stop End of Day",             32774
+        MENUITEM SEPARATOR
+        MENUITEM "Exit\tAlt+F4",                57665
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_ADD,         ID_VIEW_EXPAND_ALL,     VIRTKEY, CONTROL, NOINVERT
+    VK_SUBTRACT,    ID_VIEW_COLLAPSE_ALL,   VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 268, 202
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About <App>"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,194,185,64,12,WS_GROUP
+    ICON            IDR_MAINFRAME,IDC_APP_ICON,7,7,20,20
+    LTEXT           "<App Name>",IDC_APP_NAME,42,6,216,8,SS_NOPREFIX
+    LTEXT           "<App Version>",IDC_APP_VERSION,42,18,216,8,SS_NOPREFIX
+    LTEXT           "<App Desc>",IDC_APP_DESC,42,30,216,8
+    LTEXT           "<App Copyright>",IDC_APP_COPYRIGHT,42,42,216,8
+    EDITTEXT        IDC_APP_COMPONENTS,42,57,215,122,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+    PUSHBUTTON      "&System Info...",IDC_BUTTON_SYS_INFO,124,185,64,12
+END
+
+IDD_EODMANAGERVIEW DIALOGEX 0, 0, 260, 168
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_CLIPCHILDREN
+EXSTYLE WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_FG_REPORT,"{D76D712E-4A96-11D3-BD95-D296DC2DD072}",WS_TABSTOP,7,7,130,91
+END
+
+IDD_EODSETTINGS DIALOGEX 0, 0, 351, 215
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "End of Day Settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        " Startup ",IDC_STATIC,8,3,211,30
+    CONTROL         "Run Automatically Every Day at :",IDC_RUN_PERIODICALLY,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,16,123,12,WS_EX_TRANSPARENT
+    CONTROL         "",IDC_DT_START_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP,139,16,60,12
+    GROUPBOX        " Calculation Model ",IDC_STATIC,223,2,121,30
+    COMBOBOX        IDC_COMBO_CALC_MODEL,236,15,91,44,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        " Steps ",IDC_STATIC,8,33,336,124
+    CONTROL         "Update Market Structure",IDC_STEP_MKT_STRUCTURE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,43,108,12
+    CONTROL         "Load Options Structure",IDC_CHK_LOADOPTIONS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,55,94,10
+    CONTROL         "Update Options Close Prices",IDC_CHK_UPDATEOPTIONS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,67,107,8
+    CONTROL         "Update Underlyings Close Prices",IDC_CHK_UPDATEUND,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,78,122,8
+    CONTROL         "Filter out suspicious dividends",IDC_CHK_FILTERDIVIDENDS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,89,111,10
+    CONTROL         "Check Market Structure Updates",IDC_PARAM_MKT_STRUCTURE_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,113,118,12
+    CONTROL         "Update Only Active Underlyings",IDC_PARAM_MKT_STRUCTURE_ACTIVE_ONLY,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,125,128,12
+    CONTROL         "Delete Old Options",IDC_PARAM_MKT_STRUCTURE_DEL_OLD_OPT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,137,128,12
+    GROUPBOX        "",IDC_STATIC,192,33,152,124
+    CONTROL         "Update Average Volumes",IDC_STEP_AVG_VOLUME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,199,42,108,12
+    CONTROL         "Update IV Bands",IDC_STEP_IV_BAND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,199,54,108,12
+    CONTROL         "Update Skew && Kurtosis",IDC_STEP_SKEW_KURT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,199,66,108,12
+    CONTROL         "Calculate Weighted Vega",IDC_STEP_CALC_WTD_VEGA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,199,77,108,12
+    CONTROL         "Update Futures",IDC_STEP_IDX_FUTURE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,100,67,12
+    COMBOBOX        IDC_STEP_IDXFUT_PRICES_COMBO,92,99,95,69,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        " Log",IDC_STATIC,7,161,337,30
+    LTEXT           "Level :",IDC_STATIC,17,172,25,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO_LOG_LEVELS,43,172,124,56,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "History period in days:",IDC_STATIC,213,172,73,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_LOG_HISTORY,297,172,30,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,235,197,50,12
+    PUSHBUTTON      "Cancel",IDCANCEL,294,197,50,12
+    CONTROL         "Update Underlyings Close Prices",IDC_STEP_UND_CLOSE_PRICE,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,208,114,120,12
+    CONTROL         "From Price Provider",IDC_PARAM_UND_CLOSE_PRICE_PP,
+                    "Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,213,114,98,12
+    CONTROL         "From Ivolatility.com",IDC_PARAM_UND_CLOSE_PRICE_IV,
+                    "Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,225,114,98,12
+    CONTROL         "From Ivolatility.com",IDC_PARAM_OPT_CLOSE_PRICE_IV,
+                    "Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE | WS_GROUP | WS_TABSTOP,214,114,98,12
+    CONTROL         "From Price Provider",IDC_PARAM_OPT_CLOSE_PRICE_PP,
+                    "Button",BS_AUTORADIOBUTTON | NOT WS_VISIBLE,227,114,98,12
+    CONTROL         "Update Options Close Prices",IDC_STEP_OPT_CLOSE_PRICE,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,205,114,108,12
+END
+
+IDD_CONNECTIONS DIALOGEX 0, 0, 371, 197
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Connections"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        " Database ",IDC_STATIC_DB,6,4,358,28
+    EDITTEXT        IDC_EDIT_DB,14,15,329,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "...",IDC_BUTTON_DB_SETUP,346,15,12,12
+    GROUPBOX        " Price Provider ",IDC_STATIC_PP,6,36,176,140
+    RTEXT           "Type :",IDC_STATIC_PP_TYPE,10,48,40,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO_PP_TYPE,54,48,120,36,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Account :",IDC_STATIC_PP_ACCOUNT,10,64,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PP_ACCOUNT,54,64,120,12,ES_AUTOHSCROLL
+    RTEXT           "Password :",IDC_STATIC_PP_PASSWORD,10,80,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PP_PASSWORD,54,80,120,12,ES_PASSWORD | ES_AUTOHSCROLL
+    RTEXT           "Use Proxy :",IDC_STATIC_PP_PROXY,10,96,40,12,SS_CENTERIMAGE
+    CONTROL         "None",IDC_RADIO_PP_PROXY_NONE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,54,96,32,12
+    CONTROL         "System",IDC_RADIO_PP_PROXY_SYSTEM,"Button",BS_AUTORADIOBUTTON,94,96,40,12
+    CONTROL         "Custom",IDC_RADIO_PP_PROXY_CUSTOM,"Button",BS_AUTORADIOBUTTON,138,96,40,12
+    RTEXT           "Address :",IDC_STATIC_PP_PROXY_ADDRESS,10,112,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PP_PROXY_ADDRESS,54,112,56,12,ES_AUTOHSCROLL
+    RTEXT           "Port :",IDC_STATIC_PP_PROXY_PORT,114,112,24,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PP_PROXY_PORT,142,112,32,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Proxy Authentication",IDC_CHECK_PP_PROXY_AUTH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,54,128,116,8
+    RTEXT           "Login :",IDC_STATIC_PP_PROXY_LOGIN,10,140,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PP_PROXY_LOGIN,54,140,120,12,ES_AUTOHSCROLL
+    RTEXT           "Password :",IDC_STATIC_PP_PROXY_PASSWORD,10,156,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PP_PROXY_PASSWORD,54,156,120,12,ES_PASSWORD | ES_AUTOHSCROLL
+    GROUPBOX        " Ivolatility.com ",IDC_STATIC_IV,190,36,176,140
+    RTEXT           "Address :",IDC_STATIC_IV_ADDRESS,194,48,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IV_ADDRESS,238,48,120,12,ES_AUTOHSCROLL
+    RTEXT           "Account :",IDC_STATIC_IV_ACCOUNT,194,64,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IV_ACCOUNT,238,64,120,12,ES_AUTOHSCROLL
+    RTEXT           "Password :",IDC_STATIC_IV_PASSWORD,194,80,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IV_PASSWORD,238,80,120,12,ES_PASSWORD | ES_AUTOHSCROLL
+    RTEXT           "Use Proxy :",IDC_STATIC_IV_PROXY,194,96,40,12,SS_CENTERIMAGE
+    CONTROL         "None",IDC_RADIO_IV_PROXY_NONE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,238,96,32,12
+    CONTROL         "System",IDC_RADIO_IV_PROXY_SYSTEM,"Button",BS_AUTORADIOBUTTON,278,96,40,12
+    CONTROL         "Custom",IDC_RADIO_IV_PROXY_CUSTOM,"Button",BS_AUTORADIOBUTTON,322,96,40,12
+    RTEXT           "Address :",IDC_STATIC_IV_PROXY_ADDRESS,194,112,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IV_PROXY_ADDRESS,238,112,56,12,ES_AUTOHSCROLL
+    RTEXT           "Port :",IDC_STATIC_IV_PROXY_PORT,298,112,24,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IV_PROXY_PORT,326,112,32,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Proxy Authentication",IDC_CHECK_IV_PROXY_AUTH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,238,128,116,8
+    RTEXT           "Login :",IDC_STATIC_IV_PROXY_LOGIN,194,140,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IV_PROXY_LOGIN,238,140,120,12,ES_AUTOHSCROLL
+    RTEXT           "Password :",IDC_STATIC_IV_PROXY_PASSWORD,194,156,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_IV_PROXY_PASSWORD,238,156,120,12,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,259,181,50,12
+    PUSHBUTTON      "Cancel",IDCANCEL,315,181,50,12
+END
+
+IDD_DBCONNECTION DIALOGEX 0, 0, 178, 134
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Database Connection"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "SQL &Server name :",IDC_STATIC,7,3,159,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO_SERVER,23,16,148,92,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Log on information :",IDC_STATIC,7,30,159,12,SS_CENTERIMAGE
+    CONTROL         "Use &Windows NT integrated security",IDC_CHECK_NT_SECURITY,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,23,44,144,10
+    RTEXT           "&User Name :",IDC_STATIC_USERNAME,9,56,55,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_USERNAME,67,56,104,12,ES_AUTOHSCROLL
+    RTEXT           "&Password :",IDC_STATIC_PASSWORD,9,71,55,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_EDIT_PASSWORD,67,72,104,12,ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "&Database name :",IDC_STATIC,7,86,159,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_COMBO_DATABASE,23,99,148,92,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,65,117,50,12
+    PUSHBUTTON      "Cancel",IDCANCEL,121,117,50,12
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,2,91,0
+ PRODUCTVERSION 1,2,91,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileDescription", "ETS End of Day Management Application"
+            VALUE "FileVersion", "1, 2,91, 0"
+            VALUE "InternalName", "EtsEodManager.exe"
+            VALUE "LegalCopyright", "© 2002-2005 EGAR Technology Inc. All rights reserved."
+            VALUE "OriginalFilename", "EtsEodManager.exe"
+            VALUE "ProductName", "Equity Trading System"
+            VALUE "ProductVersion", "1, 2,91, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 261
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 195
+    END
+
+    IDD_EODMANAGERVIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 253
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 161
+    END
+
+    IDD_EODSETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 344
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 209
+    END
+
+    IDD_CONNECTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 364
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 190
+    END
+
+    IDD_DBCONNECTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 171
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 127
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+IDR_MANIFEST            RT_MANIFEST             "res\\EtsEodManager.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_EODMANAGERVIEW DLGINIT
+BEGIN
+    IDC_FG_REPORT, 0x37a, 612, 0
+0x0000, 0x0000, 0x0029, 0x0000, 0x0001, 0x0000, 0x0021, 0x0000, 0x0045, 
+0x0000, 0x0000, 0x0001, 0x8001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0002, 0x8001, 0x0001, 0x0000, 0x0000, 0x0003, 0x2700, 0x0014, 0x4c00, 
+0x000f, 0x0300, 0x0100, 0x0000, 0x0300, 0x0100, 0x0000, 0x0300, 0x0100, 
+0x0000, 0x0b00, 0xff00, 0x09ff, 0x0300, 0xe352, 0x910b, 0xce8f, 0x9d11, 
+0x00e3, 0x00aa, 0xb84b, 0x0151, 0x00cc, 0x9000, 0x4401, 0x0142, 0x0600, 
+0x6154, 0x6f68, 0x616d, 0x0003, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0005, 0x8000, 
+0x0003, 0x0008, 0x8000, 0x0003, 0x000f, 0x8000, 0x0003, 0x0012, 0x8000, 
+0x0003, 0x000d, 0x8000, 0x0003, 0x000e, 0x8000, 0x0003, 0x000c, 0x8000, 
+0x0003, 0x0005, 0x8000, 0x0003, 0x000f, 0x8000, 0x0003, 0x0010, 0x8000, 
+0x0003, 0x0010, 0x8000, 0x0003, 0x00c0, 0x0000, 0x0003, 0x0006, 0x8000, 
+0x0003, 0x0001, 0x0000, 0x0003, 0x0001, 0x0000, 0x000b, 0xffff, 0x000b, 
+0xffff, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0001, 
+0x0000, 0x0003, 0x0002, 0x0000, 0x0002, 0x0001, 0x0003, 0x0032, 0x0000, 
+0x0003, 0x000a, 0x0000, 0x0003, 0x0001, 0x0000, 0x0003, 0x0001, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x000b, 0x0000, 0x0008, 0x0000, 0x0000, 0x000b, 
+0x0000, 0x0003, 0x0003, 0x0000, 0x000b, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x000b, 0xffff, 0x0003, 0x0000, 0x0000, 0x0003, 
+0x0000, 0x0000, 0x0004, 0x0000, 0x4000, 0x000b, 0xffff, 0x0003, 0x0001, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x000b, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x000b, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 
+0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0001, 0x0000, 0x000b, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 
+0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x000b, 0xffff, 
+0x0008, 0x0002, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0003, 0x0000, 0x000b, 0xffff, 
+0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 
+0x0003, 0x0000, 0x0000, 0x0003, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0009, 0x0000, 
+
+    0
+END
+
+IDD_EODSETTINGS DLGINIT
+BEGIN
+    IDC_COMBO_CALC_MODEL, 0x403, 9, 0
+0x7453, 0x6e61, 0x6164, 0x6472, "\000" 
+    IDC_COMBO_CALC_MODEL, 0x403, 10, 0
+0x704f, 0x6974, 0x696d, 0x657a, 0x0064, 
+    IDC_COMBO_CALC_MODEL, 0x403, 8, 0
+0x5356, 0x204b, 0x6f4c, 0x0067, 
+    IDC_STEP_IDXFUT_PRICES_COMBO, 0x403, 9, 0
+0x6f4e, 0x5020, 0x6972, 0x6563, "\000" 
+    IDC_STEP_IDXFUT_PRICES_COMBO, 0x403, 12, 0
+0x6c43, 0x736f, 0x2065, 0x7250, 0x6369, 0x0065, 
+    IDC_STEP_IDXFUT_PRICES_COMBO, 0x403, 11, 0
+0x614c, 0x7473, 0x5020, 0x6972, 0x6563, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 5, 0
+0x6f4e, 0x656e, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 7, 0
+0x6146, 0x6c75, 0x7374, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 7, 0
+0x7953, 0x7473, 0x6d65, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 6, 0
+0x7245, 0x6f72, 0x0072, 
+    IDC_COMBO_LOG_LEVELS, 0x403, 8, 0
+0x6157, 0x6e72, 0x6e69, 0x0067, 
+    IDC_COMBO_LOG_LEVELS, 0x403, 7, 0
+0x654c, 0x6576, 0x356c, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 7, 0
+0x654c, 0x6576, 0x366c, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 7, 0
+0x654c, 0x6576, 0x376c, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 7, 0
+0x654c, 0x6576, 0x386c, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 7, 0
+0x654c, 0x6576, 0x396c, "\000" 
+    IDC_COMBO_LOG_LEVELS, 0x403, 6, 0
+0x6544, 0x7562, 0x0067, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "ETS End of Day Manager\nEodReport.EtsEodRpt\nEtsEodManager\nETS End of Day Report files (*.EtsEodRpt)\n.EtsEodRpt\nEtsEodManager.Document\nEtsEodManager.Document"
+    IDS_STEP_MKT_STRUCTURE  "Update Market Structure"
+    IDS_STEP_UND_BETA       "Update Underlyings Beta"
+    IDS_STEP_AVG_VOLUME     "Update Average Volumes"
+    IDS_STEP_IV_BAND        "Update IV Bands"
+    IDS_STEP_SKEW_KURT      "Update Skew & Kurtosis"
+    IDS_STEP_DEFAULT_IV     "Update Default IV"
+    IDS_STEP_OPT_CLOSE_PRICE "Update Options Close Prices"
+    IDS_STEP_UND_CLOSE_PRICE "Update Underlyings Close Prices"
+    IDS_STEP_CALC_THEO_PRICE "Calculate Theo Close Prices"
+    IDS_STEP_CALC_WTD_VEGA  "Calculate Weighted Vega"
+    IDS_STEP_OVERALL        "Overall"
+    IDS_STEP_CALC_COMM_VOLA "Calculate Volatility"
+    IDS_STEP_IDX_FUTURE     "Update Index Futures"
+    IDS_STEP_COMMODITY      "Update Commodities"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "ETS End of Day Manager"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "Open a current End of Day report\nCurrent (Ctrl+N)"
+    ID_FILE_OPEN            "Open an existing End of Day report\nOpen (Ctrl+O)"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active End of Day report with a new name\nSave As (Ctrl+S)"
+    ID_FILE_SAVE_AS         "Save the active End of Day report with a new name\nSave As (Ctrl+S)"
+    ID_FILE_PRINT           "Print End of Day Report\nPrint End of Day Report (Ctrl+P)"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy (Ctrl+C)"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_OPTIONS_SETTINGS     "Show settings dialog\nSettings"
+    ID_OPTIONS_CONNECTIONS  "Show connections dialog\nConnections"
+    ID_FILE_START_EOD       "Start End of Day\nStart End of Day"
+    ID_FILE_STOP_EOD        "Stop End of Day\nStop End of Day"
+    ID_VIEW_EXPAND_ALL      "Expand all steps records\nExpand all steps records (Ctrl+Num +)"
+    ID_VIEW_COLLAPSE_ALL    "Collapse all steps records\nCollapse all steps records (Ctrl+Num -)"
+    ID_VIEW_SHOW_COLOR_CODES 
+                            "Show records with type color\nColor record types"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STEP_INTEREST       "Update Interests"
+    ID_Menu                 "ID_FILE_START_EOD"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#include "res\EtsEodManager.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

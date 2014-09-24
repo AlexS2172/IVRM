@@ -1,0 +1,10 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\{FD68F05A-247C-4D19-B12D-852691429151}]
+"RevHi"=dword:00000001
+"RevLo"=dword:00000000
+"Account"="oneivan"
+"Password"="yesterday"
+"ProductName"="MyTrackPrvs"
+"TimeShift"="0"
+

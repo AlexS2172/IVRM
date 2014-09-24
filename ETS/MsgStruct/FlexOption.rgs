@@ -1,0 +1,25 @@
+HKCR
+{
+	MsgStruct.FlexOption.1 = s 'FlexOption Class'
+	{
+		CLSID = s '{C3819CD8-9677-499B-B7F7-72037D7D2423}'
+	}
+	MsgStruct.FlexOption = s 'FlexOption Class'
+	{
+		CLSID = s '{C3819CD8-9677-499B-B7F7-72037D7D2423}'
+		CurVer = s 'MsgStruct.FlexOption.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C3819CD8-9677-499B-B7F7-72037D7D2423} = s 'FlexOption Class'
+		{
+			ProgID = s 'MsgStruct.FlexOption.1'
+			VersionIndependentProgID = s 'MsgStruct.FlexOption'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

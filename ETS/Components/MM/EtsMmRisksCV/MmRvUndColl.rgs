@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmRisks.MmRvUndColl.1 = s 'MmRvUndColl Class'
+	{
+		CLSID = s '{770c05d6-9e53-4fae-9ddf-1653e4748c1f}'
+	}
+	EtsMmRisks.MmRvUndColl = s 'MmRvUndColl Class'
+	{
+		CLSID = s '{770c05d6-9e53-4fae-9ddf-1653e4748c1f}'
+		CurVer = s 'EtsMmRisks.MmRvUndColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {770c05d6-9e53-4fae-9ddf-1653e4748c1f} = s 'MmRvUndColl Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvUndColl.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvUndColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{dcc0c411-74e1-4481-a7ad-336e903474bf}'
+		}
+	}
+}

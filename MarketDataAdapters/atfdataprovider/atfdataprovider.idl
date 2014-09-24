@@ -1,0 +1,193 @@
+// ATFDataProvider.idl : IDL source for ATFDataProvider.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ATFDataProvider.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(6F74EAF0-9A4C-46A5-BE07-438DED3A9A40),
+	version(1.0),
+	helpstring("ATFDataProvider 1.0 Type Library")
+]
+library ATFDATAPROVIDERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("PriceProviders.tlb");
+
+	//-----------------------------------------------------------------------------//
+	[
+		uuid(668881B1-DFD1-426d-B213-632F9F0CF702)
+	]
+	struct ATStock
+	{
+		[helpstring("Name")]					BSTR	Name;
+		[helpstring("Type")]					enum StockTypeEnum		StockType;
+		[helpstring("UpdateDateTime")]		    DATE				UpdateDateTime;
+		[helpstring("Dividends frequency")]		long				DivFreq;
+		[helpstring("Dividends last date")]		DATE				DivLastDate;
+		[helpstring("Dividends amount")]		double				DivAmount;
+		[helpstring("Currency (now only USD)")]	BSTR				Currency;
+		[helpstring("Description")]				BSTR				Description;
+		[helpstring("Lot size")]				long				LotSize;
+		[helpstring("Exchange")]				BSTR				Exchange;
+		[helpstring("OpenPrice")]  				double				OpenPrice;
+		[helpstring("ClosePrice")] 				double				ClosePrice;
+		[helpstring("High")] 					double				HighPrice;
+		[helpstring("Low")] 					double				LowPrice;
+		[helpstring("LastPrice")]				double				LastPrice;
+		[helpstring("Volume")] 					double				Volume;
+		[helpstring("BidPrice")]				double				BidPrice;
+		[helpstring("AskPrice")]				double				AskPrice;
+		[helpstring("BidSize")]					long				BidSize;
+		[helpstring("AskSize")]					long				AskSize;
+		[helpstring("OpenInterest")]			double				OpenInterest;
+        [helpstring("NetChange")]				double				NetChange;
+
+	};
+	[
+		uuid(CB3EE075-4AA2-4e2d-90F6-3A2F8E448A01)
+	]
+	struct ATOption
+	{
+		[helpstring("Symbol name")]				BSTR				Symbol;
+		[helpstring("Exchange")]				BSTR				Exchange;
+		[helpstring("Strike price")]			double				StrikePrice;
+		[helpstring("Expiration date")]			DATE				ExpirationDate;
+		[helpstring("UpdateDateTime")]		    DATE				UpdateDateTime;
+		[helpstring("Type")]					enum OptionTypeEnum		OptionType;
+		[helpstring("Currency (now only USD)")]	BSTR				Currency;
+		[helpstring("Lot size")]				long				LotSize;
+		[helpstring("Open Interest")]			long				OpenInterest;
+		[helpstring("Volume")]					long				Volume;
+		[helpstring("Yesterday Volume")]		long				YVolume;
+
+		
+
+		[helpstring("LastPrice")]				double				LastPrice;
+        [helpstring("ClosePrice")]				double				ClosePrice;
+        [helpstring("OpenPrice")]				double				OpenPrice;		
+        [helpstring("HighPrice")]				double				HighPrice;
+        [helpstring("LowPrice")]				double				LowPrice;
+        [helpstring("NetChange")]				double				NetChange;
+
+        [helpstring("BidPrice")]				double				BidPrice;
+		[helpstring("AskPrice")]				double				AskPrice;
+		[helpstring("BidSize")]					long				BidSize;
+		[helpstring("AskSize")]					long				AskSize;
+
+	};
+
+	[
+		uuid(C1BB2BE2-9B75-43F2-A0C4-644CC2B05AEE),
+		helpstring("ATFPriceInfo Class")
+	]
+	coclass ATFPriceInfo
+	{
+		[default] interface IPriceProvider;
+				  interface IGroupPrice;
+		[default, source] dispinterface _IPriceInfoEvents;
+	};
+
+	[
+		uuid(8C6B863D-B3F6-4F8A-A962-29276D2AE3E3),
+		helpstring("ATFPriceProvider Class")
+	]
+	coclass ATFPriceProvider
+	{
+		[default] interface IPriceProvider;
+				  interface IGroupPrice;
+		[default, source] dispinterface _IPriceProviderEvents;
+	};
+	[
+		uuid(7C7DD2C9-3D13-477A-B40C-8C41B4D5A748),
+		helpstring("ATFStructureInfo Class")
+	]
+	coclass ATFStructureInfo
+	{
+		[default] interface IStructureProvider;
+		[default, source] dispinterface _IMyTrackStructureInfoEvents;
+	};
+
+	[
+		uuid(812DDABA-1E36-47F2-B22D-C505802F67EF),
+		helpstring("ATFStructureProvider Class")
+	]
+	coclass ATFStructureProvider
+	{
+		[default] interface IStructureProvider;
+		[default, source] dispinterface _IStructureProviderEvents;
+	};
+	[
+		uuid(4A6B9DEE-CA83-44BB-AA41-5C4BD0B0D4E8),
+		helpstring("ProviderInfo Class")
+	]
+	coclass ProviderInfo
+	{
+		[default] interface IProviderInfo;
+	};
+
+	[
+		uuid(A0551C2C-A6FD-4a50-A67A-7232BF0D6523),
+		helpstring("Group Request Type"),
+		v1_enum
+	]
+	typedef enum ATProviderRequestType
+	{
+		[helpstring(" Request data for One Exchange ")]	enOneExchangeOnly  = 0,
+		[helpstring(" Request data for All Exchanges")]		enAllExchanges         = 1
+	}ATProviderRequestType;
+	[
+		object,
+		uuid(D9F8EBEE-F447-4D74-B597-6157BCDE3CEB),
+		dual,
+		nonextensible,
+		helpstring("IATFProvider Interface"),
+		pointer_default(unique)
+	]
+	interface IATFProvider : IDispatch{
+		[id(1), helpstring("method Connect")] HRESULT Connect(void);
+		[id(2), helpstring("method Disconnect")] HRESULT Disconnect(void);
+		[id(3), helpstring("method RequestStock")] HRESULT RequestStock([in]struct StockParams* Params);
+		[id(4), helpstring("method RequestOptions")] HRESULT RequestOptions([in]struct StockParams* Params, [in] ATProviderRequestType enType);
+		[id(5), helpstring("method CancelStocks")] HRESULT CancelStocks([in, optional] VARIANT vtParams);
+		[id(6), helpstring("method CancelOptions")] HRESULT CancelOptions([in, optional] VARIANT vtParams);
+	};
+
+
+	[
+		uuid(1515D46E-A383-4865-B1ED-333E844011BA),
+		helpstring("_IATFProviderEvents Interface")
+	]
+
+	dispinterface _IATFProviderEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("event OnStock")] HRESULT OnStock([in] struct StockParams *Params, [in] struct ATStock *Results );
+		[id(2), helpstring("event OnOption")] HRESULT OnOption([in] struct StockParams *Params, [in] struct ATOption *Results, [in] VARIANT_BOOL IsLastOption);
+		[id(3), helpstring("event OnError")] HRESULT OnError([in] enum ErrorNumberEnum ErrorNumber, [in] BSTR Description, [in] enum RequestsTypeEnum ReqType, [in] VARIANT Request);
+	};
+	[
+		uuid(A0F50440-2CA3-418D-AADD-5815F304A31B),
+		helpstring("ATFProvider Class")
+	]
+	coclass ATFProvider
+	{
+		[default] interface IATFProvider;
+		[default, source] dispinterface _IATFProviderEvents;
+	};
+
+	[
+		uuid(1ED11ED1-DBDD-4E95-8BB8-BA9885810A9D),
+		helpstring("ATFPriceInfoWithNotify Class")
+	]
+	coclass ATFPriceInfoWithNotify
+	{
+		[default]	interface IPriceProvider;
+					interface IGroupPriceWithNotify;
+		[default, source] dispinterface _IPriceInfoWithNotifyEvents;
+	};
+};

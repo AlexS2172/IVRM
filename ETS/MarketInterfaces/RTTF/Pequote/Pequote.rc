@@ -1,0 +1,389 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\Pequote.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\Pequote.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_LOG_TYPE            BITMAP                  "res\\log_type.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_ACTION_START
+    BUTTON      ID_ACTION_STOP
+    SEPARATOR
+    BUTTON      ID_EDIT_COPY
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&Action"
+    BEGIN
+        MENUITEM "&Start\tF9",                  ID_ACTION_START
+        MENUITEM "S&top\tShift+F9",             ID_ACTION_STOP
+        MENUITEM SEPARATOR
+        MENUITEM "&Settings\tAtl+F7",           ID_ACTION_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "&Clear",                      ID_EDIT_CLEAR
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&?"
+    BEGIN
+        MENUITEM "&About Pequote...",          ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_EDIT_CLEAR,          VIRTKEY, SHIFT, NOINVERT
+    VK_F7,          ID_ACTION_SETTINGS,     VIRTKEY, ALT, NOINVERT
+    VK_F9,          ID_ACTION_START,        VIRTKEY, NOINVERT
+    VK_F9,          ID_ACTION_STOP,         VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG  0, 0, 177, 70
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "About Pequote"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,7,21,20
+    DEFPUSHBUTTON   "OK",IDOK,64,48,50,14,WS_GROUP
+    EDITTEXT        IDC_ED_PRODUCT_NAME,40,7,130,12,ES_READONLY | NOT 
+                    WS_BORDER
+    EDITTEXT        IDC_ED_PRODUCT_VERSION,40,19,130,12,ES_READONLY | NOT 
+                    WS_BORDER
+    EDITTEXT        IDC_ED_LEGAL_COPYRIGHT,40,32,130,12,ES_READONLY | NOT 
+                    WS_BORDER
+END
+
+IDD_SETTINGS DIALOGEX 0, 0, 270, 279
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "ETS Database",IDC_STATIC,7,7,256,32
+    EDITTEXT        IDC_ED_DATABASE,14,18,177,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | ES_WANTRETURN
+    PUSHBUTTON      "&Setup",IDC_BT_SETUP,197,17,58,13
+    GROUPBOX        "Pequote",IDC_STATIC,7,79,256,120
+    RTEXT           "Ftp address :",IDC_STATIC,26,92,77,8
+    EDITTEXT        IDC_ED_ADDRESS,108,90,143,12,ES_AUTOHSCROLL
+    RTEXT           "User name :",IDC_STATIC,26,111,77,8
+    EDITTEXT        IDC_ED_USER,108,109,143,12,ES_AUTOHSCROLL
+    RTEXT           "Password :",IDC_STATIC,26,130,77,8
+    EDITTEXT        IDC_ED_PASSWORD,108,128,143,12,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    RTEXT           "Trades file :",IDC_STATIC,26,163,77,8
+    EDITTEXT        IDC_ED_TRADES_FILE,108,161,143,12,ES_AUTOHSCROLL
+    RTEXT           "Trades check interval (sec) :",IDC_STATIC,13,182,90,8
+    EDITTEXT        IDC_ED_READ_TRADES_PERIOD,108,180,79,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,155,258,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,213,258,50,14
+    CONTROL         "FTP Passive Mode",IDC_CHECK_PASSIVE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,108,145,74,8
+    CONTROL         "Encrypted Source",IDC_CHK_ENCRYPTED,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,209,235,10
+    GROUPBOX        "",IDC_STATIC,7,200,256,50
+    EDITTEXT        IDC_ED_PASSPHRASE,14,230,241,13,ES_AUTOHSCROLL
+    LTEXT           "PassPhrase:",IDC_STATIC,18,220,236,9
+    GROUPBOX        "PeQuote Database",IDC_STATIC,7,43,256,32
+    PUSHBUTTON      "&Setup",IDC_PQ_SETUP,197,55,58,13
+    EDITTEXT        IDC_PQ_DATABASE,14,55,177,12,ES_AUTOHSCROLL | 
+                    ES_READONLY | ES_WANTRETURN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,2,58,0
+ PRODUCTVERSION 1,2,58,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileDescription", "Pequote Connector Module"
+            VALUE "FileVersion", "1, 2,58, 0"
+            VALUE "InternalName", "Pequote Connector"
+            VALUE "LegalCopyright", "© 2001-2003 EGAR Technology Inc."
+            VALUE "OriginalFilename", "PequoteConnector.exe"
+            VALUE "ProductName", "Pequote Connector"
+            VALUE "ProductVersion", "1, 2,58, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 170
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
+    END
+
+    IDD_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 263
+        VERTGUIDE, 14
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 272
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "Pequote Connector"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Pequote"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase all\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_ACTION_START         "Starts Pequote connector\nStart"
+    ID_ACTION_STOP          "Stops Pequote connector\nStop"
+    ID_ACTION_SETTINGS      "Opens settings dialog\nSettings"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_CHANGES_APPLY       "You must Stop / Start Pequote Connector before the new settings will take effect."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\Pequote.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

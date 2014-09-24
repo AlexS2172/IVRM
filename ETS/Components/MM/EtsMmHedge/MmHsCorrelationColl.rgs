@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmHedge.MmHsCorrelationColl.1 = s 'MmHsCorrelationColl Class'
+	{
+		CLSID = s '{B1522B81-AB34-4DF3-BD5D-6C5B4A665D97}'
+	}
+	EtsMmHedge.MmHsCorrelationColl = s 'MmHsCorrelationColl Class'
+	{
+		CLSID = s '{B1522B81-AB34-4DF3-BD5D-6C5B4A665D97}'
+		CurVer = s 'EtsMmHedge.MmHsCorrelationColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B1522B81-AB34-4DF3-BD5D-6C5B4A665D97} = s 'MmHsCorrelationColl Class'
+		{
+			ProgID = s 'EtsMmHedge.MmHsCorrelationColl.1'
+			VersionIndependentProgID = s 'EtsMmHedge.MmHsCorrelationColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{89306CD2-E7F4-4AB7-9AD2-14084B8CECB3}'
+		}
+	}
+}

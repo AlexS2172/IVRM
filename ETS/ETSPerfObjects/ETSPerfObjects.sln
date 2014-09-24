@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ETSPerfObjects", "ETSPerfObjects.vcproj", "{832AEA56-862B-467A-9AC5-AAD1158DF017}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = ETSPerfObjects
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:ClearCase
+		CanCheckoutShared = false
+		SolutionUniqueID = {70DEE351-5C22-4E97-8474-24E8E5B2D064}
+		SccProjectUniqueName1 = ETSPerfObjects.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{832AEA56-862B-467A-9AC5-AAD1158DF017}.Debug.ActiveCfg = Debug|Win32
+		{832AEA56-862B-467A-9AC5-AAD1158DF017}.Debug.Build.0 = Debug|Win32
+		{832AEA56-862B-467A-9AC5-AAD1158DF017}.Release.ActiveCfg = Release|Win32
+		{832AEA56-862B-467A-9AC5-AAD1158DF017}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

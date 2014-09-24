@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Trader.1 = s 'Trader Class'
+	{
+		CLSID = s '{0C4CFAF4-7D1B-4EC6-91BF-7A5C81E1D4C1}'
+	}
+	MsgStruct.Trader = s 'Trader Class'
+	{
+		CLSID = s '{0C4CFAF4-7D1B-4EC6-91BF-7A5C81E1D4C1}'
+		CurVer = s 'MsgStruct.Trader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {0C4CFAF4-7D1B-4EC6-91BF-7A5C81E1D4C1} = s 'Trader Class'
+		{
+			ProgID = s 'MsgStruct.Trader.1'
+			VersionIndependentProgID = s 'MsgStruct.Trader'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

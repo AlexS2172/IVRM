@@ -1,0 +1,91 @@
+// SimParams.idl : IDL source for SimParams.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (SimParams.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(37713603-3A3F-4943-A5A8-87A42C49FD7C),
+		dual,
+		helpstring("ISimParameters Interface"),
+		pointer_default(unique)
+	]
+	interface ISimParameters : IDispatch
+	{
+		[propget, id(1), helpstring("property VolumeMin")] HRESULT VolumeMin([out, retval] long *pVal);
+		[propput, id(1), helpstring("property VolumeMin")] HRESULT VolumeMin([in] long newVal);
+		[propget, id(2), helpstring("property VolumeMax")] HRESULT VolumeMax([out, retval] long *pVal);
+		[propput, id(2), helpstring("property VolumeMax")] HRESULT VolumeMax([in] long newVal);
+		[propget, id(3), helpstring("property PriceDelta")] HRESULT PricePercent([out, retval] double *pVal);
+		[propput, id(3), helpstring("property PriceDelta")] HRESULT PricePercent([in] double newVal);
+		[propget, id(4), helpstring("property BidDelta")] HRESULT BidPercent([out, retval] double *pVal);
+		[propput, id(4), helpstring("property BidDelta")] HRESULT BidPercent([in] double newVal);
+		[propget, id(5), helpstring("property AskDelta")] HRESULT AskPercent([out, retval] double *pVal);
+		[propput, id(5), helpstring("property AskDelta")] HRESULT AskPercent([in] double newVal);
+		[propget, id(6), helpstring("property BidSizeMin")] HRESULT BidSizeMin([out, retval] long *pVal);
+		[propput, id(6), helpstring("property BidSizeMin")] HRESULT BidSizeMin([in] long newVal);
+		[propget, id(7), helpstring("property BidSizeMax")] HRESULT BidSizeMax([out, retval] long *pVal);
+		[propput, id(7), helpstring("property BidSizeMax")] HRESULT BidSizeMax([in] long newVal);
+		[propget, id(8), helpstring("property AskSizeMin")] HRESULT AskSizeMin([out, retval] long *pVal);
+		[propput, id(8), helpstring("property AskSizeMin")] HRESULT AskSizeMin([in] long newVal);
+		[propget, id(9), helpstring("property AskSizeMax")] HRESULT AskSizeMax([out, retval] long *pVal);
+		[propput, id(9), helpstring("property AskSizeMax")] HRESULT AskSizeMax([in] long newVal);
+		[propget, id(10), helpstring("property IntervalMin")] HRESULT IntervalMin([out, retval] long *pVal);
+		[propput, id(10), helpstring("property IntervalMin")] HRESULT IntervalMin([in] long newVal);
+		[propget, id(11), helpstring("property IntervalMax")] HRESULT IntervalMax([out, retval] long *pVal);
+		[propput, id(11), helpstring("property IntervalMax")] HRESULT IntervalMax([in] long newVal);
+		[propget, id(12), helpstring("property ConnectionString")] HRESULT ConnectionString([out, retval] BSTR *pVal);
+		[propput, id(12), helpstring("property ConnectionString")] HRESULT ConnectionString([in] BSTR newVal);
+		[propget, id(13), helpstring("property StockIntervalMax")] HRESULT StockIntervalMax([out, retval] long *pVal);
+		[propput, id(13), helpstring("property StockIntervalMax")] HRESULT StockIntervalMax([in] long newVal);
+		[propget, id(14), helpstring("property StockIntervalMin")] HRESULT StockIntervalMin([out, retval] long *pVal);
+		[propput, id(14), helpstring("property StockIntervalMin")] HRESULT StockIntervalMin([in] long newVal);
+		[propget, id(15), helpstring("property NonRealtimeIntervalMin")] HRESULT NonRealtimeIntervalMin([out, retval] long *pVal);
+		[propput, id(15), helpstring("property NonRealtimeIntervalMin")] HRESULT NonRealtimeIntervalMin([in] long newVal);
+		[propget, id(16), helpstring("property NonRealtimeIntervalMax")] HRESULT NonRealtimeIntervalMax([out, retval] long *pVal);
+		[propput, id(16), helpstring("property NonRealtimeIntervalMax")] HRESULT NonRealtimeIntervalMax([in] long newVal);
+		[propget, id(17), helpstring("property VolatilityUpdateIntervalMax")] HRESULT VolatilityUpdateIntervalMax([out, retval] long *pVal);
+		[propput, id(17), helpstring("property VolatilityUpdateIntervalMax")] HRESULT VolatilityUpdateIntervalMax([in] long newVal);
+		[propget, id(18), helpstring("property VolatilityUpdateIntervalMin")] HRESULT VolatilityUpdateIntervalMin([out, retval] long *pVal);
+		[propput, id(18), helpstring("property VolatilityUpdateIntervalMin")] HRESULT VolatilityUpdateIntervalMin([in] long newVal);
+		[propget, id(19), helpstring("property VolatilityDelta in percent")] HRESULT VolatilityDelta([out, retval] double *pVal);
+		[propput, id(19), helpstring("property VolatilityDelta in percent")] HRESULT VolatilityDelta([in] double newVal);
+		[propget, id(20), helpstring("property TradeUpdateIntervalMin")] HRESULT TradeUpdateIntervalMin([out, retval] long *pVal);
+		[propput, id(20), helpstring("property TradeUpdateIntervalMin")] HRESULT TradeUpdateIntervalMin([in] long newVal);
+		[propget, id(21), helpstring("property TradeUpdateIntervalMax")] HRESULT TradeUpdateIntervalMax([out, retval] long *pVal);
+		[propput, id(21), helpstring("property TradeUpdateIntervalMax")] HRESULT TradeUpdateIntervalMax([in] long newVal);
+		[propget, id(22), helpstring("property PlayBackDate")] HRESULT PlayBackDate([out, retval] DATE *pVal);
+		[propput, id(22), helpstring("property PlayBackDate")] HRESULT PlayBackDate([in] DATE newVal);
+		[propget, id(23), helpstring("property PlayBackSpeed")] HRESULT PlayBackSpeed([out, retval] LONG *pVal);
+		[propput, id(23), helpstring("property PlayBackSpeed")] HRESULT PlayBackSpeed([in] LONG newVal);
+		[propget, id(24), helpstring("property EnableOptions")] HRESULT EnableOptions([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(24), helpstring("property EnableOptions")] HRESULT EnableOptions([in] VARIANT_BOOL newVal);
+		[propget, id(25), helpstring("property EnableStocks")] HRESULT EnableStocks([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(25), helpstring("property EnableStocks")] HRESULT EnableStocks([in] VARIANT_BOOL newVal);
+		[propget, id(26), helpstring("property DatabaseName")] HRESULT DatabaseName([out, retval] BSTR* pVal);
+		[propput, id(26), helpstring("property DatabaseName")] HRESULT DatabaseName([in] BSTR newVal);
+		[propget, id(27), helpstring("property PriceProvider")] HRESULT PriceProvider([out, retval] long* pVal);
+		[propput, id(27), helpstring("property PriceProvider")] HRESULT PriceProvider([in] long newVal);
+	};
+    [
+	uuid(2BEDEC5A-C13D-42AC-B7AF-02F04C601C15),
+	version(1.0),
+	helpstring("SimParams 1.0 Type Library")
+]
+library SIMPARAMSLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(EA8BCDDE-1617-40DE-AB29-9E4B82F9DBBC),
+		helpstring("SimParameters Class")
+	]
+	coclass SimParameters
+	{
+		[default] interface ISimParameters;
+	};
+};

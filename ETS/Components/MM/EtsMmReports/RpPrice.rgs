@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmReports.MMRpPrice.1 = s 'MMRpPrice Class'
+	{
+		CLSID = s '{CA847E52-373F-4752-BC77-1D9892802696}'
+	}
+	EtsMmReports.MMRpPrice = s 'MMRpPrice Class'
+	{
+		CLSID = s '{CA847E52-373F-4752-BC77-1D9892802696}'
+		CurVer = s 'EtsMmReports.MMRpPrice.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {CA847E52-373F-4752-BC77-1D9892802696} = s 'MMRpPrice Class'
+		{
+			ProgID = s 'EtsMmReports.MMRpPrice.1'
+			VersionIndependentProgID = s 'EtsMmReports.MMRpPrice'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

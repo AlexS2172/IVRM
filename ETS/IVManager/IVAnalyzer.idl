@@ -1,0 +1,19 @@
+
+	// IVAnalyzer.idl : IDL source for IVAnalyzer.exe
+//
+// This file will be processed by the MIDL tool to
+// produce the type library (IVAnalyzer.tlb) and marshalling code.
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(61FEE133-42C3-4E5F-820D-7DFC403ED0AE),
+	version(1.0),
+	helpstring("IVAnalyzer 1.0 Type Library")
+]
+library IVAnalyzerLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+};
+
+	

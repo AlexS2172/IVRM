@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.UpdateUndIVSettings.1 = s 'UpdateUndIVSettings Class'
+	{
+		CLSID = s '{B2DF7657-72B6-4963-84E9-EED8754BAF91}'
+	}
+	MsgStruct.UpdateUndIVSettings = s 'UpdateUndIVSettings Class'
+	{
+		CLSID = s '{B2DF7657-72B6-4963-84E9-EED8754BAF91}'
+		CurVer = s 'MsgStruct.UpdateUndIVSettings.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B2DF7657-72B6-4963-84E9-EED8754BAF91} = s 'UpdateUndIVSettings Class'
+		{
+			ProgID = s 'MsgStruct.UpdateUndIVSettings.1'
+			VersionIndependentProgID = s 'MsgStruct.UpdateUndIVSettings'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

@@ -1,0 +1,120 @@
+// VADBLayout.idl : IDL source for VADBLayout.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (VADBLayout.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+#include "mtxattr.h"
+
+[
+	uuid(B028F3F3-EDE4-445D-B9A0-D5E50F9ECDF3),
+	version(1.0),
+	helpstring("VADBLayout 1.0 Type Library")
+]
+library VADBLAYOUTLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("msado25.tlb");
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Enumerations
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(A93FA22E-9263-404B-965A-7E43D3EBC903),
+		helpstring("EOptType"),
+		v1_enum
+	]
+	typedef enum EOptType
+	{
+		Put  = 0,
+		Call = 1,
+		OTM  = 2
+	}
+	EOptType;
+
+	[
+		uuid(2861CAEB-DA6A-4070-9038-0642E2CF0F67),
+		helpstring("EVolaItemStatus"),
+		v1_enum
+	]
+	typedef enum EVolaItemStatus
+	{
+		Untouched = 0x00000001,
+		Changed   = 0x00000002,
+		Created   = 0x00000004,
+		Deleted   = 0x00000010
+	}
+	EVolaItemStatus;
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Interfaces
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(D7F18553-4AEF-4f41-A003-4824331DF756),
+		dual,
+		helpstring("IDBLayout Interface"),
+		pointer_default(unique)
+	]
+	interface IVADBLayout : IDispatch
+	{
+		[propget, id(1), helpstring("ConnectionString")] HRESULT ConnectionString([out, retval] BSTR *pVal);
+		[propput, id(1), helpstring("ConnectionString")] HRESULT ConnectionString([in] BSTR newVal);
+	};
+
+	[
+		object,
+		uuid(A8165A67-0DB2-4860-8E77-B8FBE00961B6),
+		dual,
+		helpstring("IVAManagement Interface"),
+		pointer_default(unique)
+	]
+	interface IVAManagement : IDispatch
+	{
+		[id(1), helpstring("GetSurfaceVolatilities")]  HRESULT GetSurfaceVolatilities ([in]long SurfaceID, [in]EOptType OptType, [out, retval]_Recordset **ppRecordset);
+		[id(2), helpstring("SaveSurfaceVolatilities")] HRESULT SaveSurfaceVolatilities([in]long SurfaceID, [in]EOptType OptType, [in]_Recordset *pRecordset);
+
+		[id(3), helpstring("GetVolatilitySurfaceProps")]  HRESULT GetVolatilitySurfaceProps ([in]long SurfaceID, [out, retval]_Recordset **ppRecordset);
+		[id(4), helpstring("SaveVolatilitySurfaceProps")] HRESULT SaveVolatilitySurfaceProps([in]long SurfaceID, [in]_Recordset *pRecordset);
+
+		[id(5), helpstring("GetDefaultSurfaceID")]  HRESULT GetDefaultSurfaceID ([in]BSTR Symbol, [out, retval]long *pSurfaceID);
+		[id(6), helpstring("SaveDefaultSurfaceID")] HRESULT SaveDefaultSurfaceID([in]BSTR Symbol, [in]long SurfaceID);
+
+		//[id(7), helpstring("GenerateDefaultVolatilities")] HRESULT GenerateDefaultVolatilities([in]BSTR Symbol, [in]EOptType OptType, [in]double dDefVola);
+
+		[id(8), helpstring("GetDualQuadraticProps")] HRESULT GetDualQuadraticProps([in]BSTR Symbol, [in]long ContractType, [in] DATE ExpDate, [out,retval] _Recordset** ppRS);
+		[id(9), helpstring("SaveDualQuadraticProps")] HRESULT SaveDualQuadraticProps([in]BSTR Symbol, [in]long ContractType, [in] DATE ExpDate, [in] _Recordset* pRS);
+
+		[id(10), helpstring("GetVolaSurfaceGroup")] HRESULT GetVolaSurfaceGroup([in]BSTR Symbol, [out, retval]_Recordset **ppRecordset);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	// CoClasses
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(A7166386-06A9-4D6A-8276-3A7CF0E0235E),
+		helpstring("DBLayout Class"),
+		TRANSACTION_REQUIRED
+	]
+	coclass DBLayout
+	{
+		[default] interface IVADBLayout;
+				  interface IVAManagement;
+	};
+
+
+	[
+		uuid(FBD72117-1F27-4FC1-98BF-ACD948A73AF6),
+		helpstring("DBLayoutAccess Class"),
+		TRANSACTION_REQUIRED
+	]
+	coclass DBLayoutAccess
+	{
+		[default] interface IVADBLayout;
+				  interface IVAManagement;
+	};
+};

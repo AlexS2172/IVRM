@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.ExpiryCalendar.1 = s 'ExpiryCalendar Class'
+	{
+		CLSID = s '{2A31040B-8B09-4E05-BAFB-677328DEECBA}'
+	}
+	MsgStruct.ExpiryCalendar = s 'ExpiryCalendar Class'
+	{
+		CLSID = s '{2A31040B-8B09-4E05-BAFB-677328DEECBA}'
+		CurVer = s 'MsgStruct.ExpiryCalendar.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {2A31040B-8B09-4E05-BAFB-677328DEECBA} = s 'ExpiryCalendar Class'
+		{
+			ProgID = s 'MsgStruct.ExpiryCalendar.1'
+			VersionIndependentProgID = s 'MsgStruct.ExpiryCalendar'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

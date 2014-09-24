@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[eg_lib.dsp]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/eg_lib", HSDAAAAA
+
+[eg_lib.vcproj]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/eg_lib", HSDAAAAA

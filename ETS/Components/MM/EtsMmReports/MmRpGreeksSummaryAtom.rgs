@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpGreeksSummaryAtom.1 = s 'MmRpGreeksSummaryAtom Class'
+	{
+		CLSID = s '{B8F16C91-8B03-4ABB-A976-3286A5944C75}'
+	}
+	EtsMmReports.MmRpGreeksSummaryAtom = s 'MmRpGreeksSummaryAtom Class'
+	{
+		CLSID = s '{B8F16C91-8B03-4ABB-A976-3286A5944C75}'
+		CurVer = s 'EtsMmReports.MmRpGreeksSummaryAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B8F16C91-8B03-4ABB-A976-3286A5944C75} = s 'MmRpGreeksSummaryAtom Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpGreeksSummaryAtom.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpGreeksSummaryAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

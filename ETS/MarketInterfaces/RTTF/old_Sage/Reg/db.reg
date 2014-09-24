@@ -1,0 +1,5 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\ETS\Database]
+@="Provider=sqloledb;Data Source=crocodile;Initial catalog=EMM_FW_Temp;Integrated Security=SSPI;"
+

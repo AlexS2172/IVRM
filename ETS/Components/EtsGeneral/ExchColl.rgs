@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.ExchColl.1 = s 'ExchColl Class'
+	{
+		CLSID = s '{5F320F04-FEE0-40EE-844D-1CB61883CF4E}'
+	}
+	EtsGeneral.ExchColl = s 'ExchColl Class'
+	{
+		CLSID = s '{5F320F04-FEE0-40EE-844D-1CB61883CF4E}'
+		CurVer = s 'EtsGeneral.ExchColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5F320F04-FEE0-40EE-844D-1CB61883CF4E} = s 'ExchColl Class'
+		{
+			ProgID = s 'EtsGeneral.ExchColl.1'
+			VersionIndependentProgID = s 'EtsGeneral.ExchColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

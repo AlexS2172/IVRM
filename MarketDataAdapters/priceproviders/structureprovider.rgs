@@ -1,0 +1,26 @@
+HKCR
+{
+	PriceProviders.StructureProvider.1 = s 'StructureProvider Class'
+	{
+		CLSID = s '{46BA628B-C1DB-4DBF-89DA-94F3C819CFC1}'
+	}
+	PriceProviders.StructureProvider = s 'StructureProvider Class'
+	{
+		CLSID = s '{46BA628B-C1DB-4DBF-89DA-94F3C819CFC1}'
+		CurVer = s 'PriceProviders.StructureProvider.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {46BA628B-C1DB-4DBF-89DA-94F3C819CFC1} = s 'StructureProvider Class'
+		{
+			ProgID = s 'PriceProviders.StructureProvider.1'
+			VersionIndependentProgID = s 'PriceProviders.StructureProvider'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{0F65D2BD-7DEE-49C2-8C74-9676A8D3C9B8}'
+		}
+	}
+}

@@ -1,0 +1,24 @@
+HKCR
+{
+	EgarDataFeedService.HyperFeedMarketDataForIv.1 = s 'HyperFeedMarketDataForIv Class'
+	{
+		CLSID = s '{09EE4BF8-C25B-42e4-92A8-5CC08211EB25}'
+	}
+	EgarDataFeedService.HyperFeedMarketDataForIv = s 'HyperFeedMarketDataForIv Class'
+	{
+		CLSID = s '{09EE4BF8-C25B-42e4-92A8-5CC08211EB25}'
+		CurVer = s 'EgarDataFeedService.HyperFeedMarketDataForIv.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {09EE4BF8-C25B-42e4-92A8-5CC08211EB25} = s 'HyperFeedMarketDataForIv Class'
+		{
+			ProgID = s 'EgarDataFeedService.HyperFeedMarketDataForIv.1'
+			VersionIndependentProgID = s 'EgarDataFeedService.HyperFeedMarketDataForIv'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{1F999AB9-E140-4005-9180-958D72670A36}'
+			'TypeLib' = s '{426F0B40-8F7D-497e-ADEC-C09B57D8F16A}'
+		}
+	}
+}

@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.BorrowingRatesCurves.1 = s 'BorrowingRatesCurves Class'
+	{
+		CLSID = s '{7880434D-05AA-44BC-BC05-8DD30447D992}'
+	}
+	EtsGeneral.BorrowingRatesCurves = s 'BorrowingRatesCurves Class'
+	{
+		CLSID = s '{7880434D-05AA-44BC-BC05-8DD30447D992}'
+		CurVer = s 'EtsGeneral.BorrowingRatesCurves.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {7880434D-05AA-44BC-BC05-8DD30447D992} = s 'BorrowingRatesCurves Class'
+		{
+			ProgID = s 'EtsGeneral.BorrowingRatesCurves.1'
+			VersionIndependentProgID = s 'EtsGeneral.BorrowingRatesCurves'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

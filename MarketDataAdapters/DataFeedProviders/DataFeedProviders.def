@@ -1,0 +1,9 @@
+; DataFeedProviders.def : Declares the module parameters.
+
+LIBRARY      "DataFeedProviders.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

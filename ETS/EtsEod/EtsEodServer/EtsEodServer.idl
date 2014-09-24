@@ -1,0 +1,220 @@
+// EtsEodServer.idl : IDL source for EtsEodServer
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EtsEodServer.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(9333D65D-A4C2-454E-8336-F825E6E3DC7B),
+	version(1.0),
+	helpstring("EtsEodServer 1.0 Type Library")
+]
+library EtsEodServerLib
+{
+	importlib("stdole2.tlb");
+
+	typedef	
+	[
+		uuid(41670065-6045-433b-A5A4-6F4B457FE0C6),
+		v1_enum,
+	]	
+	enum EodDispIdEnum
+	{
+		// IEodServer
+		// methods
+		DISPID_StartEod = 1,
+		DISPID_StopEod,
+		DISPID_AddTask,
+		DISPID_RemoveTask,
+		DISPID_GetTask,
+		// properties
+		DISPID_EodMask = 51,
+		DISPID_EodStatus,
+		DISPID_EodCalcModel,
+		DISPID_EodLogLevel,
+		DISPID_EodLogHistory,
+		//_IEodServerEvents
+		DISPID_OnEodStatusChanged = 101,
+		DISPID_OnError,
+		// ITask
+		// methods
+		// properties
+		DISPID_StartTime = 151
+	}
+	EodDispIdEnum;
+
+	typedef	
+	[
+		uuid(44381FB1-234D-4f51-960A-06CE8961B986),
+		v1_enum,
+	]	
+	enum EodStepsMaskEnum
+	{
+		//empty mask
+		enSmEmpty					= 0x00000000,
+		enSmLoadAvgVolumes			= 0x00000002,
+		enSmLoadIVBands				= 0x00000004,
+		enSmLoadSkewKurtosis		= 0x00000008,
+
+		//steps mask(low 2 byte)
+		enSmLoadMktStructure		= 0x00000010,
+		enSmCalculateVega			= 0x00000020,
+		enSmLoadOptClosePrice		= 0x00000040,
+		enSmLoadUndClosePrice		= 0x00000080,
+		// all steps mask
+		enSmAllSteps				= 0x00000FFF,
+
+		//steps start condition mask
+		enScmCalculateTheoPrice		= enSmLoadOptClosePrice
+									| enSmLoadUndClosePrice
+									| enSmLoadSkewKurtosis,
+
+		// steps running property (high 2 byte)
+		enSmpUndLoadFromIV			             = 0x00002000,
+		enSmpOptLoadFromIV			             = 0x00004000,
+		enSmpCheckMktStrUpdates		             = 0x00008000,
+		enSmpLoadOnlyActiveUnd		             = 0x00010000,
+		enSmpDeleteOldOptions	             	 = 0x00020000,
+		enSmpMarketStructureUndLoadClosePrices   = 0x00040000,
+		enSmpMarketStructureOptLoadClosePrices   = 0x00080000,
+		enSmpMarketStructureFilterWrongDividends = 0x00100000,
+		enSmpMarketStructureOptionsLoad          = 0x00200000,
+		enSmpLoadFutures			             = 0x00400000,
+		enSmpLoadFuturesPrice				     = 0x00800000,
+		enSmpLoadFuturesLastPrice				= 0x001000000,
+
+
+		enSmDefSteps				= enSmLoadAvgVolumes
+									| enSmLoadIVBands
+									| enSmLoadSkewKurtosis
+									| enSmLoadOptClosePrice
+									| enSmLoadUndClosePrice
+									| enSmLoadMktStructure
+									| enSmCalculateVega
+									| enSmpUndLoadFromIV
+									| enSmpOptLoadFromIV
+									//| enSmpCheckMktStrUpdates
+									| enSmpDeleteOldOptions
+									| enSmpMarketStructureFilterWrongDividends
+									| enSmpMarketStructureOptionsLoad
+									| enSmpLoadFutures
+	}
+	EodStepsMaskEnum;
+
+	typedef
+	[
+		uuid(F4CC420B-0C75-4a50-BE8F-E944F9097753),
+		v1_enum,
+	]	
+	enum EodRpMessageTypeEnum
+	{
+		enRpMtStart = 1,
+		enRpMtMessage,
+		enRpMtError,
+		enRpMtProgress,
+		enRpMtFinishSuccess,
+		enRpMtFinishWithError,
+		enRpMtWarning
+	}
+	EodRpMessageTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(53E50AAE-FF38-48d6-8DF9-82B91920D69D),
+		helpstring("EOD Calculation Model Type"),
+		v1_enum
+	]
+	typedef enum EodCalcModelTypeEnum
+	{
+		[helpstring("enEodCmBinomial")]		enEodCmBinomial		= 2,
+		[helpstring("enEodCmBinomialOpt")]	enEodCmBinomialOpt	= 3,
+		[helpstring("enEodCmVskLog")]		enEodCmVskLog		= 4
+	} EodCalcModelTypeEnum;
+
+	typedef
+	[
+		uuid(54E2167D-96CD-411a-9560-29568B37847A),
+		v1_enum,
+	]	
+	enum EodStatusEnum
+	{
+		enStStarted = 1,
+		enStStartPending,
+		enStStopped,
+		enStStopPending
+	}
+	EodStatusEnum;
+
+	[
+		object,
+		uuid(FFD9A7D9-CB6E-472D-923D-1690C70CED5C),
+		dual,
+		nonextensible,
+		helpstring("ITask Interface"),
+		pointer_default(unique)
+	]
+	interface ITask : IDispatch
+	{
+		[propget, id(DISPID_StartTime), helpstring("property StartTime")] HRESULT StartTime([out, retval] DATE* pVal);
+		[propput, id(DISPID_StartTime), helpstring("property StartTime")] HRESULT StartTime([in] DATE newVal);
+	};
+
+	[
+		object,
+		uuid(3653EEB2-21F0-4D58-9ECF-5872246839CD),
+		dual,
+		nonextensible,
+		helpstring("IEodServer Interface"),
+		pointer_default(unique)
+	]
+	interface IEodServer : IDispatch
+	{
+		[id(DISPID_StartEod), helpstring("method StartEod")] HRESULT StartEod(void);
+		[id(DISPID_StopEod), helpstring("method StopEod")] HRESULT StopEod(void);
+		[id(DISPID_AddTask), helpstring("method AddTask")] HRESULT AddTask([in] ITask* pTask);
+		[id(DISPID_RemoveTask), helpstring("method RemoveTask")] HRESULT RemoveTask();
+		[id(DISPID_GetTask), helpstring("method GetTask")] HRESULT GetTask([out] ITask** ppTask);
+
+		[propget, id(DISPID_EodMask), helpstring("property EodMask")] HRESULT EodMask([out, retval] ULONG* pVal);
+		[propput, id(DISPID_EodMask), helpstring("property EodMask")] HRESULT EodMask([in] ULONG newVal);
+		[propget, id(DISPID_EodStatus), helpstring("property EodStatus")] HRESULT EodStatus([out, retval] EodStatusEnum* pVal);
+		[propget, id(DISPID_EodCalcModel), helpstring("property EodCalcModel")] HRESULT EodCalcModel([out, retval] EodCalcModelTypeEnum* pVal);
+		[propput, id(DISPID_EodCalcModel), helpstring("property EodCalcModel")] HRESULT EodCalcModel([in] EodCalcModelTypeEnum newVal);
+		[propget, id(DISPID_EodLogLevel), helpstring("property EodLogLevel")] HRESULT EodLogLevel([out, retval] int* pVal);
+		[propput, id(DISPID_EodLogLevel), helpstring("property EodLogLevel")] HRESULT EodLogLevel([in] int newVal);
+		[propget, id(DISPID_EodLogHistory), helpstring("property EodLogHistory")] HRESULT EodLogHistory([out, retval] int* pVal);
+		[propput, id(DISPID_EodLogHistory), helpstring("property EodLogHistory")] HRESULT EodLogHistory([in] int newVal);
+	};
+
+	[
+		uuid(3A4AB1A4-895C-450A-95CD-01753A7F9125),
+		helpstring("_IEodServerEvents Interface")
+	]
+	dispinterface _IEodServerEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_OnEodStatusChanged), helpstring("method OnEodStatusChanged")] HRESULT OnEodStatusChanged([in] EodStatusEnum enStatus);
+		[id(DISPID_OnError), helpstring("method OnError")] HRESULT OnError([in] BSTR bsDescription);
+	};
+	[
+		uuid(A98F4C1B-358B-414C-9B9A-E44B1512F6C7),
+		helpstring("EodServer Class")
+	]
+	coclass EodServer
+	{
+		[default] interface IEodServer;
+		[default, source] dispinterface _IEodServerEvents;
+	};
+	[
+		uuid(83A7C6A1-2560-441E-BE96-FF4D78D1D834),
+		helpstring("Task Class")
+	]
+	coclass Task
+	{
+		[default] interface ITask;
+	};
+};

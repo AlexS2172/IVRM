@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsExpCalAtom.1 = s 'EtsExpCalAtom Class'
+	{
+		CLSID = s '{195CDD77-2A3C-47B5-807C-5872C59E1DDD}'
+	}
+	EtsGeneral.EtsExpCalAtom = s 'EtsExpCalAtom Class'
+	{
+		CLSID = s '{195CDD77-2A3C-47B5-807C-5872C59E1DDD}'
+		CurVer = s 'EtsGeneral.EtsExpCalAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {195CDD77-2A3C-47B5-807C-5872C59E1DDD} = s 'EtsExpCalAtom Class'
+		{
+			ProgID = s 'EtsGeneral.EtsExpCalAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsExpCalAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

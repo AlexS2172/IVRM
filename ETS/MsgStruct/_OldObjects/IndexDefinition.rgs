@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.IndexDef.1 = s 'IndexDef Class'
+	{
+		CLSID = s '{8E741AA2-8369-4B87-8F4D-CDFCA1A5943E}'
+	}
+	MsgStruct.IndexDef = s 'IndexDef Class'
+	{
+		CLSID = s '{8E741AA2-8369-4B87-8F4D-CDFCA1A5943E}'
+		CurVer = s 'MsgStruct.IndexDef.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8E741AA2-8369-4B87-8F4D-CDFCA1A5943E} = s 'IndexDef Class'
+		{
+			ProgID = s 'MsgStruct.IndexDef.1'
+			VersionIndependentProgID = s 'MsgStruct.IndexDef'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

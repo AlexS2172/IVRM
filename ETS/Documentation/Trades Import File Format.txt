@@ -1,0 +1,20 @@
+#		Field			Format				Notes
+--		--------------------	-------------------------	-----------------------------------------------------------------------------------------------
+1		Trader			string (up to 12 symbols)	Required.
+2		Strategy		string (up to 12 symbols)	Not required.
+3		Trade Date/Time		MM/DD/YYYY HH:MM:SS		Date part required. Local time.
+4		Underlying Symbol	string (up to 20 symbols)	Required. Futures Symbol for futures options trades, Stock/Index symbol for others.
+5		Contract Type		string (3 symbols)		Required. STK - Stock, OPT - Stock option, FUT - futures, OFT - futures option.
+6		Option/Future Root	string (up to 20 symbols)	Required for OPT, FUT, OFT trades, not required for STK trades.
+7		Future Maturity Date	MM/DD/YYYY			Required for FUT, OFT trades, not required for STK, OPT trades.
+8		Expiration Date		MM/DD/YYYY			Required for OPT, OFT trades, not required for STK, FUT trades.
+9		Strike			##.#				Required for OPT, OFT trades, not required for STK, FUT trades.
+10		Option Type		string (1 symbol)		C - call option, P - put option. Required for OPT, OFT trades, not required for STK, FUT trades.
+11		Quantity		##				Required. Positive - Buy, Negative - Sell.
+12		Price			##.#				Required.
+
+Samples:
+TR1,,06/19/2004 17:00:00,MXIM,STK,,,,,,-100,52.5
+TR1,ST1,06/19/2004 17:10:00,MXIM,OPT,XIQ,,08/20/2004,35,C,100,2.1
+TR1,,06/19/2004 17:20:00,SPX,FUT,SP,09/18/2004,,,,-10,1150.2
+TR1,,06/19/2004 17:20:00,SPX,FOP,SP,09/18/2004,08/23/2004,1000,P,100,2.5

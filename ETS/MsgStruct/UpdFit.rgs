@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.UpdFit.1 = s 'UpdFit Class'
+	{
+		CLSID = s '{40D6C7CF-F6F9-4752-A652-7D9E81E38A94}'
+	}
+	MsgStruct.UpdFit = s 'UpdFit Class'
+	{
+		CLSID = s '{40D6C7CF-F6F9-4752-A652-7D9E81E38A94}'
+		CurVer = s 'MsgStruct.UpdFit.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {40D6C7CF-F6F9-4752-A652-7D9E81E38A94} = s 'UpdFit Class'
+		{
+			ProgID = s 'MsgStruct.UpdFit.1'
+			VersionIndependentProgID = s 'MsgStruct.UpdFit'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

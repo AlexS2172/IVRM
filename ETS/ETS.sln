@@ -1,0 +1,90 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ETSManager", "ETSManager\ETSManager.vcproj", "{5839078E-D296-4475-B330-6A9409F31E6F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56675C68-4493-4C5E-AED4-9510F4AE42C9} = {56675C68-4493-4C5E-AED4-9510F4AE42C9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VADBLayout", "VADBLayout\VADBLayout.vcproj", "{E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VME", "Vme\VME.vcproj", "{B04BBDBA-BAB9-419A-8D8D-034D9AE0F947}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4} = {E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ETSLogsManager", "ETSLogsManager\ETSLogsManager.vcproj", "{44288F09-D7E7-4EBB-83F3-2B4258B8E6FF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VolatilitySources", "VolatilitySources\VolatilitySources.vcproj", "{EFD8AB9F-8168-435C-BAD6-77169C12C239}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4} = {E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4}
+		{B04BBDBA-BAB9-419A-8D8D-034D9AE0F947} = {B04BBDBA-BAB9-419A-8D8D-034D9AE0F947}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ETSXMLParams", "ETSXMLParams\ETSXMLParams.vcproj", "{56675C68-4493-4C5E-AED4-9510F4AE42C9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IVRmRes", "Skins\IVRmRes\IVRmRes.vcproj", "{51AE6E19-DE4D-4FE6-93FC-D4A087521D2E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AngoraRes", "Skins\Angora\AngoraRes\AngoraRes.vcproj", "{7F12B0A8-0159-4386-9FC4-FE0B413B02EA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EgFormat", "IvRmDataLoader\EgFormat\EgFormat\EgFormat.vcproj", "{83A22509-B2DE-4C56-A1EE-57F35FC2E971}"
+	ProjectSection(ProjectDependencies) = postProject
+		{44288F09-D7E7-4EBB-83F3-2B4258B8E6FF} = {44288F09-D7E7-4EBB-83F3-2B4258B8E6FF}
+		{56675C68-4493-4C5E-AED4-9510F4AE42C9} = {56675C68-4493-4C5E-AED4-9510F4AE42C9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OptionDogRes", "Skins\OptionDogRes\OptionDogRes.vcproj", "{61E1186F-646A-4CD2-A779-3234711F5A05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5839078E-D296-4475-B330-6A9409F31E6F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5839078E-D296-4475-B330-6A9409F31E6F}.Debug|Win32.Build.0 = Debug|Win32
+		{5839078E-D296-4475-B330-6A9409F31E6F}.Release|Win32.ActiveCfg = Release|Win32
+		{5839078E-D296-4475-B330-6A9409F31E6F}.Release|Win32.Build.0 = Release|Win32
+		{E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4}.Debug|Win32.Build.0 = Debug|Win32
+		{E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4}.Release|Win32.ActiveCfg = Release|Win32
+		{E92ACEC9-601B-4411-A4F9-2B9CD98AA6A4}.Release|Win32.Build.0 = Release|Win32
+		{B04BBDBA-BAB9-419A-8D8D-034D9AE0F947}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B04BBDBA-BAB9-419A-8D8D-034D9AE0F947}.Debug|Win32.Build.0 = Debug|Win32
+		{B04BBDBA-BAB9-419A-8D8D-034D9AE0F947}.Release|Win32.ActiveCfg = Release|Win32
+		{B04BBDBA-BAB9-419A-8D8D-034D9AE0F947}.Release|Win32.Build.0 = Release|Win32
+		{44288F09-D7E7-4EBB-83F3-2B4258B8E6FF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44288F09-D7E7-4EBB-83F3-2B4258B8E6FF}.Debug|Win32.Build.0 = Debug|Win32
+		{44288F09-D7E7-4EBB-83F3-2B4258B8E6FF}.Release|Win32.ActiveCfg = Release|Win32
+		{44288F09-D7E7-4EBB-83F3-2B4258B8E6FF}.Release|Win32.Build.0 = Release|Win32
+		{EFD8AB9F-8168-435C-BAD6-77169C12C239}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EFD8AB9F-8168-435C-BAD6-77169C12C239}.Debug|Win32.Build.0 = Debug|Win32
+		{EFD8AB9F-8168-435C-BAD6-77169C12C239}.Release|Win32.ActiveCfg = Release|Win32
+		{EFD8AB9F-8168-435C-BAD6-77169C12C239}.Release|Win32.Build.0 = Release|Win32
+		{56675C68-4493-4C5E-AED4-9510F4AE42C9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{56675C68-4493-4C5E-AED4-9510F4AE42C9}.Debug|Win32.Build.0 = Debug|Win32
+		{56675C68-4493-4C5E-AED4-9510F4AE42C9}.Release|Win32.ActiveCfg = Release|Win32
+		{56675C68-4493-4C5E-AED4-9510F4AE42C9}.Release|Win32.Build.0 = Release|Win32
+		{51AE6E19-DE4D-4FE6-93FC-D4A087521D2E}.Debug|Win32.ActiveCfg = Release|Win32
+		{51AE6E19-DE4D-4FE6-93FC-D4A087521D2E}.Debug|Win32.Build.0 = Release|Win32
+		{51AE6E19-DE4D-4FE6-93FC-D4A087521D2E}.Release|Win32.ActiveCfg = Release|Win32
+		{51AE6E19-DE4D-4FE6-93FC-D4A087521D2E}.Release|Win32.Build.0 = Release|Win32
+		{7F12B0A8-0159-4386-9FC4-FE0B413B02EA}.Debug|Win32.ActiveCfg = Release|Win32
+		{7F12B0A8-0159-4386-9FC4-FE0B413B02EA}.Debug|Win32.Build.0 = Release|Win32
+		{7F12B0A8-0159-4386-9FC4-FE0B413B02EA}.Release|Win32.ActiveCfg = Release|Win32
+		{7F12B0A8-0159-4386-9FC4-FE0B413B02EA}.Release|Win32.Build.0 = Release|Win32
+		{83A22509-B2DE-4C56-A1EE-57F35FC2E971}.Debug|Win32.ActiveCfg = Debug|Win32
+		{83A22509-B2DE-4C56-A1EE-57F35FC2E971}.Debug|Win32.Build.0 = Debug|Win32
+		{83A22509-B2DE-4C56-A1EE-57F35FC2E971}.Release|Win32.ActiveCfg = Release|Win32
+		{83A22509-B2DE-4C56-A1EE-57F35FC2E971}.Release|Win32.Build.0 = Release|Win32
+		{61E1186F-646A-4CD2-A779-3234711F5A05}.Debug|Win32.ActiveCfg = Debug|Win32
+		{61E1186F-646A-4CD2-A779-3234711F5A05}.Debug|Win32.Build.0 = Debug|Win32
+		{61E1186F-646A-4CD2-A779-3234711F5A05}.Release|Win32.ActiveCfg = Release|Win32
+		{61E1186F-646A-4CD2-A779-3234711F5A05}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+EndGlobal

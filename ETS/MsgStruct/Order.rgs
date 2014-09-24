@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.Order.1 = s 'Order Class'
+	{
+		CLSID = s '{28D6473A-F133-4B46-877C-C6A4EB3BC116}'
+	}
+	MsgStruct.Order = s 'Order Class'
+	{
+		CLSID = s '{28D6473A-F133-4B46-877C-C6A4EB3BC116}'
+		CurVer = s 'MsgStruct.Order.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {28D6473A-F133-4B46-877C-C6A4EB3BC116} = s 'Order Class'
+		{
+			ProgID = s 'MsgStruct.Order.1'
+			VersionIndependentProgID = s 'MsgStruct.Order'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

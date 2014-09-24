@@ -1,0 +1,127 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ATFPRICEINFO        REGISTRY                "ATFPriceInfo.rgs"
+IDR_ATFPRICEPROVIDER    REGISTRY                "ATFPriceProvider.rgs"
+IDR_ATFSTRUCTUREINFO    REGISTRY                "ATFStructureInfo.rgs"
+IDR_ATFSTRUCTUREPROVIDER REGISTRY                "ATFStructureProvider.rgs"
+IDR_PROVIDERINFO        REGISTRY                "ProviderInfo.rgs"
+IDR_ATFDataProvider     REGISTRY                "ATFDataProvider.rgs"
+IDR_ATFPROVIDER         REGISTRY                "ATFProvider.rgs"
+IDR_ATFPRICEINFOWITHNOTIFY REGISTRY                "ATFPriceInfoWithNotify.rgs"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""..\\\\..\\\\tlb\\\\ATFDataProvider.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,8,87,0
+ PRODUCTVERSION 1,8,87,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileDescription", "ATFDataProvider Module"
+            VALUE "FileVersion", "1, 8, 87, 0"
+            VALUE "InternalName", "ATFDataProvider"
+            VALUE "LegalCopyright", "©2002-2003 EGAR Technology Inc."
+            VALUE "OriginalFilename", "ATFDataProvider.exe"
+            VALUE "ProductName", "ATFDataProvider Module"
+            VALUE "ProductVersion", "1, 8, 87, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "ATFDataProvider"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "..\\..\\tlb\\ATFDataProvider.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

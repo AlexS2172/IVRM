@@ -1,0 +1,24 @@
+HKCR
+{
+	EgarDataFeedService.HyperFeedStructureProviderEx.1 = s 'HyperFeedStructureProviderEx Class'
+	{
+		CLSID = s '{F025923A-4A0E-4764-BF04-7CC977F902BC}'
+	}
+	EgarDataFeedService.HyperFeedStructurePr = s 'HyperFeedStructureProviderEx Class'
+	{
+		CLSID = s '{F025923A-4A0E-4764-BF04-7CC977F902BC}'
+		CurVer = s 'EgarDataFeedService.HyperFeedStructureProviderEx.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F025923A-4A0E-4764-BF04-7CC977F902BC} = s 'HyperFeedStructureProviderEx Class'
+		{
+			ProgID = s 'EgarDataFeedService.HyperFeedStructureProviderEx.1'
+			VersionIndependentProgID = s 'EgarDataFeedService.HyperFeedStructureProviderEx'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{1F999AB9-E140-4005-9180-958D72670A36}'
+			'TypeLib' = s '{426F0B40-8F7D-497e-ADEC-C09B57D8F16A}'
+		}
+	}
+}

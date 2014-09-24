@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.CalculationParametrs.1 = s 'CalculationParametrs Class'
+	{
+		CLSID = s '{1FC9F748-165C-4FB8-B421-E7AEC4132963}'
+	}
+	EtsGeneral.CalculationParametrs = s 'CalculationParametrs Class'
+	{
+		CLSID = s '{1FC9F748-165C-4FB8-B421-E7AEC4132963}'
+		CurVer = s 'EtsGeneral.CalculationParametrs.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {1FC9F748-165C-4FB8-B421-E7AEC4132963} = s 'CalculationParametrs Class'
+		{
+			ProgID = s 'EtsGeneral.CalculationParametrs.1'
+			VersionIndependentProgID = s 'EtsGeneral.CalculationParametrs'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

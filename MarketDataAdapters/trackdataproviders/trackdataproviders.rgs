@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{208D10D7-30AA-476B-B3C8-ECD417B47FEA} = s 'TrackDataProviders'
+		'TrackDataProviders.EXE'
+		{
+			val AppID = s {208D10D7-30AA-476B-B3C8-ECD417B47FEA}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+HKCR
+{
+	HyperFeedProviders.SettingsManager.1 = s 'SettingsManager Class'
+	{
+		CLSID = s '{A9521DE9-14AF-409A-BF66-C8ADEFE9F43C}'
+	}
+	HyperFeedProviders.SettingsManager = s 'SettingsManager Class'
+	{
+		CLSID = s '{A9521DE9-14AF-409A-BF66-C8ADEFE9F43C}'
+		CurVer = s 'HyperFeedProviders.SettingsManager.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A9521DE9-14AF-409A-BF66-C8ADEFE9F43C} = s 'SettingsManager Class'
+		{
+			ProgID = s 'HyperFeedProviders.SettingsManager.1'
+			VersionIndependentProgID = s 'HyperFeedProviders.SettingsManager'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{A8FB1680-0F6E-42EB-84D6-5A445C61818E}'
+			'TypeLib' = s '{AD59A81D-7749-4597-A38F-913E16C4519A}'
+		}
+	}
+}

@@ -1,0 +1,608 @@
+// MMW.idl : IDL source for MMW.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (MMW.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+
+[
+	uuid(602C2386-E1D1-4be2-B5DF-9A24E2717D86),
+	version(1.0),
+	helpstring("MMW 1.0 Type Library")
+]
+library MMWLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("..\tlb\MsgStruct.tlb");	
+
+    typedef	[v1_enum]
+    enum 
+    {
+	    // IPubManager
+	    DISPID_RegPublisher = 1,
+	    DISPID_UnregPublisher,
+
+	    DISPID_PubQuote,
+	    DISPID_PubVola,
+	    DISPID_PubTradeUpdate,
+		DISPID_PubHHRequest,
+		DISPID_PubBroker,
+		DISPID_PubTrader,
+		DISPID_PubTrade,
+		DISPID_PubExchange,
+		DISPID_PubHoliday,
+		DISPID_PubExchangeHoliday,
+		DISPID_PubBook,
+		DISPID_PubStrategy,
+		DISPID_PubCommission,
+		DISPID_PubIndex,
+		DISPID_PubIndexDef,
+		DISPID_PubStock,
+		DISPID_PubContractInGroup,
+		DISPID_PubContractGroup,
+		DISPID_PubExpiry,
+		DISPID_PubOption,
+		DISPID_PubRMScenario,
+		DISPID_PubContract,
+		DISPID_PubTraderContract,
+		DISPID_PubIrCurve,
+		DISPID_PubIrPoint,
+		DISPID_PubQuoteSubscription,
+		DISPID_PubDataInfo,
+		DISPID_PubVolaSurfaceData,
+		DISPID_PubCustomStrikeSkewPoint,
+		DISPID_PubLastQuote,
+		DISPID_PubContractExchange,
+		DISPID_PubExpiryCalendar,
+		DISPID_PubExpiryInCalendar,
+		DISPID_PubPriceUpdate,
+		DISPID_PubUnderlyingUpdate,
+		DISPID_PubManualPriceUpdate,
+		DISPID_PubSettingsUpdate,
+
+	    // ISubManager
+	    DISPID_SubQuote,
+	    DISPID_UnsubQuote,
+	    DISPID_SubVola,
+	    DISPID_UnsubVola,
+	    DISPID_SubTradeUpdate,
+	    DISPID_UnsubTradeUpdate,
+		DISPID_SubHHRequest,
+	    DISPID_UnsubHHRequest,
+
+		DISPID_SubBroker,
+	    DISPID_UnsubBroker,
+		DISPID_SubTrader,
+	    DISPID_UnsubTrader,
+		DISPID_SubTrade,
+		DISPID_UnsubTrade,
+		DISPID_SubExchange,
+		DISPID_UnsubExchange,
+		DISPID_SubHoliday,
+		DISPID_UnsubHoliday,
+		DISPID_SubExchangeHoliday,
+		DISPID_UnsubExchangeHoliday,
+		DISPID_SubBook,
+		DISPID_UnsubBook,
+		DISPID_SubStrategy,
+		DISPID_UnsubStrategy,
+		DISPID_SubCommission,
+		DISPID_UnsubCommission,
+		DISPID_SubIndex,
+		DISPID_UnsubIndex,
+		DISPID_SubIndexDef,
+		DISPID_UnsubIndexDef,
+		DISPID_SubStock,
+		DISPID_UnsubStock,
+		DISPID_SubContractInGroup,
+		DISPID_UnsubContractInGroup,
+		DISPID_SubContractGroup,
+		DISPID_UnsubContractGroup,
+		DISPID_SubExpiry,
+		DISPID_UnsubExpiry,
+		DISPID_SubOption,
+		DISPID_UnsubOption,
+		DISPID_SubRMScenario,
+		DISPID_UnsubRMScenario,
+		DISPID_SubContract,
+		DISPID_UnsubContract,
+		DISPID_SubTraderContract,
+		DISPID_UnsubTraderContract,
+		DISPID_SubIrPoint,
+		DISPID_UnsubIrPoint,
+		DISPID_SubIrCurve,
+		DISPID_UnsubIrCurve,
+		DISPID_SubQuoteSubscription,
+		DISPID_UnsubQuoteSubscription,
+		DISPID_SubDataInfo,
+		DISPID_UnsubDataInfo,
+		DISPID_SubVolaSurfaceData,
+		DISPID_UnsubVolaSurfaceData,
+		DISPID_SubCustomStrikeSkewPoint,
+		DISPID_UnsubCustomStrikeSkewPoint,
+		DISPID_SubLastQuote,
+		DISPID_UnsubLastQuote,
+		DISPID_SubContractExchange,
+		DISPID_UnsubContractExchange,
+		DISPID_SubExpiryCalendar,
+		DISPID_UnsubExpiryCalendar,
+		DISPID_SubExpiryInCalendar,
+		DISPID_UnsubExpiryInCalendar,
+		DISPID_SubPriceUpdate,
+		DISPID_UnsubPriceUpdate,
+		DISPID_SubUnderlyingUpdate,
+		DISPID_UnsubUnderlyingUpdate,
+		DISPID_UnsubManualPriceUpdate,
+		DISPID_SubManualPriceUpdate,
+		DISPID_UnsubSettingsUpdate,
+		DISPID_SubSettingsUpdate,
+
+	    // _IOnMessages
+	    DISPID_OnQuote,
+	    DISPID_OnVola,
+	    DISPID_OnTradeUpdate,
+		DISPID_OnHHRequest,
+		DISPID_OnBroker,
+		DISPID_OnTrader,
+		DISPID_OnTrade,
+		DISPID_OnExchange,
+		DISPID_OnHoliday,
+		DISPID_OnExchangeHoliday,
+		DISPID_OnBook,
+		DISPID_OnStrategy,
+		DISPID_OnCommission,
+		DISPID_OnIndex,
+		DISPID_OnIndexDef,
+		DISPID_OnStock,
+		DISPID_OnContractInGroup,
+		DISPID_OnContractGroup,
+		DISPID_OnExpiry,
+		DISPID_OnOption,
+		DISPID_OnRMScenario,
+		DISPID_OnContract,
+		DISPID_OnTraderContract,
+		DISPID_OnIrCurve,
+		DISPID_OnIrPoint,
+		DISPID_OnQuoteSubscription,
+		DISPID_OnDataInfo,
+		DISPID_OnVolaSurfaceData,
+		DISPID_OnCustomStrikeSkewPoint,
+		DISPID_OnLastQuote,
+		DISPID_OnContractExchange,
+		DISPID_OnExpiryCalendar,
+		DISPID_OnExpiryInCalendar,
+		DISPID_OnPriceUpdate,
+		DISPID_OnUnderlyingUpdate,
+		DISPID_OnManualPriceUpdate,
+		DISPID_OnSettingsUpdate,
+
+		DISPID_OnLogon,
+		DISPID_OnLogoff,
+
+		DISPID_IsLogoned,
+		DISPID_UserGroup,
+
+	    // IPubManager
+		DISPID_PubDynamicMessage,
+
+	    // ISubManager
+		DISPID_SubDynamicMessage,
+		DISPID_UnsubDynamicMessage,
+
+	    // _IOnMessages
+		DISPID_OnDynamicMessage,
+
+	    // IPubManager
+		DISPID_GetHHRequestStatus,
+	    // _IOnMessages
+		DISPID_OnHHRequestStatus,
+
+/*****************************************************************************/
+/* Obsolete used for binary compatibility */
+	    // IPubManager
+		DISPID_PubFIXRequestNewOrder,
+		DISPID_PubFIXNewOrder,
+		DISPID_PubFIXExecutionReport,
+
+	    // ISubManager
+		DISPID_SubFIXRequestNewOrder,
+		DISPID_UnsubFIXRequestNewOrder,
+		DISPID_SubFIXNewOrder,
+		DISPID_UnsubFIXNewOrder,
+		DISPID_SubFIXExecutionReport,
+		DISPID_UnsubFIXExecutionReport,
+
+	    // _IOnMessages
+		DISPID_OnFIXRequestNewOrder,
+		DISPID_OnFIXNewOrder,
+		DISPID_OnFIXExecutionReport,
+
+/*****************************************************************************/
+
+	    // IPubManager
+		DISPID_PubOptionRoot,
+		DISPID_PubBroadcastMessage,
+
+	    // ISubManager
+		DISPID_SubOptionRoot,
+		DISPID_UnsubOptionRoot,
+		DISPID_SubBroadcastMessage,
+		DISPID_UnsubBroadcastMessage,
+
+	    // _IOnMessages
+		DISPID_OnOptionRoot,
+		DISPID_OnBroadcastMessage,
+
+		// IPubManager
+		/************** Order messages **********************************/
+		DISPID_PubRequestNewOrder,
+		DISPID_PubAlterOrder,
+		DISPID_PubCancelOrder,
+		DISPID_PubRequestOrderStatus,
+		/************** Orders Notification messages ********************/
+		DISPID_PubOrder,
+		DISPID_PubExecutionReport,
+		/****************************************************************/
+
+		// ISubManager
+		DISPID_SubOrderMessages,
+		DISPID_UnsubOrderMessages,
+		/****************************************************************/
+		DISPID_SubOrdersNotificationMessages,
+		DISPID_UnsubOrdersNotificationMessages,
+		/****************************************************************/
+		DISPID_SubExecutionReport,
+		DISPID_UnsubExecutionReport,
+		/****************************************************************/
+
+		// _IOnMessages
+		DISPID_OnRequestNewOrder,
+		DISPID_OnAlterOrder,
+		DISPID_OnCancelOrder,
+		DISPID_OnRequestOrderStatus,
+		/****************************************************************/
+		DISPID_OnOrder,
+		DISPID_OnExecutionReport,
+		
+		// IPubManager
+		DISPID_PubFixGatewayStatusRequest,
+		DISPID_PubFixGatewayStatus,
+		// ISubManager
+		DISPID_SubFixGatewayStatusRequest,
+		DISPID_UnsubFixGatewayStatusRequest,
+		DISPID_SubFixGatewayStatus,
+		DISPID_UnsubFixGatewayStatus,
+		// _IOnMessages
+		DISPID_OnFixGatewayStatusRequest,
+		DISPID_OnFixGatewayStatus,
+
+		// IActiveFuturesChange
+		DISPID_PubActiveFuturesChange,
+		DISPID_SubActiveFuturesChange,
+		DISPID_UnsubActiveFuturesChange,
+		DISPID_OnActiveFuturesChange,
+
+		// IFlexOption
+		DISPID_PubFlexOption,
+		DISPID_SubFlexOption,
+		DISPID_UnsubFlexOption,
+		DISPID_OnFlexOption
+	}
+	DISP_IDS;
+
+	typedef 
+		[
+		uuid(3231229F-938C-4D76-927A-10A746EC4FCD),
+		v1_enum,
+	]
+	enum MESSAGE_TYPE
+	{
+		enMtQuote						= 1,
+		enMtVola						= 2,
+		enMtTradeUpdate					= 3,
+		
+		enMtHHRequest					= 4,
+		enMtBroker						= 5,
+		enMtTrader						= 6,
+		enMtTrade						= 7,
+		enMtCommission					= 8,
+		enMtExchange					= 9,
+		enMtHoliday						= 10,
+		enMtExchangeHoliday				= 11,
+		enMtBook						= 12,
+		enMtStrategy					= 13,
+		enMtIndex						= 14,
+		enMtIndexDef					= 15,
+		enMtStock						= 16,
+		enMtContractInGroup				= 17,
+		enMtContractGroup				= 18,
+		enMtExpiry						= 19,
+		enMtOption						= 20,
+		enMtRMScenario					= 21,
+		enMtContract					= 22,
+		enMtTraderContract				= 23,
+		enMtIrCurve						= 24,
+		enMtIrPoint						= 25,
+		enMtQuoteSubscription 			= 26,
+		enMtDataInfo					= 27,
+		enMtVolaSurfaceData				= 28,
+		enMtCustomStrikeSkewPoint		= 29,
+		enMtLastQuote					= 30,
+		enMtContractExchange			= 31,
+		enMtExpiryCalendar				= 32,
+		enMtExpiryInCalendar			= 33,
+		enMtDynamicMessage				= 34,
+/*****************************************************************************/
+/* Obsolete fo binary compatibility											 */
+		enMtFIXRequestNewOrder			= 35,
+		enMtFIXNewOrder					= 36,
+		enMtFIXExecutionReport			= 37,
+/*****************************************************************************/
+		enMtOptionRoot					= 38,
+		enMtBroadcastMessage			= 39,
+
+		enMtRequestNewOrder				= 40,
+		enMtAlterOrder					= 41,
+		enMtCancelOrder					= 42,
+		enMtRequestOrderStatus			= 43,
+		enMtOrder						= 44,
+		enMtExecutionReport				= 45,
+		enMtFixGatewayStatusRequest		= 46,
+		enMtFixGatewayStatus			= 47,
+		enMtPriceUpdate					= 48,
+		enMtActiveFuturesChange         = 49,
+		enMtFlexOption					= 50,
+		enMtUnderlyingUpdate			= 51,
+		enMtManualPriceUpdate			= 52,
+		enMtSettingsUpdate				= 53
+	}
+	MESSAGE_TYPE;
+
+	[
+		object,
+		uuid(299D6F93-1D47-4810-A3C7-F55244E19860),
+		dual,
+		helpstring("IPubManager Interface"),
+		pointer_default(unique)
+	]
+	interface IPubManager : IDispatch
+	{
+		[id(DISPID_RegPublisher), helpstring("method RegPublisher")]
+		HRESULT RegPublisher([in] enum MESSAGE_TYPE Type, [in] ISymbolObject* Symbol);
+
+		[id(DISPID_UnregPublisher), helpstring("method UnregPublisher")]
+		HRESULT UnregPublisher([in] enum MESSAGE_TYPE Type, [in] ISymbolObject* Symbol);
+
+		[id(DISPID_PubVola), helpstring("method PubVola")]
+		HRESULT PubVola([in] ISymbolObject* Symbol, [in] IVMESurface* Data, [out, retval] long* Result);
+
+		[id(DISPID_PubTradeUpdate), helpstring("method PubTradeUpdate")]
+		HRESULT PubTradeUpdate([in] ITradeUpdate* Data, [out, retval] long* Result);
+
+		[id(DISPID_PubDynamicMessage), helpstring("method PubDynamicMessage")] 
+		HRESULT PubDynamicMessage([in] BSTR UID, [in] IDynamicMessage* DynamicMessage, [out, retval] long* Result);
+
+		[id(DISPID_PubBroadcastMessage), helpstring("method PubBroadcastMessage")] 
+		HRESULT PubBroadcastMessage([in] IBroadcastMessage* BroadcastMessage, [out, retval] long* Result);
+
+		[propget, id(DISPID_IsLogoned), helpstring("property IsLogoned")] HRESULT IsLogoned([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(DISPID_UserGroup), helpstring("property UserGroup")] HRESULT UserGroup([in] BSTR bsVal);
+				
+		[id(DISPID_PubRequestNewOrder), helpstring("method PubRequestNewOrder")] 
+		HRESULT PubRequestNewOrder([in] IOrder* Order, [out, retval] long* Result);
+		
+		[id(DISPID_PubAlterOrder), helpstring("method PubAlterOrder")] 
+		HRESULT PubAlterOrder([in] IOrder* Order, [out, retval] long* Result);
+
+		[id(DISPID_PubCancelOrder), helpstring("method PubCancelOrder")] 
+		HRESULT PubCancelOrder([in] IOrder* Order, [out, retval] long* Result);
+		
+		[id(DISPID_PubRequestOrderStatus), helpstring("method PubRequestOrderStatus")] 
+		HRESULT PubRequestOrderStatus([in] IOrder* Order, [out, retval] long* Result);
+
+		[id(DISPID_PubOrder), helpstring("method PubOrder")] 
+		HRESULT PubOrder([in] IOrder* Order, [out, retval] long* Result);
+
+		[id(DISPID_PubExecutionReport), helpstring("method PubExecutionReport")] 
+		HRESULT PubExecutionReport([in] IExecutionReport* Report, [out, retval] long* Result);		
+
+		[id(DISPID_PubFixGatewayStatusRequest), helpstring("method PubFixGatewayStatusRequest")] 
+		HRESULT PubFixGatewayStatusRequest([in] IFixGatewayStatusRequest* Request, [out, retval] long* Result);
+
+		[id(DISPID_PubFixGatewayStatus), helpstring("method PubFixGatewayStatus")] 
+		HRESULT PubFixGatewayStatus([in] IFixGatewayStatus* Status, [out, retval] long* Result);
+
+		[id(DISPID_PubPriceUpdate), helpstring("method PubPriceUpdate")]
+		HRESULT PubPriceUpdate([in] IPriceUpdate* Data, [out, retval] long* Result);
+
+		[id(DISPID_PubUnderlyingUpdate), helpstring("method PubUnderlyingUpdate")]
+		HRESULT PubUnderlyingUpdate([in] IUnderlyingUpdate* Data, [out, retval] long* Result);
+
+		[id(DISPID_PubActiveFuturesChange), helpstring("method PubActiveFuturesChange")]
+		HRESULT PubActiveFuturesChange([in] IActiveFuturesChange* Data, [out, retval] long* Result);
+
+		[id(DISPID_PubFlexOption), helpstring("method PubFlexOption")]
+		HRESULT PubFlexOption([in] IFlexOption* Data, [out, retval] long* Result);
+
+		[id(DISPID_PubManualPriceUpdate), helpstring("method PubManualPriceUpdate")]
+		HRESULT PubManualPriceUpdate([in] IManualPriceUpdate* Data, [out, retval] long* Result);
+
+		[id(DISPID_PubSettingsUpdate), helpstring("method PubSettingsUpdate")]
+		HRESULT PubSettingsUpdate([in] ISettingsUpdate* Data, [out, retval] long* Result);
+	};
+
+	[
+		object,
+		uuid(6B514165-5780-411c-9D58-E95CB0F4A710),
+		dual,
+		helpstring("ISubManager Interface"),
+		pointer_default(unique)
+	]
+	interface ISubManager : IDispatch
+	{
+		[id(DISPID_SubVola), helpstring("method SubVola")]
+		HRESULT SubVola([in] ISymbolObject* Symbol);
+		[id(DISPID_UnsubVola), helpstring("method UnsubVola")]
+		HRESULT UnsubVola([in] ISymbolObject* Symbol);
+
+		[id(DISPID_SubTradeUpdate), helpstring("method SubTradeUpdate")]
+		HRESULT SubTradeUpdate();
+		[id(DISPID_UnsubTradeUpdate), helpstring("method UnsubTradeUpdate")]
+		HRESULT UnsubTradeUpdate();
+
+		[id(DISPID_SubDynamicMessage), helpstring("method SubDynamicMessage")] 
+		HRESULT SubDynamicMessage([in] BSTR UID);
+		[id(DISPID_UnsubDynamicMessage), helpstring("method UnsubDynamicMessage")] 
+		HRESULT UnsubDynamicMessage([in] BSTR UID);
+
+		[id(DISPID_SubBroadcastMessage), helpstring("method SubBroadcastMessage")] 
+		HRESULT SubBroadcastMessage();
+		[id(DISPID_UnsubBroadcastMessage), helpstring("method UnsubBroadcastMessage")] 
+		HRESULT UnsubBroadcastMessage();
+
+		[id(DISPID_SubOrderMessages), helpstring("method SubOrderMessages")] 
+		HRESULT SubOrderMessages();
+		[id(DISPID_UnsubOrderMessages), helpstring("method UnsubOrderMessages")] 
+		HRESULT UnsubOrderMessages();
+
+		[id(DISPID_SubOrdersNotificationMessages), helpstring("method SubOrdersNotificationMessages")] 
+		HRESULT SubOrdersNotificationMessages();
+		[id(DISPID_UnsubOrdersNotificationMessages), helpstring("method UnsubOrdersNotificationMessages")] 
+		HRESULT UnsubOrdersNotificationMessages();
+
+		[id(DISPID_SubFixGatewayStatusRequest), helpstring("method SubFixGatewayStatusRequest")] 
+		HRESULT SubFixGatewayStatusRequest();
+		[id(DISPID_UnsubFixGatewayStatusRequest), helpstring("method UnsubFixGatewayStatusRequest")] 
+		HRESULT UnsubFixGatewayStatusRequest();
+
+		[id(DISPID_SubFixGatewayStatus), helpstring("method SubFixGatewayStatus")] 
+		HRESULT SubFixGatewayStatus();
+		[id(DISPID_UnsubFixGatewayStatus), helpstring("method UnsubFixGatewayStatus")] 
+		HRESULT UnsubFixGatewayStatus();
+
+		[id(DISPID_SubPriceUpdate), helpstring("method SubPriceUpdate")]
+		HRESULT SubPriceUpdate();
+		[id(DISPID_UnsubPriceUpdate), helpstring("method UnsubPriceUpdate")]
+		HRESULT UnsubPriceUpdate();
+
+		[id(DISPID_SubUnderlyingUpdate), helpstring("method SubUnderlyingUpdate")]
+		HRESULT SubUnderlyingUpdate();
+		[id(DISPID_UnsubUnderlyingUpdate), helpstring("method UnsubUnderlyingUpdate")]
+		HRESULT UnsubUnderlyingUpdate();
+
+		[id(DISPID_SubExecutionReport), helpstring("method SubExecutionReport")]
+		HRESULT SubExecutionReport();
+		[id(DISPID_UnsubExecutionReport), helpstring("method UnsubExecutionReport")]
+		HRESULT UnsubExecutionReport();
+
+
+		[id(DISPID_SubActiveFuturesChange), helpstring("method SubActiveFuturesChange")]
+		HRESULT SubActiveFuturesChange();
+
+		[id(DISPID_UnsubActiveFuturesChange), helpstring("method UnsubActiveFuturesChange")]
+		HRESULT UnsubActiveFuturesChange();
+
+		[id(DISPID_SubFlexOption), helpstring("method SubFlexOption")]
+		HRESULT SubFlexOption();
+
+		[id(DISPID_UnsubFlexOption), helpstring("method UnsubFlexOption")]
+		HRESULT UnsubFlexOption();
+
+		[id(DISPID_SubManualPriceUpdate), helpstring("method SubManualPriceUpdate")]
+		HRESULT SubManualPriceUpdate();
+
+		[id(DISPID_UnsubManualPriceUpdate), helpstring("method UnsubManualPriceUpdate")]
+		HRESULT UnsubManualPriceUpdate();
+
+		[id(DISPID_SubSettingsUpdate), helpstring("method SubSettingsUpdate")]
+		HRESULT SubSettingsUpdate();
+
+		[id(DISPID_UnsubSettingsUpdate), helpstring("method UnsubSettingsUpdate")]
+		HRESULT UnsubSettingsUpdate();
+	};
+
+	[
+		uuid(3C6BBF75-6CD5-45c6-9CF7-F0C955BAD4D0),
+		helpstring("_IOnMessages Interface")
+	]
+	dispinterface _IOnMessages
+	{
+		properties:
+		methods:
+
+		[id(DISPID_OnVola), helpstring("method OnVola")]
+		HRESULT OnVola([in] ISymbolObject* Symbol, [in] IVMESurface* Data);
+
+		[id(DISPID_OnTradeUpdate), helpstring("method OnTradeUpdate")]
+		HRESULT OnTradeUpdate([in] ITradeUpdate* Data);
+
+		[id(DISPID_OnDynamicMessage), helpstring("method OnDynamicMessage")] 
+		HRESULT OnDynamicMessage([in] IDynamicMessage* Data);
+
+		[id(DISPID_OnBroadcastMessage), helpstring("method OnBroadcastMessage")] 
+		HRESULT OnBroadcastMessage([in] IBroadcastMessage* Data);
+
+		[id(DISPID_OnLogon), helpstring("method OnLogon")] 
+		HRESULT OnLogon([in]BSTR bsRouterName);
+
+		[id(DISPID_OnLogoff), helpstring("method OnLogonff")] 
+		HRESULT OnLogoff([in]BSTR bsRouterName);
+		
+		[id(DISPID_OnRequestNewOrder), helpstring("method OnRequestNewOrder")] 
+		HRESULT OnRequestNewOrder([in] IOrder* Data);
+
+		[id(DISPID_OnAlterOrder), helpstring("method OnAlterOrder")] 
+		HRESULT OnAlterOrder([in] IOrder* Data);
+
+		[id(DISPID_OnCancelOrder), helpstring("method OnCancelOrder")] 
+		HRESULT OnCancelOrder([in] IOrder* Data);
+
+		[id(DISPID_OnRequestOrderStatus), helpstring("method OnRequestOrderStatus")] 
+		HRESULT OnRequestOrderStatus([in] IOrder* Data);
+
+		[id(DISPID_OnOrder), helpstring("method OnOrder")] 
+		HRESULT OnOrder([in] IOrder* Data);
+
+		[id(DISPID_OnExecutionReport), helpstring("method OnExecutionReport")] 
+		HRESULT OnExecutionReport([in] IExecutionReport* Data);
+
+		[id(DISPID_OnFixGatewayStatusRequest), helpstring("method OnFixGatewayStatusRequest")] 
+		HRESULT OnFixGatewayStatusRequest([in] IFixGatewayStatusRequest* Data);
+
+		[id(DISPID_OnFixGatewayStatus), helpstring("method OnFixGatewayStatus")] 
+		HRESULT OnFixGatewayStatus([in] IFixGatewayStatus* Data);
+
+		[id(DISPID_OnPriceUpdate), helpstring("method OnPriceUpdate")]
+		HRESULT OnPriceUpdate([in] IPriceUpdate* Data);
+
+		[id(DISPID_OnUnderlyingUpdate), helpstring("method OnUnderlyingUpdate")]
+		HRESULT OnUnderlyingUpdate([in] IUnderlyingUpdate* Data);
+
+		[id(DISPID_OnActiveFuturesChange), helpstring("method OnActiveFuturesChange")]
+		HRESULT OnActiveFuturesChange([in] IActiveFuturesChange* Data);
+
+		[id(DISPID_OnFlexOption), helpstring("method OnFlexOption")]
+		HRESULT OnFlexOption([in] IFlexOption* Data);
+
+		[id(DISPID_OnManualPriceUpdate), helpstring("method OnManualPriceUpdate")]
+		HRESULT OnManualPriceUpdate([in] IManualPriceUpdate* Data);
+
+		[id(DISPID_OnSettingsUpdate), helpstring("method OnSettingsUpdate")]
+		HRESULT OnSettingsUpdate([in] ISettingsUpdate* Data);
+	};
+
+	[
+		uuid(D9614A17-5E4D-47d9-8EDB-8A6209CF7A1A),
+		helpstring("MsgManager Class")
+	]
+	coclass MsgManager
+	{
+		[default] interface ISubManager;
+		interface IPubManager;
+		[default, source] dispinterface _IOnMessages;
+	};
+};

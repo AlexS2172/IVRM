@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{376AB49D-9D39-4B27-B122-4D22D490FE91} = s 'VME'
+		'VME.EXE'
+		{
+			val AppID = s {376AB49D-9D39-4B27-B122-4D22D490FE91}
+		}
+	}
+}

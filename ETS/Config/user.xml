@@ -1,0 +1,256 @@
+<ETS>
+	<BackOffice>
+		<Settings>
+			<Parameter Name="LogHeight" Type="long" Value="0"/>
+			<Parameter Name="LogLeft" Type="long" Value="0"/>
+			<Parameter Name="LogTop" Type="long" Value="0"/>
+			<Parameter Name="LogWidth" Type="long" Value="0"/>
+			<Parameter Name="PositionReconciliationFileMask" Type="string" Value="RecYYYY-DD-MM.txt"/>
+			<Parameter Name="PositionReconciliationFilePath" Type="string" Value="D:\ETS\ETS_CFG"/>
+		</Settings>
+	</BackOffice>
+	<ETSEndofDayManager>
+		<MainWindow>
+			<Parameter Name="NormalPositionBottom" Type="long" Value="944"/>
+			<Parameter Name="NormalPositionLeft" Type="long" Value="87"/>
+			<Parameter Name="NormalPositionRight" Type="long" Value="1174"/>
+			<Parameter Name="NormalPositionTop" Type="long" Value="66"/>
+			<Parameter Name="ShowCmd" Type="long" Value="1"/>
+		</MainWindow>
+		<Settings>
+			<Parameter Name="FirstStart" Type="long" Value="0"/>
+		</Settings>
+	</ETSEndofDayManager>
+	<EtsEodServer>
+		<Settings>
+			<Parameter Name="CalcModel" Type="long" Value="2"/>
+			<Parameter Name="LogHistory" Type="long" Value="7"/>
+			<Parameter Name="LogLevel" Type="long" Value="10"/>
+			<Parameter Name="StepMask" Type="long" Value="15622150"/>
+		</Settings>
+		<Task>
+			<Parameter Name="RestartTime" Type="string" Value=""/>
+		</Task>
+	</EtsEodServer>
+	<IvRmServer>
+		<Parameter Name="AssetListFile" Type="string" Value=""/>
+	</IvRmServer>
+	<MarketMaker>
+		<BatchReporting>
+			<Parameter Name="Email" Type="string" Value="achuchev@egartech.com"/>
+			<Parameter Name="FilterDisplay" Type="long" Value="0"/>
+			<Parameter Name="IncludeDate" Type="long" Value="-1"/>
+			<Parameter Name="IncludeFilters" Type="long" Value="-1"/>
+			<Parameter Name="IncludeTime" Type="long" Value="0"/>
+			<Parameter Name="SendEmail" Type="long" Value="-1"/>
+		</BatchReporting>
+		<NewPortfolioTrades>
+			<Parameter Name="BrokerID" Type="long" Value="0"/>
+			<Parameter Name="ClearingBrokerID" Type="long" Value="0"/>
+			<Parameter Name="StrategyID" Type="long" Value="0"/>
+			<Parameter Name="TraderID" Type="long" Value="175"/>
+		</NewPortfolioTrades>
+		<PositionTransfer>
+			<Parameter Name="DefTraderFromID" Type="long" Value="165"/>
+			<Parameter Name="DefTraderToID" Type="long" Value="165"/>
+		</PositionTransfer>
+		<RiskMatrix>
+			<Parameter Name="GroupSpecificRatioFile" Type="string" Value="C:\test_.txt"/>
+		</RiskMatrix>
+		<Settings>
+			<Parameter Name="ActiveRealTime" Type="long" Value="1"/>
+			<Parameter Name="AggByHolding" Type="long" Value="-1"/>
+			<Parameter Name="BatchCapabilityPath" Type="string" Value=""/>
+			<Parameter Name="CalcDefOptExchID" Type="long" Value="0"/>
+			<Parameter Name="CalcDefUndExchID" Type="long" Value="0"/>
+			<Parameter Name="CalcIvInRuntime" Type="long" Value="1"/>
+			<Parameter Name="CalcModel" Type="long" Value="2"/>
+			<Parameter Name="CalcSleepAmt" Type="long" Value="1"/>
+			<Parameter Name="CalcSleepFreq" Type="long" Value="10"/>
+			<Parameter Name="CheckExpiredOptions" Type="long" Value="0"/>
+			<Parameter Name="CrdDefPrcIncrementCheap" Type="long" Value="5"/>
+			<Parameter Name="CrdDefPrcIncrementExpensive" Type="long" Value="10"/>
+			<Parameter Name="CrdDefQtyIncrement" Type="long" Value="10"/>
+			<Parameter Name="CVEnabled" Type="long" Value="1"/>
+			<Parameter Name="DefTraderID" Type="long" Value="0"/>
+			<Parameter Name="DefTradeType" Type="long" Value="-1"/>
+			<Parameter Name="DisplayZeroPositions" Type="long" Value="1"/>
+			<Parameter Name="EADaysToDiv" Type="long" Value="7"/>
+			<Parameter Name="EADaysToDivDays" Type="long" Value="150"/>
+			<Parameter Name="EAOnlyExerc" Type="long" Value="0"/>
+			<Parameter Name="EAOptWithPosition" Type="long" Value="-1"/>
+			<Parameter Name="EAUpcomingDivs" Type="long" Value="-1"/>
+			<Parameter Name="ExecProjectionsForAll" Type="long" Value="0"/>
+			<Parameter Name="ExecuteBatchReporting" Type="long" Value="-1"/>
+			<Parameter Name="HedgeUseExtPosition" Type="long" Value="0"/>
+			<Parameter Name="IndexHedgeLotSize" Type="long" Value="100"/>
+			<Parameter Name="IndexHedgeMaxSize" Type="long" Value="10000"/>
+			<Parameter Name="IndexHedgeSlice" Type="long" Value="100"/>
+			<Parameter Name="LastStopDate" Type="string" Value="9/25/2009"/>
+			<Parameter Name="LastStopTime" Type="string" Value="5:50:32 PM"/>
+			<Parameter Name="LogAdvancedInfo" Type="long" Value="1"/>
+			<Parameter Name="LogHeight" Type="long" Value="2130"/>
+			<Parameter Name="LogLeft" Type="long" Value="675"/>
+			<Parameter Name="LogPerfCountInterval" Type="long" Value="100"/>
+			<Parameter Name="LogPerformanceCounters" Type="long" Value="1"/>
+			<Parameter Name="LogTop" Type="long" Value="2310"/>
+			<Parameter Name="LogWidth" Type="long" Value="17865"/>
+			<Parameter Name="MainLeft" Type="long" Value="6765"/>
+			<Parameter Name="MainState" Type="long" Value="0"/>
+			<Parameter Name="MainTop" Type="long" Value="7875"/>
+			<Parameter Name="MainWidth" Type="long" Value="6570"/>
+			<Parameter Name="MainWinAlwaysOnTop" Type="long" Value="0"/>
+			<Parameter Name="MarkedTradesRuleOn" Type="long" Value="0"/>
+			<Parameter Name="MathedTradesLeft" Type="long" Value="2700"/>
+			<Parameter Name="MathedTradesState" Type="long" Value="0"/>
+			<Parameter Name="MathedTradesTop" Type="long" Value="2850"/>
+			<Parameter Name="MatrixCalcModel" Type="long" Value="2"/>
+			<Parameter Name="MatrixExerciseOptions" Type="long" Value="0"/>
+			<Parameter Name="MatrixReqTypeAlwaysNonGroup" Type="long" Value="1"/>
+			<Parameter Name="NetExposureAUM" Type="string" Value="1"/>
+			<Parameter Name="OrdDefOptPrcIncrementCheap" Type="long" Value="5"/>
+			<Parameter Name="OrdDefOptPrcIncrementExpensive" Type="long" Value="10"/>
+			<Parameter Name="OrdDefOptQtyIncrement" Type="long" Value="10"/>
+			<Parameter Name="OrdDefStkPrcIncrement" Type="long" Value="1"/>
+			<Parameter Name="OrdDefStkQtyIncrement" Type="long" Value="100"/>
+			<Parameter Name="PnLCalcType" Type="long" Value="1"/>
+			<Parameter Name="PrintMarginBottom" Type="string" Value="1440"/>
+			<Parameter Name="PrintMarginLeft" Type="string" Value="1440"/>
+			<Parameter Name="PrintMarginRight" Type="string" Value="1440"/>
+			<Parameter Name="PrintMarginTop" Type="string" Value="1440"/>
+			<Parameter Name="PrintOrientation" Type="long" Value="0"/>
+			<Parameter Name="PrintPaperSize" Type="long" Value="1"/>
+			<Parameter Name="PrintZoom" Type="string" Value="100"/>
+			<Parameter Name="PrintZoomMode" Type="long" Value="0"/>
+			<Parameter Name="ProcessorsLoad" Type="long" Value="4"/>
+			<Parameter Name="QuoteBidColBuy" Type="long" Value="1"/>
+			<Parameter Name="QuoteDefOptExchID" Type="long" Value="0"/>
+			<Parameter Name="QuoteDefUndExchID" Type="long" Value="0"/>
+			<Parameter Name="QuoteDirectlyToRealtime" Type="long" Value="0"/>
+			<Parameter Name="QuoteFitToImpCurveType" Type="long" Value="2"/>
+			<Parameter Name="QuoteFitToImpFlatNoBid" Type="long" Value="1"/>
+			<Parameter Name="QuoteOptExchAll" Type="long" Value="0"/>
+			<Parameter Name="QuoteOptExpirySeparation" Type="long" Value="-1"/>
+			<Parameter Name="QuoteOtherColBuy" Type="long" Value="0"/>
+			<Parameter Name="QuoteReqTypeAlwaysNonGroup" Type="long" Value="0"/>
+			<Parameter Name="QuoteUndExchAll" Type="long" Value="0"/>
+			<Parameter Name="Reports_Groups" Type="long" Value="0"/>
+			<Parameter Name="RiskBidColBuy" Type="long" Value="0"/>
+			<Parameter Name="RiskDirectlyToRealtime" Type="long" Value="0"/>
+			<Parameter Name="RiskOtherColBuy" Type="long" Value="0"/>
+			<Parameter Name="RiskReqTypeAlwaysNonGroup" Type="long" Value="1"/>
+			<Parameter Name="ScreenExportPath" Type="string" Value=""/>
+			<Parameter Name="ShowEventLog" Type="long" Value="0"/>
+			<Parameter Name="ShowMessageUnableToEdit" Type="long" Value="1"/>
+			<Parameter Name="ShowWindowsInTaskbar" Type="long" Value="1"/>
+			<Parameter Name="SimulatedVola" Type="long" Value="0"/>
+			<Parameter Name="StockHedgeExportPath" Type="string" Value="D:\ETS\IvRm_Dev_2.3\ETS\EtsMM\"/>
+			<Parameter Name="StockHedgeLotSize" Type="long" Value="100"/>
+			<Parameter Name="StockHedgeMaxSize" Type="long" Value="10000"/>
+			<Parameter Name="StockHedgeSlice" Type="long" Value="100"/>
+			<Parameter Name="StockShiftFile" Type="string" Value="--"/>
+			<Parameter Name="UseCalcSleep" Type="long" Value="1"/>
+			<Parameter Name="UseDefTrader" Type="long" Value="1"/>
+			<Parameter Name="UseTheoBadMarketVola" Type="long" Value="0"/>
+			<Parameter Name="UseTheoCloseForPNL" Type="long" Value="0"/>
+			<Parameter Name="UseTheoNoBid" Type="long" Value="0"/>
+			<Parameter Name="UseTheoVolatility" Type="long" Value="1"/>
+			<Parameter Name="UseTTE" Type="long" Value="1"/>
+			<Parameter Name="VSCalcEnabled" Type="long" Value="1"/>
+			<Parameter Name="WindowListHeight" Type="long" Value="3525"/>
+			<Parameter Name="WindowListLeft" Type="long" Value="4575"/>
+			<Parameter Name="WindowListStayOnTop" Type="long" Value="1"/>
+			<Parameter Name="WindowListTop" Type="long" Value="5850"/>
+			<Parameter Name="WindowListWidth" Type="long" Value="2130"/>
+		</Settings>
+		<TradeEditor>
+			<Parameter Name="BrokerID" Type="long" Value="0"/>
+			<Parameter Name="ClearingBrokerID" Type="long" Value="0"/>
+			<Parameter Name="TraderID" Type="long" Value="170"/>
+			<Parameter Name="TradeStatus" Type="long" Value="0"/>
+		</TradeEditor>
+		<VolaShift>
+			<Parameter Name="ShiftAll" Type="long" Value="-1"/>
+			<Parameter Name="ShiftValue" Type="string" Value="13.3"/>
+		</VolaShift>
+	</MarketMaker>
+	<OConnor>
+		<Log>
+			<Parameter Name="Date" Type="long" Value="80"/>
+			<Parameter Name="Description" Type="long" Value="674"/>
+			<Parameter Name="Time" Type="long" Value="70"/>
+			<Parameter Name="Type" Type="long" Value="80"/>
+		</Log>
+	</OConnor>
+	<OConnorConnector>
+		<wp>
+			<Parameter Name="Flags" Type="long" Value="0"/>
+			<Parameter Name="MaxPositionX" Type="long" Value="-1"/>
+			<Parameter Name="MaxPositionY" Type="long" Value="-1"/>
+			<Parameter Name="MinPositionX" Type="long" Value="-1"/>
+			<Parameter Name="MinPositionY" Type="long" Value="-1"/>
+			<Parameter Name="NormalPositionBottom" Type="long" Value="787"/>
+			<Parameter Name="NormalPositionLeft" Type="long" Value="128"/>
+			<Parameter Name="NormalPositionRight" Type="long" Value="1086"/>
+			<Parameter Name="NormalPositionTop" Type="long" Value="385"/>
+			<Parameter Name="ShowCmd" Type="long" Value="1"/>
+		</wp>
+	</OConnorConnector>
+	<Pequote>
+		<Log>
+			<Parameter Name="Date" Type="long" Value="70"/>
+			<Parameter Name="Description" Type="long" Value="370"/>
+			<Parameter Name="Time" Type="long" Value="70"/>
+			<Parameter Name="Type" Type="long" Value="70"/>
+		</Log>
+	</Pequote>
+	<PequoteConnector>
+		<wp>
+			<Parameter Name="Flags" Type="long" Value="0"/>
+			<Parameter Name="MaxPositionX" Type="long" Value="-1"/>
+			<Parameter Name="MaxPositionY" Type="long" Value="-1"/>
+			<Parameter Name="MinPositionX" Type="long" Value="-1"/>
+			<Parameter Name="MinPositionY" Type="long" Value="-1"/>
+			<Parameter Name="NormalPositionBottom" Type="long" Value="874"/>
+			<Parameter Name="NormalPositionLeft" Type="long" Value="132"/>
+			<Parameter Name="NormalPositionRight" Type="long" Value="1092"/>
+			<Parameter Name="NormalPositionTop" Type="long" Value="174"/>
+			<Parameter Name="ShowCmd" Type="long" Value="1"/>
+		</wp>
+	</PequoteConnector>
+	<SageConnector>
+		<MainWindow>
+			<Parameter Name="Flags" Type="long" Value="0"/>
+			<Parameter Name="MaxPositionX" Type="long" Value="-1"/>
+			<Parameter Name="MaxPositionY" Type="long" Value="-1"/>
+			<Parameter Name="MinPositionX" Type="long" Value="-1"/>
+			<Parameter Name="MinPositionY" Type="long" Value="-1"/>
+			<Parameter Name="NormalPositionBottom" Type="long" Value="644"/>
+			<Parameter Name="NormalPositionLeft" Type="long" Value="532"/>
+			<Parameter Name="NormalPositionRight" Type="long" Value="1178"/>
+			<Parameter Name="NormalPositionTop" Type="long" Value="183"/>
+			<Parameter Name="ShowCmd" Type="long" Value="1"/>
+		</MainWindow>
+	</SageConnector>
+	<VolaManager>
+		<Settings>
+			<Parameter Name="AppBarAlwaysOnTop" Type="long" Value="0"/>
+			<Parameter Name="AppBarAutoHide" Type="long" Value="0"/>
+			<Parameter Name="AppBarLeft" Type="long" Value="0"/>
+			<Parameter Name="AppBarState" Type="long" Value="1"/>
+			<Parameter Name="AppBarTop" Type="long" Value="0"/>
+			<Parameter Name="CalcMode" Type="long" Value="0"/>
+			<Parameter Name="ChartMode" Type="long" Value="2"/>
+			<Parameter Name="ChartRangeFrom" Type="long" Value="0"/>
+			<Parameter Name="ChartRangeTo" Type="long" Value="15000"/>
+			<Parameter Name="CurveMode" Type="long" Value="2"/>
+			<Parameter Name="FlatNoBid" Type="long" Value="1"/>
+			<Parameter Name="FlatOutRange" Type="long" Value="1"/>
+			<Parameter Name="LastSymbol" Type="string" Value="AA"/>
+			<Parameter Name="SleepDuration" Type="long" Value="0"/>
+			<Parameter Name="SleepFrequency" Type="long" Value="1"/>
+			<Parameter Name="VMAlwaysOnTop" Type="long" Value="1"/>
+			<Parameter Name="VMUseExtrapolation" Type="long" Value="1"/>
+		</Settings>
+	</VolaManager>
+</ETS>

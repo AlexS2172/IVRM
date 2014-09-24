@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.ContractRootColl.1 = s 'ContractRootColl Class'
+	{
+		CLSID = s '{ED77FC0D-9392-41C2-890F-AB7F36C64027}'
+	}
+	EtsGeneral.ContractRootColl = s 'ContractRootColl Class'
+	{
+		CLSID = s '{ED77FC0D-9392-41C2-890F-AB7F36C64027}'
+		CurVer = s 'EtsGeneral.ContractRootColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {ED77FC0D-9392-41C2-890F-AB7F36C64027} = s 'ContractRootColl Class'
+		{
+			ProgID = s 'EtsGeneral.ContractRootColl.1'
+			VersionIndependentProgID = s 'EtsGeneral.ContractRootColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

@@ -1,0 +1,69 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "FirstOptionsConnector"=".\FirstOptionsConnector\FirstOptionsConnector.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/FirstOptions/FirstOptionsConnector", YOZCAAAA
+    .\firstoptionsconnector
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RttfSample"=".\RttfSample\RttfSample.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/FirstOptions/RttfSample", PQZCAAAA
+    .\rttfsample
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TestRttfServer"=".\TestRttfServer\TestRttfServer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/FirstOptions/TestRttfServer", IRZCAAAA
+    .\TestRttfServer
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/FirstOptions", SOZCAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

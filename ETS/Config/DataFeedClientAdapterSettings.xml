@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Settings>
+	<Sessions>
+		<Session name="administrator">
+			<Field name="Provider" value="IVDataBroker=corbaloc:iiop:192.168.9.154:910/IVDataBroker"/>
+			<Field name="RemoteObjName" value="IVDataBroker"/>
+			<Field name="UserName" value="IVRMUSER"/>
+			<Field name="Password" value="123456"/>
+			<Field name="Compression" value="0"/>
+			<Field name="ServerTimeout" value="60000"/>
+			<Field name="ORBendPoint" value="giop:tcp:192.168.9.154:970"/>
+		</Session>
+	</Sessions>
+</Settings>

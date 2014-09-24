@@ -1,0 +1,259 @@
+// EtsMmIndexHedge.idl : IDL source for EtsMmIndexHedge
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EtsMmIndexHedge.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "ComponentsCommon.idl"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+[
+	uuid(6665CE3B-8B87-4C6F-B128-5614C3466F0D),
+	version(1.0),
+	helpstring("EtsMmIndexHedge 1.0 Type Library")
+]
+library EtsMmIndexHedgeLib
+{
+	importlib("stdole2.tlb");
+	importlib("PriceProviders.tlb");
+	importlib("EtsGeneral.tlb");
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(F5A275C4-8275-47CE-B598-DDFFBF3F0379),
+		dual,
+		nonextensible,
+		helpstring("IMmIhOptAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmIhOptAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,					ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,					Symbol)
+		ETSGENERAL_PROP_DEF(3,			DATE,					Expiry)
+		ETSGENERAL_PROP_DEF(4,			enum EtsOptionTypeEnum,	OptType)
+		ETSGENERAL_PROP_DEF(5,			DOUBLE,					Strike)
+		ETSGENERAL_PROP_DEF(6,			DOUBLE,					Vola)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,					Rate)
+		ETSGENERAL_PROP_DEF(8,			LONG,					Qty)
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,					HTBRate)
+
+		ETSGENERAL_PROP_DEF(21,			DOUBLE,					PriceBid)
+		ETSGENERAL_PROP_DEF(22,			DOUBLE,					PriceAsk)
+		ETSGENERAL_PROP_DEF(23,			DOUBLE,					PriceLast)
+		
+		ETSGENERAL_PROP_DEF(31,			DOUBLE,					Delta)
+		ETSGENERAL_PROP_DEF(33,			DATE,					ExpiryOV)
+		ETSGENERAL_PROP_DEF(34,			DATE,					TradingClose)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(48937003-4529-4B6F-B619-72E5F1F1199E),
+		dual,
+		nonextensible,
+		helpstring("IMmIhOptColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmIhOptColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IMmIhOptAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(886B6A87-F50E-48DE-A8FC-0890444CCD2D),
+		dual,
+		nonextensible,
+		helpstring("IMmIhUndAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmIhUndAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,						Symbol)
+		ETSGENERAL_PROPPUTREF_DEF(3,	IEtsPriceProfileAtom*,		UndPriceProfile)
+		ETSGENERAL_PROP_DEF(4,			LONG,						TotalQtyInShares)
+		ETSGENERAL_PROP_DEF(5,			BSTR,						PrimaryExch)
+
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,						Weight)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,						PriceBid)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,						PriceAsk)
+		ETSGENERAL_PROP_DEF(13,			DOUBLE,						PriceLast)
+
+		ETSGENERAL_PROP_DEF(21,			LONG,						IndexShares1)
+		ETSGENERAL_PROP_DEF(22,			LONG,						IndexShares2)
+		ETSGENERAL_PROP_DEF(23,			LONG,						IndexTxn)
+		ETSGENERAL_PROP_DEF(24,			LONG,						CurShares)
+		ETSGENERAL_PROP_DEF(25,			LONG,						Transact)
+		ETSGENERAL_PROP_DEF(26,			BSTR,						PrimaryExchImportID)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(60A8F703-B208-42F0-BF14-DBAED122F1E7),
+		dual,
+		nonextensible,
+		helpstring("IMmIhUndColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmIhUndColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmIhUndAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(807A55DA-B8B9-40D0-8844-CF7770BB7295),
+		dual,
+		nonextensible,
+		helpstring("IMmIhIndexAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmIhIndexAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,						Symbol)
+		ETSGENERAL_PROP_DEF(4,			DOUBLE,						Yield)
+		ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,				IsHTB)
+		ETSGENERAL_PROP_DEF(6,			VARIANT_BOOL,				IsAmerican)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,						Skew)
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,						Kurt)
+		ETSGENERAL_PROPPUTREF_DEF(9,	IIndexAtom*,				BasketIndex)
+
+		ETSGENERAL_PROPPUTREF_DEF(21,	IEtsPriceProfileAtom*,		UndPriceProfile)
+		ETSGENERAL_PROPPUTREF_DEF(22,	IEtsPriceProfileAtom*,		OptPriceProfile)
+		ETSGENERAL_PROPREADONLY_DEF(23,	IVolaControl*,				VolaSrv)
+		ETSGENERAL_PROPREADONLY_DEF(24,	IMmIhOptColl*,				Opt)
+
+		ETSGENERAL_PROP_DEF(31,			DOUBLE,						PriceBid)
+		ETSGENERAL_PROP_DEF(32,			DOUBLE,						PriceAsk)
+		ETSGENERAL_PROP_DEF(33,			DOUBLE,						PriceLast)
+		
+		ETSGENERAL_PROPREADONLY_DEF(41,	IMmIhUndColl*,				Und)
+		ETSGENERAL_PROP_DEF(42,			DOUBLE,						NetDelta)
+
+		[id(51), helpstring("method CalcAllOptions")]
+		HRESULT CalcAllOptions([in] enum EtsCalcModelTypeEnum enCalcModel,
+								[in] VARIANT_BOOL bUseTheoVolatility,
+								[in] VARIANT_BOOL bUseTheoVolaNoBid,
+								[in] VARIANT_BOOL bUseTheoVolaBadMarket,
+								[in] DOUBLE dUndPriceTolerance,
+								[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+								[in/*, defaultvalue(0)*/] LONG nCalcSleepFreq,
+								[in/*, defaultvalue(0)*/] LONG nCalcSleepAmt,
+								[in] ICalculationParametrs* pParams);
+	};
+
+	[
+		object,
+		uuid(A4A143DE-D25E-4A8C-8BFD-9CB34B050116),
+		dual,
+		nonextensible,
+		helpstring("IMmIhRequestAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmIhRequestAtom : IDispatch
+	{
+		ETSGENERAL_PROPPUTREF_DEF(1,	IMmIhIndexAtom*,	Idx)
+		ETSGENERAL_PROPPUTREF_DEF(2,	IMmIhOptAtom*,		Opt)
+		ETSGENERAL_PROPPUTREF_DEF(3,	IMmIhUndAtom*,		Und)
+		
+
+		[propget, id(4), helpstring("property Und2")] HRESULT Und2([in] LONG UndIndex, [out, retval] IMmIhUndAtom** pVal);
+		[propputref, id(4), helpstring("property Und2")] HRESULT Und2([in] LONG UndIndex, [in] IMmIhUndAtom* newVal);
+
+		[id(5), helpstring("method GetQuoteUpdateParam")]
+			HRESULT GetQuoteUpdateParam([out, retval] struct QuoteUpdateParams* pRetVal);
+
+	};
+	[
+		object,
+		uuid(7F6F2636-97F8-43FF-A33E-01DB62119F8E),
+		dual,
+		nonextensible,
+		helpstring("IMmIhRequestColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmIhRequestColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IMmIhRequestAtom*)
+
+		[id(10), helpstring("method AddRequest")]
+		HRESULT AddRequest([in] BSTR Key, [in] IMmIhUndAtom* pUnd, [in] IMmIhIndexAtom* pIdx, [in] IMmIhOptAtom* pOpt,  [out, retval] IMmIhRequestAtom** pRetVal);
+
+	};
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(458A076E-E002-4EBF-A49B-00851C10D385),
+		helpstring("MmIhOptAtom Class")
+	]
+	coclass MmIhOptAtom
+	{
+		[default] interface IMmIhOptAtom;
+	};
+	[
+		uuid(E742D3FE-D8D5-4EE2-9A0F-10E782E2AAF0),
+		helpstring("MmIhOptColl Class")
+	]
+	coclass MmIhOptColl
+	{
+		[default] interface IMmIhOptColl;
+	};
+	[
+		uuid(91987177-4C7B-41CB-BD77-2CA16260F57A),
+		helpstring("MmIhIndexAtom Class")
+	]
+	coclass MmIhIndexAtom
+	{
+		[default] interface IMmIhIndexAtom;
+	};
+	[
+		uuid(B46AE86B-8455-4F0A-A356-342A0DB74A19),
+		helpstring("MmIhUndAtom Class")
+	]
+	coclass MmIhUndAtom
+	{
+		[default] interface IMmIhUndAtom;
+	};
+	[
+		uuid(D75C107B-A873-40F3-BEE3-E77C472965F2),
+		helpstring("MmIhUndColl Class")
+	]
+	coclass MmIhUndColl
+	{
+		[default] interface IMmIhUndColl;
+	};
+	[
+		uuid(11D75A7A-77BB-4E8C-AAAE-4B484B6F6F85),
+		helpstring("MmIhRequestAtom Class")
+	]
+	coclass MmIhRequestAtom
+	{
+		[default] interface IMmIhRequestAtom;
+	};
+	[
+		uuid(452026DE-121D-4EEB-8F55-ACFDBA75CA92),
+		helpstring("MmIhRequestColl Class")
+	]
+	coclass MmIhRequestColl
+	{
+		[default] interface IMmIhRequestColl;
+	};
+};

@@ -1,0 +1,8 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\ETS\Asp]
+"Sharky"="EGAR"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\ETS\Asp\Database]
+"EGAR"="Provider=SQLOLEDB.1;Data Source=CROCODILE;Initial Catalog=ETS_ASP_EOD;User ID=feed;Password=feed;Persist Security Info=False"
+

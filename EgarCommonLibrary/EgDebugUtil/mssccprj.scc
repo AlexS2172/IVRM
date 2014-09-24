@@ -1,0 +1,13 @@
+SCC = This is a Source Code Control file
+
+[EgDebugUtil.dsp]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgDebugUtil", TAZCAAAA
+
+[EgDebugUtil.sln]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgDebugUtil", TAZCAAAA
+
+[EgDebugUtil.vcproj]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgDebugUtil", TAZCAAAA

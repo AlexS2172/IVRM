@@ -1,0 +1,26 @@
+HKCR
+{
+	ETSXMLParams.XMLLoader.1 = s 'XMLLoader Class'
+	{
+		CLSID = s '{72C9B320-7F8A-4004-BF53-0C7D2125AC49}'
+	}
+	ETSXMLParams.XMLLoader = s 'XMLLoader Class'
+	{
+		CLSID = s '{72C9B320-7F8A-4004-BF53-0C7D2125AC49}'
+		CurVer = s 'ETSXMLParams.XMLLoader.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {72C9B320-7F8A-4004-BF53-0C7D2125AC49} = s 'XMLLoader Class'
+		{
+			ProgID = s 'ETSXMLParams.XMLLoader.1'
+			VersionIndependentProgID = s 'ETSXMLParams.XMLLoader'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A0E5EDFE-8B12-4361-9CD2-0424D0350AEE}'
+		}
+	}
+}

@@ -1,0 +1,2493 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project version='6'>
+	<steps type='0'>
+		<step action='Group'>
+			<name>Project steps</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%WORK_ROOT%</DestDir>
+			<Empty type='11'>-1</Empty>
+			<Ext><![CDATA[*.bak
+]]></Ext>
+			<IgnoreSrc type='11'>-1</IgnoreSrc>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>0</LogCopied>
+			<Purge type='11'>-1</Purge>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Recurse type='11'>-1</Recurse>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>1</indent>
+			<name>Delete BAK Files</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[' increment the build number in the global macro BUILD_NUM, creating
+' the macro and initializing to 1 if it doesn't exist
+Const BLD_MACRO = "BUILD_NUM"
+
+' retrieve global macros collection
+Set macros = Application.Macros(vbldProject) 
+
+' see if our macro exists
+Set macro = macros.Item(BLD_MACRO)
+
+If macro Is Nothing Then
+	' create the macro if not found
+	macros.Add BLD_MACRO, "1"
+	Builder.LogMessage "Created BUILD_NUM macro"
+Else
+	macro.Value = CLng(macro.Value)+1
+	Builder.LogMessage "Incremented BUILD_NUM macro to " & macro.Value
+End If
+]]></Script>
+			<indent type='3'>1</indent>
+			<name>Increment Build Number</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>1</indent>
+			<name>Source Control</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>update</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%WORK_ROOT%</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<indent type='3'>2</indent>
+			<name>ClearCase: Get Latest Version</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>1</indent>
+			<name>Build Project</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>2</indent>
+			<name>Build ETS</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>OptionCalc</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%COMMON_LIBRARY_ROOT%OptionCalc\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OptionCalc.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Option Calc</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%COMMON_LIBRARY_ROOT%EgStdLib\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EgStdLib.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: StdLib</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%COMMON_LIBRARY_ROOT%EgarCommonLibrary.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<LogLevel type='3'>4</LogLevel>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>CommonLib: Build</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%COMMON_LIBRARY_ROOT%OptionCalc\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OptionCalc.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Option Calc</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%COMMON_LIBRARY_ROOT%EgStdLib\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EgStdLib.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: StdLib</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>HyperFeed</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%MARKET_DATA_ADAPTERS_ROOT%priceproviders</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>PriceProviders.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Price Providers</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%MARKET_DATA_ADAPTERS_ROOT%ActivFeedProviders</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ActivFeedProviders.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Activ Feed</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<Config>Release</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%MARKET_DATA_ADAPTERS_ROOT%priceproviders.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<LogLevel type='3'>3</LogLevel>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>HyperFeed</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<Config>Release P4</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%MARKET_DATA_ADAPTERS_ROOT%priceproviders.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<ProdVer type='11'>-1</ProdVer>
+			<indent type='3'>4</indent>
+			<name>HyperFeed: P4</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%MARKET_DATA_ADAPTERS_ROOT%priceproviders</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>PriceProviders.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Price Providers</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%MARKET_DATA_ADAPTERS_ROOT%ActivFeedProviders</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ActivFeedProviders.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Activ Feed</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Transport</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>4</indent>
+			<name>Build Transport</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%EgRouterSrv\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EgRouterSrv.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check Out: EgRouterSrv</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%EgTpPrx\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EgTpPrx.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check Out: EgTpPrx</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%RtControl\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>RtControl.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check Out: RtControl</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%TpControl\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>TpControl.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check Out: TpControl</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%Transport\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>Transport.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check Out: Transport</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%TRANSPORT_LIBRARY_ROOT%EgarTransport.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<LogLevel type='3'>4</LogLevel>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>5</indent>
+			<name>transport: Build</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%EgRouterSrv\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EgRouterSrv.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check In: EgRouterSrv</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%EgTpPrx\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EgTpPrx.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check In: EgTpPrx</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%RtControl\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>RtControl.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check In: RtControl</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%TpControl\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>TpControl.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check In: TpControl</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%TRANSPORT_LIBRARY_ROOT%Transport\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>Transport.rc</Selector>
+			<indent type='3'>5</indent>
+			<name>ClearCase: Check In: Transport</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MMW\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>MMW.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Price Providers</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MsgStruct\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>MsgStruct.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Activ Providers</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%TransportLayer.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<LogLevel type='3'>4</LogLevel>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>Transport: Build</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MMW\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>MMW.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Price Providers</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MsgStruct\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>MsgStruct.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Activ Providers</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>ETS</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%ETSManager\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ETSManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Ets Manager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%VADBLayout\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>VADBLayout.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Va Db Layout</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%ETSLogsManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ETSLogsManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: ETSLogsManager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Vme\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>VME.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Vme</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%ETS.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<LogLevel type='3'>4</LogLevel>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>ETS: Build</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%ETSManager\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ETSManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Ets Manager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%VADBLayout\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>VADBLayout.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Va Db Layout</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%ETSLogsManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ETSLogsManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: ETSLogsManager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Vme\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>VME.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Vme</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>RTTF</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MarketInterfaces\RTTF\Sage</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>Sage_GUI.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: Sage</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MarketInterfaces\RTTF\Sage\Utils\TradesUploader</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>TradesUploader.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check Out: TradesUploader</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%MarketInterfaces\RTTF\RTTF.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>RTTF: Build</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MarketInterfaces\RTTF\Sage</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>Sage_GUI.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: Sage</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%MarketInterfaces\RTTF\Sage\Utils\TradesUploader</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>TradesUploader.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>ClearCase: Check In: TradesUploader</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Volatility Sources</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%VolatilitySources</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>VolatilitySources.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: VolatilitySources</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%VolatilitySources.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>Volatility Sources Build</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%VolatilitySources</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>VolatilitySources.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: VolatilitySources</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Components</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\EtsGeneral</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsGeneral.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsGeneral</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmGeneral</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmGeneral.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmGeneral</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmGreeks</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmGreeks.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmGreeks</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmHedge</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmHedge.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmHedge</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmIndexHedge</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmIndexHedge.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmIndexHedge</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmQuotes</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmQuotes.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmQuotes</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmReports</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmReports.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmReports</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmRisks</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmRisks.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmRisks</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmStockHedge</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmStockHedge.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmStockHedge</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmVolaAnalysis</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmVolaAnalysis.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMmVolaAnalysis</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%Components\Components.sln</Filename>
+			<Force type='3'>1</Force>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<LogLevel type='3'>4</LogLevel>
+			<ParseOutput type='11'>-1</ParseOutput>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>Build Components</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\EtsGeneral</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsGeneral.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsGeneral</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmGeneral</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmGeneral.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmGeneral</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmGreeks</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmGreeks.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmGreeks</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmHedge</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmHedge.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmHedge</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmIndexHedge</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmIndexHedge.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmIndexHedge</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmQuotes</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmQuotes.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmQuotes</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmReports</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmReports.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmReports</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmRisks</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmRisks.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmRisks</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmStockHedge</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmStockHedge.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmStockHedge</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%Components\MM\EtsMmVolaAnalysis</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMmVolaAnalysis.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMmVolaAnalysis</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Build Market Maker</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EtsMM</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMM.vbp</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsMm</name>
+		</step>
+		<step action='Make VB6'>
+			<Attr type='11'>-1</Attr>
+			<ContFail type='11'>-1</ContFail>
+			<DebugInfo type='11'>-1</DebugInfo>
+			<Filename>%ETS_ROOT%EtsMM\EtsMM.vbp</Filename>
+			<IncrReason type='11'>-1</IncrReason>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>Build Ets Main</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EtsMM</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsMM.vbp</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsMm</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Build Back Office</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%BackOffice\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ElladaBO.vbp</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: Ets BackOffice</name>
+		</step>
+		<step action='Make VB6'>
+			<Attr type='11'>-1</Attr>
+			<DebugInfo type='11'>-1</DebugInfo>
+			<Filename>%ETS_ROOT%BackOffice\ElladaBO.vbp</Filename>
+			<IncrReason type='11'>-1</IncrReason>
+			<indent type='3'>4</indent>
+			<name>Build ElladaBO</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%BackOffice\</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ElladaBO.vbp</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: Ets BackOffice</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Build Volatility Manager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EGOcx</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EGOcx.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EGOcx</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%edaTools</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>edaTools.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: edaTools</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%IVMCtrl</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>IVMCtrl.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: IVMCtrl</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%IVManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>IVAnalyzer.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: IVAnalyzer</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release Builder|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%VolatilityManager.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<ParseOutput type='11'>-1</ParseOutput>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>Build VolatilityManager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EGOcx</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EGOcx.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EGOcx</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%edaTools</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>edaTools.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: edaTools</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%IVMCtrl</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>IVMCtrl.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: IVMCtrl</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%IVManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>IVAnalyzer.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: IVAnalyzer</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Build EOD </name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EtsEod\EtsEodManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsEodManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsEodManager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EtsEod\EtsEodServer</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsEodServer.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EtsEodServer</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%ETSManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ETSManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: ETSManager</name>
+		</step>
+		<step action='Make VS.NET'>
+			<Attr type='11'>-1</Attr>
+			<BaseSel type='3'>1</BaseSel>
+			<Config>Release|Win32</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%EtsEod\EtsEod.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<ParseOutput type='11'>-1</ParseOutput>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>EOD: Build EtsEod</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EtsEod\EtsEodManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsEodManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsEodManager</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%EtsEod\EtsEodServer</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>EtsEodServer.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EtsEodServer</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%ETSManager</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>ETSManager.rc</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: ETSManager</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>3</indent>
+			<name>Build OTCCalc</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%OTCOptionCalc</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>AssemblyInfo.cs</Selector>
+			<indent type='3'>4</indent>
+			<name>Check Out: EAssemblyInfo</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%OTCOptionCalc</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OTCOptionCalc.csproj.user</Selector>
+			<checked type='11'>0</checked>
+			<indent type='3'>4</indent>
+			<name>Check Out: OTCOptionCalc.csproj.user</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%OTCOptionCalc</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OTCOptionCalc.suo</Selector>
+			<checked type='11'>0</checked>
+			<indent type='3'>4</indent>
+			<name>Check Out: OTCOptionCalc.suo</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkout</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%COMMON_LIBRARY_ROOT%\OCWrapper\OCWrapper</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OCWrapper.csproj.user</Selector>
+			<checked type='11'>0</checked>
+			<indent type='3'>4</indent>
+			<name>Check Out: OCWrapper.csproj.user</name>
+		</step>
+		<step action='Make VS.NET'>
+			<AssemblyVer type='11'>-1</AssemblyVer>
+			<Attr type='11'>-1</Attr>
+			<Config>Release|Any CPU</Config>
+			<FileVer type='11'>-1</FileVer>
+			<Filename>%ETS_ROOT%OTCOptionCalc\otcoptioncalc.sln</Filename>
+			<IncrBuildNum type='11'>-1</IncrBuildNum>
+			<ParseOutput type='11'>-1</ParseOutput>
+			<PostProcess type='11'>-1</PostProcess>
+			<ProdVer type='11'>-1</ProdVer>
+			<VersionSel type='3'>1</VersionSel>
+			<indent type='3'>4</indent>
+			<name>OTC calc</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%OTCOptionCalc</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>AssemblyInfo.cs</Selector>
+			<indent type='3'>4</indent>
+			<name>Check In: EAssemblyInfo</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%OTCOptionCalc</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OTCOptionCalc.csproj.user</Selector>
+			<checked type='11'>0</checked>
+			<indent type='3'>4</indent>
+			<name>Check In: OTCOptionCalc.csproj.user</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%ETS_ROOT%OTCOptionCalc</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OTCOptionCalc.suo</Selector>
+			<checked type='11'>0</checked>
+			<indent type='3'>4</indent>
+			<name>Check In: OTCOptionCalc.suo</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>checkin</Command>
+			<Force type='11'>-1</Force>
+			<Identical type='11'>-1</Identical>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Path>%COMMON_LIBRARY_ROOT%\OCWrapper\OCWrapper</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<Selector>OCWrapper.csproj.user</Selector>
+			<checked type='11'>0</checked>
+			<indent type='3'>4</indent>
+			<name>Check In: OCWrapper.csproj.user</name>
+		</step>
+		<step action='ClearCase'>
+			<Command>mkbl</Command>
+			<Force type='11'>-1</Force>
+			<MakeUnc type='11'>-1</MakeUnc>
+			<Nwarn type='11'>-1</Nwarn>
+			<Opt>-all -inc ETS_ASP_v%VERSION_NUM% </Opt>
+			<Path>%ETS_ROOT%</Path>
+			<Ptime type='11'>-1</Ptime>
+			<Recurse type='11'>-1</Recurse>
+			<indent type='3'>3</indent>
+			<name>ClearCase: Make Baseline</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%</DestDir>
+			<ExclExt>*.pdb</ExclExt>
+			<Ext><![CDATA[*.exe
+*.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built Release Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\PDB</DestDir>
+			<Ext><![CDATA[*.pdb
+
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built PDB Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%</DestDir>
+			<ExclExt>*.pdb</ExclExt>
+			<Ext><![CDATA[*.exe
+*.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\Components\Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built Components Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\Transport</DestDir>
+			<ExclExt>*.pdb</ExclExt>
+			<Ext><![CDATA[*.exe
+*.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%TRANSPORT_LIBRARY_ROOT%Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built Release Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\Transport\PDB</DestDir>
+			<Ext><![CDATA[*.pdb
+
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%TRANSPORT_LIBRARY_ROOT%Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built PDB Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\Database\EOD</DestDir>
+			<Ext><![CDATA[*.sql
+
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\Database\ASP\EOD Patches</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built SQL EOD Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\PDB</DestDir>
+			<Ext><![CDATA[*.pdb
+
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\Components\Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built PDB Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\Database\</DestDir>
+			<Ext><![CDATA[*.sql
+
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\Database\ASP\Patches</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built SQL Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\CommonLib</DestDir>
+			<Ext><![CDATA[egdebugutil.dll
+
+egstdlib7.dll
+optioncalc.dll]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%CommonProgramFiles%\Egar</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built CommonLib Release Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%</DestDir>
+			<Ext><![CDATA[eghttp.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%CommonProgramFiles%\Egar</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built EgHttp Release Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\CommonLib\PDB</DestDir>
+			<Ext><![CDATA[egstdlib7.pdb
+optioncalc.pdb
+
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<Purge type='11'>-1</Purge>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%CommonProgramFiles%\Egar</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy BuiltCommonLib PDB Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\PDB</DestDir>
+			<Ext><![CDATA[eghttp.pdb
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<Purge type='11'>-1</Purge>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%CommonProgramFiles%\Egar</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built EgHttp PDB Files</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>2</indent>
+			<name>RTTF</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%</DestDir>
+			<ExclExt>*.pdb</ExclExt>
+			<Ext><![CDATA[*.exe
+*.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\MarketInterfaces\Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built Release Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\PDB</DestDir>
+			<Ext><![CDATA[*.pdb
+
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%WORK_ROOT%ETS\MarketInterfaces\Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built PDB Files</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>2</indent>
+			<name>CopyMarketInterface files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\PriceProviders</DestDir>
+			<ExclExt>*.pdb</ExclExt>
+			<Ext><![CDATA[*.exe
+*.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%MARKET_DATA_ADAPTERS_ROOT%Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built Components Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\PriceProviders\Pdb</DestDir>
+			<Ext><![CDATA[*.pdb
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%MARKET_DATA_ADAPTERS_ROOT%Bin</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built Components Files</name>
+		</step>
+		<step action='Group'>
+			<indent type='3'>2</indent>
+			<name>Copy OTC Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\OtcCalc</DestDir>
+			<ExclExt>*.pdb</ExclExt>
+			<Ext><![CDATA[*.exe
+*.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%COMMON_LIBRARY_ROOT%\OCWrapper\OCWrapper\Bin\Release</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>3</indent>
+			<name>Copy Built Components Files</name>
+		</step>
+		<step action='Copy Files'>
+			<Delay>15</Delay>
+			<DestDir>%RELEASE_ROOT%\%VERSION_NUM%\OtcCalc</DestDir>
+			<ExclExt>*.pdb</ExclExt>
+			<Ext><![CDATA[*.exe
+*.dll
+]]></Ext>
+			<Incremental type='11'>-1</Incremental>
+			<LogCopied type='11'>-1</LogCopied>
+			<ReadOnly type='11'>-1</ReadOnly>
+			<Restartable type='11'>-1</Restartable>
+			<Retries>10</Retries>
+			<SourceDir>%ETS_ROOT%OTCOptionCalc\Bin\Release</SourceDir>
+			<TBD type='11'>-1</TBD>
+			<indent type='3'>4</indent>
+			<name>Copy Built Components Files</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[String  sVersions, sWorkRoot
+
+sWorkRoot =  Application.Macros(vbldMacroProject).Item("RELEASE_ROOT").Value + "\2.00."+CStr(Application.Macros(vbldMacroProject).Item("BUILD_NUM").Value)+"\Database\EOD"
+sVersions = GetDatabaseVersion(sWorkRoot)
+Application.Macros(vbldMacroTemporary).Add "DATABASE_EOD_VER", sVersions
+
+]]></Script>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>3</indent>
+			<name>Get Database EOD Version</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[String  sVersions, sWorkRoot
+
+sWorkRoot =  Application.Macros(vbldMacroProject).Item("RELEASE_ROOT").Value+"\2.00."+CStr(Application.Macros(vbldMacroProject).Item("BUILD_NUM").Value)+"\Database"
+sVersions = GetDatabaseVersion(sWorkRoot)
+Application.Macros(vbldMacroTemporary).Add "DATABASE_VER", sVersions
+
+]]></Script>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>3</indent>
+			<name>Get Database  Version</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[String  sVersions, sWorkRoot
+
+sWorkRoot =  Application.Macros(vbldMacroProject).Item("RELEASE_ROOT").Value+"\2.00."+CStr(Application.Macros(vbldMacroProject).Item("BUILD_NUM").Value)
+Application.Macros(vbldMacroTemporary).Add "FILE_PATH", sWorkRoot
+
+sVersions = GetFileVersions(sWorkRoot)
+Application.Macros(vbldMacroTemporary).Add "FILE_VER", sVersions
+
+]]></Script>
+			<indent type='3'>3</indent>
+			<name>Get File Versions</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[String  sVersions, sWorkRoot
+
+sWorkRoot =  Application.Macros(vbldMacroProject).Item("RELEASE_ROOT").Value+"\2.00."+CStr(Application.Macros(vbldMacroProject).Item("BUILD_NUM").Value)+"\OtcCalc"
+sVersions = GetFileVersions(sWorkRoot)
+Application.Macros(vbldMacroTemporary).Add "OTC_FILE_VER", sVersions
+
+]]></Script>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>3</indent>
+			<name>Get File Versions</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[String  sVersions, sWorkRoot
+
+sWorkRoot =  Application.Macros(vbldMacroProject).Item("RELEASE_ROOT").Value+"\2.00."+CStr(Application.Macros(vbldMacroProject).Item("BUILD_NUM").Value)+"\PriceProviders"
+sVersions = GetFileVersions(sWorkRoot)
+Application.Macros(vbldMacroTemporary).Add "PP_FILE_VER", sVersions
+
+]]></Script>
+			<indent type='3'>3</indent>
+			<name>Get File Versions</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[String  sVersions, sWorkRoot
+
+sWorkRoot =  Application.Macros(vbldMacroProject).Item("RELEASE_ROOT").Value+"\2.00."+CStr(Application.Macros(vbldMacroProject).Item("BUILD_NUM").Value)+"\CommonLib"
+sVersions = GetFileVersions(sWorkRoot)
+Application.Macros(vbldMacroTemporary).Add "OC_FILE_VER", sVersions
+
+]]></Script>
+			<indent type='3'>3</indent>
+			<name>Get File Versions</name>
+		</step>
+		<step action='Run Script'>
+			<Language>VBScript</Language>
+			<Script><![CDATA[Dim CC 'As New ClearCase.Application
+Set CC = CreateObject("ClearCase.Application")
+' Set a view context for the version comparison
+'ChDir "C:\Development\EG1_ETS_ASP_Production_BugFix"
+'Dim chd As ChDir.CChangeDir
+'Set chd = CreateObject("ChDir.ChangeDir")
+'chd.ChangeTo "C:\Development\EG1_ETS_ASP_Production_BugFix"
+' Get the project VOB with tag \projects
+Dim PVOB 'As CCProjectVOB
+Set PVOB = CC.ProjectVOB("\FTDepartment")
+'Dim pVies 'As CCViews
+Dim pStream 'As ClearCase.CCStream
+'Set pVies = CC.Views
+Dim S
+Dim basel 'As CCBaseline
+Dim compBas 'As CCBaselines
+
+S = "<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 style='margin-left:8.6pt;border-collapse:collapse;border:none;mso-border-alt: solid windowtext .5pt;mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt; mso-border-insideh:.5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>"
+
+
+
+Set pStream = PVOB.Stream("Florida_Int_P1")
+For Each basel In pStream.LatestBaselines
+    Set compBas = pStream.Baselines(basel.Component)
+    If compBas.Count >= 2 Then
+    
+         S = S + "<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'><td width=636 colspan=2 valign=top style='width:477.0pt;border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;background:#CCFFFF;padding:0in 5.4pt 0in 5.4pt'><p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b style='mso-bidi-font-weight:normal'><span style='color:#003572'><o:p>" + basel.Component.Name + "</o:p></span></b></p></td></tr>"
+        
+        Dim Baseline1 'As CCBaseline
+        Dim Baseline2 'As CCBaseline
+        Dim bHasChanges
+        
+        bHasChanges = False
+        Set Baseline2 = compBas.Item(compBas.Count)
+        
+        Set Baseline1 = compBas.Item(compBas.Count - 1)
+
+        Dim BaselineComp 'As CCBaselineComparison
+        Set BaselineComp = CC.CreateBaselineComparison
+    
+        BaselineComp.BaselineOne = Baseline1
+        BaselineComp.BaselineTwo = Baseline2
+        BaselineComp.Compare
+        
+        Dim Activities 'As CCActivities
+        Dim Activity   'As CCActivity
+
+        Set Activities = BaselineComp.ActivitiesInTwoButNotOne
+
+        For Each Activity In Activities
+           If InStr(1, Activity.Headline, "build", vbTextCompare) = 0 And InStr(1, Activity.Headline, "rebase", vbTextCompare) = 0 And InStr(1, Activity.Headline, "deliver", vbTextCompare) = 0 Then
+                S = S + "<tr style='mso-yfti-irow:1'><td width=319 valign=top style='width:239.0pt;border:solid windowtext 1.0pt; border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt; padding:0in 5.4pt 0in 5.4pt'><p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span style='color:#003572'><o:p>" + Activity.Name + "</o:p></span></p></td>"
+                S = S + "<td width=317 valign=top style='width:238.0pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt; mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt; mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'> <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span style='color:#003572'><o:p>" + Activity.Headline + "</o:p></span></p></td></tr>"
+                bHasChanges = True
+           End If
+        Next
+        
+        Set Activities = BaselineComp.ChangedActivities
+        For Each Activity In Activities
+           If InStr(1, Activity.Headline, "build", vbTextCompare) = 0 And InStr(1, Activity.Headline, "rebase", vbTextCompare) = 0 And InStr(1, Activity.Headline, "deliver", vbTextCompare) = 0 Then
+                S = S + "<tr style='mso-yfti-irow:1'><td width=319 valign=top style='width:239.0pt;border:solid windowtext 1.0pt; border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt; padding:0in 5.4pt 0in 5.4pt'><p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span style='color:#003572'><o:p>" + Activity.Name + "</o:p></span></p></td>"
+                S = S + "<td width=317 valign=top style='width:238.0pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt; mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt; mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'> <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span style='color:#003572'><o:p>" + Activity.Headline + "</o:p></span></p></td></tr>"
+                bHasChanges = True
+           End If
+        Next
+        
+        If bHasChanges = False Then
+        S = S + "<tr style='mso-yfti-irow:1'><td width=319 valign=top style='width:239.0pt;border:solid windowtext 1.0pt; border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt; padding:0in 5.4pt 0in 5.4pt'></td>"
+        S = S + "<td width=317 valign=top style='width:238.0pt;border-top:none;border-left: none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt; mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt; mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'> </td></tr>"
+        End If
+    End If
+        
+Next
+S = S + "</table>"
+
+Application.Macros(vbldMacroTemporary).Add "ACTIVITY", S
+]]></Script>
+			<indent type='3'>3</indent>
+			<name>Collect Activity Information</name>
+		</step>
+		<step action='Write File'>
+			<Filename>%RELEASE_ROOT%\%VERSION_NUM%\Report.htm</Filename>
+			<Text>%BUILD_REPORT%</Text>
+			<Writeable type='11'>-1</Writeable>
+			<indent type='3'>3</indent>
+			<name>Write File</name>
+		</step>
+		<step action='Send Mail'>
+			<From>%FROM_EMAIL%</From>
+			<HTML type='11'>-1</HTML>
+			<Message>%BUILD_REPORT%</Message>
+			<Port>25</Port>
+			<Server>%SMTP_SERVER%</Server>
+			<Subject>ETS ASP 'Florida' %VERSION_NUM%  Released </Subject>
+			<Timeout>10</Timeout>
+			<To>%TO_EMAIL%</To>
+			<description>Notify the build master that the build completed -- change the SMTP_SERVER, FROM_EMAIL and TO_EMAIL project macros to your e-mail addresses</description>
+			<indent type='3'>3</indent>
+			<name>Notify of Completion</name>
+		</step></steps>
+	<steps type='1'>
+		<step action='Group'>
+			<name>Check Out File</name>
+		</step>
+		<step action='Run Program'>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  checkout  -c "Build %VERSION_NUM%" %CHECKOUT_FILE%.rc</command>
+			<indent type='3'>1</indent>
+			<name>Check Out Rc file</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Run Program'>
+			<checked type='11'>0</checked>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  checkout  -c "Build %VERSION_NUM%" %CHECKOUT_FILE%.vcproj</command>
+			<indent type='3'>1</indent>
+			<name>Check Out Project</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Group'>
+			<name>Check Out VB File</name>
+		</step>
+		<step action='Run Program'>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  checkout  -c "Build %VERSION_NUM%" %CHECKOUT_FILE%</command>
+			<indent type='3'>1</indent>
+			<name>Check Out Project</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Group'>
+			<name>Check In VB File</name>
+		</step>
+		<step action='Run Program'>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  checkin  -nc -pti -ide  %CHECKOUT_FILE%</command>
+			<indent type='3'>1</indent>
+			<name>Check In Project</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Group'>
+			<name>Undo Check Out VB File</name>
+		</step>
+		<step action='Run Program'>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  uncheckout  -rm  %CHECKOUT_FILE%.vbp</command>
+			<indent type='3'>1</indent>
+			<name>Undo Check Out Project</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Group'>
+			<name>Check In File</name>
+		</step>
+		<step action='Run Program'>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  checkin  -nc -pti -ide  %CHECKOUT_FILE%.rc</command>
+			<indent type='3'>1</indent>
+			<name>Check In Rc File</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Run Program'>
+			<checked type='11'>0</checked>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  checkin  -nc -pti -ide  %CHECKOUT_FILE%.vcproj</command>
+			<indent type='3'>1</indent>
+			<name>Check In Project</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Group'>
+			<name>Undo Check Out File</name>
+		</step>
+		<step action='Run Program'>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  uncheckout  -rm  %CHECKOUT_FILE%.rc</command>
+			<indent type='3'>1</indent>
+			<name>Undo CheckOut Rc File</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step>
+		<step action='Run Program'>
+			<command>E:\Program Files\Rational\ClearCase\bin\ClearTool.exe  uncheckout  -rm  %CHECKOUT_FILE%.vcproj</command>
+			<indent type='3'>1</indent>
+			<name>Undo Check Out Project</name>
+			<outputfrom type='3'>1</outputfrom>
+			<startin>%CHECKOUT_ROOT%</startin>
+		</step></steps>
+	<steps type='2'>
+		<step action='Group'>
+			<condcompareto>Transport:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<name>Undo Check Out Transport</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%MMW\</ParamValues>
+			<ParamValues>MMW</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Transport:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Transport: UChO MMW</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%MsgStruct\</ParamValues>
+			<ParamValues>MsgStruct</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<condcompareto>Transport:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<indent type='3'>1</indent>
+			<name>Transport: UChO MsgStruct</name>
+		</step>
+		<step action='Group'>
+			<condcompareto>ETS:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<name>Undo Check Out ETS</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%ETSManager\</ParamValues>
+			<ParamValues>ETSManager</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>ETS:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>ETS: UChO ETSManager</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%VADBLayout</ParamValues>
+			<ParamValues>VADBLayout</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<condcompareto>ETS:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<indent type='3'>1</indent>
+			<name>ETS: UChO VaDbLayout</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%VME\</ParamValues>
+			<ParamValues>VME</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<condcompareto>ETS:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<indent type='3'>1</indent>
+			<name>ETS: UChO VME</name>
+		</step>
+		<step action='Group'>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<name>Components: Check In</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\EtsGeneral</ParamValues>
+			<ParamValues>EtsGeneral</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<indent type='3'>1</indent>
+			<name>Components: EtsGeneral</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmGeneral</ParamValues>
+			<ParamValues>EtsMmGeneral</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmGeneral</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmGreeks</ParamValues>
+			<ParamValues>EtsMmGreeks</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmGreeks</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmHedge</ParamValues>
+			<ParamValues>EtsMmHedge</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmHedge</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmIndexHedge</ParamValues>
+			<ParamValues>EtsMmIndexHedge</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmIndexHedge</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmQuotes</ParamValues>
+			<ParamValues>EtsMmQuotes</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmQuotes</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmReports</ParamValues>
+			<ParamValues>EtsMmReports</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmReports</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmRisks</ParamValues>
+			<ParamValues>EtsMmRisks</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmRisks</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmStockHedge</ParamValues>
+			<ParamValues>EtsMmStockHedge</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmStockHedge</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Components\MM\EtsMmVolaAnalysis</ParamValues>
+			<ParamValues>EtsMmVolaAnalysis</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: EtsMmVolaAnalysis</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%ETSMmDataSharing</ParamValues>
+			<ParamValues>ETSMmDataSharing</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Components:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Components: ETSMmDataSharing</name>
+		</step>
+		<step action='Group'>
+			<condcompareto>RTTF:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<name>Undo Check Out RTTF</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%MarketInterfaces\RTTF\Sage</ParamValues>
+			<ParamValues>Sage_GUI</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<condcompareto>RTTF:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<indent type='3'>1</indent>
+			<name>RTTF: UChO Sage</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%MarketInterfaces\RTTF\Sage\Utils\TradesUploader</ParamValues>
+			<ParamValues>TradesUploader</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>RTTF:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>RTTF: UChO TradesUploader</name>
+		</step>
+		<step action='Group'>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Market Maker:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<name>Undo ETS MM</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Ets_Main</ParamValues>
+			<ParamValues>EtsMM</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out VB File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Market Maker:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Market Maker: Undo Check In Main</name>
+		</step>
+		<step action='Subroutine Call'>
+			<Expand type='11'>-1</Expand>
+			<ParamValues array='0'>%ETS_ROOT%Ets_Quotes</ParamValues>
+			<ParamValues>EtsMM</ParamValues>
+			<Parameters array='0'>CHECKOUT_ROOT</Parameters>
+			<Parameters>CHECKOUT_FILE</Parameters>
+			<SubName>Undo Check Out VB File</SubName>
+			<buildfailsteps type='11'>0</buildfailsteps>
+			<condcompareto>Market Maker:</condcompareto>
+			<condcomparison type='3'>2</condcomparison>
+			<condexpr>%FAILSTEP_NAME%</condexpr>
+			<continueonfail type='11'>-1</continueonfail>
+			<indent type='3'>1</indent>
+			<name>Market Undo Check out Quotes</name>
+		</step></steps>
+	<macros>
+		<macro name='BUILD_NUM'>
+			<value type='3'>48</value>
+		</macro>
+		<macro name='BUILD_REPORT'>
+			<value><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><HTML 
+XMLNS:O><HEAD><TITLE>ETS Florida</TITLE>
+<META content="Evrsoft First Page" name=GENERATOR>
+<STYLE type=text/css>HTML {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+BODY {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; FONT-FAMILY: Georgia, Serif
+}
+#menu {
+	BORDER-RIGHT: #cccccc 1px dashed; PADDING-RIGHT: 20px; BORDER-TOP: #cccccc 1px dashed; PADDING-LEFT: 20px; BACKGROUND: #dddddd; LEFT: 20px; PADDING-BOTTOM: 20px; MARGIN: 0px; BORDER-LEFT: #cccccc 1px dashed; WIDTH: 150px; PADDING-TOP: 20px; BORDER-BOTTOM: #cccccc 1px dashed; POSITION: absolute
+}
+#menu A {
+	FONT-SIZE: 12px; LINE-HEIGHT: 2
+}
+#content {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: #f5f5f5; PADDING-BOTTOM: 10px; MARGIN-LEFT: 205px; OVERFLOW: auto; PADDING-TOP: 0px
+}
+H1 {
+	FONT-SIZE: large; PADDING-TOP: 10px
+}
+</STYLE>
+</HEAD>
+<BODY><BR>
+<DIV id=menu style="WIDTH: 131px; HEIGHT: 483px">
+<P>&nbsp;</P>
+<P><FONT size=2>Released:<BR></FONT><FONT color=#003399 size=2>%DATETIME%</FONT> 
+</P>
+<P>
+<TABLE width="100%%" border=0>
+  <TBODY>
+  <TR>
+    <TD>Release:</TD></TR>
+  <TR>
+    <TD>
+      <P align=right><A 
+      href="file://///wolf/FT_releases/ETS/ASP/Florida/2.0/%VERSION_NUM%/">Get 
+      Files</A></P></TD></TR></TBODY></TABLE></P></DIV>
+<DIV id=content>
+<TABLE style="WIDTH: 441px; HEIGHT: 66px">
+  <TBODY>
+  <TR>
+    <TD><IMG style="WIDTH: 396px; HEIGHT: 60px" height=60 alt="" 
+      src="http://www.myflorida.com/images/4003_tt1_p3_home1.jpg" 
+      width=480 align=right border=0></TD></TR></TBODY></TABLE>
+<P><FONT face="Times New Roman" color=#3366cc 
+size=6><TABLE"><TBODY><TR><TD><FONT color=#3366cc size=6>ETS ASP&nbsp; 
+'<EM><U>Florida</U></EM>'<BR></FONT>
+<P><FONT size=2><FONT color=#3366cc size=6>
+<TABLE style="WIDTH: 413px; HEIGHT: 122px" borderColorDark=#003399 
+borderColorLight=#99ccff border=0>
+  <TBODY>
+  <TR height=35>
+    <TD>
+      <P align=left><STRONG><FONT color=#ff9900>ETS Version:</FONT><FONT 
+      color=#000080 size=2>%VERSION_NUM%</FONT></STRONG></P></TD></TR>
+  <TR height=48>
+    <TD><STRONG><FONT color=#000080 size=2>
+      <P align=left><FONT color=#ff9900 size=4><STRONG>Database <FONT 
+      color=#333366>%DATABASE_VER%</FONT></STRONG></FONT></P></FONT></STRONG></TD></TR>
+  <TR height=52>
+    <TD><FONT color=#ff9900 size=4><STRONG>
+      <P align=left><FONT color=#ff9900 size=4><STRONG>EOD Database <FONT 
+      color=#333366 
+      size=2>%DATABASE_EOD_VER%</FONT></STRONG></FONT></P></STRONG></FONT></TD></TR></TBODY></TABLE></FONT></P>
+<P>&nbsp;</P>
+<P>%ACTIVITY%</FONT></P>
+<P><FONT color=#330000>Files</FONT>:<O:P></O:P></P><FONT size=3><FONT 
+color=#333333>%FILE_VER%<BR>%OC_FILE_VER%<BR>%OTC_FILE_VER%<BR>%PP_FILE_VER%</TD></TR></TBODY></TABLE></FONT></FONT></FONT> 
+
+<P></P></DIV></BODY></HTML>
+
+]]></value>
+		</macro>
+		<macro name='CLEARCASE_VIEW_FOLDER'>
+			<value>Florida_Int_P1</value>
+		</macro>
+		<macro name='CLEARCASE_VIEWS_DIR'>
+			<value>E:\</value>
+		</macro>
+		<macro name='COMMON_LIBRARY_ROOT'>
+			<value>%WORK_ROOT%EgarCommonLibrary\</value>
+		</macro>
+		<macro name='ETS_ROOT'>
+			<value>%WORK_ROOT%ETS\</value>
+		</macro>
+		<macro name='FIX_LIBRARY_ROOT'>
+			<value>%WORK_ROOT%EgarFixLibrary\</value>
+		</macro>
+		<macro name='FROM_EMAIL'>
+			<description>From address for emails</description>
+			<value>ETSMails@egartech.com</value>
+		</macro>
+		<macro name='MARKET_DATA_ADAPTERS_ROOT'>
+			<value>%WORK_ROOT%MarketDataAdapters\</value>
+		</macro>
+		<macro name='OTC_FILE_VER'>
+			<value>OTC Calc was not built</value>
+		</macro>
+		<macro name='RELEASE_ROOT'>
+			<value>Z:\ETS\ASP\Florida\2.0</value>
+		</macro>
+		<macro name='SMTP_SERVER'>
+			<description>Identity of the SMTP server to use when sending mail</description>
+			<value>sampo</value>
+		</macro>
+		<macro name='TO_EMAIL'>
+			<description><![CDATA[E-mail address to send notification of success and failure to
+]]></description>
+			<value>EgarOne_Florida@egartech.com</value>
+		</macro>
+		<macro name='TRANSPORT_LIBRARY_ROOT'>
+			<value>%WORK_ROOT%EgarTransport\</value>
+		</macro>
+		<macro name='TRANSPORT_ROOT'>
+			<value>%WORK_ROOT%EgarTransport\</value>
+		</macro>
+		<macro name='VERSION_NUM'>
+			<value>2.00.%BUILD_NUM%</value>
+		</macro>
+		<macro name='WORK_ROOT'>
+			<value>%CLEARCASE_VIEWS_DIR%%CLEARCASE_VIEW_FOLDER%\</value>
+		</macro></macros>
+	<script language='VBScript'><![CDATA[Sub CreateShortcut(target, sname)
+
+	Set objWshShell = CreateObject("Wscript.Shell")
+	
+	' Read desktop path using WshSpecialFolders object
+	strDesktopPath = objWshShell.SpecialFolders("Desktop")
+	
+	' Create a shortcut object on the desktop
+	Set objShortcut = objWshShell.CreateShortcut(strDesktopPath & "\" & sname & ".lnk")
+	
+	' Set shortcut object properties and save it
+	objShortcut.TargetPath = target
+	objShortcut.Save
+End Sub
+
+Public Function UpdateVersion(ByVal vstrVersion)
+	Dim larrVer
+	larrVer       = Split(vstrVersion, ".")
+	larrVer(2)    = CLng(larrVer(2)) + 1
+	UpdateVersion = Join(larrVer, ".")
+End Function
+
+Public Sub IncrementISVersion(ByVal strFileName)
+	Dim  ISWiProject
+    Dim  pProperty 
+	Builder.logmessage strFileName
+	' Create a reference to the InstallShield Developer Automation Interface
+  	Set ISWiProject = CreateObject("ISWiAutomation.ISWiProject")
+  	    ISWiProject.OpenProject(strFileName)
+  	    
+    Set pProperty = ISWiProject.ISWIProperties.Item("ProductVersion")
+
+	Builder.logmessage "The ISProject " + strFileName +" Version " + pProperty.Value
+	pProperty.Value = UpdateVersion(pProperty.Value)
+	Builder.logmessage "Is changed to " +pProperty.Value     
+   
+    ISWiProject.SaveProject
+    ISWiProject.CloseProject  	
+End Sub
+
+' *****************************************************************************
+' get  trapping any errors
+
+
+Function PadLeft(str, size)
+	If size > Len(str) Then
+		PadLeft = String(size-Len(str), 32) & str
+	Else
+		PadLeft = str
+	End If
+End Function
+
+Function PadRight(str, size)
+	If size > Len(str) Then
+		PadRight = str & String(size-Len(str), 32)
+	Else
+		PadRight = str
+	End If
+End Function
+
+Public Function GetFileVersions(ByVal vstrPath)
+
+	Dim strResult, strVersion
+	Dim fso
+	Dim objFolder, dateStr, dateArr
+	
+	
+	strResult = " <table border=0 cellspacing=0 cellpadding=0 > <tr> <td width=190 valign=top><b>File</b></td><td width=70 valign=top ><b>Size</b></td><td width=100 valign=top ><b>Version</b></td><td width=250 valign=top><b>Modification</b> </td> </tr>"
+	Set fso       = vbld_FSO
+	Set objFolder = fso.GetFolder(vstrPath)
+	For Each objFile In objFolder.Files
+	  If UCase(Right(objFile.Name, 3)) = "DLL" Or UCase(Right(objFile.Name, 3)) = "EXE" Or UCase(Right(objFile.Name, 3)) = "OCX" Then
+
+			dateStr = Trim(objFile.DateLastModified)
+			dateArr = Split(dateStr, " ")
+			dateArr(1) = Trim(dateArr(1))
+			If Len(dateArr(1)) < 8 Then dateArr(1) = "0" & dateArr(1)
+			dateStr = Join(dateArr, " ")
+
+			strResult = strResult & "<tr><td width=190 valign=top><span lang=EN-US style='font-size:8.0pt;'>"
+			strResult = strResult & objFile.Name
+			strResult = strResult & "</span></td><td width=70 valign=top><span lang=EN-US style='font-size:8.0pt;'>"
+			strResult = strResult & FormatNumber(objFile.Size, 0, False, False, True)
+			strResult = strResult & "</span></td><td width=100 valign=top><span lang=EN-US style='font-size:8.0pt;'>"
+			strResult = strResult & fso.GetFileVersion(objFile.Path)
+            strResult = strResult & "</span></td><td width=250 valign=top><span lang=EN-US style='font-size:8.0pt;'>"
+            strResult = strResult & dateStr
+            strResult = strResult & "</span></td></tr>"
+	  End If 
+	Next	
+	GetFileVersions = strResult+ "</table>"
+End Function
+
+Public Function GetDBVersionFromFileName(ByVal vstrFileName)
+'20040112.02_ViaNet_3.33.141.sql
+	Dim verArr
+	Dim verArr2
+	verArr  = Split(vstrFileName,".")
+	verArr2 =  Split(verArr(1),"_")
+	
+    GetDBVersionFromFileName = verArr2(2)+"."+verArr(2)+"."+verArr(3)
+End Function
+
+Public Function GetDatabaseVersion(ByVal vstrPath)
+
+	Dim strResult, strVersion
+	Dim fso
+	Dim objFolder, verFile, tmpVerDB
+
+	verFile = ""
+	Set fso       = vbld_FSO
+	Set objFolder = fso.GetFolder(vstrPath)
+	For Each objFile In objFolder.Files
+	  If UCase(Right(objFile.Name, 3)) = "SQL" Then
+	        tmpVerDB = GetDBVersionFromFileName(objFile.Name)
+	  		If verFile < tmpVerDB Then
+	  			  verFile = tmpVerDB
+	  	    End If		  
+	  End If 
+	Next	
+	GetDatabaseVersion = verFile
+End Function
+]]></script>
+</project>

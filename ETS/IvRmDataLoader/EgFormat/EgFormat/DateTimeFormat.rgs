@@ -1,0 +1,27 @@
+HKCR
+{
+	EgFormat.DateTimeFormat.1 = s 'DateTimeFormat Class'
+	{
+		CLSID = s '{43A37F0D-91C7-4922-BE55-BA48964EA3E1}'
+	}
+	EgFormat.DateTimeFormat = s 'DateTimeFormat Class'
+	{
+		CLSID = s '{43A37F0D-91C7-4922-BE55-BA48964EA3E1}'
+		CurVer = s 'EgFormat.DateTimeFormat.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {43A37F0D-91C7-4922-BE55-BA48964EA3E1} = s 'DateTimeFormat Class'
+		{
+			ProgID = s 'EgFormat.DateTimeFormat.1'
+			VersionIndependentProgID = s 'EgFormat.DateTimeFormat'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{802B484C-53F8-4682-9CDF-5C2F4270B547}'
+		}
+	}
+}

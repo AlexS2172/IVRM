@@ -1,0 +1,53 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PriceProviders", "PriceProviders\PriceProviders.vcproj", "{DF565740-36DF-49C9-94D8-5CA7F23C03D0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ActivFeedProviders", "ActivFeedProviders\ActivFeedProviders.vcproj", "{BFD0D6F3-7F8D-4D48-B849-86A0BCF84D36}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0} = {DF565740-36DF-49C9-94D8-5CA7F23C03D0}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{59241CFD-0917-4954-BB08-CF2BC204FBE0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataFeedProviders.vc8.corba.4.1.2", "DataFeedProviders\DataFeedProviders.vc8.corba.4.1.2.vcproj", "{D306F2FD-D2FF-4E3F-A818-C6B0C5B267C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0} = {DF565740-36DF-49C9-94D8-5CA7F23C03D0}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release P4|Win32 = Release P4|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Debug|Win32.Build.0 = Debug|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Release P4|Win32.ActiveCfg = Release P4|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Release P4|Win32.Build.0 = Release P4|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Release|Win32.ActiveCfg = Release|Win32
+		{DF565740-36DF-49C9-94D8-5CA7F23C03D0}.Release|Win32.Build.0 = Release|Win32
+		{BFD0D6F3-7F8D-4D48-B849-86A0BCF84D36}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BFD0D6F3-7F8D-4D48-B849-86A0BCF84D36}.Debug|Win32.Build.0 = Debug|Win32
+		{BFD0D6F3-7F8D-4D48-B849-86A0BCF84D36}.Release P4|Win32.ActiveCfg = Release|Win32
+		{BFD0D6F3-7F8D-4D48-B849-86A0BCF84D36}.Release P4|Win32.Build.0 = Release|Win32
+		{BFD0D6F3-7F8D-4D48-B849-86A0BCF84D36}.Release|Win32.ActiveCfg = Release|Win32
+		{BFD0D6F3-7F8D-4D48-B849-86A0BCF84D36}.Release|Win32.Build.0 = Release|Win32
+		{D306F2FD-D2FF-4E3F-A818-C6B0C5B267C1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D306F2FD-D2FF-4E3F-A818-C6B0C5B267C1}.Debug|Win32.Build.0 = Debug|Win32
+		{D306F2FD-D2FF-4E3F-A818-C6B0C5B267C1}.Release P4|Win32.ActiveCfg = Release|Win32
+		{D306F2FD-D2FF-4E3F-A818-C6B0C5B267C1}.Release P4|Win32.Build.0 = Release|Win32
+		{D306F2FD-D2FF-4E3F-A818-C6B0C5B267C1}.Release|Win32.ActiveCfg = Release|Win32
+		{D306F2FD-D2FF-4E3F-A818-C6B0C5B267C1}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(DevPartner) = postSolution
+	EndGlobalSection
+	GlobalSection(DevPartner) = postSolution
+	EndGlobalSection
+EndGlobal

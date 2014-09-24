@@ -1,0 +1,16 @@
+// EGOcx.odl : type library source for EGOcx.dll
+
+// This file will be processed by the MIDL compiler to produce the
+// type library (EGOcx.tlb).
+
+[ uuid(A7CF5DCD-767A-47B5-8E40-4A5B6C8BA676), version(1.0) ]
+library EGOcx
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+
+
+	//{{AFX_APPEND_ODL}}
+	//}}AFX_APPEND_ODL}}
+};

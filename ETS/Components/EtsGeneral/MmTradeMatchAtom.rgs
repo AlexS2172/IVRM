@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.MmTradeMatchAtom.1 = s 'MmTradeMatchAtom Class'
+	{
+		CLSID = s '{A609B092-31B9-49A1-9B94-DAFA712752CB}'
+	}
+	EtsGeneral.MmTradeMatchAtom = s 'MmTradeMatchAtom Class'
+	{
+		CLSID = s '{A609B092-31B9-49A1-9B94-DAFA712752CB}'
+		CurVer = s 'EtsGeneral.MmTradeMatchAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A609B092-31B9-49A1-9B94-DAFA712752CB} = s 'MmTradeMatchAtom Class'
+		{
+			ProgID = s 'EtsGeneral.MmTradeMatchAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.MmTradeMatchAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ECC5DD29-4F8D-4AD1-9E2F-C9B61683C08C}'
+		}
+	}
+}

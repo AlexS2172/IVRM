@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{A8FB1680-0F6E-42EB-84D6-5A445C61818E} = s 'HyperFeedProviders'
+		'HyperFeedProviders.exe'
+		{
+			val AppID = s {A8FB1680-0F6E-42EB-84D6-5A445C61818E}
+		}
+	}
+}

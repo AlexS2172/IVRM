@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TNT TestServer", "TNT TestServer.vcproj", "{300B5FB7-8B37-4B41-9F96-5D1C97D8FB46}"
+EndProject
+Global
+	GlobalSection(DevPartner Solution Properties) = postSolution
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccLocalPath0 = .
+		CanCheckoutShared = false
+		SolutionUniqueID = {3DC6EC29-4F49-4111-BC59-1771BA068DE4}
+		SccProjectUniqueName1 = TNT\u0020TestServer.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = false
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{300B5FB7-8B37-4B41-9F96-5D1C97D8FB46}.Debug.ActiveCfg = Debug|Win32
+		{300B5FB7-8B37-4B41-9F96-5D1C97D8FB46}.Debug.Build.0 = Debug|Win32
+		{300B5FB7-8B37-4B41-9F96-5D1C97D8FB46}.Release.ActiveCfg = Release|Win32
+		{300B5FB7-8B37-4B41-9F96-5D1C97D8FB46}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

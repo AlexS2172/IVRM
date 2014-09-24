@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.VMESurface.1 = s 'VMESurface Class'
+	{
+		CLSID = s '{204F70CC-F92F-4AC8-BB2F-83A10407F702}'
+	}
+	MsgStruct.VMESurface = s 'VMESurface Class'
+	{
+		CLSID = s '{204F70CC-F92F-4AC8-BB2F-83A10407F702}'
+		CurVer = s 'MsgStruct.VMESurface.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {204F70CC-F92F-4AC8-BB2F-83A10407F702} = s 'VMESurface Class'
+		{
+			ProgID = s 'MsgStruct.VMESurface.1'
+			VersionIndependentProgID = s 'MsgStruct.VMESurface'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

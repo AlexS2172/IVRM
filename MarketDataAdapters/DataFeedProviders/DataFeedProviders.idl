@@ -1,0 +1,55 @@
+// DataFeedProviders.idl : IDL source for DataFeedProviders
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DataFeedProviders.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+
+[
+	uuid(ACF65312-1D51-47B8-9860-8FA52F45A4DC),
+	version(1.0),
+	helpstring("DataFeedProviders 1.0 Type Library")
+]
+library DataFeedProvidersLib
+{
+	importlib("stdole2.tlb");
+	importlib("..\tlb\PriceProviders.tlb");
+	
+	[
+		uuid(19C184C5-38D7-4921-8168-46D5AF46E1CD),
+		helpstring("DataFeedBatchPriceInfo Class")
+	]
+	coclass DataFeedBatchPriceInfo
+	{
+		[default]	interface IPriceProvider;
+					interface IBatchPriceProvider;
+					interface IUserInformation;
+					interface IRisksProvider;
+		[default, source]	dispinterface _IBatchPriceInfoEvents;
+							dispinterface _IRisksInfoEvents;
+	};
+	
+	[
+		uuid(68A518E0-85F5-4370-9E01-B4D435D2F349),
+		helpstring("DataFeedStructureInfo Class")
+	]
+	coclass DataFeedStructureInfo
+	{
+		[default]	interface IStructureProvider;
+					interface IProvider;
+					interface IStructureProvider2;
+		[default, source] dispinterface _IStructureProviderExEvents;
+	};
+	
+	[
+		uuid(34A0BAE2-87B1-4BDF-A6E8-E8C5B8405B6F),
+		helpstring("DataFeedProviderInfo Class")
+	]
+	coclass ProviderInfo
+	{
+		[default] interface IProviderInfo;
+	};
+};

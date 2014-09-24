@@ -1,0 +1,101 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "CIBCTradeFeedAdapter"=.\CIBC\CIBCTradeFeedAdapter.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC (2)/MarketInterfaces/RTTF/CIBC", USUDAAAA
+    .\CIBC
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "FirstOptionsConnector"=.\FirstOptions\FirstOptionsConnector\FirstOptionsConnector.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/FirstOptions/FirstOptionsConnector", YOZCAAAA
+    .\FirstOptions\FirstOptionsConnector
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "OConnor"=.\OConnor\OConnor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/OConnor", ZRZCAAAA
+    .\OConnor
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Sage"=.\Sage\Sage_GUI.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/Sage", KTZCAAAA
+    .\Sage
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TradesUploader"=.\Sage\Utils\TradesUploader\TradesUploader.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF/Sage/Utils/TradesUploader", PVZCAAAA
+    .\Sage\Utils\TradesUploader
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Production 2.1 CIBC/MarketInterfaces/RTTF", ROZCAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

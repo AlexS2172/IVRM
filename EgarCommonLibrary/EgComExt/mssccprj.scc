@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[EgComExt.dsp]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgComExt", HJVAAAAA
+
+[EgComExt.vcproj]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgComExt", HJVAAAAA

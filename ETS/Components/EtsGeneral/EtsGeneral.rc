@@ -1,0 +1,199 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""..\\\\tlb\\\\EtsGeneral.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,147,0
+ PRODUCTVERSION 2,0,147,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileVersion", "2, 0,147, 0"
+            VALUE "InternalName", "EtsGeneral.dll"
+            VALUE "LegalCopyright", "© EGAR Technology Inc. All rights reserved."
+            VALUE "OriginalFilename", "EtsGeneral.dll"
+            VALUE "ProductName", "Equity Trading System"
+            VALUE "ProductVersion", "2, 0,147, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ETSGENERAL          REGISTRY                "EtsGeneral.rgs"
+IDR_VOLACONTROL         REGISTRY                "VolaControl.rgs"
+IDR_EXCHATOM            REGISTRY                "ExchAtom.rgs"
+IDR_EXCHCOLL            REGISTRY                "ExchColl.rgs"
+IDR_INDEXCOMPATOM       REGISTRY                "IndexCompAtom.rgs"
+IDR_INDEXCOMPCOLL       REGISTRY                "IndexCompColl.rgs"
+IDR_UNDATOM             REGISTRY                "UndAtom.rgs"
+IDR_UNDCOLL             REGISTRY                "UndColl.rgs"
+IDR_UNDBYSYMCOLL        REGISTRY                "UndBySymColl.rgs"
+IDR_INDEXATOM           REGISTRY                "IndexAtom.rgs"
+IDR_INDEXCOLL           REGISTRY                "IndexColl.rgs"
+IDR_SYNTHROOTCOMPATOM   REGISTRY                "SynthRootCompAtom.rgs"
+IDR_SYNTHROOTCOMPCOLL   REGISTRY                "SynthRootCompColl.rgs"
+IDR_SYNTHROOTATOM       REGISTRY                "SynthRootAtom.rgs"
+IDR_SYNTHROOTCOLL       REGISTRY                "SynthRootColl.rgs"
+IDR_ETSPRICEPROFILEATOM REGISTRY                "EtsPriceProfileAtom.rgs"
+IDR_ETSPRICEPROFILECOLL REGISTRY                "EtsPriceProfileColl.rgs"
+IDR_ETSOPTATOM          REGISTRY                "EtsOptAtom.rgs"
+IDR_ETSOPTCOLL          REGISTRY                "EtsOptColl.rgs"
+IDR_ETSOPTROOTATOM      REGISTRY                "EtsOptRootAtom.rgs"
+IDR_ETSOPTROOTCOLL      REGISTRY                "EtsOptRootColl.rgs"
+IDR_ETSEVENTATOM        REGISTRY                "EtsEventAtom.rgs"
+IDR_ETSEVENTCOLL        REGISTRY                "EtsEventColl.rgs"
+IDR_ETSTRADERATOM       REGISTRY                "EtsTraderAtom.rgs"
+IDR_ETSTRADERCOLL       REGISTRY                "EtsTraderColl.rgs"
+IDR_ETSOPTROOTBYNAMECOLL REGISTRY                "EtsOptRootByNameColl.rgs"
+IDR_ETSBROKERATOM       REGISTRY                "EtsBrokerAtom.rgs"
+IDR_ETSBROKERCOLL       REGISTRY                "EtsBrokerColl.rgs"
+IDR_ETSTRADERGROUPATOM  REGISTRY                "EtsTraderGroupAtom.rgs"
+IDR_ETSTRADERGROUPCOLL  REGISTRY                "EtsTraderGroupColl.rgs"
+IDR_ETSUNDGROUPATOM     REGISTRY                "EtsUndGroupAtom.rgs"
+IDR_ETSUNDGROUPCOLL     REGISTRY                "EtsUndGroupColl.rgs"
+IDR_ETSSTRATEGYATOM     REGISTRY                "EtsStrategyAtom.rgs"
+IDR_ETSSTRATEGYCOLL     REGISTRY                "EtsStrategyColl.rgs"
+IDR_ETSEXPMONTHATOM     REGISTRY                "EtsExpMonthAtom.rgs"
+IDR_ETSEXPMONTHCOLL     REGISTRY                "EtsExpMonthColl.rgs"
+IDR_ETSEXPCALCOLL       REGISTRY                "EtsExpCalColl.rgs"
+IDR_ETSTRADERUNDATOM    REGISTRY                "EtsTraderUndAtom.rgs"
+IDR_ETSTRADERUNDCOLL    REGISTRY                "EtsTraderUndColl.rgs"
+IDR_ETSFUTATOM          REGISTRY                "EtsFutAtom.rgs"
+IDR_ETSFUTCOLL          REGISTRY                "EtsFutColl.rgs"
+IDR_ETSFUTROOTATOM      REGISTRY                "EtsFutRootAtom.rgs"
+IDR_ETSFUTROOTCOLL      REGISTRY                "EtsFutRootColl.rgs"
+IDR_ETSFUTOPTATOM       REGISTRY                "EtsFutOptAtom.rgs"
+IDR_ETSFUTOPTCOLL       REGISTRY                "EtsFutOptColl.rgs"
+IDR_ETSCONTRACTATOM     REGISTRY                "EtsContractAtom.rgs"
+IDR_ETSCONTRACTCOLL     REGISTRY                "EtsContractColl.rgs"
+IDR_ETSCONTRACTBYSYMCOLL REGISTRY                "EtsContractBySymColl.rgs"
+IDR_ETSPROCESSDELAY     REGISTRY                "EtsProcessDelay.rgs"
+IDR_ETSDIVATOM          REGISTRY                "EtsDivAtom.rgs"
+IDR_ETSDIVCOLL          REGISTRY                "EtsDivColl.rgs"
+IDR_ETSINDEXDIVATOM     REGISTRY                "EtsIndexDivAtom.rgs"
+IDR_ETSINDEXDIVCOLL     REGISTRY                "EtsIndexDivColl.rgs"
+IDR_ETSMAIN             REGISTRY                "EtsMain.rgs"
+IDR_ETSMMENTITYATOM     REGISTRY                "EtsMmEntityAtom.rgs"
+IDR_ETSMMFILTERATOM     REGISTRY                "EtsMmFilterAtom.rgs"
+IDR_ETSMMFILTERATOMCOLL REGISTRY                "EtsMmFilterAtomColl.rgs"
+IDR_ETSMMENTITYATOMCOLL REGISTRY                "EtsMmEntityAtomColl.rgs"
+IDR_ETSRATEATOM         REGISTRY                "EtsRateAtom.rgs"
+IDR_ETSRATECOLL         REGISTRY                "EtsRateColl.rgs"
+IDR_ETSFILTERDATA       REGISTRY                "EtsFilterData.rgs"
+IDR_ETSHOLIDAYATOM      REGISTRY                "EtsHolidayAtom.rgs"
+IDR_CALCULATIONPARAMETRS REGISTRY                "CalculationParametrs.rgs"
+IDR_SPOTCONTRACTATOM    REGISTRY                "SpotContractAtom.rgs"
+IDR_CONTRACTCOLL        REGISTRY                "ContractColl.rgs"
+IDR_BORROWINGRATESCURVES REGISTRY                "BorrowingRatesCurves.rgs"
+IDR_CALCULATIONSETTINGS REGISTRY                "CalculationSettings.rgs"
+IDR_SYNTHETICSPOTCONTRACTATOM REGISTRY                "SyntheticSpotContractAtom.rgs"
+IDR_ASSETCOLL           REGISTRY                "AssetColl.rgs"
+IDR_SyntheticEquityAtom REGISTRY                "SyntheticEquityAtom.rgs"
+IDR_BASKETASSETCOMPONENT REGISTRY                "BasketAssetComponent.rgs"
+IDR_BASKETASSETCOMPONENTSCOLL REGISTRY                "BasketAssetComponentsColl.rgs"
+IDR_MMTRADEINFOATOM     REGISTRY                "MmTradeInfoAtom.rgs"
+IDR_MMTRADEBYUNDCOLL    REGISTRY                "MmTradeByUndColl.rgs"
+IDR_MMTRADEINFOCOLL     REGISTRY                "MmTradeInfoColl.rgs"
+IDR_MMTRADEMATCHATOM    REGISTRY                "MmTradeMatchAtom.rgs"
+IDR_MMTRADEMATCHCOLL    REGISTRY                "MmTradeMatchColl.rgs"
+IDR_MMTRADEUPDATECOLL   REGISTRY                "MmTradeUpdateColl.rgs"
+IDR_MMTRADECHANNEL      REGISTRY                "MmTradeChannel.rgs"
+IDR_CONTRACTROOTCOLL    REGISTRY                "ContractRootColl.rgs"
+IDR_MARKETSIMULATIONSCENARIO REGISTRY                "MarketSimulationScenario.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "EtsGeneral"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "..\\tlb\\EtsGeneral.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

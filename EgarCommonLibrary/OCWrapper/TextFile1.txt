@@ -1,0 +1,671 @@
+using System;
+using System.IO;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+ 
+
+namespace Egar.CreditRisk.Calc
+{
+ public class EcrWrapper
+ {
+  static float Definite(float value)
+  {
+   return (!(float.IsNaN(value) || float.IsInfinity(value)) ? value : 0);
+  }
+ 
+  static private int date2int(DateTime date)
+  {
+   return date.Day*100*100 + date.Month*100 + date.Year%100;
+  }
+  static private DateTime int2date(int date)
+  {
+   int Year= date % 100;
+   date/= 100;
+   int Month= date % 100;
+   date/= 100;
+   int Day= date;
+ 
+   return new DateTime(Year, Month, Day);
+  }
+ 
+  /// <summary>
+  /// Defines company information class
+  /// </summary>
+  public class CompanyData
+  {
+   public class CreditBaseData
+   {
+    public DateTime StartDate;
+    public DateTime CloseDate;
+    public float Exposure;
+    public float RecoveryRate;
+    public float Interest;
+ 
+    public CreditBaseData(DateTime StartDate,
+     DateTime CloseDate,
+     float Exposure,
+     float RecoveryRate,
+     float Interest)
+    {
+     this.StartDate=  StartDate;
+     this.CloseDate=  CloseDate;
+     this.Exposure=  Exposure;
+     this.RecoveryRate= RecoveryRate;
+     this.Interest=  Interest;
+    }
+   }
+ 
+   public class LimitData : CreditBaseData
+   {
+    public LimitData( DateTime StartDate,
+     DateTime CloseDate,
+     float Exposure,
+     float RecoveryRate,
+     float Interest) :
+     base(StartDate, CloseDate, Exposure, RecoveryRate, Interest) {}
+   }
+ 
+   public class CreditData : CreditBaseData
+   {
+    public static int FieldsCount= 6;
+ 
+    public int Type;
+ 
+    public CreditData( DateTime StartDate,
+     DateTime CloseDate,
+     float Exposure,
+     float Interest,
+     int Type,
+     float RecoveryRate) :
+     base(StartDate, CloseDate, Exposure, RecoveryRate, Interest)
+    {
+     this.Type= Type;
+    }
+   }
+ 
+   public struct PdData
+   {
+    public float Value;
+    public float Delta;
+    public DateTime Date;
+ 
+    public PdData( float Value,
+     float delta,
+     DateTime Date)
+    {
+     this.Value= Value;
+     this.Delta= delta;
+     this.Date= Date;
+    }
+   }
+ 
+   public struct CorrelationIndexData
+   {
+    public int Field1; // value between 0 and 99
+    public int Field2; // value between 0 and 99
+    public int Field3; // value between 0 and 99
+    public int Field4; // value between 0 and 999
+ 
+    public CorrelationIndexData(int F1, int F2, int F3, int F4)
+    {
+     Field1= F1;
+     Field2= F2;
+     Field3= F3;
+     Field4= F4;
+    }
+ 
+    public static float ToFloat(CorrelationIndexData idx)
+    {
+     float res= 0;
+     res+= idx.Field1;
+     res*= 100;
+     res+= idx.Field2;
+     res*= 100;
+     res+= idx.Field3;
+     res*= 1000;
+     res+= idx.Field4;
+     return res;
+    }
+   }
+ 
+
+   public static int FieldsCount= 10;
+ 
+   public int   CmpID;
+   public PdData   pd;
+   public CorrelationIndexData  CorrIndex;
+   public CreditBaseData Limit;
+ 
+   public static int CreditsMaxSize= 100; // limit of CreditRisk array size
+   public CreditData[] Credits;
+ 
+   public CompanyData( int CmpID,
+    PdData pd,
+    CorrelationIndexData CorrIdx,
+    CreditBaseData Limit,
+    CreditData[] Credits)
+   {
+    this.CmpID=   CmpID;
+    this.pd=   pd;
+    this.CorrIndex=  CorrIdx;
+    this.Limit=   Limit;
+    this.Credits=  Credits;
+   }
+ 
+   /// <summary>
+   /// Convets the Company fields to array of floats
+   /// </summary>
+   public static float[] ToFloatsCMP(CompanyData company)
+   {
+    float[] floats= new float[CompanyData.FieldsCount];
+ 
+    floats[0]= company.CmpID;
+ 
+    floats[1]= company.pd.Value;
+    floats[2]= company.pd.Delta;
+    floats[3]= date2int(company.pd.Date);
+ 
+    floats[4]= CorrelationIndexData.ToFloat(company.CorrIndex);
+ 
+    if (company.Limit != null)
+    {
+     floats[5]= date2int(company.Limit.StartDate);
+     floats[6]= date2int(company.Limit.CloseDate);
+     floats[7]= company.Limit.Exposure;
+     floats[8]= company.Limit.RecoveryRate;
+     floats[9]= company.Limit.Interest;
+    }
+    else
+    {
+     floats[5]= 0f;
+     floats[6]= 0f;
+     floats[7]= 0f;
+     floats[8]= 0f;
+     floats[9]= 0f;
+    }
+ 
+    return floats;
+   }
+   /// <summary>
+   /// Convers CreditList of Company to the two-dimentional array of floats
+   /// </summary>
+   public static float[,] ToFloatsCRD(CompanyData Company)
+   {
+    if (Company.Credits == null)
+     return new float[0, CreditsMaxSize];
+ 
+    CreditData[] Credits = Company.Credits;
+    if(Credits.Length > CreditsMaxSize)
+     throw new Exception(String.Format("Credits list for CompanyID={0} contain more than {1} elements", Company.CmpID, CompanyData.CreditsMaxSize));
+    float[,] floats= new float[CreditData.FieldsCount, CreditsMaxSize];
+ 
+    for(int i= 0; i < Credits.Length; i++)
+    {
+     floats[0, i]= date2int(Credits[i].StartDate);
+     floats[1, i]= date2int(Credits[i].CloseDate);
+     floats[2, i]= Credits[i].Exposure;
+     floats[3, i]= Credits[i].Interest;
+     floats[4, i]= Credits[i].Type;
+     floats[5, i]= Credits[i].RecoveryRate;
+    }
+ 
+    return floats;
+   }
+  }
+ 
+  public class ModelParams
+  {
+   /// <summary>
+   /// Model parameters
+   /// </summary>
+   public class ModelData
+   {
+    public float sigma;
+    public float p;
+    public float d;
+    public int  SimCount;  // count of simulations
+    public float AvgLossCorr; // average portfolio loss correlation
+ 
+    // borrowers correlation coefficients
+    public static int CorrCount= 11;
+    public float[] Correlations= new float[CorrCount];
+    
+    public static int FieldsCount= 5 + CorrCount;
+ 
+    public ModelData( float sigma,
+     float p,
+     float d,
+     int  SimCount,
+     float[] Correlations,
+     float AvgLossCorr) 
+    {
+     this.sigma=   sigma;
+     this.p=    p;
+     this.d=    d;
+     this.SimCount=  SimCount;
+     Correlations.CopyTo(this.Correlations, 0);
+     this.AvgLossCorr= AvgLossCorr;
+    }
+   }
+   /// <summary>
+   /// Porfolio attributes
+   /// </summary>
+   public class PortfolioData
+   {
+    public static int FieldsCount= 4;
+ 
+    public float RelyLevel;   // reliability level
+    public float BorrSepSum;
+    public float AvgDepRate;   // average deposit rate
+ 
+    public enum LoanTypes {LIMIT=2, CURR=1}
+    public LoanTypes UsedLoanType;
+ 
+    public PortfolioData( float  RelyLevel,
+     float  BorrSepSum,
+     float  AvgDepRate,
+     LoanTypes UsedLoanType)
+    {
+     this.RelyLevel=  RelyLevel;
+     this.BorrSepSum=  BorrSepSum;
+     this.AvgDepRate=  AvgDepRate;
+     this.UsedLoanType= UsedLoanType;
+    }
+    public PortfolioData(PortfolioData port) :
+     this( port.RelyLevel,
+     port.BorrSepSum,
+     port.AvgDepRate,
+     port.UsedLoanType) {}
+   }
+ 
+   public static int FieldsCount= ModelData.FieldsCount + PortfolioData.FieldsCount + 1;
+ 
+   public DateTime  Date;
+   public ModelData  Model;
+   public PortfolioData Portfolio;
+ 
+   public ModelParams(DateTime date, ModelData model, PortfolioData port)
+   {
+    this.Date=  date;
+    this.Model=  model;
+    this.Portfolio= port;
+   }
+  
+   public static float[] ToFloats(ModelParams Params)
+   {
+    float[] floats= new float[FieldsCount];
+ 
+    ModelData  model= Params.Model;
+    PortfolioData port= Params.Portfolio;
+ 
+    floats[0]= date2int(Params.Date);
+    floats[1]= model.sigma;
+    floats[2]= model.p;
+    floats[3]= model.d;
+    floats[4]= port.RelyLevel;
+    floats[5]= model.SimCount;
+    floats[6]= port.BorrSepSum;
+    floats[7]= port.AvgDepRate;
+    floats[8]= (int)port.UsedLoanType;
+    for(int i= 0; i < ModelParams.ModelData.CorrCount; i++)
+     floats[i+9]= model.Correlations[i];
+    floats[20]= model.AvgLossCorr;
+ 
+    return floats;
+   }
+  }
+ 
+  /// <summary>
+  /// Defines processing results of ECR method
+  /// </summary>
+  public class CalcResults
+  {
+   /// <summary>
+   /// General attributes of portfolio
+   /// </summary>
+   public struct SwapData
+   {
+    public static int FieldsCount= 10;
+ 
+    public float AvgPortfolioTime;
+    public float EL;
+    public float sigmaEL;
+    public float VAR;
+    public float ShortFall;
+    public float PresentValue;
+    public float SaddlePoint;
+ 
+    public float RiskLimit;
+    public float RAROC;
+    public float Csp;
+ 
+    /// <summary>
+    /// Converts an array of floats to the Swap object
+    /// </summary>
+    public static SwapData FromFloats(float[] floats)
+    {
+     SwapData swap= new SwapData();
+     swap.AvgPortfolioTime=  Definite(floats[0]);
+     swap.EL=   Definite(floats[1]);
+     swap.sigmaEL=  Definite(floats[2]);
+     swap.VAR=   Definite(floats[3]);
+     swap.ShortFall=  Definite(floats[4]);
+     swap.PresentValue= Definite(floats[5]);
+     swap.SaddlePoint= Definite(floats[6]);
+     swap.RiskLimit=  Definite(floats[7]);
+     swap.RAROC=   Definite(floats[8]);
+     swap.Csp=   Definite(floats[9]);
+ 
+     return swap;
+    }
+ 
+   };
+ 
+   public struct RiskData
+   {
+    public static int FieldsCount= 10;
+ 
+    public int  CompID;
+    public float PD;
+    public float deltaPD;
+    public float EL;
+    public float deltaEL;
+    public float AvgCreditTime;
+    public float EAD;
+    public float Interest;
+    public float AbsCAR;
+    public float RAROC;
+ 
+    public static RiskData FromFloats(float[] floats)
+    {
+     RiskData risk= new RiskData();
+     risk.CompID=   (int)Definite(floats[0]);
+     risk.PD=   Definite(floats[1]);
+     risk.deltaPD=  Definite(floats[2]);
+     risk.EL=   Definite(floats[3]);
+     risk.deltaEL=  Definite(floats[4]);
+     risk.AvgCreditTime= Definite(floats[5]);
+     risk.EAD=   Definite(floats[6]);
+     risk.Interest=  Definite(floats[7]);
+     risk.AbsCAR=  Definite(floats[8]);
+     risk.RAROC=   Definite(floats[9]);
+ 
+     return risk;
+    }
+   };
+ 
+   public class LossCurveData
+   {
+    public static int PointsCount = 10000;
+    public PointF[] Points = new PointF[PointsCount];
+   }
+ 
+   public struct MaxRiskData
+   {
+    public static int FieldsCount= 7;
+ 
+    public int  CompID;
+    public float EL;
+    public float AvgCreditTime;
+    public float EAD;
+    public float AbsCAR;
+    public float RelativeCAR;
+    public float EADReference;
+ 
+    public static MaxRiskData FromFloats(float[] floats)
+    {
+     MaxRiskData MaxRisk;
+ 
+     MaxRisk.CompID=    (int)Definite(floats[0]);
+     MaxRisk.EL=    Definite(floats[1]);
+     MaxRisk.AvgCreditTime= Definite(floats[2]);
+     MaxRisk.EAD=   Definite(floats[3]);
+     MaxRisk.AbsCAR=   Definite(floats[4]);
+     MaxRisk.RelativeCAR= Definite(floats[5]);
+     MaxRisk.EADReference= Definite(floats[6]);
+ 
+     return MaxRisk;
+    }
+   }
+   public struct MinRarocData
+   {
+    public static int FieldsCount= 7;
+ 
+    public int  CompID;
+    public float EL;
+    public float AvgCreditTime;
+    public float EAD;
+    public float AbsCAR;
+    public float AvgInterest;
+    public float RAROC;
+ 
+    public static MinRarocData FromFloats(float[] floats)
+    {
+     MinRarocData MinRAROC;
+ 
+     MinRAROC.CompID=    (int)Definite(floats[0]);
+     MinRAROC.EL=    Definite(floats[1]);
+     MinRAROC.AvgCreditTime=  Definite(floats[2]);
+     MinRAROC.EAD=    Definite(floats[3]);
+     MinRAROC.AbsCAR=   Definite(floats[4]);
+     MinRAROC.AvgInterest=  Definite(floats[5]);
+     MinRAROC.RAROC=    Definite(floats[6]);
+ 
+     return MinRAROC;
+    }
+   }
+   public SwapData   Swap;
+   public RiskData[]  Risks;
+   public MaxRiskData[] MaxRisks;
+   public MinRarocData[] MinRAROCs;
+   public LossCurveData LossCurve;
+   public int   ReturnCode= 0;
+ 
+   public CalcResults(SwapData Swap,
+    RiskData[]  Risks,
+    MaxRiskData[] MaxRisks,
+    MinRarocData[] MinRAROCs,
+    LossCurveData LossCurve,
+    int    ReturnCode)
+   {
+    this.Swap= Swap;
+    this.Risks= Risks;
+    this.MaxRisks= MaxRisks;
+    this.MinRAROCs= MinRAROCs;
+    this.LossCurve= LossCurve;
+    this.ReturnCode= ReturnCode;
+   }
+  }
+ 
+  public static ProgressBar CalculationProgress = null;
+ 
+  static public CalcResults ECR(CompanyData[] Portfolio, ModelParams Params)
+  {
+   int Ncmp= Portfolio.Length;
+   int Nmc= 1;//Company.CreditsMaxSize;
+   int Max= Ncmp;
+ 
+   float[,] CMP= new float[CompanyData.FieldsCount, Ncmp];
+   float[,,] CRD= new float[CompanyData.CreditData.FieldsCount, Nmc, Ncmp];
+   float[]  PARAM= new float[ModelParams.FieldsCount];
+   float[]  SWAP= new float[CalcResults.SwapData.FieldsCount];
+   float[,] RISK= new float[CalcResults.RiskData.FieldsCount, Ncmp];
+   float[,] MaxRSK= new float[CalcResults.MaxRiskData.FieldsCount, Ncmp];
+   float[,] MinRRC= new float[CalcResults.MinRarocData.FieldsCount, Ncmp];
+   float[,] Curve = new float[2, CalcResults.LossCurveData.PointsCount];
+ 
+   for(int i= 0; i < Ncmp; i++)
+   {
+    float[] cmp= CompanyData.ToFloatsCMP(Portfolio[i]);
+    for(int j= 0; j < CompanyData.FieldsCount; j++)
+     CMP[j,i]= cmp[j];
+   }
+ 
+   if (Params.Portfolio.UsedLoanType == ModelParams.PortfolioData.LoanTypes.CURR)
+   {
+    for(int i= 0; i < Ncmp; i++)
+    {
+     float[,] crd= CompanyData.ToFloatsCRD(Portfolio[i]);
+     for(int j= 0; j < Nmc; j++)
+      for(int k= 0; k < CompanyData.CreditData.FieldsCount; k++)
+       CRD[k,j,i]= crd[k,j];
+    }
+   }
+ 
+   PARAM= ModelParams.ToFloats(Params);
+ 
+   #region Test dumping
+   /*
+   System.IO.StreamWriter stream= new System.IO.StreamWriter("ecrout_raw.txt");
+ 
+   stream.WriteLine("\t\tPARAM");
+   foreach(float f in PARAM)
+    stream.Write(f.ToString() + "\t");
+   stream.WriteLine();
+ 
+   stream.WriteLine("\t\tCMP");
+   for(int i= 0; i < CMP; i++)
+   {
+    for(int j= 0; j < CalcResults.RiskData.FieldsCount; j++)
+     stream.Write(RISK[j, i].ToString() + "\t");
+    stream.WriteLine();
+   }
+   stream.WriteLine();
+   */
+   #endregion
+ 
+   int ECRres = 0;
+   unsafe
+   {
+    IntPtr pNcmp = new IntPtr(&Ncmp);
+    IntPtr pNmc = new IntPtr(&Nmc);
+    IntPtr pMax = new IntPtr(&Max);
+ 
+    ECRres = _ECR( pNcmp, pNmc, pMax, CMP, CRD, PARAM, new _ProgressBar(ProgressBarStub),
+      SWAP, RISK, MaxRSK, MinRRC, Curve);
+   }
+ 
+   #region Test dumping
+   /*
+   stream.WriteLine("\t\tSWAP");
+   foreach(float f in SWAP)
+    stream.Write(f.ToString() + "\t");
+   stream.WriteLine();
+   stream.WriteLine();
+ 
+   stream.WriteLine("\t\tRISK");
+   for(int i= 0; i < Ncmp; i++)
+   {
+    for(int j= 0; j < CalcResults.RiskData.FieldsCount; j++)
+     stream.Write(RISK[j, i].ToString() + "\t");
+    stream.WriteLine();
+   }
+   stream.WriteLine();
+ 
+
+   stream.WriteLine("\t\tMAXRISK");
+   for(int i= 0; i < Ncmp; i++)
+   {
+    for(int j= 0; j < CalcResults.MaxRiskData.FieldsCount; j++)
+     stream.Write(MaxRSK[j, i].ToString() + "\t");
+    stream.WriteLine();
+   }
+   stream.WriteLine();
+ 
+   stream.WriteLine("\t\tMINRAROC");
+   for(int i= 0; i < Ncmp; i++)
+   {
+    for(int j= 0; j < CalcResults.MinRarocData.FieldsCount; j++)
+     stream.Write(MinRRC[j, i].ToString() + "\t");
+    stream.WriteLine();
+   }
+   stream.WriteLine();
+ 
+   stream.WriteLine("\t\tLOSS");
+   for(int i= 0; i < CalcResults.LossCurveData.Length; i++)
+    stream.WriteLine("{0}\t{1}", LOS[0, i], LOS[1, i].ToString());
+   stream.WriteLine();
+ 
+   stream.Close();*/
+   #endregion
+ 
+   CalcResults.SwapData Swap= CalcResults.SwapData.FromFloats(SWAP);
+   CalcResults.RiskData[] Risks= new CalcResults.RiskData[Ncmp];
+   for(int i= 0; i < Ncmp; i++)
+   {
+    float[] floats= new float[CalcResults.RiskData.FieldsCount];
+    for(int j= 0; j < CalcResults.RiskData.FieldsCount; j++)
+     floats[j]= RISK[j, i];
+    Risks[i]= CalcResults.RiskData.FromFloats(floats);
+ 
+   }
+ 
+   // count actually size of MaxRSK array (breaks when zero-filled record has reached)
+   int MaxRisksSize= Ncmp;
+   for(MaxRisksSize= 0; MaxRisksSize < Ncmp; MaxRisksSize++)
+    if(MaxRSK[0, MaxRisksSize] == 0) break;
+ 
+   CalcResults.MaxRiskData[] MaxRisks= new CalcResults.MaxRiskData[MaxRisksSize];
+   for(int i= 0; i < MaxRisksSize; i++)
+   {
+    float[] floats= new float[CalcResults.MaxRiskData.FieldsCount];
+    for(int j= 0; j < CalcResults.MaxRiskData.FieldsCount; j++)
+     floats[j]= MaxRSK[j, i];
+    MaxRisks[i]= CalcResults.MaxRiskData.FromFloats(floats);
+   }
+   // count actually size of MinRRC array (breaks when zero-filled record has reached)
+   int MinRAROCsSize= Ncmp;
+   for(MinRAROCsSize= 0; MinRAROCsSize < Ncmp; MinRAROCsSize++)
+    if(MinRRC[0, MinRAROCsSize] == 0) break;
+ 
+   CalcResults.MinRarocData[] MinRAROCs= new CalcResults.MinRarocData[MinRAROCsSize];
+   for(int i= 0; i < MinRAROCsSize; i++)
+   {
+    float[] floats= new float[CalcResults.MinRarocData.FieldsCount];
+    for(int j= 0; j < CalcResults.MinRarocData.FieldsCount; j++)
+     floats[j]= MinRRC[j, i];
+    MinRAROCs[i]= CalcResults.MinRarocData.FromFloats(floats);
+   }
+ 
+   CalcResults.LossCurveData LossCurve = new CalcResults.LossCurveData();
+   for(int i = 0; i < CalcResults.LossCurveData.PointsCount; i++)
+   {
+    LossCurve.Points[i].X = Definite(Curve[0, i]);
+    LossCurve.Points[i].Y = Definite(Curve[1, i]);
+   }
+ 
+   CalcResults results= new CalcResults(Swap, Risks, MaxRisks, MinRAROCs, LossCurve, ECRres);
+   return results;
+  }
+ 
+  private delegate void _ProgressBar(IntPtr i);
+  public delegate void ProgressBar(int i);
+ 
+  [System.Runtime.InteropServices.DllImport(@"EcrDll.dll", EntryPoint="ECR")]
+  private static extern
+   int _ECR(IntPtr pNcmp, IntPtr pNmc, IntPtr pMax,
+   [MarshalAs(UnmanagedType.LPArray)]  float[,]  Cmp,
+   [MarshalAs(UnmanagedType.LPArray)]  float[,,]  CRD,
+   [MarshalAs(UnmanagedType.LPArray)]  float[]   PARAM,
+   [MarshalAs(UnmanagedType.FunctionPtr)] _ProgressBar BAR,
+   [MarshalAs(UnmanagedType.LPArray)]  float[]   SWAP,
+   [MarshalAs(UnmanagedType.LPArray)]  float[,]  RISK,
+   [MarshalAs(UnmanagedType.LPArray)]  float[,]  Maxrsk,
+   [MarshalAs(UnmanagedType.LPArray)]  float[,]  MinRRC,
+   [MarshalAs(UnmanagedType.LPArray)]  float[,]  LOS);
+  
+ 
+  private static void ProgressBarStub(IntPtr pi)
+  {
+   int i;
+   unsafe { i= *(int*)pi.ToPointer(); }
+ 
+   if(CalculationProgress != null)
+   {
+    try { CalculationProgress(i); } 
+    catch {}
+   }
+  }
+ }
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.QuoteSubscription.1 = s 'QuoteSubscription Class'
+	{
+		CLSID = s '{3ADCB489-7247-4D36-8C83-2C857345420A}'
+	}
+	MsgStruct.QuoteSubscription = s 'QuoteSubscription Class'
+	{
+		CLSID = s '{3ADCB489-7247-4D36-8C83-2C857345420A}'
+		CurVer = s 'MsgStruct.QuoteSubscription.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3ADCB489-7247-4D36-8C83-2C857345420A} = s 'QuoteSubscription Class'
+		{
+			ProgID = s 'MsgStruct.QuoteSubscription.1'
+			VersionIndependentProgID = s 'MsgStruct.QuoteSubscription'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

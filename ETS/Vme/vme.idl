@@ -1,0 +1,240 @@
+// VME.idl : IDL source for VME.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (VME.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(98359542-A5A1-4A74-9E6A-520A4126F41D),
+	version(1.0),
+	helpstring("VME 1.0 Type Library")
+]
+library VMELib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("..\tlb\MsgStruct.tlb");
+	importlib("..\tlb\VADBLayout.tlb");
+	#include "..\include\VolatilitySourceCommon.idl"
+
+	[
+		object,
+		uuid(8FAF6D42-5B54-4080-AF09-004FF6BB6126),
+		dual,
+		helpstring("IHostStatisticData Interface"),
+		pointer_default(unique)
+	]
+	interface IDualQuadraticData : IDispatch
+	{
+		[propget, id(1), helpstring("ATMVola")] HRESULT ATMVola([out, retval] double* pVal);
+		[propput, id(1), helpstring("ATMVola")] HRESULT ATMVola([in] double newVal);
+		[propget, id(2), helpstring("CoefA1")] HRESULT CoefA1([out, retval] double* pVal);
+		[propput, id(2), helpstring("CoefA1")] HRESULT CoefA1([in] double newVal);
+		[propget, id(3), helpstring("CoefB1")] HRESULT CoefB1([out, retval] double* pVal);
+		[propput, id(3), helpstring("CoefB1")] HRESULT CoefB1([in] double newVal);
+		[propget, id(4), helpstring("CoefA2")] HRESULT CoefA2([out, retval] double* pVal);
+		[propput, id(4), helpstring("CoefA2")] HRESULT CoefA2([in] double newVal);
+		[propget, id(5), helpstring("CoefB2")] HRESULT CoefB2([out, retval] double* pVal);
+		[propput, id(5), helpstring("CoefB2")] HRESULT CoefB2([in] double newVal);
+	};
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Time skew volatility management interface
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(0DAF4BB5-B973-42EC-B13E-57B21E4CF6AC),
+		dual,
+		helpstring("Time skew volatility management interface"),
+		pointer_default(unique)
+	]
+	interface IVMTimeSkewVolatilities : IDispatch
+	{
+		[propget, id(1), helpstring("Count")]			HRESULT Count([out, retval] long *pVal);
+		[propget, id(2), helpstring("ExpDate")]			HRESULT ExpDate([in]long index, [out, retval] DATE *pVal);
+		[propget, id(3), helpstring("Volatility")]		HRESULT Volatility([in]DATE ExpDate, [out, retval] double *pVal);
+		[propput, id(4), helpstring("VolatilityDelta")] HRESULT VolatilityDelta([in]DATE ExpDate, [in] double newVal);
+		[propget, id(5), helpstring("Strike")]			HRESULT Strike([in]DATE ExpDate, [out, retval] double *pVal);
+		[id(6), helpstring("Save")]   HRESULT Save();
+		[id(7), helpstring("Reload")] HRESULT Reload();
+	};
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Strike skew volatility management interface
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(995B7ABF-F0BB-44DB-868B-4C3781CB1DB8),
+		dual,
+		helpstring("Strike skew volatility management interface"),
+		pointer_default(unique)
+	]
+	interface IVMStrikeSkewVolatilities : IDispatch
+	{
+		[propget, id(1), helpstring("Count")]					HRESULT Count([out, retval] long *pVal);
+		[propget, id(2), helpstring("Strike")]					HRESULT Strike([in]long index, [out, retval] double *pVal);
+		[propget, id(3), helpstring("Status")]					HRESULT Status([in]double Strike, [out, retval] enum EVolaItemStatus *pVal);
+		[propget, id(4), helpstring("Volatility")]				HRESULT Volatility([in]double Strike, [out, retval] double *pVal);
+		[propput, id(4), helpstring("Volatility")]				HRESULT Volatility([in]double Strike, [in] double newVal);
+		[propget, id(5), helpstring("IsATM")]					HRESULT IsATM([in]double Strike, [out, retval] VARIANT_BOOL *pVal);
+		[propget, id(6), helpstring("IsBasePoint")]				HRESULT IsBasePoint([in]double Strike, [out, retval] VARIANT_BOOL *pVal);
+		[propput, id(6), helpstring("IsBasePoint")]				HRESULT IsBasePoint([in]double Strike, [in] VARIANT_BOOL newVal);
+		[propget, id(7), helpstring("BasePointsCount")]			HRESULT BasePointsCount([out, retval] long *pVal);
+		[propget, id(8), helpstring("BasePointsInterpolation")] HRESULT BasePointsInterpolation([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(8), helpstring("BasePointsInterpolation")] HRESULT BasePointsInterpolation([in] VARIANT_BOOL newVal);
+		[propget, id(9), helpstring("UpdateMark")]				HRESULT UpdateMark([out, retval] long *pVal);
+		[id(10), helpstring("Add")]								HRESULT Add([in]double Strike, [in]double Volatility, [in]VARIANT_BOOL IsBasePoint, [out, retval]long *pnIndex);
+		[id(11), helpstring("Remove")]							HRESULT Remove([in]double Strike);
+		[id(12), helpstring("Save")]							HRESULT Save();
+		[id(13), helpstring("RemoveAll")]						HRESULT RemoveAll();
+		[id(14), helpstring("Reload")]							HRESULT Reload();
+		[id(15), helpstring("ProportionalShift")]				HRESULT ProportionalShift([in]double Strike, [in]double Vola);
+		[propget, id(16), helpstring("DualQuadraticParams")]	HRESULT DualQuadraticParams([out, retval] IDualQuadraticData** pVal);
+		[propputref, id(16), helpstring("DualQuadraticParams")]	HRESULT DualQuadraticParams([in] IDualQuadraticData* newVal);
+	};
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Volatility surface management interfaces
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(402BD79E-85D6-41F8-A39D-EB6E6A972769),
+		dual,
+		helpstring("Volatility surface management interfaces"),
+		pointer_default(unique)
+	]
+	interface IVMSymbolVolatilitySurface : IDispatch
+	{
+		[propget, id(1), helpstring("SmileAccelerator")]	 HRESULT SmileAccelerator([out, retval] double *pVal);
+		[propput, id(1), helpstring("SmileAccelerator")]	 HRESULT SmileAccelerator([in] double newVal);
+		[propget, id(2), helpstring("UnderlinePrice")]		 HRESULT UnderlinePrice([out, retval] double *pVal);
+		[propput, id(2), helpstring("UnderlinePrice")]		 HRESULT UnderlinePrice([in] double newVal);
+		[propget, id(3), helpstring("PriceOverride")]		 HRESULT PriceOverride([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(3), helpstring("PriceOverride")]		 HRESULT PriceOverride([in] VARIANT_BOOL newVal);
+		[propget, id(4), helpstring("DiscreteAcceleration")] HRESULT DiscreteAcceleration([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(4), helpstring("DiscreteAcceleration")] HRESULT DiscreteAcceleration([in] VARIANT_BOOL newVal);
+		[propget, id(5), helpstring("InterpolationFactor")]	 HRESULT InterpolationFactor([out, retval] double *pVal);
+		[propput, id(5), helpstring("InterpolationFactor")]	 HRESULT InterpolationFactor([in] double newVal);
+		[propget, id(6), helpstring("DataSource")]			 HRESULT DataSource([out, retval] IVAManagement* *pVal);
+		[propget, id(7), helpstring("TimeSkew")]			 HRESULT TimeSkew([out, retval] IVMTimeSkewVolatilities* *pVal);
+		[propget, id(8), helpstring("StrikeSkew")]			 HRESULT StrikeSkew([in]DATE ExpDate, [out, retval]IVMStrikeSkewVolatilities* *pVal);
+		[propget, id(9), helpstring("Volatility")]			 HRESULT Volatility([in]double UnderlinePrice, [in]double Strike, [in]DATE ExpDate, [out, retval] double *pVal);
+		[id(10), helpstring("Save")]   HRESULT Save();
+		[id(11), helpstring("Reload")] HRESULT Reload();
+		[id(12), helpstring("SaveAs")] HRESULT SaveAs([in]long SurfaceID, [in]VARIANT_BOOL NewDefault);
+		[propget, id(13), helpstring("EnableEvents")] HRESULT EnableEvents([out, retval] VARIANT_BOOL *pVal);
+		[propput, id(13), helpstring("EnableEvents")] HRESULT EnableEvents([in] VARIANT_BOOL newVal);
+	};
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Volatility management interfaces
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		object,
+		uuid(C8CFA85D-CBD9-4CAC-B2ED-A82A7E344B42),
+		dual,
+		helpstring("Volatility management interfaces"),
+		pointer_default(unique)
+	]
+	interface IVolatilityManagement : IDispatch
+	{
+		[propputref, id(1), helpstring("DataSource")]       HRESULT DataSource([in]IVAManagement *newVal);
+		[propput,    id(1), helpstring("DataSource")]       HRESULT DataSource([in]IVAManagement *newVal);
+		[propget,	 id(1), helpstring("DataSource")]       HRESULT DataSource([out, retval]IVAManagement **pVal);
+		[propget,	 id(2), helpstring("Surface")]		    HRESULT Surface([in]long SurfaceID, [in] enum EOptType OptType, [out, retval] IVMSymbolVolatilitySurface **pVal);
+		[propget,	 id(3), helpstring("ActiveSurfaceID")]  HRESULT ActiveSurfaceID([in]BSTR Symbol, [out, retval]long *pVal);
+		[propput,	 id(3), helpstring("ActiveSurfaceID")]  HRESULT ActiveSurfaceID([in]BSTR Symbol, [in]long newVal);
+		[propput,	 id(4), helpstring("UnderlinePrice")]   HRESULT UnderlinePrice ([in]BSTR Symbol, [in]double newVal);
+		[propget,	 id(5), helpstring("DefaultSurfaceID")] HRESULT DefaultSurfaceID([in]BSTR Symbol, [out, retval] long *pVal);
+		[propput,	 id(5), helpstring("DefaultSurfaceID")] HRESULT DefaultSurfaceID([in]BSTR Symbol, [in] long newVal);
+		[id(6), helpstring("method UnregisterPublisher")] HRESULT UnregisterPublisher();
+	};
+
+	[
+		uuid(1AE77306-1358-4102-8DB1-9381CCAA9EA2),
+		helpstring("_IVolatilityManagementEvents Interface")
+	]
+	dispinterface _IVolatilityManagementEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("OnDefaultSurfaceChanged")] 
+			HRESULT OnDefaultSurfaceChanged([in]long SurfaceID, [in]enum EOptType OptType, [in]VARIANT_BOOL NewDefault);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	// CoClasses
+	/////////////////////////////////////////////////////////////////////////////
+	[
+		uuid(02A635F2-37A9-4B3C-AD8B-F787AB3B34F4),
+		helpstring("TimeSkewVolatilities Class")
+	]
+	coclass TimeSkewVolatilities
+	{
+		[default] interface IVMTimeSkewVolatilities;
+	};
+
+	[
+		uuid(9051B1CC-509F-4BB3-9070-C33BEE4253BC),
+		helpstring("StrikeSkewVolatilities Class")
+	]
+	coclass StrikeSkewVolatilities
+	{
+		[default] interface IVMStrikeSkewVolatilities;
+	};
+
+	[
+		uuid(4A625D7C-209F-4E26-A651-24474EA66C3B),
+		helpstring("SymbolVolatilitySurface Class")
+	]
+	coclass SymbolVolatilitySurface
+	{
+		[default] interface IVMSymbolVolatilitySurface;
+	};
+
+	[
+		uuid(D6D459C5-9C9E-4B74-8CB3-4E0C4021C9E7),
+		helpstring("VolatilityManagement Class")
+	]
+	coclass VolatilityManagement
+	{
+		[default] interface IVolatilityManagement;
+		[default, source] dispinterface _IVolatilityManagementEvents;
+	};
+
+	[
+		uuid(E9E43E56-605D-4314-A423-3621C51A123C),
+		helpstring("SymbolVolatility Class")
+	]
+	coclass SymbolVolatility
+	{
+		[default] interface IVSSymbolVolatility;
+		interface IVSTargetVolatility;
+	};
+
+	[
+		uuid(079EBA0B-CAC8-4210-BD39-36F52BC5C01D),
+		helpstring("VolatilitySource Class")
+	]
+	coclass VolatilitySource
+	{
+		[default] interface IVolatilitySource;
+		[default, source] dispinterface _IVolatilitySourceEvents;
+	};
+
+	[
+		uuid(9B5F8E2A-F141-433c-B821-D5530DA44BD7),
+		helpstring("DualQuadraticData Class")
+	]
+	coclass DualQuadraticData
+	{
+		[default] interface IDualQuadraticData;
+	};
+};

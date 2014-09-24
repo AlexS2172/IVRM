@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmVolaAnalysis.MmVaExpAtom.1 = s 'MmVaExpAtom Class'
+	{
+		CLSID = s '{79B0356B-54B1-407C-8BD9-B0195A9CC75E}'
+	}
+	EtsMmVolaAnalysis.MmVaExpAtom = s 'MmVaExpAtom Class'
+	{
+		CLSID = s '{79B0356B-54B1-407C-8BD9-B0195A9CC75E}'
+		CurVer = s 'EtsMmVolaAnalysis.MmVaExpAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {79B0356B-54B1-407C-8BD9-B0195A9CC75E} = s 'MmVaExpAtom Class'
+		{
+			ProgID = s 'EtsMmVolaAnalysis.MmVaExpAtom.1'
+			VersionIndependentProgID = s 'EtsMmVolaAnalysis.MmVaExpAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FFE2394C-E154-49F2-838A-9D51EDF17C79}'
+		}
+	}
+}

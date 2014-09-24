@@ -1,0 +1,9 @@
+; VADBLayout.def : Declares the module parameters.
+
+;LIBRARY      "VADBLayout.DLL"
+
+EXPORTS
+	DllCanUnloadNow      PRIVATE
+	DllGetClassObject    PRIVATE
+	DllRegisterServer    PRIVATE
+	DllUnregisterServer	 PRIVATE

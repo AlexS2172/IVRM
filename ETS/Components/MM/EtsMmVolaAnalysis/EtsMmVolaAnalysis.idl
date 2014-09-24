@@ -1,0 +1,391 @@
+// EtsMmVolaAnalysis.idl : IDL source for EtsMmVolaAnalysis
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EtsMmVolaAnalysis.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "ComponentsCommon.idl"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+[
+	uuid(FFE2394C-E154-49F2-838A-9D51EDF17C79),
+	version(1.0),
+	helpstring("EtsMmVolaAnalysis 1.0 Type Library")
+]
+library EtsMmVolaAnalysisLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("EtsGeneral.tlb");
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(89E03BA1-4881-41A8-8466-421AAA411F3A),
+		helpstring("ETS MM Voatility Analysis New Trade Type"),
+		v1_enum
+	]
+	typedef enum EtsMmVaNewTradeTypeEnum
+	{
+		[helpstring("None")]		enMmVaNewTradeNone	= 0,
+		[helpstring("Buy")]			enMmVaNewTradeBuy	= 1,
+		[helpstring("Sell")]		enMmVaNewTradeSell	= 2
+	} EtsMmVaNewTradeTypeEnum;
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(A787748D-B429-4056-A06E-438C177C0846),
+		dual,
+		nonextensible,
+		helpstring("IMmVaOptAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaOptAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,					ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,					Symbol)
+		ETSGENERAL_PROP_DEF(3,			DATE,					Expiry)
+		ETSGENERAL_PROP_DEF(4,			enum EtsOptionTypeEnum,	OptType)
+		ETSGENERAL_PROP_DEF(5,			DOUBLE,					Strike)
+		ETSGENERAL_PROP_DEF(6,			DOUBLE,					Vola)
+		ETSGENERAL_PROPPUTREF_DEF(7,	IExchAtom*,				Exch)
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,					PriceBid)
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,					PriceAsk)
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,					PriceLast)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,					PriceClose)
+		ETSGENERAL_PROP_DEF(12,			DOUBLE,					PriceTheoClose)
+		ETSGENERAL_PROP_DEF(13,			DOUBLE,					IVBid)
+		ETSGENERAL_PROP_DEF(14,			DOUBLE,					IVAsk)
+		ETSGENERAL_PROP_DEF(15,			DOUBLE,					VegaBid)
+		ETSGENERAL_PROP_DEF(16,			DOUBLE,					VegaAsk)
+		ETSGENERAL_PROP_DEF(17,			DOUBLE,					DeltaBid)
+		ETSGENERAL_PROP_DEF(18,			DOUBLE,					DeltaAsk)
+		ETSGENERAL_PROP_DEF(22,			DATE,					ExpiryOV)
+		ETSGENERAL_PROP_DEF(23,			LONG,					OptionRootID)
+
+		[id(19), helpstring("method ClearValues")]
+		HRESULT ClearValues([in] VARIANT_BOOL WithIV);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(CA2EEDBB-2C9E-4E53-8966-265DA7D9A036),
+		dual,
+		nonextensible,
+		helpstring("IMmVaOptPairAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaOptPairAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,					RootID)
+		ETSGENERAL_PROP_DEF(2,			LONG,					LotSize)
+		ETSGENERAL_PROP_DEF(3,			DOUBLE,					StraddleBid)
+		ETSGENERAL_PROP_DEF(4,			DOUBLE,					StraddleAsk)
+		ETSGENERAL_PROP_DEF(5,			DOUBLE,					StraddleIVBid)
+		ETSGENERAL_PROP_DEF(6,			DOUBLE,					StraddleIVAsk)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,					TotalVegaBid)
+		ETSGENERAL_PROP_DEF(8,			DOUBLE,					TotalVegaAsk)
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,					NetDeltaBid)
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,					NetDeltaAsk)
+		ETSGENERAL_PROP_DEF(11,			LONG,					ContractsBid)
+		ETSGENERAL_PROP_DEF(12,			LONG,					ContractsAsk)
+		ETSGENERAL_PROP_DEF(13,			LONG,					DeltaInSharesBid)
+		ETSGENERAL_PROP_DEF(14,			LONG,					DeltaInSharesAsk)
+
+		[propget, id(15), helpstring("Opt")]
+		HRESULT Opt([in] enum EtsOptionTypeEnum OptType, [out, retval] IMmVaOptAtom** pVal);
+
+		[id(16), helpstring("method ClearValues")]
+		HRESULT ClearValues();
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(64EE111D-34BD-4C8F-AAAC-7BA677035E96),
+		dual,
+		nonextensible,
+		helpstring("IMmVaOptPairColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaOptPairColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmVaOptPairAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(13659B24-AAD4-4363-B95A-2EDEF21A68E4),
+		dual,
+		nonextensible,
+		helpstring("IMmVaStrikeAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaStrikeAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			DOUBLE,					Strike)
+		ETSGENERAL_PROPREADONLY_DEF(2,	IMmVaOptPairColl*,		OptPair)
+		ETSGENERAL_PROP_DEF(3,			BSTR,					RootNames)
+		ETSGENERAL_PROPPUTREF_DEF(4,	IMmVaOptPairAtom*,		CurOptPair)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(5A2434C8-2AEF-46AD-88D7-C3925EA03BDA),
+		dual,
+		nonextensible,
+		helpstring("IMmVaStrikeColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaStrikeColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(DOUBLE, IMmVaStrikeAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(7A152F62-3F31-4D5B-87FB-2EBA7BC371B8),
+		dual,
+		nonextensible,
+		helpstring("IMmVaExpAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaExpAtom : IDispatch
+	{
+		//ETSGENERAL_PROP_DEF(1,		DATE,				ExpiryMonth)
+		ETSGENERAL_PROP_DEF(1,			DATE,				Expiry)
+		ETSGENERAL_PROP_DEF(2,			DOUBLE,				Rate)
+		ETSGENERAL_PROPREADONLY_DEF(3,	IMmVaStrikeColl*,	Strike)
+		ETSGENERAL_PROPPUTREF_DEF(4,	IMmVaStrikeAtom*,	AtmStrike)
+
+		ETSGENERAL_PROP_DEF(5,			DATE,				ExpiryOV)
+		ETSGENERAL_PROP_DEF(6,			DATE,				TradingClose)
+
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,				HTBRate)
+
+		ETSGENERAL_PROPREADONLY_DEF(8,	DATE,				LocalExpiryOV)
+
+		[id(39), helpstring("method FindAtmStrike")]
+		HRESULT FindAtmStrike([in] DOUBLE UnderlyingSpot);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(122E08AF-0065-4498-AFED-0EC35EE1D645),
+		dual,
+		nonextensible,
+		helpstring("IMmVaExpColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaExpColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(DATE, IMmVaExpAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(2429BEE9-D2CA-44FC-BF34-A7BFE4FC69F3),
+		dual,
+		nonextensible,
+		helpstring("IMmVaOptRootAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaOptRootAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,						Name)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(FE8B30C7-1E37-4352-8F7F-82C2EC8B6167),
+		dual,
+		nonextensible,
+		helpstring("IMmVaOptRootColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaOptRootColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmVaOptRootAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(42E57030-6DE4-45EF-B407-6BD5ECB254C1),
+		dual,
+		nonextensible,
+		helpstring("IMmVaUndAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaUndAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,							ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,							Symbol)
+		ETSGENERAL_PROP_DEF(3,			enum EtsContractTypeEnum,		UndType)
+		ETSGENERAL_PROP_DEF(4,			DOUBLE,							Yield)
+		//ETSGENERAL_PROP_DEF(5,			LONG,							DivFreq)
+		//ETSGENERAL_PROP_DEF(6,			DATE,							DivDate)
+		//ETSGENERAL_PROP_DEF(7,			DOUBLE,							DivAmt)
+		ETSGENERAL_PROP_DEF(8,			VARIANT_BOOL,					IsHTB)
+		ETSGENERAL_PROP_DEF(9,			VARIANT_BOOL,					IsAmerican)
+		ETSGENERAL_PROP_DEF(10,			LONG,							ExpCalendarID)
+		ETSGENERAL_PROPPUTREF_DEF(11,	IIndexAtom*,					BasketIndex)
+		ETSGENERAL_PROP_DEF(12,			VARIANT_BOOL,					IsTraderContract)
+		ETSGENERAL_PROPREADONLY_DEF(13,	IVolaControl*,					VolaSrv)
+		ETSGENERAL_PROPREADONLY_DEF(14,	IMmVaExpColl*,					Expiry)
+		ETSGENERAL_PROP_DEF(15,			DOUBLE,							Skew)
+		ETSGENERAL_PROP_DEF(16,			DOUBLE,							Kurt)
+		ETSGENERAL_PROP_DEF(17,			LONG,							QtyInShares)
+		ETSGENERAL_PROP_DEF(18,			DOUBLE,							Pos)
+		ETSGENERAL_PROP_DEF(19,			VARIANT_BOOL,					UseMidRates)
+		ETSGENERAL_PROPREADONLY_DEF(20,	IMmVaOptRootColl*,				OptRoot)
+		ETSGENERAL_PROPPUTREF_DEF(21,	IMmVaExpAtom*,					CurExpiry)
+		ETSGENERAL_PROP_DEF(22,			DOUBLE,							PriceBid)
+		ETSGENERAL_PROP_DEF(23,			DOUBLE,							PriceAsk)
+		ETSGENERAL_PROP_DEF(24,			DOUBLE,							PriceLast)
+		ETSGENERAL_PROP_DEF(25,			DOUBLE,							PriceClose)
+		ETSGENERAL_PROP_DEF(26,			LONG,							LotSize)
+		ETSGENERAL_PROP_DEF(27,			enum EtsMmVaNewTradeTypeEnum,	NewTradeType)
+		ETSGENERAL_PROPPUTREF_DEF(28,	IExchAtom*,						Exch)
+		ETSGENERAL_PROP_DEF(29,			DOUBLE,							LoadValue1)
+		ETSGENERAL_PROP_DEF(30,			DOUBLE,							LoadValue2)
+		ETSGENERAL_PROP_DEF(31,			DOUBLE,							CalcValue1)
+		ETSGENERAL_PROP_DEF(32,			DOUBLE,							CalcValue2)
+		ETSGENERAL_PROP_DEF(33,			BSTR,							CalcExpression1)
+		ETSGENERAL_PROP_DEF(34,			BSTR,							CalcExpression2)
+		ETSGENERAL_PROPPUTREF_DEF(35,	IEtsIndexDivAtom*,						Dividend)
+
+		[id(50), helpstring("method CalcCurrentValues")]
+		HRESULT CalcCurrentValues([in] DOUBLE dVegaAmount, [in] enum EtsCalcModelTypeEnum enCalcModel,
+								[in] VARIANT_BOOL bUseTheoVolatility,
+								[in] ICalculationParametrs* Params);
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(F78EDF94-47CF-49CF-A60E-B71AE1FC065D),
+		dual,
+		nonextensible,
+		helpstring("IMmVaUndColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmVaUndColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, BSTR, IMmVaUndAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		uuid(2B24A363-617D-4C50-B217-340317D57B9E),
+		helpstring("MmVaOptAtom Class")
+	]
+	coclass MmVaOptAtom
+	{
+		[default] interface IMmVaOptAtom;
+	};
+	[
+		uuid(FA313FBA-F5D4-4207-B5F7-CD0777232755),
+		helpstring("MmVaOptPairAtom Class")
+	]
+	coclass MmVaOptPairAtom
+	{
+		[default] interface IMmVaOptPairAtom;
+	};
+	[
+		uuid(7E1D9116-39E9-4F67-A414-552083069F4E),
+		helpstring("MmVaOptPairColl Class")
+	]
+	coclass MmVaOptPairColl
+	{
+		[default] interface IMmVaOptPairColl;
+	};
+	[
+		uuid(09095FCD-D577-4548-BD6B-A7052A677FEC),
+		helpstring("MmVaStrikeAtom Class")
+	]
+	coclass MmVaStrikeAtom
+	{
+		[default] interface IMmVaStrikeAtom;
+	};
+	[
+		uuid(52A9F473-5ED7-4900-BC5E-F2D60372E2BC),
+		helpstring("MmVaStrikeColl Class")
+	]
+	coclass MmVaStrikeColl
+	{
+		[default] interface IMmVaStrikeColl;
+	};
+	[
+		uuid(79B0356B-54B1-407C-8BD9-B0195A9CC75E),
+		helpstring("MmVaExpAtom Class")
+	]
+	coclass MmVaExpAtom
+	{
+		[default] interface IMmVaExpAtom;
+	};
+	[
+		uuid(93D8F172-3C55-48C5-A6D4-F5BD0495951C),
+		helpstring("MmVaExpColl Class")
+	]
+	coclass MmVaExpColl
+	{
+		[default] interface IMmVaExpColl;
+	};
+	[
+		uuid(D4BD676A-43E4-436D-9A6D-5C2BDC9ADCEC),
+		helpstring("MmVaOptRootAtom Class")
+	]
+	coclass MmVaOptRootAtom
+	{
+		[default] interface IMmVaOptRootAtom;
+	};
+	[
+		uuid(466E3130-F4E8-46D1-A4C9-EBEFC67F2148),
+		helpstring("MmVaOptRootColl Class")
+	]
+	coclass MmVaOptRootColl
+	{
+		[default] interface IMmVaOptRootColl;
+	};
+	[
+		uuid(00461023-02E2-49D4-87A6-6472ED80E12A),
+		helpstring("MmVaUndAtom Class")
+	]
+	coclass MmVaUndAtom
+	{
+		[default] interface IMmVaUndAtom;
+	};
+	[
+		uuid(CCCAE637-F20B-45C0-94C1-FEE5B22A1EDE),
+		helpstring("MmVaUndColl Class")
+	]
+	coclass MmVaUndColl
+	{
+		[default] interface IMmVaUndColl;
+	};
+};

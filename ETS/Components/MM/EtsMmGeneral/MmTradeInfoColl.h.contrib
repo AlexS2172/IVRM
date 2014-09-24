@@ -1,0 +1,57 @@
+// MmTradeInfoColl.h : Declaration of the CMmTradeInfoColl
+#ifndef __MM_TRADE_INFO_COLL_H__
+#define __MM_TRADE_INFO_COLL_H__
+#pragma once
+
+#include "resource.h"       // main symbols
+#include "EtsMmGeneral.h"
+
+_COM_SMARTPTR_TYPEDEF(IMmTradeInfoColl, IID_IMmTradeInfoColl);
+
+typedef IDispatchImpl<IMmTradeInfoColl, &IID_IMmTradeInfoColl, &LIBID_EtsMmGeneralLib>								IMmTradeInfoCollDispImpl;
+typedef ICollectionOnSTLMapExOfInterfacePtrImpl<IMmTradeInfoCollDispImpl, IMmTradeInfoAtom, LONG, LONG, DATE, DATE>	IMmTradeInfoCollImpl;
+
+// CMmTradeInfoColl
+
+class ATL_NO_VTABLE CMmTradeInfoColl : 
+	public CComObjectRootEx<CComSingleThreadModel>,
+	public CComCoClass<CMmTradeInfoColl, &CLSID_MmTradeInfoColl>,
+	public ISupportErrorInfoImpl<&IID_IMmTradeInfoColl>,
+	public IMmTradeInfoCollImpl
+{
+public:
+	CMmTradeInfoColl()
+	{
+	}
+
+DECLARE_REGISTRY_RESOURCEID(IDR_MMTRADEINFOCOLL)
+
+DECLARE_NOT_AGGREGATABLE(CMmTradeInfoColl)
+
+BEGIN_COM_MAP(CMmTradeInfoColl)
+	COM_INTERFACE_ENTRY(IMmTradeInfoColl)
+	COM_INTERFACE_ENTRY(IDispatch)
+	COM_INTERFACE_ENTRY(ISupportErrorInfo)
+END_COM_MAP()
+
+	DECLARE_PROTECT_FINAL_CONSTRUCT()
+
+	HRESULT FinalConstruct()
+	{
+		return S_OK;
+	}
+	
+	void FinalRelease() 
+	{
+		IMmTradeInfoCollImpl::Clear();
+	}
+
+public:
+
+	STDMETHOD(Add)(LONG Key, DATE SortKey, IMmTradeInfoAtom* Value, IMmTradeInfoAtom** pRetVal);
+
+};
+
+OBJECT_ENTRY_AUTO(__uuidof(MmTradeInfoColl), CMmTradeInfoColl)
+
+#endif //__MM_TRADE_INFO_COLL_H__

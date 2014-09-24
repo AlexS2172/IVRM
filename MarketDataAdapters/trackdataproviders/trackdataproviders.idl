@@ -1,0 +1,67 @@
+// TrackDataProviders.idl : IDL source for TrackDataProviders.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (TrackDataProviders.tlb) and marshaling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(001B9044-9A9D-4C58-B8AE-A034C0DF8B49),
+	version(1.0),
+	helpstring("TrackDataProviders 1.0 Type Library")
+]
+library TRACKDATAPROVIDERSLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("..\\tlb\\PriceProviders.tlb");
+
+	[
+		uuid(F2C3ADE2-5BEC-4B78-8A39-192F8CB2FAC8),
+		helpstring("TrackDataStructureProvider Class")
+	]
+	coclass TrackDataStructureProvider
+	{
+		[default]         interface IStructureProvider;
+		[default, source] dispinterface _IStructureProviderEvents;
+	};
+
+	[
+		uuid(90CD8882-E9EF-471C-95DB-D4C92AA67D41),
+		helpstring("TrackDataPriceProvider Class")
+	]
+	coclass TrackDataPriceProvider
+	{
+		[default] interface IPriceProvider;
+		[default, source] dispinterface _IPriceProviderEvents;
+	};
+
+	[
+		uuid(9400AA5E-77C9-4C5B-8B2A-AF6419733F3B),
+		helpstring("TrackDataStructureInfo Class")
+	]
+	coclass TrackDataStructureInfo
+	{
+		[default] interface IStructureProvider;
+		[default, source] dispinterface _IMyTrackStructureInfoEvents;
+	};
+	[
+		uuid(6B0F8362-4C54-4602-99A1-246089E287C8),
+		helpstring("TrackDataPriceInfo Class")
+	]
+	coclass TrackDataPriceInfo
+	{
+		[default] interface IPriceProvider;
+		[default, source] dispinterface _IPriceInfoEvents;
+	};
+	[
+		uuid(9C843E57-E203-4335-B4B8-486F5B5B6514),
+		helpstring("ProviderInfo Class")
+	]
+	coclass ProviderInfo
+	{
+		[default] interface IProviderInfo;
+	};
+};

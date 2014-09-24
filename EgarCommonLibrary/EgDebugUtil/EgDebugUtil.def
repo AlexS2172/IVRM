@@ -1,0 +1,7 @@
+;LIBRARY         EgDebugUtil
+
+EXPORTS
+	CreateCurrentProcessMiniDumpA
+	CreateCurrentProcessMiniDumpW
+    IsMiniDumpFunctionAvailable
+    SetMiniDumpDefaultCrashHandler

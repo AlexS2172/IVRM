@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmRisks.MmRvGroupingAtom.1 = s 'MmRvGroupingAtom Class'
+	{
+		CLSID = s '{ab6e48c8-d4d3-447d-b8eb-577f1e8b2db1}'
+	}
+	EtsMmRisks.MmRvGroupingAtom = s 'MmRvGroupingAtom Class'
+	{
+		CLSID = s '{ab6e48c8-d4d3-447d-b8eb-577f1e8b2db1}'
+		CurVer = s 'EtsMmRisks.MmRvGroupingAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {ab6e48c8-d4d3-447d-b8eb-577f1e8b2db1} = s 'MmRvGroupingAtom Class'
+		{
+			ProgID = s 'EtsMmRisks.MmRvGroupingAtom.1'
+			VersionIndependentProgID = s 'EtsMmRisks.MmRvGroupingAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{dcc0c411-74e1-4481-a7ad-336e903474bf}'
+		}
+	}
+}

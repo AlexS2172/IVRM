@@ -1,0 +1,24 @@
+HKCR
+{
+	SimParams.SimParameters.1 = s 'SimParameters Class'
+	{
+		CLSID = s '{EA8BCDDE-1617-40DE-AB29-9E4B82F9DBBC}'
+	}
+	SimParams.SimParameters = s 'SimParameters Class'
+	{
+		CLSID = s '{EA8BCDDE-1617-40DE-AB29-9E4B82F9DBBC}'
+		CurVer = s 'SimParams.SimParameters.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EA8BCDDE-1617-40DE-AB29-9E4B82F9DBBC} = s 'SimParameters Class'
+		{
+			ProgID = s 'SimParams.SimParameters.1'
+			VersionIndependentProgID = s 'SimParams.SimParameters'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{B9907F04-2B52-4B83-9A76-47D92A5A6730}'
+			'TypeLib' = s '{2BEDEC5A-C13D-42AC-B7AF-02F04C601C15}'
+		}
+	}
+}

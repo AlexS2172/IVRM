@@ -1,0 +1,24 @@
+HKCR
+{
+	HyperFeedProviders.HyperFeedPriceInfo.1 = s 'HyperFeedPriceInfo Class'
+	{
+		CLSID = s '{15F78302-5620-4AAE-822D-99C15DCFBFB8}'
+	}
+	HyperFeedProviders.HyperFeedPriceInfo = s 'HyperFeedPriceInfo Class'
+	{
+		CLSID = s '{15F78302-5620-4AAE-822D-99C15DCFBFB8}'
+		CurVer = s 'HyperFeedProviders.HyperFeedPriceInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {15F78302-5620-4AAE-822D-99C15DCFBFB8} = s 'HyperFeedPriceInfo Class'
+		{
+			ProgID = s 'HyperFeedProviders.HyperFeedPriceInfo.1'
+			VersionIndependentProgID = s 'HyperFeedProviders.HyperFeedPriceInfo'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{A8FB1680-0F6E-42EB-84D6-5A445C61818E}'
+			'TypeLib' = s '{AD59A81D-7749-4597-A38F-913E16C4519A}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.CIvDataUpdate.1 = s 'CIvDataUpdate Class'
+	{
+		CLSID = s '{7610A205-821C-44E1-BAE6-A3341809B5B4}'
+	}
+	MsgStruct.CIvDataUpdate = s 'CIvDataUpdate Class'
+	{
+		CLSID = s '{7610A205-821C-44E1-BAE6-A3341809B5B4}'
+		CurVer = s 'MsgStruct.CIvDataUpdate.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {7610A205-821C-44E1-BAE6-A3341809B5B4} = s 'CIvDataUpdate Class'
+		{
+			ProgID = s 'MsgStruct.CIvDataUpdate.1'
+			VersionIndependentProgID = s 'MsgStruct.CIvDataUpdate'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

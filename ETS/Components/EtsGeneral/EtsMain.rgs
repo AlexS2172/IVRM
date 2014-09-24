@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsMain.1 = s 'EtsMain Class'
+	{
+		CLSID = s '{AABF1053-C2A6-404A-9D0E-77704A8A04CB}'
+	}
+	EtsGeneral.EtsMain = s 'EtsMain Class'
+	{
+		CLSID = s '{AABF1053-C2A6-404A-9D0E-77704A8A04CB}'
+		CurVer = s 'EtsGeneral.EtsMain.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {AABF1053-C2A6-404A-9D0E-77704A8A04CB} = s 'EtsMain Class'
+		{
+			ProgID = s 'EtsGeneral.EtsMain.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsMain'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

@@ -1,0 +1,155 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""EtsMmReports.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,1,144,0
+ PRODUCTVERSION 1,1,144,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology, Inc."
+            VALUE "FileDescription", "EtsMmReports Dynamic Link Library"
+            VALUE "FileVersion", "1, 1,144, 0"
+            VALUE "InternalName", "EtsMmReports.dll"
+            VALUE "LegalCopyright", "© EGAR Technology, Inc. All rights reserved."
+            VALUE "OriginalFilename", "EtsMmReports.dll"
+            VALUE "ProductName", "Equity Trading System"
+            VALUE "ProductVersion", "1, 1,144, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_ETSMMREPORTS        REGISTRY                "EtsMmReports.rgs"
+IDR_MMRPEXERCISEDSTOCKATOM REGISTRY                "MmRpExercisedStockAtom.rgs"
+IDR_MMRPEXERCISEDSTOCKCOLL REGISTRY                "MmRpExercisedStockColl.rgs"
+IDR_MMRPGREEKSBYMONTHATOM REGISTRY                "MmRpGreeksByMonthAtom.rgs"
+IDR_MMRPGREEKSBYMONTHCOLL REGISTRY                "MmRpGreeksByMonthColl.rgs"
+IDR_MMRPGREEKSSUMMARYATOM REGISTRY                "MmRpGreeksSummaryAtom.rgs"
+IDR_MMRPGREEKSSUMMARYCOLL REGISTRY                "MmRpGreeksSummaryColl.rgs"
+IDR_MMRPMATRIXBYSTOCKATOM REGISTRY                "MmRpMatrixByStockAtom.rgs"
+IDR_MMRPMATRIXBYSTOCKCOLL REGISTRY                "MmRpMatrixByStockColl.rgs"
+IDR_MMRPMATRIXBYSTOCKOPTATOM REGISTRY                "MmRpMatrixByStockOptAtom.rgs"
+IDR_MMRPMATRIXBYSTOCKOPTCOLL REGISTRY                "MmRpMatrixByStockOptColl.rgs"
+IDR_MMRPOPTATOM         REGISTRY                "MmRpOptAtom.rgs"
+IDR_MMRPOPTCOLL         REGISTRY                "MmRpOptColl.rgs"
+IDR_MMRPOPTROOTATOM     REGISTRY                "MmRpOptRootAtom.rgs"
+IDR_MMRPOPTROOTCOLL     REGISTRY                "MmRpOptRootColl.rgs"
+IDR_MMRPPNLATOM         REGISTRY                "MmRpPnLAtom.rgs"
+IDR_MMRPPNLCOLL         REGISTRY                "MmRpPnLColl.rgs"
+IDR_MMRPPOSATOM         REGISTRY                "MmRpPosAtom.rgs"
+IDR_MMRPPOSCOLL         REGISTRY                "MmRpPosColl.rgs"
+IDR_MMRPPOSWITHEARLYEXERCISEATOM REGISTRY                "MmRpPosWithEarlyExerciseAtom.rgs"
+IDR_MMRPPOSWITHEARLYEXERCISECOLL REGISTRY                "MmRpPosWithEarlyExerciseColl.rgs"
+IDR_MMRPPOSWITHEARLYEXERCISEOPTATOM REGISTRY                "MmRpPosWithEarlyExerciseOptAtom.rgs"
+IDR_MMRPPOSWITHEARLYEXERCISEOPTCOLL REGISTRY                "MmRpPosWithEarlyExerciseOptColl.rgs"
+IDR_MMRPRISKMATRIXATOM  REGISTRY                "MmRpRiskMatrixAtom.rgs"
+IDR_MMRPRISKMATRIXCOLL  REGISTRY                "MmRpRiskMatrixColl.rgs"
+IDR_MMRPRISKMATRIXSHIFTATOM REGISTRY                "MmRpRiskMatrixShiftAtom.rgs"
+IDR_MMRPRISKMATRIXSHIFTCOLL REGISTRY                "MmRpRiskMatrixShiftColl.rgs"
+IDR_MMRPSYNTHETICATOM   REGISTRY                "MmRpSyntheticAtom.rgs"
+IDR_MMRPSYNTHETICCOLL   REGISTRY                "MmRpSyntheticColl.rgs"
+IDR_MMRPSYNTHETICOPTATOM REGISTRY                "MmRpSyntheticOptAtom.rgs"
+IDR_MMRPSYNTHETICOPTCOLL REGISTRY                "MmRpSyntheticOptColl.rgs"
+IDR_MMRPUNDATOM         REGISTRY                "MmRpUndAtom.rgs"
+IDR_MMRPUNDCOLL         REGISTRY                "MmRpUndColl.rgs"
+IDR_MMRPFUTATOM         REGISTRY                "MmRpFutAtom.rgs"
+IDR_MMRPFUTCOLL         REGISTRY                "MmRpFutColl.rgs"
+IDR_RPPRICE             REGISTRY                "RpPrice.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "EtsMmReports"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "EtsMmReports.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

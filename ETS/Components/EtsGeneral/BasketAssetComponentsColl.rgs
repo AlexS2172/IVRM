@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.BasketAssetComponentsColl.1 = s 'BasketAssetComponentsColl Class'
+	{
+		CLSID = s '{0ACFE452-3B7B-49E3-A833-2718BBA8FD14}'
+	}
+	EtsGeneral.BasketAssetComponentsColl = s 'BasketAssetComponentsColl Class'
+	{
+		CLSID = s '{0ACFE452-3B7B-49E3-A833-2718BBA8FD14}'
+		CurVer = s 'EtsGeneral.BasketAssetComponentsColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {0ACFE452-3B7B-49E3-A833-2718BBA8FD14} = s 'BasketAssetComponentsColl Class'
+		{
+			ProgID = s 'EtsGeneral.BasketAssetComponentsColl.1'
+			VersionIndependentProgID = s 'EtsGeneral.BasketAssetComponentsColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

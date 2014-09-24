@@ -1,0 +1,26 @@
+HKCR
+{
+	ETSXMLParams.XMLParams.1 = s 'XMLParams Class'
+	{
+		CLSID = s '{EB67BE5C-26B8-4F1E-8A88-3244FFD9EDCC}'
+	}
+	ETSXMLParams.XMLParams = s 'XMLParams Class'
+	{
+		CLSID = s '{EB67BE5C-26B8-4F1E-8A88-3244FFD9EDCC}'
+		CurVer = s 'ETSXMLParams.XMLParams.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EB67BE5C-26B8-4F1E-8A88-3244FFD9EDCC} = s 'XMLParams Class'
+		{
+			ProgID = s 'ETSXMLParams.XMLParams.1'
+			VersionIndependentProgID = s 'ETSXMLParams.XMLParams'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{A0E5EDFE-8B12-4361-9CD2-0424D0350AEE}'
+		}
+	}
+}

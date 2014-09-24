@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmGeneral.MmOrderExecColl.1 = s 'MmOrderExecColl Class'
+	{
+		CLSID = s '{022ADA5F-5D87-43AE-940D-F63882388A6E}'
+	}
+	EtsMmGeneral.MmOrderExecColl = s 'MmOrderExecColl Class'
+	{
+		CLSID = s '{022ADA5F-5D87-43AE-940D-F63882388A6E}'
+		CurVer = s 'EtsMmGeneral.MmOrderExecColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {022ADA5F-5D87-43AE-940D-F63882388A6E} = s 'MmOrderExecColl Class'
+		{
+			ProgID = s 'EtsMmGeneral.MmOrderExecColl.1'
+			VersionIndependentProgID = s 'EtsMmGeneral.MmOrderExecColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ECC5DD29-4F8D-4AD1-9E2F-C9B61683C08C}'
+		}
+	}
+}

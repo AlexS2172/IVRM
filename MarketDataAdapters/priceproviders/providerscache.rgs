@@ -1,0 +1,26 @@
+HKCR
+{
+	PriceProviders.ProvidersCache.1 = s 'ProvidersCache Class'
+	{
+		CLSID = s '{87AD91C2-CEA6-4E44-96C2-8251D99E112D}'
+	}
+	PriceProviders.ProvidersCache = s 'ProvidersCache Class'
+	{
+		CLSID = s '{87AD91C2-CEA6-4E44-96C2-8251D99E112D}'
+		CurVer = s 'PriceProviders.ProvidersCache.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {87AD91C2-CEA6-4E44-96C2-8251D99E112D} = s 'ProvidersCache Class'
+		{
+			ProgID = s 'PriceProviders.ProvidersCache.1'
+			VersionIndependentProgID = s 'PriceProviders.ProvidersCache'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{0F65D2BD-7DEE-49C2-8C74-9676A8D3C9B8}'
+		}
+	}
+}

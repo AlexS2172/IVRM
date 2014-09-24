@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.SyntheticSpotContractAtom.1 = s 'SyntheticSpotContractAtom Class'
+	{
+		CLSID = s '{9B1A90B1-8EA9-4782-8566-71DF3AF029B2}'
+	}
+	EtsGeneral.SyntheticSpotContractAtom = s 'SyntheticSpotContractAtom Class'
+	{
+		CLSID = s '{9B1A90B1-8EA9-4782-8566-71DF3AF029B2}'
+		CurVer = s 'EtsGeneral.SyntheticSpotContractAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9B1A90B1-8EA9-4782-8566-71DF3AF029B2} = s 'SyntheticSpotContractAtom Class'
+		{
+			ProgID = s 'EtsGeneral.SyntheticSpotContractAtom.1'
+			VersionIndependentProgID = s 'EtsGeneral.SyntheticSpotContractAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

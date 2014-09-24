@@ -1,0 +1,49 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OptionCalc", "OptionCalc\optioncalc.vcproj", "{A8FCE5BC-8D92-44ED-A399-150714DC7A45}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C229602-124D-4FAA-B36C-7FC5FF1948D0} = {6C229602-124D-4FAA-B36C-7FC5FF1948D0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OptionPriceModels", "OptionPriceModels\optionpricemodels.vcproj", "{6C229602-124D-4FAA-B36C-7FC5FF1948D0}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 3
+		SccProjectUniqueName0 = OptionCalc\\optioncalc.vcproj
+		SccProjectName0 = \u0022$/EgCommon/OptionCalc\u0022,\u0020BIIBAAAA
+		SccLocalPath0 = OptionCalc
+		CanCheckoutShared = false
+		SccProjectUniqueName1 = OptionPriceModels\\optionpricemodels.vcproj
+		SccProjectName1 = \u0022$/EgCommon/OptionPriceModels\u0022,\u0020GYDAAAAA
+		SccLocalPath1 = OptionPriceModels
+		CanCheckoutShared = false
+		SccProjectName2 = OptionCalcBuild
+		SccLocalPath2 = .
+		SccProvider2 = MSSCCI:ClearCase
+		CanCheckoutShared = false
+		SolutionUniqueID = {AC5089F5-1E61-4FBA-B80C-9E33B2FED521}
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{A8FCE5BC-8D92-44ED-A399-150714DC7A45}.Debug.ActiveCfg = Debug|Win32
+		{A8FCE5BC-8D92-44ED-A399-150714DC7A45}.Debug.Build.0 = Debug|Win32
+		{A8FCE5BC-8D92-44ED-A399-150714DC7A45}.Release.ActiveCfg = Release|Win32
+		{A8FCE5BC-8D92-44ED-A399-150714DC7A45}.Release.Build.0 = Release|Win32
+		{6C229602-124D-4FAA-B36C-7FC5FF1948D0}.Debug.ActiveCfg = Debug|Win32
+		{6C229602-124D-4FAA-B36C-7FC5FF1948D0}.Debug.Build.0 = Debug|Win32
+		{6C229602-124D-4FAA-B36C-7FC5FF1948D0}.Release.ActiveCfg = Release|Win32
+		{6C229602-124D-4FAA-B36C-7FC5FF1948D0}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

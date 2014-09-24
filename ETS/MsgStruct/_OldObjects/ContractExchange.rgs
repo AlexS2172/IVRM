@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.ContractExchange.1 = s 'ContractExchange Class'
+	{
+		CLSID = s '{91151ED7-60DE-4F32-9A6D-3D35543FC37E}'
+	}
+	MsgStruct.ContractExchange = s 'ContractExchange Class'
+	{
+		CLSID = s '{91151ED7-60DE-4F32-9A6D-3D35543FC37E}'
+		CurVer = s 'MsgStruct.ContractExchange.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {91151ED7-60DE-4F32-9A6D-3D35543FC37E} = s 'ContractExchange Class'
+		{
+			ProgID = s 'MsgStruct.ContractExchange.1'
+			VersionIndependentProgID = s 'MsgStruct.ContractExchange'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

@@ -1,0 +1,13 @@
+SCC = This is a Source Code Control file
+
+[TNT TestServer.sln]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/ETS/Work/TNT/TNT TestServer", OUUCAAAA
+
+[TNT TestServer.vcproj]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/ETS/Work/TNT/TNT TestServer", OUUCAAAA
+
+[TNT TestServerPS.vcproj]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/ETS/Work/TNT/TNT TestServer", OUUCAAAA

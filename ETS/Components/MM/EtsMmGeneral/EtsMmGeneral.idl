@@ -1,0 +1,829 @@
+// EtsMmGeneral.idl : IDL source for EtsMmGeneral
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EtsMmGeneral.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "ComponentsCommon.idl"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+
+[
+	uuid(ECC5DD29-4F8D-4AD1-9E2F-C9B61683C08C),
+	version(1.0),
+	helpstring("EtsMmGeneral 1.0 Type Library")
+]
+library EtsMmGeneralLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("EtsGeneral.tlb");
+	importlib("vsflex8.ocx");
+	importlib("../../../tlb/MsgStruct.tlb");
+
+	//[
+	//	uuid(0AF28F37-B5EC-4529-9CA4-7A581EA59059),
+	//	helpstring("ETS TradesFilter Type"),
+	//	v1_enum
+	//]
+	//typedef enum EtsTradesFilterEnum
+	//{
+	//	[helpstring("Trade Filter None")]				TFC_NONE		 = -1,
+	//	[helpstring("Trade Filter By Underlying")]		TFC_UNDERLYING	 = 0,
+	//	[helpstring("Trade Filter By Type")]			TFC_TYPE		 = 1,
+	//	[helpstring("Trade Filter By Group")]			TFC_GROUP		 = 2,
+	//	[helpstring("Trade Filter By TraderGroup")]		TFC_TRADER_GROUP = 3,
+	//	[helpstring("Trade Filter By Trader")]			TFC_TRADER		 = 4,
+	//	[helpstring("Trade Filter By Strategy")]		TFC_STRATEGY	 = 5,
+	//	[helpstring("Trade Filter By PosType")]			TFC_POSTYPE		 = 6,
+	//	[helpstring("Trade Filter Column Count")]		TFC_COLUMN_COUNT = 7,
+	//	[helpstring("Trade Filter Last Column")]		TFC_LAST_COLUMN = TFC_COLUMN_COUNT-1,
+	//} EtsTradesFilterEnum;
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+
+	//[
+	//	uuid(4E5C06AE-3FD0-441f-9194-A038CC7B5FA7),
+	//	helpstring("ETS TradesList Type"),
+	//	v1_enum
+	//]
+	//typedef enum TradesListColumnEnum
+	//{
+	//	[helpstring("Trade List None")]			TLC_NONE		= -1,
+	//	[helpstring("Trade List Key")]			TLC_KEY			= 0,
+	//	[helpstring("Trade List Type")]			TLC_TYPE		= 1,
+	//	[helpstring("Trade List Underlying")]	TLC_UNDERLYING	= 2,
+	//	[helpstring("Trade List Symbol")]		TLC_SYMBOL		= 3,
+	//	[helpstring("Trade List Option Type")]	TLC_OPT_TYPE	= 4,
+	//	[helpstring("Trade List Expiry")]		TLC_EXPIRY		= 5,
+	//	[helpstring("Trade List DTE")]			TLC_DTE			= 6,
+	//	[helpstring("Trade List Strike")]		TLC_STRIKE		= 7,
+	//	[helpstring("Trade List Buy/Sell")]		TLC_BS			= 8,
+	//	[helpstring("Trade List Price")]		TLC_PRICE		= 9,
+
+	//	[helpstring("Trade List Quantity")]		TLC_QTY				= 10,
+	//	[helpstring("Trade List LotSize")]		TLC_LOTSIZE			= 11,
+	//	[helpstring("Trade List Price")]		TLC_TOT_PRICE		= 12,
+	//	[helpstring("Trade List Date")]			TLC_DATE			= 13,
+	//	[helpstring("Trade List Trader")]		TLC_TRADER			= 14,
+	//	[helpstring("Trade List Strategy")]		TLC_STRATEGY		= 15,
+	//	[helpstring("Trade List Broker")]		TLC_BROKER			= 16,
+	//	[helpstring("Trade List CLR Broker")]	TLC_CLR_BROKER		= 17,
+	//	[helpstring("Trade List Commission")]	TLC_COMMISSION		= 18,
+	//	[helpstring("Trade List Matched")]		TLC_MATCHED			= 19,
+	//	[helpstring("Trade List Marked")]		TLC_MARKED			= 20,
+	//	[helpstring("Trade List Fut.Root")]		TLC_FUT_ROOT		= 21,
+	//	[helpstring("Trade List Futures")]		TLC_FUTURES			= 22,
+	//	[helpstring("Trade List Fut.Maturity")]	TLC_FUT_MATURITY	= 23,
+	//	[helpstring("Trade List Und.Price")]	TLC_STOCKREFPRICE	= 24,
+	//	[helpstring("Trade List Traded IV")]	TLC_TRADED_IV		= 25,
+	//	[helpstring("Trade List TradeType")]	TLC_TRADETYPE		= 26,
+	//	[helpstring("Trade List Column Count")]	TLC_COLUMN_COUNT	= 27,
+ //                                               
+	//	[helpstring("Trade List Last Column")]	TLC_LAST_COLUMN		= TLC_COLUMN_COUNT	- 1
+
+
+	//} TradesListColumnEnum;
+ //   
+	/////////////////////////////////////////////////////////////////////////////////
+	////
+	//[
+	//	object,
+	//	uuid(340F0E0A-3DD9-45B6-A6DF-516AFA7FE9B3),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmTradeInfoAtom Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmTradeInfoAtom : IDispatch
+	//{
+	//	// trade info
+	//	ETSGENERAL_PROP_DEF(1,			LONG,						TradeID)
+	//	ETSGENERAL_PROP_DEF(2,			LONG,						SeqNum)
+	//	ETSGENERAL_PROP_DEF(3,			DOUBLE,						Price)	
+	//	ETSGENERAL_PROP_DEF(4,			LONG,						Quantity)	
+	//	ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,				IsBuy)
+	//	ETSGENERAL_PROP_DEF(6,			DATE,						TradeDate)
+	//	ETSGENERAL_PROP_DEF(7,			DOUBLE,						SpotReference)	
+	//	ETSGENERAL_PROP_DEF(8,			DOUBLE,						TradedIV)
+	//	ETSGENERAL_PROP_DEF(9,			VARIANT_BOOL,				IsPosition)
+	//	ETSGENERAL_PROP_DEF(10,			enum EtsTradeStatusEnum,	Status)	
+	//	ETSGENERAL_PROP_DEF(11,			DOUBLE,						BrokerCommission)
+	//	ETSGENERAL_PROP_DEF(12,			DOUBLE,						ClearingBrokerCommission)
+	//	ETSGENERAL_PROP_DEF(13,			LONG,						Mark)
+	//	ETSGENERAL_PROP_DEF(14,			LONG,						OrderID)
+	//	ETSGENERAL_PROP_DEF(15,			LONG,						ExecStatus)
+
+	//	// additional info
+	//	ETSGENERAL_PROPPUTREF_DEF(31,	IUndAtom*,					Und)
+	//	ETSGENERAL_PROPPUTREF_DEF(32,	IEtsOptAtom*,				Opt)
+	//	ETSGENERAL_PROPPUTREF_DEF(33,	IEtsOptRootAtom*,			OptRoot)
+	//	ETSGENERAL_PROPPUTREF_DEF(34,	IEtsTraderAtom*,			Trader)
+	//	ETSGENERAL_PROPPUTREF_DEF(35,	IEtsBrokerAtom*,			Broker)
+	//	ETSGENERAL_PROPPUTREF_DEF(36,	IEtsBrokerAtom*,			ClearingBroker)
+	//	ETSGENERAL_PROPPUTREF_DEF(37,	IEtsStrategyAtom*,			Strategy)
+	//	ETSGENERAL_PROPPUTREF_DEF(38,	IEtsFutRootAtom*,			FutRoot)
+	//	ETSGENERAL_PROPPUTREF_DEF(39,	IEtsFutAtom*,				Fut)
+	//	ETSGENERAL_PROPPUTREF_DEF(40,	IEtsFutOptAtom*,			FutOpt)
+
+	//	// helpers for additional info
+	//	ETSGENERAL_PROPREADONLY_DEF(51,	LONG,						ContractID)
+	//	ETSGENERAL_PROPREADONLY_DEF(52,	enum EtsContractTypeEnum,	ContractType)
+	//	ETSGENERAL_PROPREADONLY_DEF(53,	BSTR,						Symbol)
+	//	ETSGENERAL_PROPREADONLY_DEF(54,	LONG,						UndID)
+	//	ETSGENERAL_PROPREADONLY_DEF(55,	LONG,						OptRootID)
+	//	ETSGENERAL_PROPREADONLY_DEF(56,	LONG,						FutRootID)
+	//	ETSGENERAL_PROPREADONLY_DEF(57,	LONG,						FutID)
+	//	ETSGENERAL_PROPREADONLY_DEF(58,	LONG,						LotSize)
+	//	ETSGENERAL_PROPREADONLY_DEF(59,	DOUBLE,						TotalCommission)
+	//	ETSGENERAL_PROPREADONLY_DEF(60,	DOUBLE,						TotalPrice)
+	//	ETSGENERAL_PROPREADONLY_DEF(61,	LONG,						StrategyID)
+	//	ETSGENERAL_PROPREADONLY_DEF(62,	BSTR,						ContractName)
+	//	ETSGENERAL_PROPREADONLY_DEF(63,	LONG,						BrokerID)
+	//	ETSGENERAL_PROPREADONLY_DEF(64,	LONG,						ClearingBrokerID)
+	//	ETSGENERAL_PROPREADONLY_DEF(65,	BSTR,						ImportID)
+	//	ETSGENERAL_PROPREADONLY_DEF(66,	BSTR,						ExecStatusString)
+	//	ETSGENERAL_PROPREADONLY_DEF(67,	DOUBLE,					ManualActivePrice)
+
+	//	[id(71), helpstring("method CopyTo")] 
+	//	HRESULT CopyTo([in] IMmTradeInfoAtom* pDest);
+	//	
+	//	[id(72), helpstring("method GetTradeTypeString")]
+	//	HRESULT GetTradeTypeString([out, retval] BSTR* pDest);
+
+	//	[id(73), helpstring("method GetTradeMatchedString")]
+	//	HRESULT GetTradeMatchedString([out, retval] BSTR* pDest);
+
+	//	[id(74), helpstring("method CheckTradeByFilter")]
+	//	HRESULT CheckByFilter([in] IEtsFilterData* pFilter, [out, retval] VARIANT_BOOL *pRetVal);
+
+	//	ETSGENERAL_PROPPUTREF_DEF(75,	IContract*,			Contract)
+	//};
+
+	///////////////////////////////////////////////////////////////////////////////
+	////
+	//[
+	//	object,
+	//	uuid(A3A6C60A-CC00-4656-BFB4-4701CCC405DF),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmTradeInfoColl Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmTradeInfoColl : IDispatch
+	//{
+	//	ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG, DATE, IMmTradeInfoAtom*)
+	//	[id(50), helpstring("method Clone")] HRESULT Clone([out, retval] IMmTradeInfoColl** pSrcColl);
+ //               [propget, id(11), helpstring("property FilterTrades")]  
+	//	HRESULT FilterTradesCV([in] LONG ID, [in] LONG filterGroup, [in] LONG filterType, [in] IEtsUndGroupColl* pGroupCol, [in]VARIANT_BOOL Actual, [in] VARIANT_BOOL TradesForNullPositions, [out, retval] IMmTradeInfoColl** pVal);
+
+
+	//	[propget, id(51), helpstring("property FilterTrades")]  
+	//	HRESULT FilterTrades([in] IEtsFilterData* pFilter, 
+	//								[in] IEtsUndGroupColl* pGroupCol,
+	//								[in] VARIANT_BOOL Actual, 
+	//								[in, defaultvalue(FALSE)] VARIANT_BOOL bSkipFutContracts,
+	//								[in, defaultvalue(FALSE)] VARIANT_BOOL bFutWithDerivative,
+	//								[out, retval] IMmTradeInfoColl** pVal);
+
+	//	[id(25), helpstring("method ResetPosition")]  
+	//	HRESULT ResetTradesPosition();
+	//	[id(56), helpstring("method MoveNextPosition")]  
+	//	HRESULT MoveNextTrade([out] VARIANT_BOOL* bIsLast);
+	//	[propget, id(57), helpstring("propery TradeAtCurrentPosition")]
+	//	HRESULT TradeAtCurrentPosition([out, retval] IMmTradeInfoAtom** pDest);
+
+	//	[id(58), helpstring("method GetFirstTrade")]  
+	//	HRESULT GetFirstTrade([out, retval] IMmTradeInfoAtom** pDest);
+	//};
+
+	/////////////////////////////////////////////////////////////////////////////////
+	////
+	//[
+	//	object,
+	//	uuid(AFD8BCF3-3DCE-4AD5-BCD3-4472C609310D),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmTradeUpdateColl Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmTradeUpdateColl : IDispatch
+	//{
+	//	ETSGENERAL_COMMON_COLLECTION_DEF(LONG, ITradeUpdate*)
+
+	//	[id(10), helpstring("method Clone")] HRESULT Clone([out, retval] IMmTradeUpdateColl** pSrcColl);
+	//};
+ 
+/*
+	[
+		object,
+		uuid(9AEA1D69-F1C2-4A0A-99C1-3AF4C31C1A82),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeByUndAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeByUndAtom : IDispatch
+	{
+		ETSGENERAL_PROPPUTREF_DEF(1,	IMmTradeInfoColl*,		Trd	)
+		ETSGENERAL_PROP_DEF(2,			BSTR,					bsKey)
+		ETSGENERAL_PROP_DEF(3,			DOUBLE,					dSortKey)
+
+	};*/
+
+
+
+	//[
+	//	object,
+	//	uuid(D590A619-737D-4B7C-BE9C-23C2588B5F79),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmTradeByUndColl Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmTradeByUndColl : IDispatch
+	//{
+	//	ETSGENERAL_COMMON_COLLECTION_DEF(BSTR, IMmTradeInfoColl* )
+	//	
+	//};
+
+	//[
+	//	object,
+	//	uuid(F41EBAD3-F648-4A7D-82EF-A06B7B9A5EBB),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmTradeMatchAtom Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmTradeMatchAtom : IDispatch
+	//{
+	//	ETSGENERAL_PROPPUTREF_DEF(1,	IMmTradeInfoAtom*,				TrdActual	)
+	//	ETSGENERAL_PROPPUTREF_DEF(2,	IMmTradeInfoColl*,				TrdManual	)
+	//	ETSGENERAL_PROPPUTREF_DEF(3,	IMmTradeInfoAtom*,				TrdMatch	)
+	//	ETSGENERAL_PROP_DEF(4,			VARIANT_BOOL,					Updated)
+	//};
+
+	//[
+	//	object,
+	//	uuid(196C9FE6-E58E-4DEB-9254-D858523F640B),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmTradeMatchColl Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmTradeMatchColl : IDispatch
+	//{
+	//	ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG,	DATE,		IMmTradeMatchAtom* )
+	//};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(AA15B02D-95C2-45EB-96C0-2DED27C12B9B),
+		dual,
+		nonextensible,
+		helpstring("IMmOrderExecAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmOrderExecAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,								ID)
+		ETSGENERAL_PROP_DEF(2,			LONG,								SeqNum)
+		ETSGENERAL_PROP_DEF(3,			enum EtsOrderExecutionStatusEnum,	ExecStatus)
+		ETSGENERAL_PROP_DEF(4,			LONG,								ExecQty)
+		ETSGENERAL_PROP_DEF(5,			DOUBLE,								ExecPrice)
+		ETSGENERAL_PROP_DEF(6,			DATE,								ExecDate)
+		ETSGENERAL_PROP_DEF(7,			BSTR,								ExecID)
+
+		ETSGENERAL_PROPREADONLY_DEF(52,	BSTR,								OrderExecStatusString)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(1ADD71D5-7C40-4561-902A-788773118E10),
+		dual,
+		nonextensible,
+		helpstring("IMmOrderExecColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmOrderExecColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG,	DATE,		IMmOrderExecAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(1933A78B-02CE-416A-AB8B-C64B4D47DD54),
+		dual,
+		nonextensible,
+		helpstring("IMmOrderExecDestAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmOrderExecDestAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,						Code)
+		ETSGENERAL_PROP_DEF(3,			BSTR,						Name)
+		ETSGENERAL_PROP_DEF(4,			VARIANT_BOOL,				IsOption)
+		ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,				IsStock)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(11F9534D-A398-497B-B646-0DDC49313F7A),
+		dual,
+		nonextensible,
+		helpstring("IMmOrderExecDestColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmOrderExecDestColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG,	BSTR,		IMmOrderExecDestAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(2CDF4115-BAF7-4FAF-8ED7-4D62D8186FD0),
+		dual,
+		nonextensible,
+		helpstring("IMmOrderAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmOrderAtom : IDispatch
+	{
+		// core info
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			LONG,						SeqNum)
+		ETSGENERAL_PROP_DEF(3,			DATE,						UpdateDate)
+		ETSGENERAL_PROPPUTREF_DEF(4,	IMmOrderExecDestAtom*,		Dest)
+		ETSGENERAL_PROP_DEF(5,			enum EtsOrderStatusEnum,	Status)
+		ETSGENERAL_PROP_DEF(6,			enum EtsOrderTypeEnum,		OrderType)
+		ETSGENERAL_PROP_DEF(7,			VARIANT_BOOL,				IsBuy)
+		ETSGENERAL_PROP_DEF(8,			LONG,						OrderQty)
+		ETSGENERAL_PROP_DEF(9,			DOUBLE,						OrderPrice)
+		ETSGENERAL_PROP_DEF(10,			DATE,						OrderDate)
+		ETSGENERAL_PROP_DEF(11,			DOUBLE,						AvgPrice)
+		ETSGENERAL_PROP_DEF(12,			LONG,						CumQty)
+		ETSGENERAL_PROP_DEF(13,			BSTR,						OrderID)
+
+		// additional info
+		ETSGENERAL_PROPPUTREF_DEF(31,	IUndAtom*,					Und)
+		ETSGENERAL_PROPPUTREF_DEF(32,	IEtsOptAtom*,				Opt)
+		ETSGENERAL_PROPPUTREF_DEF(33,	IEtsOptRootAtom*,			OptRoot)
+		ETSGENERAL_PROPREADONLY_DEF(34, IMmOrderExecColl*,			Execs)
+		ETSGENERAL_PROP_DEF(35,			BSTR,						RequestUID)
+		ETSGENERAL_PROPPUTREF_DEF(36,	IEtsTraderAtom*,			Trader)
+		ETSGENERAL_PROPREADONLY_DEF(37, IMmTradeInfoColl*,			Trades)
+		// helpers for additional info
+		ETSGENERAL_PROPREADONLY_DEF(38,	LONG,						ContractID)
+		ETSGENERAL_PROPREADONLY_DEF(39,	enum EtsContractTypeEnum,	ContractType)
+		ETSGENERAL_PROPREADONLY_DEF(40,	BSTR,						Symbol)
+		ETSGENERAL_PROPREADONLY_DEF(41,	LONG,						UnderlyingID)
+		ETSGENERAL_PROPREADONLY_DEF(42,	LONG,						OptRootID)
+
+		// helpers
+		//[id(51), helpstring("method CopyTo")] 
+		//HRESULT CopyTo([in] IMmOrderAtom* pDest);
+
+		ETSGENERAL_PROPREADONLY_DEF(52,	BSTR,						OrderTypeString)
+		ETSGENERAL_PROPREADONLY_DEF(53,	BSTR,						OrderStatusString)
+
+		//[id(54), helpstring("method CalcExecAverages")]
+		//HRESULT CalcExecAverages();
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(518EDE83-6978-41BA-9546-C810830AE250),
+		dual,
+		nonextensible,
+		helpstring("IMmOrderColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmOrderColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG,	DATE,		IMmOrderAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(D0BCC80C-26D3-4928-A66C-3FF5523E838A),
+		dual,
+		nonextensible,
+		helpstring("IMmOrderByReqColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmOrderByReqColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(BSTR,	DATE,		IMmOrderAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(1F029D6A-5FB9-47C8-809E-21190F84947A),
+		dual,
+		nonextensible,
+		helpstring("IMmTntCounterPartyAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTntCounterPartyAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			BSTR,						Name)
+		ETSGENERAL_PROP_DEF(3,			BSTR,						Desc)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(A5E9B156-FC34-481E-9E02-2811442A395D),
+		dual,
+		nonextensible,
+		helpstring("IMmTntCounterPartyColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTntCounterPartyColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG,	BSTR,		IMmTntCounterPartyAtom*)
+	};
+
+	[
+		object,
+		uuid(1FDEC55B-86A6-49EB-92C7-5A555867E7B2),
+		dual,
+		nonextensible,
+		helpstring("IMmTradeView Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTradeView : IDispatch
+	{
+		[propget, id(1), helpstring("TradeViewFilter")] HRESULT TradeViewFilter([in] enum EtsTradesFilterEnum Filter, [out, retval] LONG* pVal);	
+		[propput, id(1), helpstring("TradeViewFilter")] HRESULT TradeViewFilter([in] enum EtsTradesFilterEnum Filter, [in] LONG newVal);
+		[propput, id(2), helpstring("TradeViewColumnsOrder")] HRESULT TradeViewColumnsOrder([in] SAFEARRAY(LONG)* colOrder);
+		[propget, id(3), helpstring("RowData")] HRESULT RowData([in] LONG lRow, [out, retval] IMmTradeInfoAtom** ppVal);
+		[propget, id(4), helpstring("FilterData") ] HRESULT FilterData( [out, retval] IEtsFilterData** pRetVal);
+		[id(5), helpstring("Sort")]	   HRESULT Sort([in] enum TradesListColumnEnum enField, [in] enum EtsSortingEnum enSort);
+		[id(6), helpstring("Refresh")] HRESULT Refresh();
+		[id(7), helpstring("ClearSelected")] HRESULT ClearSelected();
+		[id(8), helpstring("SetTradeAsSelected")] HRESULT SetTradeAsSelected([in] LONG TradeID );
+		[id(9), helpstring("IsSelectedTrade")] HRESULT IsSelectedTrade([in] LONG TradeID, [out, retval] VARIANT_BOOL* bIsSel);	
+		ETSGENERAL_PROPPUTREF_DEF(10,	IEtsMain*,	EtsMain)
+		ETSGENERAL_PROPPUTREF_DEF(11,	IMmTradeChannel*,	TradeChannel)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(E34750E9-93EC-4CE7-B11C-B1827D8C0C25),
+		dual,
+		nonextensible,
+		helpstring("IMmTntCounterPartyByNameColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTntCounterPartyByNameColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(BSTR,		IMmTntCounterPartyAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(03813D10-1C67-42A9-AE52-3ED3D9F04EC1),
+		dual,
+		nonextensible,
+		helpstring("IMmTntCardAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTntCardAtom : IDispatch
+	{
+		// core info
+		ETSGENERAL_PROP_DEF(1,			LONG,						ID)
+		ETSGENERAL_PROP_DEF(2,			LONG,						SeqNum)
+		ETSGENERAL_PROP_DEF(3,			DATE,						TradeDate)
+		ETSGENERAL_PROP_DEF(4,			BSTR,						TradeID)
+		ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,				IsBuy)
+		ETSGENERAL_PROP_DEF(6,			LONG,						Qty)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,						Price)
+		ETSGENERAL_PROP_DEF(9,			BSTR,						PoeID)
+		ETSGENERAL_PROP_DEF(10,			enum EtsTntCardStatusEnum,	Status)
+		ETSGENERAL_PROP_DEF(11,			BSTR,						Account)
+
+		// TNT misc data
+		ETSGENERAL_PROP_DEF(12,			BSTR,						ExecutingFirm)
+		ETSGENERAL_PROP_DEF(13,			BSTR,						CMTA)
+		ETSGENERAL_PROP_DEF(14,			BSTR,						Quantifier)
+		ETSGENERAL_PROP_DEF(15,			BSTR,						ContraFirm)
+		ETSGENERAL_PROP_DEF(16,			BSTR,						SpreadIndicator)
+		ETSGENERAL_PROP_DEF(17,			BSTR,						OptionalData)
+
+		// additional info
+		ETSGENERAL_PROP_DEF(31,			BSTR,						Msg)
+		ETSGENERAL_PROPPUTREF_DEF(32,	IUndAtom*,					Und)
+		ETSGENERAL_PROPPUTREF_DEF(33,	IEtsOptAtom*,				Opt)
+		ETSGENERAL_PROPPUTREF_DEF(34,	IEtsOptRootAtom*,			OptRoot)
+		ETSGENERAL_PROPPUTREF_DEF(35,	IMmTntCounterPartyAtom*,	CntPty)
+		ETSGENERAL_PROP_DEF(36,			VARIANT_BOOL,				MakeTrade)
+		ETSGENERAL_PROP_DEF(37,			VARIANT_BOOL,				IsExpired)
+		ETSGENERAL_PROP_DEF(38,			BSTR,						Desc)
+
+		// helpers
+		ETSGENERAL_PROPREADONLY_DEF(51,	BSTR,						CardStatusString)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(4C984F3F-DAA6-4866-9150-AB1B8EF09247),
+		dual,
+		nonextensible,
+		helpstring("IMmTntCardColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTntCardColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(BSTR,	DATE,		IMmTntCardAtom*)
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	[
+		object,
+		uuid(5EFE307B-6525-4ED4-88F3-1C2DF3516DCF),
+		dual,
+		nonextensible,
+		helpstring("IMmTntCardBySeqColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmTntCardBySeqColl : IDispatch
+	{
+		ETSGENERAL_EXTENDED_COLLECTION_DEF(LONG,	DATE,		IMmTntCardAtom*)
+	};
+
+	///////////////////////////////////////////////////////////////////////////////
+	////
+	//[
+	//	object,
+	//	uuid(25482764-ABFC-450D-8928-18A2B7C013EC),
+	//	dual,
+	//	nonextensible,
+	//	helpstring("IMmTradeChannel Interface"),
+	//	pointer_default(unique)
+	//]
+	//interface IMmTradeChannel : IDispatch
+	//{
+	//	ETSGENERAL_PROPREADONLY_DEF(1, IMmTradeInfoColl*,  Trd)
+	//	ETSGENERAL_PROPREADONLY_DEF(2, IMmTradeByUndColl*, TrdByUndMan)
+	//	ETSGENERAL_PROPREADONLY_DEF(3, IMmTradeByUndColl*, TrdByUnd)
+	//	ETSGENERAL_PROPREADONLY_DEF(4, IMmTradeByUndColl*, TrdByTraderAndContract)
+	//	ETSGENERAL_PROPREADONLY_DEF(5, IMmTradeByUndColl*, TrdByFut)
+	//	ETSGENERAL_PROPREADONLY_DEF(6, IMmTradeMatchColl*, TrdForMatch)
+	//	ETSGENERAL_PROP_DEF(7,	BSTR,		DatabaseString)
+
+	//	[id(10), helpstring("OpenTradeView")] HRESULT OpenTradeView([out, retval] IMmTradeView** pTradeView);
+
+
+	//	[id(20), helpstring("method LoadTrades")]
+	//	HRESULT LoadTrades([in] LONG lTraderId,
+	//					   [in] IEtsMain* pMain,
+	//					   [in, defaultvalue(-1)] VARIANT_BOOL bShowProgress);
+
+ // 		[id(21), helpstring("LoadStrategy")]		
+	//	HRESULT LoadStrategy([in] LONG lStrategyID, 
+	//						 [out] IEtsStrategyAtom** pStrategyAtom, 
+	//						 [out, retval] VARIANT_BOOL* bNew);
+
+ // 		[id(22), helpstring("UpdateManualActivePrices")]		
+	//	HRESULT UpdateManualActivePrices();
+
+	//	[id(23), helpstring("method UpdatePriceInfo")]
+	//	HRESULT UpdatePriceInfo([in] LONG lTraderId,
+	//							[in] IEtsMain* pMain);
+
+
+ // 	};
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	//
+	//[
+	//	uuid(2476A3F1-BF81-4398-8EFC-8D617109C2B4),
+	//	helpstring("MmTradeInfoAtom Class")
+	//]
+	//coclass MmTradeInfoAtom
+	//{
+	//	[default] interface IMmTradeInfoAtom;
+	//};
+	//[
+	//	uuid(48113D2F-3F2B-49AB-B559-EF8AD35F7644),
+	//	helpstring("MmTradeInfoColl Class")
+	//]
+	//coclass MmTradeInfoColl
+	//{
+	//	[default] interface IMmTradeInfoColl;
+	//};
+	[
+		uuid(C4517B03-A608-4FC5-B8B1-9A4554130211),
+		helpstring("MmOrderAtom Class")
+	]
+	coclass MmOrderAtom
+	{
+		[default] interface IMmOrderAtom;
+	};
+	[
+		uuid(7659176F-5745-409D-9437-96A216681413),
+		helpstring("MmOrderColl Class")
+	]
+	coclass MmOrderColl
+	{
+		[default] interface IMmOrderColl;
+	};
+	[
+		uuid(4984127F-969D-4047-A1E4-E5B51D8EE16A),
+		helpstring("MmOrderExecAtom Class")
+	]
+	coclass MmOrderExecAtom
+	{
+		[default] interface IMmOrderExecAtom;
+	};
+	[
+		uuid(022ADA5F-5D87-43AE-940D-F63882388A6E),
+		helpstring("MmOrderExecColl Class")
+	]
+	coclass MmOrderExecColl
+	{
+		[default] interface IMmOrderExecColl;
+	};
+	[
+		uuid(932F68FA-DB31-48B1-B8A7-79673CC51D28),
+		helpstring("MmOrderExecDestAtom Class")
+	]
+	coclass MmOrderExecDestAtom
+	{
+		[default] interface IMmOrderExecDestAtom;
+	};
+	[
+		uuid(2ABCA188-3553-4DAA-9E5D-9BAE5590DB82),
+		helpstring("MmOrderExecDestColl Class")
+	]
+	coclass MmOrderExecDestColl
+	{
+		[default] interface IMmOrderExecDestColl;
+	};
+	[
+		uuid(7BA72441-E311-4BE4-8A79-8AA3C58E4680),
+		helpstring("MmOrderByReqColl Class")
+	]
+	coclass MmOrderByReqColl
+	{
+		[default] interface IMmOrderByReqColl;
+	};
+	[
+		uuid(D18C7873-4D96-401C-BA25-D9327C22DFCE),
+		helpstring("MmTntCounterPartyAtom Class")
+	]
+	coclass MmTntCounterPartyAtom
+	{
+		[default] interface IMmTntCounterPartyAtom;
+	};
+	[
+		uuid(53A44A8F-7D3B-4379-B141-D24771CFEC1C),
+		helpstring("MmTntCounterPartyColl Class")
+	]
+	coclass MmTntCounterPartyColl
+	{
+		[default] interface IMmTntCounterPartyColl;
+	};
+	[
+		uuid(A7A471E2-AE98-45F7-892C-30D00E40102C),
+		helpstring("MmTntCardAtom Class")
+	]
+	coclass MmTntCardAtom
+	{
+		[default] interface IMmTntCardAtom;
+	};
+	[
+		uuid(B72721EB-A2DD-4EAB-BEF1-ED87A10DD47E),
+		helpstring("MmTntCardColl Class")
+	]
+	coclass MmTntCardColl
+	{
+		[default] interface IMmTntCardColl;
+	};
+	[
+		uuid(3286232A-DE29-47C8-95BA-8282BEB26BF2),
+		helpstring("MmTntCardBySeqColl Class")
+	]
+	coclass MmTntCardBySeqColl
+	{
+		[default] interface IMmTntCardBySeqColl;
+	};
+	[
+		uuid(901CAAD4-1B7B-4B2D-9205-DC4C2171F1C2),
+		helpstring("MmTntCounterPartyByNameColl Class")
+	]
+	coclass MmTntCounterPartyByNameColl
+	{
+		[default] interface IMmTntCounterPartyByNameColl;
+	};
+//	[
+//		uuid(F07158D5-FA20-4383-AC41-924D0D3F2FA2),
+//		helpstring("MmTradeByUndAtom Class")
+//	]
+//	coclass MmTradeByUndAtom
+//	{
+//		[default] interface IMmTradeByUndAtom;
+//	};
+	//[
+	//	uuid(C1247841-CEA4-4240-9C69-4DBF10F893E4),
+	//	helpstring("MmTradeByUndColl Class")
+	//]
+	//coclass MmTradeByUndColl
+	//{
+	//	[default] interface IMmTradeByUndColl;
+	//};
+	/*[
+		uuid(A609B092-31B9-49A1-9B94-DAFA712752CB),
+		helpstring("MmTradeMatchAtom Class")
+	]
+	coclass MmTradeMatchAtom
+	{
+		[default] interface IMmTradeMatchAtom;
+	};
+	[
+		uuid(554CC50D-82CD-435C-A779-9A70F1230165),
+		helpstring("MmTradeMatchColl Class")
+	]
+	coclass MmTradeMatchColl
+	{
+		[default] interface IMmTradeMatchColl;
+	};*/
+	//[
+	//	uuid(54A210CA-85AD-43F8-9BAD-59A061CDDA43),
+	//	helpstring("_IMmTradeChannelEvents Interface")
+	//]
+	//dispinterface _IMmTradeChannelEvents
+	//{
+	//	properties:
+	//	methods:
+	//	[id(1), helpstring("method Notification")] HRESULT Notification([in] BSTR bsText, [in] LONG lPercent);
+	//};
+	//[
+	//	uuid(076DA83D-DD23-4803-8897-CAABB986F174),
+	//	helpstring("MmTradeChannel Class")
+	//]
+	//coclass MmTradeChannel
+	//{
+	//	[default] interface IMmTradeChannel;
+	//	[default, source] dispinterface _IMmTradeChannelEvents;
+	//};
+	[
+		uuid(4DA918C6-0A6D-4DFE-AF80-99854865AD7F),
+		helpstring("_IMmTradeViewEvents Interface")
+	]
+	dispinterface _IMmTradeViewEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method Progress")] HRESULT Progress([in] BSTR Description, [in] LONG Percent);
+	};
+	[
+		uuid(1530DB84-3963-48EB-81F3-21BCE24715E6),
+		helpstring("MmTradeView Class")
+	]
+	coclass MmTradeView
+	{
+		[default] interface IMmTradeView;
+				  interface IVSFlexDataSource;	
+		[default, source] dispinterface _IMmTradeViewEvents;
+	};
+	//[
+	//	uuid(9182A64F-21D5-4C77-A015-7210326BB40E),
+	//	helpstring("MmTradeUpdateColl Class")
+	//]
+	//coclass MmTradeUpdateColl
+	//{
+	//	[default] interface IMmTradeUpdateColl;
+	//};
+};

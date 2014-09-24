@@ -1,0 +1,69 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "EgDebugUtil"=.\EgDebugUtil\EgDebugUtil.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/EgCommon/EgDebugUtil", TAZCAAAA
+    .\EgDebugUtil
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "EgStdLib"=.\EgStdLib\EgStdLib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/EgCommon/EgStdLib", MUKAAAAA
+    .\EgStdLib
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "EgTcpDriver"=.\EgTcpDriver\egtcpdriver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/EgCommon/EgTcpDriver", KNDAAAAA
+    .\EgTcpDriver
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    EgarCommonLibrary
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

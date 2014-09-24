@@ -1,0 +1,30 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector]
+"Logon Time"="10:00 AM"
+"Logoff Time"="10:00 AM"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector\Bins]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector\Bins\1]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector\Bins\1\Account 1]
+"User"="EG15M-8002"
+"Password"="EGA"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector\Gateways]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector\Gateways\1]
+"Addr"="209.140.121.68"
+"Port"="20024"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector\Gateways\2]
+"Addr"="209.140.121.69"
+"Port"="20025"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Egar\Common\Connectivity\ISE Connector\ISELogs]
+"LogTop"="0"
+"LogLeft"="0"
+"LogWidth"="15480"
+"LogHeight"="11220"
+

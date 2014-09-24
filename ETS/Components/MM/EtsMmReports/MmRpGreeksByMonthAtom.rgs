@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpGreeksByMonthAtom.1 = s 'MmRpGreeksByMonthAtom Class'
+	{
+		CLSID = s '{70F4D747-F0F1-47E8-9EE2-9A3DAEE40298}'
+	}
+	EtsMmReports.MmRpGreeksByMonthAtom = s 'MmRpGreeksByMonthAtom Class'
+	{
+		CLSID = s '{70F4D747-F0F1-47E8-9EE2-9A3DAEE40298}'
+		CurVer = s 'EtsMmReports.MmRpGreeksByMonthAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {70F4D747-F0F1-47E8-9EE2-9A3DAEE40298} = s 'MmRpGreeksByMonthAtom Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpGreeksByMonthAtom.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpGreeksByMonthAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

@@ -1,0 +1,15 @@
+For EMM_FW DB creation from scripts please do next steps:
+
+1. Create new DB in SQL Server Enterprise Manager 
+2. Run this scripts in specified sequence (Please run all scripts for correct functionality of application)
+	EMM_FW_Tables.sql
+	EMM_FW_Constraints.sql
+	EMM_FW_Views.sql
+	EMM_FW_Procedures.sql
+
+3. Then execute usp_DatabaseInitialization stored procedure in the newly created DB.
+4. Run EMM_FW_adds_necessaries_stocks.sql for create stocks records in DB (Optional) 
+
+
+
+

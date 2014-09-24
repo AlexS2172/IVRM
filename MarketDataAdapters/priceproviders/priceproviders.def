@@ -1,0 +1,9 @@
+; PriceProviders.def : Declares the module parameters.
+
+;LIBRARY      "PriceProviders.DLL"
+
+EXPORTS
+	DllCanUnloadNow      PRIVATE
+	DllGetClassObject    PRIVATE
+	DllRegisterServer    PRIVATE
+	DllUnregisterServer	 PRIVATE

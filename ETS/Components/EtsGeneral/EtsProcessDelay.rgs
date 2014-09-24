@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.EtsProcessDelay.1 = s 'EtsProcessDelay Class'
+	{
+		CLSID = s '{F915F505-7C4C-4BF5-B47F-B10EA9B6C902}'
+	}
+	EtsGeneral.EtsProcessDelay = s 'EtsProcessDelay Class'
+	{
+		CLSID = s '{F915F505-7C4C-4BF5-B47F-B10EA9B6C902}'
+		CurVer = s 'EtsGeneral.EtsProcessDelay.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F915F505-7C4C-4BF5-B47F-B10EA9B6C902} = s 'EtsProcessDelay Class'
+		{
+			ProgID = s 'EtsGeneral.EtsProcessDelay.1'
+			VersionIndependentProgID = s 'EtsGeneral.EtsProcessDelay'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

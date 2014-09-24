@@ -1,0 +1,66 @@
+<?xml version='1.0'?>
+<project version='5'>
+	<step action='Group' type='0'>
+		<name>Project steps</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsGeneral.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmGeneral.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmGreeks.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmHedge.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmIndexHedge.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmQuotes.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmReports.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmRisks.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmStockHedge.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+	<step action='COM Register' type='0'>
+		<Filename>C:\ClearCaseViews\EG1_ETS_ASP_Release_1_0\ETS\Components\bin\EtsMmVolaAnalysis.dll</Filename>
+		<ShowCmd type='11'>-1</ShowCmd>
+		<indent type='3'>1</indent>
+		<name>New Step</name>
+	</step>
+</project>

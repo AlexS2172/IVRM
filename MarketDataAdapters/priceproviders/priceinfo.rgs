@@ -1,0 +1,26 @@
+HKCR
+{
+	PriceProviders.PriceInfo.1 = s 'PriceInfo Class'
+	{
+		CLSID = s '{FA41723C-C387-4448-9245-FC2875C2EE3C}'
+	}
+	PriceProviders.PriceInfo = s 'PriceInfo Class'
+	{
+		CLSID = s '{FA41723C-C387-4448-9245-FC2875C2EE3C}'
+		CurVer = s 'PriceProviders.PriceInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {FA41723C-C387-4448-9245-FC2875C2EE3C} = s 'PriceInfo Class'
+		{
+			ProgID = s 'PriceProviders.PriceInfo.1'
+			VersionIndependentProgID = s 'PriceProviders.PriceInfo'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			'TypeLib' = s '{0F65D2BD-7DEE-49C2-8C74-9676A8D3C9B8}'
+		}
+	}
+}

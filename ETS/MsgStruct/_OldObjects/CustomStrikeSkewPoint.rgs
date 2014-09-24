@@ -1,0 +1,26 @@
+HKCR
+{
+	MsgStruct.CustomStrikeSkewPoint.1 = s 'CustomStrikeSkewPoint Class'
+	{
+		CLSID = s '{F119173B-10EB-4AC4-82CD-25249D724AFF}'
+	}
+	MsgStruct.CustomStrikeSkewPoint = s 'CustomStrikeSkewPoint Class'
+	{
+		CLSID = s '{F119173B-10EB-4AC4-82CD-25249D724AFF}'
+		CurVer = s 'MsgStruct.CustomStrikeSkewPoint.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F119173B-10EB-4AC4-82CD-25249D724AFF} = s 'CustomStrikeSkewPoint Class'
+		{
+			ProgID = s 'MsgStruct.CustomStrikeSkewPoint.1'
+			VersionIndependentProgID = s 'MsgStruct.CustomStrikeSkewPoint'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{4959EBD0-5E0F-42CD-BDA3-462F4AF45C7A}'
+		}
+	}
+}

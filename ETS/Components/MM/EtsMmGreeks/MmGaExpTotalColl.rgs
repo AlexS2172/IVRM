@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmGreeks.MmGaExpTotalColl.1 = s 'MmGaExpTotalColl Class'
+	{
+		CLSID = s '{4C51803D-182C-451A-AA0E-3C0DC5AADA53}'
+	}
+	EtsMmGreeks.MmGaExpTotalColl = s 'MmGaExpTotalColl Class'
+	{
+		CLSID = s '{4C51803D-182C-451A-AA0E-3C0DC5AADA53}'
+		CurVer = s 'EtsMmGreeks.MmGaExpTotalColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {4C51803D-182C-451A-AA0E-3C0DC5AADA53} = s 'MmGaExpTotalColl Class'
+		{
+			ProgID = s 'EtsMmGreeks.MmGaExpTotalColl.1'
+			VersionIndependentProgID = s 'EtsMmGreeks.MmGaExpTotalColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{B4A726AD-9406-4A24-9E8A-D8ADD9CAC4DC}'
+		}
+	}
+}

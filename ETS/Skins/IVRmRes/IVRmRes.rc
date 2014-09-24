@@ -1,0 +1,146 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+SPLASH_IVRM             BITMAP                  "Images\\IVRmSplash.bmp"
+SPLASH_IVRM_BO          BITMAP                  "Images\\IVRmBOSplash.bmp"
+BOTITLE                 BITMAP                  "Images\\BOTitle.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+QUOTATION               ICON                    "Images\\Quotation.ico"
+QUOTES                  ICON                    "Images\\Quotes.ico"
+REPORTS                 ICON                    "Images\\Reports.ico"
+RISKS                   ICON                    "Images\\Risks.ico"
+STOCKHEDGE              ICON                    "Images\\StockHedge.ico"
+HEDGESUMMARY            ICON                    "Images\\HedgeSummary.ico"
+INDEXHEDGE              ICON                    "Images\\IndexHedge.ico"
+ORDERS                  ICON                    "Images\\Orders.ico"
+MANAGE                  ICON                    "Images\\Manage.ico"
+PNLPROJECTIONS          ICON                    "Images\\PnLProjections.ico"
+MATRIX                  ICON                    "Images\\Matrix.ico"
+GREEKS                  ICON                    "Images\\Greeks.ico"
+TNTCARDS                ICON                    "Images\\TntCards.ico"
+MAIN                    ICON                    "Images\\Main.ico"
+TRADES                  ICON                    "images\\Trades.ico"
+UNDERLYINGS             ICON                    "Images\\Underlyings.ico"
+VolaAnalysis            ICON                    "Images\\VolaAnalysis.ico"
+VolaMonitor             ICON                    "Images\\Vola.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// JPEG
+//
+
+IDR_SPLASH              JPEG                    "Images\\Splash_IVM.jpg"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// GIF
+//
+
+IDR_ICON_GIF            GIF                     "Images\\EGAR ONE.gif"
+IDR_IVRM_LOGO_GIF       GIF                     "Images\\EGAR IVRM.gif"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LONGTITLE           "IVRisk Management"
+    IDS_TITLE               "IVRm"
+    IDS_DESCRIPTION         "Risk Management system. Market Maker Edition"
+    IDS_COPYRIGHT           "Copyright © 2001-2006, EGAR Technology Inc."
+    IDS_BO_TITLE            "IVRmBO"
+    IDS_BO_LONGTITLE        "IV Risk Management BO"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_ADV_DEFAULT         "Please visit us on www.ivolatility.com"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

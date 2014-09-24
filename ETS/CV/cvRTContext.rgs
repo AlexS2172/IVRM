@@ -1,0 +1,27 @@
+HKCR
+{
+	CV.cvRTContext.1 = s 'cvRTContext Class'
+	{
+		CLSID = s '{9AFC738C-04A4-497B-9C19-2897F3387CDC}'
+	}
+	CV.cvRTContext = s 'cvRTContext Class'
+	{
+		CLSID = s '{9AFC738C-04A4-497B-9C19-2897F3387CDC}'
+		CurVer = s 'CV.cvRTContext.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9AFC738C-04A4-497B-9C19-2897F3387CDC} = s 'cvRTContext Class'
+		{
+			ProgID = s 'CV.cvRTContext.1'
+			VersionIndependentProgID = s 'CV.cvRTContext'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{DACC06D8-9039-498F-A5BB-9E7462205C74}'
+		}
+	}
+}

@@ -1,0 +1,247 @@
+// EtsMmHedge.idl : IDL source for EtsMmHedge
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EtsMmHedge.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+#include "ComponentsCommon.idl"
+
+[
+	uuid(89306CD2-E7F4-4AB7-9AD2-14084B8CECB3),
+	version(1.0),
+	helpstring("EtsMmHedge 1.0 Type Library")
+]
+library EtsMmHedgeLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("EtsGeneral.tlb");
+
+	[
+		uuid(95B1B154-A0B3-4d09-866D-46A9809C4F81),
+		helpstring("ETS MM Hedge Type"),
+		v1_enum
+	]
+	typedef enum EtsHedgeTypeEnum
+	{
+		[helpstring("enEtsHedgeTypeDelta")]	enEtsHedgeTypeDelta = 0x00,
+		[helpstring("enEtsHedgeTypeVega")]	enEtsHedgeTypeVega	= 0x01
+	} EtsHedgeTypeEnum;
+	
+	[
+	    object,
+	    uuid(CD3AF73D-027B-48F5-A007-23F1D36E5BF1),
+	    dual,
+	    nonextensible,
+	    helpstring("IMmHsCorrelationColl Interface"),
+	    pointer_default(unique)
+	]
+    interface IMmHsCorrelationColl : IDispatch
+	{
+		[propget, id(DISPID_NEWENUM), hidden, helpstring("_NewEnum")]
+		HRESULT _NewEnum([out,retval] IUnknown** ppUnk);
+
+		[propget, id(DISPID_VALUE), defaultcollelem, helpstring("Item")]
+		HRESULT Item([in] LONG Id1, [in] LONG Id2, [out, retval] DOUBLE* pVal);
+
+		[id(2), helpstring("Add")]
+		HRESULT Add([in] LONG Id1, [in] LONG Id2, [in, defaultvalue(0)] DOUBLE Value );
+
+		[id(4), helpstring("Remove")]
+		HRESULT Remove([in] LONG Id1, [in] LONG Id2);
+
+		[id(5), helpstring("Clear")]
+		HRESULT Clear(void);
+
+		[propget, id(6), helpstring("Count")]
+		HRESULT Count([out, retval] LONG* pVal);
+	};
+
+	[
+		object,
+		uuid(CA13F406-B847-44A2-A7E6-91319C3AA594),
+		dual,
+		nonextensible,
+		helpstring("IMmHsOptAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmHsOptAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,		DOUBLE,			Delta)
+		ETSGENERAL_PROP_DEF(2,		VARIANT_BOOL,	Enabled)
+		ETSGENERAL_PROP_DEF(3,		DATE,			Expiry)
+		ETSGENERAL_PROP_DEF(4,		LONG,			ID)		
+		ETSGENERAL_PROP_DEF(5,		LONG,			LotSize)
+		ETSGENERAL_PROP_DEF(6,		enum EtsOptionTypeEnum,		OptType)
+		ETSGENERAL_PROP_DEF(7,		DOUBLE,			PriceAsk)
+		ETSGENERAL_PROP_DEF(8,		DOUBLE,			PriceBid)
+		ETSGENERAL_PROP_DEF(9,		DOUBLE,			PriceLast)
+		ETSGENERAL_PROP_DEF(10,		LONG,			Qty)
+		ETSGENERAL_PROP_DEF(11,		DOUBLE,			Rate)
+		ETSGENERAL_PROP_DEF(12,		LONG,			UndID)
+		ETSGENERAL_PROP_DEF(13,		DOUBLE,			Strike)
+		ETSGENERAL_PROP_DEF(14,		BSTR,			Symbol)
+		ETSGENERAL_PROP_DEF(15,		DOUBLE,			Vega)
+		ETSGENERAL_PROP_DEF(16,		DOUBLE,			VegaWeight)
+		ETSGENERAL_PROP_DEF(17,		DOUBLE,			Vola)
+		ETSGENERAL_PROP_DEF(19,		DOUBLE,			HTBRate)
+		ETSGENERAL_PROP_DEF(20,		DATE,			ExpiryOV)
+		ETSGENERAL_PROP_DEF(21,		DATE,			TradingClose)
+		ETSGENERAL_PROP_DEF(22,		LONG,			OptionRootID)
+
+		[id(18), helpstring("method ClearValues")]	HRESULT ClearValues();
+	};
+
+	[
+		object,
+		uuid(4630D900-5407-4185-BAB6-CE969DEE157D),
+		dual,
+		nonextensible,
+		helpstring("IMmHsOptColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmHsOptColl : IDispatch
+	{
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IMmHsOptAtom*)
+	};
+
+	[
+		object,
+		uuid(A38B5D66-AAAE-4608-B97A-3F854EC6E08F),
+		dual,
+		nonextensible,
+		helpstring("IMmHsUndAtom Interface"),
+		pointer_default(unique)
+	]
+	interface IMmHsUndAtom : IDispatch
+	{
+		ETSGENERAL_PROP_DEF(1,			DOUBLE,				Delta)
+		//ETSGENERAL_PROP_DEF(2,			DOUBLE,				DivAmt)
+		//ETSGENERAL_PROP_DEF(3,			DATE,				DivDate)
+		//ETSGENERAL_PROP_DEF(4,			LONG,				DivFreq)
+		ETSGENERAL_PROP_DEF(5,			VARIANT_BOOL,		Enabled)
+		ETSGENERAL_PROP_DEF(7,			DOUBLE,				HV)
+		ETSGENERAL_PROP_DEF(8,			LONG,				ID)
+		ETSGENERAL_PROP_DEF(9,			VARIANT_BOOL,	    IsAmerican)
+		ETSGENERAL_PROP_DEF(10,			DOUBLE,				IV)
+		ETSGENERAL_PROP_DEF(11,			LONG,				LotSize)
+		ETSGENERAL_PROPREADONLY_DEF(12,	 IMmHsOptColl*,	 Opt)
+		ETSGENERAL_PROP_DEF(13,			DOUBLE,				Pos)
+		ETSGENERAL_PROP_DEF(14,			DOUBLE,				PriceAsk)
+		ETSGENERAL_PROP_DEF(15,			DOUBLE,				PriceBid)
+		ETSGENERAL_PROP_DEF(16,			DOUBLE,				PriceLast)
+		ETSGENERAL_PROP_DEF(17,			LONG,				Qty)
+		ETSGENERAL_PROP_DEF(18,			BSTR,				Symbol)
+		ETSGENERAL_PROP_DEF(19,			enum EtsContractTypeEnum,	UndType)
+		ETSGENERAL_PROP_DEF(20,			DOUBLE,				Vega)
+	    ETSGENERAL_PROPREADONLY_DEF(21,	IVolaControl*,	VolaSrv)
+		ETSGENERAL_PROP_DEF(22,			DOUBLE,				VolOfVol)
+		ETSGENERAL_PROP_DEF(23,			DOUBLE,				Yield)
+		ETSGENERAL_PROP_DEF(24,			VARIANT_BOOL,		UseMidRates)
+		ETSGENERAL_PROPPUTREF_DEF(25,	IEtsPriceProfileAtom*,		UndPriceProfile)
+        ETSGENERAL_PROPPUTREF_DEF(26,	IEtsPriceProfileAtom*,		OptPriceProfile)
+		ETSGENERAL_PROPPUTREF_DEF(27,	IEtsIndexDivAtom*,					Dividend)
+
+
+		[id(40), helpstring("method ClearValues")] HRESULT ClearValues();
+		[id(41), helpstring("method CalcGreeks")] 
+		HRESULT CalcGreeks( [in] LONG nGreekMask, [in] enum EtsCalcModelTypeEnum enCalcModel, 
+							[in] VARIANT_BOOL vbVegaWeighted, [in] VARIANT_BOOL bUseTheoVolatility, 
+							[in] VARIANT_BOOL bUseTheoVolaNoBid, [in] VARIANT_BOOL bUseTheoVolaBadMarket,
+							[in] DOUBLE dUndPriceTolerance, [in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule,
+							[in] ICalculationParametrs* pParams);
+	};
+
+	[
+		object,
+		uuid(AEC3E57F-EC8C-4E91-A519-FC852FF3CCDE),
+		dual,
+		nonextensible,
+		helpstring("IMmHsUndColl Interface"),
+		pointer_default(unique)
+	]
+	interface IMmHsUndColl : IDispatch
+	{	
+		ETSGENERAL_COMMON_COLLECTION_DEF(LONG, IMmHsUndAtom*)
+	};
+
+	[
+	    object,
+	    uuid(AE9B867E-B0FC-40DD-8964-D1216294DB6E),
+	    dual,
+	    nonextensible,
+	    helpstring("IMmHsCalc Interface"),
+	    pointer_default(unique)
+	]
+    interface IMmHsCalc : IDispatch
+	{
+		ETSGENERAL_PROPREADONLY_DEF(1,	 IMmHsUndColl*,				Stocks)	    
+		ETSGENERAL_PROPREADONLY_DEF(2,	 IMmHsUndColl*,				Instruments)
+		ETSGENERAL_PROPREADONLY_DEF(3,	 IMmHsCorrelationColl*,		Correlations)
+        
+		[id(4), helpstring("method CalcYs")] 
+		HRESULT CalcYs( [in] enum EtsHedgeTypeEnum enHedgeType, 
+			[in] DOUBLE dUndPriceTolerance, 
+			[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule );
+		[id(5), helpstring("method CreateEqs")] HRESULT CreateEqs();
+		[id(6), helpstring("method DecomposeMatrix")] HRESULT DecomposeMatrix();
+		[id(7), helpstring("method SolveEqs")] 
+		HRESULT SolveEqs([in] enum EtsHedgeTypeEnum enHedgeType);
+		[id(8), helpstring("method CalcPositions")] 
+		HRESULT CalcPositions([in] DOUBLE dUndPriceTolerance, 
+			[in] enum EtsPriceRoundingRuleEnum enPriceRoundingRule);
+		[id(9), helpstring("method CalcGain")] 
+		HRESULT CalcGain([out, retval] DOUBLE* dblGain);
+	};
+
+	[
+		uuid(D106A8EB-08F3-4223-9FFA-1467BE851A75),
+		helpstring("MmHsCalc Class")
+	]
+	coclass MmHsCalc
+	{
+		[default] interface IMmHsCalc;
+	};
+	[
+		uuid(B1522B81-AB34-4DF3-BD5D-6C5B4A665D97),
+		helpstring("MmHsCorrelationColl Class")
+	]
+	coclass MmHsCorrelationColl
+	{
+		[default] interface IMmHsCorrelationColl;
+	};
+	[
+		uuid(1922261E-EBEB-4792-ADF6-85A6FB142622),
+		helpstring("MmHsUndColl Class")
+	]
+	coclass MmHsUndColl
+	{
+		[default] interface IMmHsUndColl;
+	};
+	[
+		uuid(D99491D0-DD6C-4757-9C46-CF214CB29E7D),
+		helpstring("MmHsOptColl Class")
+	]
+	coclass MmHsOptColl
+	{
+		[default] interface IMmHsOptColl;
+	};
+	[
+		uuid(A51B199E-CE7B-4763-B13F-1EB202D78091),
+		helpstring("MmHsOptAtom Class")
+	]
+	coclass MmHsOptAtom
+	{
+		[default] interface IMmHsOptAtom;
+	};
+	[
+		uuid(3CF86D26-F580-4A50-B543-72A82308F3AF),
+		helpstring("MmHsUndAtom Class")
+	]
+	coclass MmHsUndAtom
+	{
+		[default] interface IMmHsUndAtom;
+	};
+};

@@ -1,0 +1,126 @@
+// CV.idl : IDL source for CV
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (CV.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(DACC06D8-9039-498F-A5BB-9E7462205C74),
+	version(1.0),
+	helpstring("CV 1.0 Type Library")
+]
+library CVLib
+{
+	importlib("stdole2.tlb");
+
+[
+		uuid(08F57F31-AA3E-4a00-9921-FC76BC73FAAA)
+]
+typedef enum cvType{
+	cvNone,
+	cvNumeric,
+	cvBoolean,
+	cvString
+} cvType;
+
+
+[
+		uuid(8B070918-95BB-48ae-9EAD-99D037AA1DB4)
+]
+struct cvInfo{
+	BSTR		Name;
+	cvType	Type;
+	BSTR		Caption;
+	BSTR		Format;
+	LONG		ID;
+};
+
+[
+	object,
+	uuid(225DA231-B37D-43c7-947A-2F249EDF9CF5),
+	dual,
+	nonextensible,
+	helpstring("IcvDataProvider Interface"),
+	pointer_default(unique)
+]
+interface IcvDataProvider : IDispatch{
+	[id(1), helpstring("method GetData")] HRESULT GetData( [in] LONG lDataID, [out] VARIANT* Value );
+	[id(2), helpstring("method CallFunction")] HRESULT CallFunction([in] LONG lFunctionID, [in] SAFEARRAY(VARIANT)* arrParameters, [out] VARIANT *Value);
+	[id(3), helpstring("method Check")] 
+	HRESULT Check( 
+						[in] SAFEARRAY(struct cvInfo) *arrSysVars, 
+						[in] SAFEARRAY(struct cvInfo) *arrSysFuncs, 
+						[out, retval] LONG *pRetVal
+					); 
+//	[id(4), helpstring("method SetDataValue")] HRESULT SetDataValue([in]BSTR strDataName, [in] VARIANT Value );
+};
+
+[
+	object,
+	uuid(10FC8A48-7539-4C54-87C2-8F6174CE0165),
+	dual,
+	nonextensible,
+	helpstring("IcvRTContext Interface"),
+	pointer_default(unique)
+]
+interface IcvRTContext : IDispatch{
+	[id(1), helpstring("method InitContext")] HRESULT InitContext([in] LONG contextID);
+	[propget, id(2), helpstring("property ConnectionString")] HRESULT ConnectionString( [out, retval] BSTR* pVal);
+	[propput, id(2), helpstring("property ConnectionString")] HRESULT ConnectionString( [in] BSTR newVal);
+	[propget, id(15), helpstring("property Halted")] HRESULT Halted( [out, retval] VARIANT_BOOL* pVal );
+
+	[id(3), helpstring("method CreateCVPool")] HRESULT CreateCVPool([in] IcvDataProvider *pIcvDataProvider, [in] LONG lLevelID, [out, retval] LONG* lPoolID);
+	[id(4), helpstring("method GetRequiredDataProviderLevels")] HRESULT GetRequiredDataProviderLevels(LONG lLevelID, [out,retval] SAFEARRAY(LONG)* LevelsArray);
+	[id(5), helpstring("method BindAggregations")] HRESULT BindAggregations([in] LONG lPoolID, [in] LONG lAggregationPoolID);
+	[id(6), helpstring("method Recalculate")] HRESULT Recalculate(LONG lPoolID);
+	[id(7), helpstring("method GetCVInfo")] HRESULT GetCVInfo( [in] LONG lLevelID, [in] LONG lCVID, [out, retval] struct cvInfo* pInfo );
+	[id(8), helpstring("method GetCVIDs")] HRESULT GetCVIDs( [in] LONG lLevelID, [out,retval] SAFEARRAY(LONG)* arrayCVIDs);
+	[id(9), helpstring("method GetCVValue")] HRESULT GetCVValue( [in] LONG lPoolID, [in] LONG lCVID, [out, retval] VARIANT *pRetVal);
+	[id(10), helpstring("method RegisterPoolDataProvider")] HRESULT RegisterPoolDataProvider( [in] LONG lPoolID, [in] LONG lDataProviderLevelID, IcvDataProvider* pIcvDataProvider );
+	[id(11), helpstring( "method GetLevelIDByName") ] HRESULT GetLevelIDByName( [in] BSTR strLevelName, [out, retval] LONG *pID );
+	[id(12), helpstring( "method GetLevelSystemEnvironment") ] HRESULT GetSystemEnvironment( [in] LONG lLevelID, [out] SAFEARRAY( struct cvInfo ) * arrayVariables, [out] SAFEARRAY( struct cvInfo) *arrayFunctions );
+	[id(13), helpstring( "method RemoveCVPool")] HRESULT RemoveCVPool( [in] LONG lPoolID, [in] VARIANT_BOOL bClearAggOnly);
+	[id(14), helpstring( "method Halt")] HRESULT Halt();
+	[id(16), helpstring( "method Clear")] HRESULT Clear();
+
+	[id(17), helpstring("method SetRecalculateCvCount")]
+	HRESULT SetRecalculateCvCount([in] LONG Count);
+
+	
+};
+/*[
+	object,
+	uuid(4B5BD503-D884-48F2-B96A-C4EB2306A601),
+	dual,
+	nonextensible,
+	helpstring("IcvRTPool Interface"),
+	pointer_default(unique)
+]
+interface IcvRTPool : IDispatch{
+	//[id(1), helpstring("method RegisterDataProvider")] HRESULT RegisterDataProvider(LONG lLevelID, IcvDataProvider* pIcvDataProvider);
+	//[id(2), helpstring("method BindAggregations")] HRESULT BindAggregations(LONG lPoolID, LONG lAggregationsPool);
+};*/
+
+
+
+	[
+		uuid(9AFC738C-04A4-497B-9C19-2897F3387CDC),
+		helpstring("cvRTContext Class")
+	]
+	coclass cvRTContext
+	{
+		[default] interface IcvRTContext;
+	};
+	/*[
+		uuid(C721DE0C-C255-4938-858C-59A5926B5B92),
+		helpstring("cvRTPool Class")
+	]
+	coclass cvRTPool
+	{
+		[default] interface IcvRTPool;
+	};*/
+
+};

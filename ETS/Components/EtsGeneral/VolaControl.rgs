@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.VolaControl.1 = s 'VolaControl Class'
+	{
+		CLSID = s '{B1B9E070-7E0D-4311-9D15-4BA8640F57F8}'
+	}
+	EtsGeneral.VolaControl = s 'VolaControl Class'
+	{
+		CLSID = s '{B1B9E070-7E0D-4311-9D15-4BA8640F57F8}'
+		CurVer = s 'EtsGeneral.VolaControl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B1B9E070-7E0D-4311-9D15-4BA8640F57F8} = s 'VolaControl Class'
+		{
+			ProgID = s 'EtsGeneral.VolaControl.1'
+			VersionIndependentProgID = s 'EtsGeneral.VolaControl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{D78D97A8-D6E1-4026-A19B-48E2F23CB0C6}'
+		}
+	}
+}

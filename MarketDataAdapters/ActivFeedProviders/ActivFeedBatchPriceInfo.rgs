@@ -1,0 +1,27 @@
+HKCR
+{
+	ActivFeedProviders.ActivFeedBatchPric.1 = s 'ActivFeedBatchPriceInfo Class'
+	{
+		CLSID = s '{AA7DECDF-CA9B-4670-BB25-8583B099D71B}'
+	}
+	ActivFeedProviders.ActivFeedBatchPriceI = s 'ActivFeedBatchPriceInfo Class'
+	{
+		CLSID = s '{AA7DECDF-CA9B-4670-BB25-8583B099D71B}'
+		CurVer = s 'ActivFeedProviders.ActivFeedBatchPric.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {AA7DECDF-CA9B-4670-BB25-8583B099D71B} = s 'ActivFeedBatchPriceInfo Class'
+		{
+			ProgID = s 'ActivFeedProviders.ActivFeedBatchPric.1'
+			VersionIndependentProgID = s 'ActivFeedProviders.ActivFeedBatchPriceI'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{BEBDF61A-0EFD-468F-ACC0-9C5F5402293F}'
+		}
+	}
+}

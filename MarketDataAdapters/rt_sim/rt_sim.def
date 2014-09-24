@@ -1,0 +1,18 @@
+EXPORTS
+	rt_startup
+	rt_set_shutdown_callback
+	rt_shutdown
+	rt_request_fields
+	rt_request_fields_via_handle
+	rt_request_group    
+	rt_remove_fields
+	rt_add_fields
+	rt_remove_all_symbols
+	rt_get_field_int32
+	rt_get_field_real
+	rt_get_field_char
+	rt_get_field_type
+
+                        
+
+

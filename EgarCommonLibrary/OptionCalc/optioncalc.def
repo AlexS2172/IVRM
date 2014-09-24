@@ -1,0 +1,38 @@
+;LIBRARY      OptionCalc
+EXPORTS
+    CalcGreeksMM2 @1
+	CalcGreeksMM @2
+	CalcVolatilityMM2 @3
+	CalcVolatilityMM @4
+	CalcGreeks @5
+	CalcGreeksEx @6
+	CalcVolatility @7
+	GetBasketDividends @8
+	GetBasketDividendsCount @9
+	GetDividends2 @10
+	GetDividends @11
+	GetDividendsCount @12
+	InterpolateRates @13
+	IsCall @14
+	IsSymbolsPair @15
+	CalcForwardPrice @16
+	CalcVolatilityMM3 @17
+	InterpolateRates2 @18
+	CalcForwardPrice2 @19
+	CalcFutureOptionGreeks @20
+	CalcFutureOptionVolatility @21
+	NormalC @22
+	CalcFutureOptionGreeksCustDivs @23
+	CalcFutureOptionVolatilityCustDivs @24
+	CalcFutureOptionGreeks2 @25
+	CalcFutureOptionGreeksCustDivs2 @26
+	CalcFutureOptionGreeks3 @27
+	VarianceSwapGreeks @28
+	RealizedVariance @29	
+	ImpliedVariance @30
+	OleDateToUnixDate @31
+	TmToDATE @32
+	GetNYDateTimeAsDATE @33
+	TmToDateEx @34
+	GetCalculationParams @35
+	

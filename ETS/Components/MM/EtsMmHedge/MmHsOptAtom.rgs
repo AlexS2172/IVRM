@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmHedge.MmHsOptAtom.1 = s 'MmHsOptAtom Class'
+	{
+		CLSID = s '{A51B199E-CE7B-4763-B13F-1EB202D78091}'
+	}
+	EtsMmHedge.MmHsOptAtom = s 'MmHsOptAtom Class'
+	{
+		CLSID = s '{A51B199E-CE7B-4763-B13F-1EB202D78091}'
+		CurVer = s 'EtsMmHedge.MmHsOptAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A51B199E-CE7B-4763-B13F-1EB202D78091} = s 'MmHsOptAtom Class'
+		{
+			ProgID = s 'EtsMmHedge.MmHsOptAtom.1'
+			VersionIndependentProgID = s 'EtsMmHedge.MmHsOptAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{89306CD2-E7F4-4AB7-9AD2-14084B8CECB3}'
+		}
+	}
+}

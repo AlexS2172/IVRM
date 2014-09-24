@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[egtcpdriver.dsp]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgTcpDriver", KNDAAAAA
+
+[egtcpdriver.vcproj]
+SCC_Aux_Path = "\\dino\FTGroup\"
+SCC_Project_Name = "$/EgCommon/EgTcpDriver", KNDAAAAA

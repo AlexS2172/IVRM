@@ -1,0 +1,24 @@
+HKCR
+{
+	ISEProvider.ISEStdPriceInfo.1 = s 'ISEStdPriceInfo Class'
+	{
+		CLSID = s '{75E355C4-B71D-4891-8350-B281CF00D28A}'
+	}
+	ISEProvider.ISEStdPriceInfo = s 'ISEStdPriceInfo Class'
+	{
+		CLSID = s '{75E355C4-B71D-4891-8350-B281CF00D28A}'
+		CurVer = s 'ISEProvider.ISEStdPriceInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {75E355C4-B71D-4891-8350-B281CF00D28A} = s 'ISEStdPriceInfo Class'
+		{
+			ProgID = s 'ISEProvider.ISEStdPriceInfo.1'
+			VersionIndependentProgID = s 'ISEProvider.ISEStdPriceInfo'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{9848FACF-EB55-4687-8A44-B540CE806C6E}'
+			'TypeLib' = s '{DB12E66D-0F62-4783-855C-383886AA3D22}'
+		}
+	}
+}

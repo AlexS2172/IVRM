@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsMmGeneral.MmTntCounterPartyColl.1 = s 'MmTntCounterPartyColl Class'
+	{
+		CLSID = s '{53A44A8F-7D3B-4379-B141-D24771CFEC1C}'
+	}
+	EtsMmGeneral.MmTntCounterPartyColl = s 'MmTntCounterPartyColl Class'
+	{
+		CLSID = s '{53A44A8F-7D3B-4379-B141-D24771CFEC1C}'
+		CurVer = s 'EtsMmGeneral.MmTntCounterPartyColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {53A44A8F-7D3B-4379-B141-D24771CFEC1C} = s 'MmTntCounterPartyColl Class'
+		{
+			ProgID = s 'EtsMmGeneral.MmTntCounterPartyColl.1'
+			VersionIndependentProgID = s 'EtsMmGeneral.MmTntCounterPartyColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ECC5DD29-4F8D-4AD1-9E2F-C9B61683C08C}'
+		}
+	}
+}

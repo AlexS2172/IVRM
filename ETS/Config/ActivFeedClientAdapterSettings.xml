@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Settings>
+	<Sessions>
+		<Session name="Default">
+			<Field name="LogLevel" value="1" />
+			<Field name="BatchNotificationDelay" value="500" />
+			<Field name="SystemName" value="USData" />
+			<Field name="MarketOpenTime"           value="930" />
+			<Field name="fieldname" value="fieldvalue" />
+			<Field name="ActivServiceINIFilePath" value="C:\Activ\bin\ServiceLocation.ini"/>
+		</Session>
+		<Session name="ets_eod">
+			<Field name="Login"                  value="egartech6" />
+			<Field name="Password"               value="egar6" />
+			<Field name="LogLevel"             value="10" />
+			<Field name="BatchNotificationDelay" value="5000" />
+		</Session>
+		<Session name="Administrator">
+			<Field name="Login"                  value="et1019-user10" />
+			<Field name="Password"               value="et1019-u10" />
+			<Field name="LogLevel"             value="10" />
+			<Field name="BatchNotificationDelay" value="5000" />
+		</Session>
+	</Sessions>
+	<Exchanges>
+		<!-- NASDAQ -->
+		<Exchange type="Stock" name="" 	activ="Q" egar="S" />
+		<Exchange type="Option" name="" activ="Q" egar="S" />
+
+		<!-- NYSE -->
+		<Exchange type="Stock" name="" 	activ="N" egar="N" />
+		<Exchange type="Option" name="" activ="N" egar="N" />
+
+		<!-- AMEX -->
+		<Exchange type="Stock" name="" 	activ="A" egar="A" />
+		<Exchange type="Option" name="" activ="AO" egar="A" />
+
+		<!-- PHLX -->
+		<Exchange type="Stock" name="" 	activ="X" egar="X" />
+		<Exchange type="Option" name="" activ="XO" egar="X" />
+
+		<!-- PSE -->
+		<Exchange type="Stock" name="" 	activ="PA" egar="P" />
+		<Exchange type="Option" name="" activ="PO" egar="P" />
+
+		<!-- ISE -->
+		<Exchange type="Stock" name="" 	activ="Y" egar="K" />
+		<Exchange type="Option" name="" activ="Y" egar="K" />
+
+		<!-- GLOBEX -->
+		<Exchange type="Stock" name="" 	activ="CMG" egar="G"/>
+		<Exchange type="Option" name="" activ="CMG" egar="G" />
+
+		<!-- CME -->
+		<Exchange type="Stock" name="" 	activ="CM" egar="T" />
+		<Exchange type="Option" name="" activ="CM" egar="T" />
+
+		<!-- TSX -->
+		<Exchange type="Stock" name="" 	activ="TO" egar="W" region="CAD"/>
+		<Exchange type="Option" name="" activ="TO" egar="W" region="CAD"/>
+
+		<!-- TSV -->
+		<Exchange type="Stock" name="" 	activ="V" egar="Z" region="CAD"/>
+		<Exchange type="Option" name="" activ="V" egar="Z" region="CAD"/>
+
+		<!-- NBE -->
+		<Exchange type="Stock" name="" 	activ="NB" egar="F" />
+		<Exchange type="Option" name="" activ="NB" egar="F" />
+
+		<!-- BOX -->
+		<Exchange type="Stock" name="" 	activ="B" egar="B" />
+		<Exchange type="Option" name="" activ="BO" egar="B" />
+
+		<!-- CBOE -->
+		<Exchange type="Stock" name="" 	activ="CB" egar="H" />
+		<Exchange type="Option" name="" activ="W" egar="H" />
+
+		<Exchange type="Option" name="" activ="O" egar="_" />
+
+		<Exchange type="Stock" name="" 	activ="ActivExchangeCode" egar="EgarExchangeCode" />
+		<Exchange type="Option" name="" activ="ActivExchangeCode" egar="EgarExchangeCode" />
+		<Exchange type="Option" name="" activ="Active" egar="Egar" />
+	</Exchanges>
+</Settings>

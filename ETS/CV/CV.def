@@ -1,0 +1,9 @@
+; CV.def : Declares the module parameters.
+
+LIBRARY      "CV.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE

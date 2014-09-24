@@ -1,0 +1,27 @@
+HKCR
+{
+	EtsGeneral.MmTradeUpdateColl.1 = s 'MmTradeUpdateColl Class'
+	{
+		CLSID = s '{9182A64F-21D5-4C77-A015-7210326BB40E}'
+	}
+	EtsGeneral.MmTradeUpdateColl = s 'MmTradeUpdateColl Class'
+	{
+		CLSID = s '{9182A64F-21D5-4C77-A015-7210326BB40E}'
+		CurVer = s 'EtsGeneral.MmTradeUpdateColl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {9182A64F-21D5-4C77-A015-7210326BB40E} = s 'MmTradeUpdateColl Class'
+		{
+			ProgID = s 'EtsGeneral.MmTradeUpdateColl.1'
+			VersionIndependentProgID = s 'EtsGeneral.MmTradeUpdateColl'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{ECC5DD29-4F8D-4AD1-9E2F-C9B61683C08C}'
+		}
+	}
+}

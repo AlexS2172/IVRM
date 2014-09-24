@@ -1,0 +1,185 @@
+// ETSManager.idl : IDL source for ETSManager.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ETSManager.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		uuid(421C5A20-903C-4463-B27C-1C50F2533596),
+		helpstring("IVSettings Type"),
+		v1_enum
+	]
+	typedef enum IVSettingsType
+	{
+		[helpstring("VolServerName")]						 enVolServerName,
+		[helpstring("VolServerAppPath")]					 enVolServerAppPath,
+		[helpstring("VolServerPort")]						 enVolServerPort,
+		[helpstring("VolPassword")]						     enVolPassword,
+		[helpstring("VolLogin")]						     enVolLogin,
+		[helpstring("VolProtocol")]						     enVolProtocol,
+		[helpstring("ProxyName")]							 enProxyName,
+
+		[helpstring("ProxyPort")]							 enProxyPort,
+		[helpstring("ProxyLogin")]							 enProxyLogin,
+		[helpstring("ProxyPassword")]						 enProxyPassword,
+		[helpstring("ProxyAuthType")]						 enProxyAuthType,
+		[helpstring("UseProxy")]							 enUseProxy
+
+	} IVSettingsType;
+	
+	[
+		uuid(D1B4443B-98DF-409d-87BD-DE2B1A942F93),
+		helpstring("Proxy Authentification Type"),
+		v1_enum
+	]
+	typedef enum ProxyAuthentificationType
+	{
+		[helpstring("Disable")]							 enProxyAuthDisable = 0,
+		[helpstring("Enable")]							 enProxyAuthEnable  = 1
+
+	} ProxyAuthentificationType;
+
+	[
+		uuid(CF4B84FE-CD52-456f-AE40-5A2DA03ED3B1),
+		helpstring("Use Proxy Type"),
+		v1_enum
+	]
+	typedef enum UseProxyType
+	{
+		[helpstring("Disable Proxy")]					 enProxyDisable = 0,
+		[helpstring("UseCustom Proxy Settings")]		 enProxyCustom  = 1,
+		[helpstring("Use Default Proxy Settings")]		 enProxyDefault = 2,
+	} UseProxyType;
+
+	[
+		object,
+		uuid(93DCD54D-3E59-4D8B-B8A3-E20DE399A27B),
+		dual,
+		helpstring("ISettings Interface"),
+		pointer_default(unique)
+	]
+	interface ISettings : IDispatch
+	{
+		[propget, id(1), helpstring("property DatabaseConnection")] HRESULT DatabaseConnection([out, retval] BSTR *pVal);
+		[propput, id(1), helpstring("property DatabaseConnection")] HRESULT DatabaseConnection([in] BSTR newVal);
+		[propget, id(2), helpstring("property PriceProvider")] HRESULT PriceProvider([out, retval] long *pVal);
+		[propput, id(2), helpstring("property PriceProvider")] HRESULT PriceProvider([in] long newVal);
+		[propget, id(3), helpstring("property VolatilitySource")] HRESULT VolatilitySource([out, retval] long *pVal);
+		[propput, id(3), helpstring("property VolatilitySource")] HRESULT VolatilitySource([in] long newVal);
+	};
+
+	[
+		object,
+		uuid(408B08F1-1797-4e17-BEDF-67382D8A762C),
+		dual,
+		helpstring("ISettings Interface for ASP"),
+		pointer_default(unique)
+	]
+	interface ISettings2 : ISettings
+	{
+		[id(4), helpstring("method InitForProfile")] HRESULT InitForProfile([in] BSTR bsProfileName);
+		[id(5), helpstring("method UpdateForProfile")] HRESULT UpdateForProfile([in] BSTR bsProfileName);
+	};
+
+[
+	uuid(27AB6D2A-C72E-4BAE-86A8-15E7ADF1B163),
+	version(1.0),
+	helpstring("ETSManager 1.0 Type Library")
+]
+library ETSMANAGERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(988D62F9-40C8-4578-98E3-F2A5DD94631F),
+		helpstring("_ISettingsEvents Interface")
+	]
+	dispinterface _ISettingsEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method DatabaseConnectionChanged")] HRESULT DatabaseConnectionChanged([in] BSTR bsConnectionString);
+		[id(2), helpstring("method PriceProviderChanged")] HRESULT PriceProviderChanged([in] long lProviderType);
+		[id(3), helpstring("method VolatilitySourceChanged")] HRESULT VolatilitySourceChanged([in] long lVolatilitySourceType);
+	};
+	[
+		object,
+		uuid(38349BCA-43A4-4DC0-9090-A92BC464477D),
+		dual,
+		helpstring("IIVSettings Interface"),
+		pointer_default(unique)
+	]
+	interface IIVSettings : IDispatch
+	{
+		[propget, id(1), helpstring("property VolServerName")] HRESULT VolServerName([out, retval] BSTR *pVal);
+		[propput, id(1), helpstring("property VolServerName")] HRESULT VolServerName([in] BSTR newVal);
+		[propget, id(2), helpstring("property VolServerAppPath")] HRESULT VolServerAppPath([out, retval] BSTR *pVal);
+		[propput, id(2), helpstring("property VolServerAppPath")] HRESULT VolServerAppPath([in] BSTR newVal);
+		[propget, id(3), helpstring("property VolServerPort")] HRESULT VolServerPort([out, retval] long *pVal);
+		[propput, id(3), helpstring("property VolServerPort")] HRESULT VolServerPort([in] long newVal);
+		[propget, id(4), helpstring("property VolPassword")] HRESULT VolPassword([out, retval] BSTR *pVal);
+		[propput, id(4), helpstring("property VolPassword")] HRESULT VolPassword([in] BSTR newVal);
+		[propget, id(5), helpstring("property VolLogin")] HRESULT VolLogin([out, retval] BSTR *pVal);
+		[propput, id(5), helpstring("property VolLogin")] HRESULT VolLogin([in] BSTR newVal);
+		[propget, id(6), helpstring("property VolProtocol")] HRESULT VolProtocol([out, retval] short *pVal);
+		[propput, id(6), helpstring("property VolProtocol")] HRESULT VolProtocol([in] short newVal);
+		[propget, id(7), helpstring("property ProxyName")] HRESULT ProxyName([out, retval] BSTR *pVal);
+		[propput, id(7), helpstring("property ProxyName")] HRESULT ProxyName([in] BSTR newVal);
+		[propget, id(8), helpstring("property ProxyPort")] HRESULT ProxyPort([out, retval] long *pVal);
+		[propput, id(8), helpstring("property ProxyPort")] HRESULT ProxyPort([in] long newVal);
+		[propget, id(9), helpstring("property ProxyLogin")] HRESULT ProxyLogin([out, retval] BSTR *pVal);
+		[propput, id(9), helpstring("property ProxyLogin")] HRESULT ProxyLogin([in] BSTR newVal);
+		[propget, id(10), helpstring("property ProxyPassword")] HRESULT ProxyPassword([out, retval] BSTR *pVal);
+		[propput, id(10), helpstring("property ProxyPassword")] HRESULT ProxyPassword([in] BSTR newVal);
+		[propget, id(11), helpstring("property ProxyAuthType")] HRESULT ProxyAuthType([out, retval] ProxyAuthentificationType *pVal);
+		[propput, id(11), helpstring("property ProxyAuthType")] HRESULT ProxyAuthType([in] ProxyAuthentificationType newVal);
+		[propget, id(15), helpstring("property UseProxy")] HRESULT UseProxy([out, retval] UseProxyType *pVal);
+		[propput, id(15), helpstring("property UseProxy")] HRESULT UseProxy([in] UseProxyType newVal);
+	};
+
+	[
+		uuid(C213BE7D-AFAE-4F1C-8E9D-A7D248FA987B),
+		helpstring("Settings Class")
+	]
+	coclass Settings
+	{
+		[default] interface ISettings;
+		[default, source] dispinterface _ISettingsEvents;
+		interface ISettings2;
+		
+	};
+
+
+	[
+		uuid(D765243D-779B-4957-9100-ACF1B2ABB407),
+		helpstring("_IIVSettingsEvents Interface")
+	]
+	dispinterface _IIVSettingsEvents
+	{
+		properties:
+		methods:
+		[id(1), helpstring("method IVSettingsChanged")] HRESULT IVSettingsChanged(IVSettingsType type);
+	};
+	[
+		uuid(6153474C-B28C-42E2-B105-5D4AAAF86191),
+		helpstring("IVSettings Class")
+	]
+	coclass IVSettings
+	{
+		[default] interface IIVSettings;
+		[default, source] dispinterface _IIVSettingsEvents;
+	};
+	[
+		uuid(43948DEB-0A6F-4041-95CB-BA3A40C7D697),
+		helpstring("ServiceIVSettings Class")
+	]
+
+	coclass ServiceIVSettings
+	{
+		[default] interface IIVSettings;
+		[default, source] dispinterface _IIVSettingsEvents;
+	};
+};

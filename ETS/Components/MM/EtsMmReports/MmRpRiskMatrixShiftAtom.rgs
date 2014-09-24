@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpRiskMatrixShiftAtom.1 = s 'MmRpRiskMatrixShiftAtom Class'
+	{
+		CLSID = s '{69A6912C-8B4A-4289-8F54-57A015CC54BB}'
+	}
+	EtsMmReports.MmRpRiskMatrixShiftAtom = s 'MmRpRiskMatrixShiftAtom Class'
+	{
+		CLSID = s '{69A6912C-8B4A-4289-8F54-57A015CC54BB}'
+		CurVer = s 'EtsMmReports.MmRpRiskMatrixShiftAtom.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {69A6912C-8B4A-4289-8F54-57A015CC54BB} = s 'MmRpRiskMatrixShiftAtom Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpRiskMatrixShiftAtom.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpRiskMatrixShiftAtom'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

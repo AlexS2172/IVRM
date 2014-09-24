@@ -1,0 +1,26 @@
+HKCR
+{
+	EtsMmReports.MmRpPosWithEarlyExercise.1 = s 'MmRpPosWithEarlyExerciseOptAtom Class'
+	{
+		CLSID = s '{ECA3C985-B733-40B2-B813-44073820401F}'
+	}
+	EtsMmReports.MmRpPosWithEarlyExerciseOp = s 'MmRpPosWithEarlyExerciseOptAtom Class'
+	{
+		CLSID = s '{ECA3C985-B733-40B2-B813-44073820401F}'
+		CurVer = s 'EtsMmReports.MmRpPosWithEarlyExercise.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {ECA3C985-B733-40B2-B813-44073820401F} = s 'MmRpPosWithEarlyExerciseOptAtom Class'
+		{
+			ProgID = s 'EtsMmReports.MmRpPosWithEarlyExercise.1'
+			VersionIndependentProgID = s 'EtsMmReports.MmRpPosWithEarlyExerciseOp'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{81864EB2-4B7B-4BF6-A4D2-45ECDFF27E7E}'
+		}
+	}
+}

@@ -1,0 +1,10 @@
+#		Field			Format				Notes
+--		--------------------	-------------------------	-----------------------------------------------------------------------------------------------
+1		Underlying Symbol	string (up to 20 symbols)	Required. Stock/Index symbol.
+2		Expiration Date		MM/DD/YYYY			Required.
+3		Strike			##.#				Required.
+4		Volatility		##.#				Required. In percents.
+
+Samples:
+MSFT,04/20/2002,25,17.29
+AOL,01/20/2007,35,16.31

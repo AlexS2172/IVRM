@@ -1,0 +1,1088 @@
+if exists (select * from dbo.sysobjects where id = object_id(N'[VolaSurfaceGroup]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [VolaSurfaceGroup]
+GO
+CREATE TABLE [VolaSurfaceGroup] (
+	[ID] [int] IDENTITY (1, 1) NOT NULL,
+	[BI_ID] [int] NOT NULL,
+	[OptionRootID] [int] ,
+	[VSD_ID] [int] NOT NULL,
+	[ActionDate] [datetime] NOT NULL DEFAULT (getdate()),
+	CONSTRAINT [PK_VolaSurfaceGroup] PRIMARY KEY  CLUSTERED 
+	(
+		[ID]
+	) WITH  FILLFACTOR = 60  ON [PRIMARY] ,
+) ON [PRIMARY]
+GO
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_SubSurface_Save]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_SubSurface_Save]
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+create     proc dbo.usp_SubSurface_Save
+    @iVolaSurfaceGroupID int = null output,
+    @iBaseInstrumentID int = null,
+    @iRootID int = null,
+    @iVolaSurfaceID int = null, 
+    @iContractTypeID int  = null
+as
+   
+	------------------------------------------------
+	set nocount on
+	------------------------------------------------
+	declare @error int		set @error = 0
+   	
+
+	declare @iVSGID int
+	set @iVSGID = null
+
+
+	if (isnull(@iVolaSurfaceGroupID, -1) > 0)
+	begin
+
+		update 	VolaSurfaceGroup
+		set	vsd_id = @iVolaSurfaceID
+		where 	[ID] = @iVolaSurfaceGroupID
+		
+	end
+	else
+	begin
+
+		if (isnull(@iBaseInstrumentID, -1) > 0 and isnull(@iRootID, -1) > 0)
+		begin
+			select	@iVSGID = [ID]
+			from	VolaSurfaceGroup
+			where 	bi_id = @iBaseInstrumentID and optionRootId = @iRootID
+
+			if (isnull(@iVSGID, -1) > 0)
+			begin
+				update	VolaSurfaceGroup
+				set	vsd_id = @iVolaSurfaceID
+				where [ID] = @iVSGID
+			end
+			else
+			begin
+
+				Begin Transaction		
+
+		
+				if @error <> 0 begin
+					if @@TranCount > 1 Rollback Transaction goto finish
+				end
+			
+				insert into VolaSurfaceGroup (bi_id, OptionRootID, vsd_id)
+				values (@iBaseInstrumentID, @iRootID, @iVolaSurfaceID)
+
+				if @@error <> 0 begin 
+					set @error = -2 
+					if @@TranCount > 1 Rollback Transaction goto finish 
+				end
+
+				Commit Transaction
+			end
+			set @error = 0
+		end
+				
+	end
+                
+finish:
+	return @error
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+-------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_SubSurface_Get]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_SubSurface_Get]
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+create      proc dbo.usp_SubSurface_Get 
+    @iVolaSurfaceGroupID int = null,
+    @iBaseInstrumentID int = null,
+    @iRootID int = null, 
+    @iContractTypeID int  = null,
+    @vcSymbolName varchar(20) = null
+as
+   
+	------------------------------------------------
+	set nocount on
+	------------------------------------------------
+	declare @error int		set @error = 0
+   	
+	if ( isnull(@iVolaSurfaceGroupID, -1) > 0 )
+	begin
+		select 
+			vsg.[id] as iGroupID,
+			vsg.bi_id as iBaseAsset,
+			vsg.OptionRootID as iRootId,
+			vsd.SurfaceName as vcSurfaceName,
+			vsg.vsd_id as iSurfaceID
+		from	VolaSurfaceGroup vsg
+		inner join VolaSurfaceData vsd on vsd.VolaSurfaceDataID = vsg.vsd_id
+		where 	vsg.[id] = @iVolaSurfaceGroupID
+	end
+	else
+	begin
+		if ( isnull(@iBaseInstrumentID, -1) > 0 and isnull(@iRootID, -1) > 0 )
+		begin
+			select 
+				vsg.[id] as iGroupID,
+				vsg.bi_id as iBaseAsset,
+				vsg.OptionRootID as iRootId,
+				vsd.SurfaceName as vcSurfaceName,
+				vsg.vsd_id as iSurfaceID
+			from	VolaSurfaceGroup vsg
+			inner join VolaSurfaceData vsd on vsd.VolaSurfaceDataID = vsg.vsd_id
+			where 	vsg.[bi_id] = @iBaseInstrumentID and vsg.[OptionRootID] = @iRootID
+		end
+		else
+		begin
+			if ( isnull(@iBaseInstrumentID, -1) > 0 )
+			begin
+				select 
+					vsg.[id] as iGroupID,
+					vsg.bi_id as iBaseAsset,
+					vsg.OptionRootID as iRootId,
+					vsd.SurfaceName as vcSurfaceName,
+					vsg.vsd_id as iSurfaceID
+				from	VolaSurfaceGroup vsg
+				inner join VolaSurfaceData vsd on vsd.VolaSurfaceDataID = vsg.vsd_id
+				where 	vsg.[bi_id] = @iBaseInstrumentID
+			end
+			else
+			begin
+				if (isnull(@vcSymbolName, '*NO*') = '*NO*')
+				begin
+					select 
+						vsg.[id] as iGroupID,
+						vsg.bi_id as iBaseAsset,
+						vsg.OptionRootID as iRootId,
+						vsd.SurfaceName as vcSurfaceName,
+						vsg.vsd_id as iSurfaceID
+					from	VolaSurfaceGroup vsg
+					inner join VolaSurfaceData vsd on vsd.VolaSurfaceDataID = vsg.vsd_id
+				end
+				else
+				begin
+					declare @iContractID int
+					set @iContractID = NULL
+
+					select @iContractID = ContractID
+					from ContractView
+					where Symbol = rtrim(ltrim(@vcSymbolName)) and ContractTypeID in (1, 2)
+					
+					if ( isnull(@iContractID, -1) > 0)
+					begin
+						select 
+							vsg.[id] as iGroupID,
+							vsg.bi_id as iBaseAsset,
+							vsg.OptionRootID as iRootId,
+							vsd.SurfaceName as vcSurfaceName,
+							vsg.vsd_id as iSurfaceID,
+							orv.Symbol as vcRootSymbol	
+						from	VolaSurfaceGroup vsg
+						inner join VolaSurfaceData vsd on vsd.VolaSurfaceDataID = vsg.vsd_id
+						inner join OptionRootView orv on orv.OptionRootID = vsg.OptionRootID and orv.UnderlyingID = vsg.bi_id
+						where 	vsg.[bi_id] = @iContractID	
+					end
+				end
+			end
+		end
+	end
+                
+finish:
+	return @error
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+-------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_SubSurface_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_SubSurface_Del]
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+create     proc dbo.usp_SubSurface_Del
+    @iVolaSurfaceGroupID int = null,
+    @iBaseInstrumentID int = null,
+    @iRootID int = null, 
+    @iContractTypeID int  = null
+as
+   
+	------------------------------------------------
+	set nocount on
+	------------------------------------------------
+	declare @error int		set @error = 0
+   	
+	if ( isnull(@iVolaSurfaceGroupID, -1) > 0 )
+	begin
+		delete from VolaSurfaceGroup
+		where [ID] = @iVolaSurfaceGroupID
+	end
+	else
+	begin
+		if ( isnull(@iBaseInstrumentID, -1) > 0 and isnull(@iRootID, -1) > 0 )
+		begin
+
+			delete	from	VolaSurfaceGroup
+			where 	[bi_id] = @iBaseInstrumentID and [OptionRootID] = @iRootID
+		end
+		else
+		begin
+			if ( isnull(@iBaseInstrumentID, -1) > 0 )
+			begin
+				delete	from	VolaSurfaceGroup
+				where 	[bi_id] = @iBaseInstrumentID
+			end
+		end
+	end
+                
+finish:
+	return @error
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_SubSurfaceList_Get]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_SubSurfaceList_Get]
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+create     proc dbo.usp_SubSurfaceList_Get
+    @iBaseInstrumentID int = null
+as
+   
+	------------------------------------------------
+	set nocount on
+	------------------------------------------------
+	declare @error int		set @error = 0
+   	
+	
+	select 
+		vsd.ContractID as iBaseAsset,
+		vsd.SurfaceName as vcSurfaceName,
+		vsd.[VolaSurfaceDataID] as iSurfaceID
+	from	VolaSurfaceData vsd
+	where 	vsd.IsDefaultSurface = 0 and @iBaseInstrumentID = vsd.ContractID
+	
+	                
+finish:
+	return @error
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[IVSubSurfaceRawVola]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [IVSubSurfaceRawVola]
+GO
+
+CREATE TABLE [IVSubSurfaceRawVola] (
+	[BI_ID] [int] NOT NULL,
+	[OptionRootID] [int] ,
+	[expiration_date] [datetime] NOT NULL,
+	[expiration_ov] [datetime] NOT NULL,
+	[strike] [float] NOT NULL,
+	[volatility] [float] NOT NULL
+) ON [PRIMARY]
+GO
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_AspEod_SynthteticSubSurface_Load]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_AspEod_SynthteticSubSurface_Load]
+GO
+
+create    proc usp_AspEod_SynthteticSubSurface_Load
+as
+SET NOCOUNT ON
+
+BEGIN TRANSACTION
+
+	-------------------------------------------------------------------------------------------------------
+	-- delete wrong Surafces without BaseAsset --
+	delete from VolaSurfaceGroup
+	where BI_ID not in (select ContractID from ContractView where ContractTypeID in (1, 2))
+	-------------------------------------------------------------------------------------------------------
+	-- delete wrong Surfaces without RootID
+	delete from VolaSurfaceGroup
+	where OptionRootID not in (	select 	OptionRootID 
+					from 	OptionRootView 
+					where 	UnderlyingID = BI_ID)
+
+	-------------------------------------------------------------------------------------------------------
+	-- delete points without surface in volasurfacegroup --
+	delete from CustomStrikeSkewPoint 
+	where customStrikeSkewPointID in 
+	(	
+		select 	customStrikeSkewPointID 
+		from 	CustomStrikeSkewPoint  cssp
+		inner 	join VolaSurfaceData vsd on 
+							cssp.VolaSurfaceDataID = vsd.VolaSurfaceDataID and 
+							vsd.IsDefaultSurface = 0 and 
+							vsd.VolaSurfaceDataID not in (select distinct vsd_id from VolaSurfaceGroup)
+	)
+	--------------------------------------------------------------------------------------------------------
+	-- delete Custom Surface without Group --
+	delete from VolaSurfaceData
+	where VolaSurfaceDataID not in ( select distinct vsd_id from VolaSurfaceGroup )
+					and IsDefaultSurface = 0
+
+	--------------------------------------------------------------------------------------------------------
+
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Delete Obsolete skew points failed', 16, 1)
+		return (-2)
+	end
+	--------------------------------------------------------------------------------------------------------
+	-- Update existing -------------------------------------------------------------------------------------
+	--------------------------------------------------------------------------------------------------------
+	
+	update CustomStrikeSkewPoint
+	set
+		Volatility = ivss.volatility * 100.0,
+	 	ActionDate = GetDate(),
+ 		ExpiryOV = ivss.expiration_ov
+	from  CustomStrikeSkewPoint cssp, IVSubSurfaceRawVola ivss
+	inner join VolaSurfaceGroup vsg on 	vsg.OptionRootID = ivss.OptionRootID and 
+						vsg.bi_id = ivss.bi_id
+	where 				abs(cssp.Strike - ivss.Strike) < 0.0005 and 
+					datediff(d, cssp.ExpiryDate ,ivss.expiration_date) = 0 and
+					cssp.VolaSurfaceDataID = vsg.vsd_id
+		  
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Update existing skew points failed', 16, 1)
+		return (-3)
+	end
+
+	-------------------------------------------------------------------------------------------------------
+	-- Insert new IV points from IV database --------------------------------------------------------------
+	-------------------------------------------------------------------------------------------------------
+
+	insert into CustomStrikeSkewPoint(volaSurfaceDataID, Strike, ExpiryDate, ExpiryOV, Volatility, IsBasePoint, Type )
+	select 
+		vsg.vsd_id, 
+		ivss.strike, 
+		ivss.expiration_date,
+		ivss.expiration_ov,
+		case
+			when ivss.volatility is null then 20
+			when ivss.volatility = 0 then 20
+			when ivss.volatility < 0 then 20
+			else ivss.volatility * 100
+		end,
+		-1,
+		2
+	from IVSubSurfaceRawVola ivss
+	inner join VolaSurfaceGroup vsg on vsg.OptionRootID = ivss.OptionRootID and vsg.bi_id = ivss.bi_id
+	where not exists (
+				select top 1 1 from 
+				CustomStrikeSkewPoint
+				where 	VolaSurfaceDataID = vsg.vsd_id and
+					abs(Strike - ivss.Strike) < 0.0005 and
+					datediff(d, ExpiryDate, ivss.expiration_date) = 0	
+			 )
+	
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Insert new skew points failed', 16, 1)
+		return (-4)
+	end
+
+	--------------------------------------------------------------------------------------------------------
+	-- delete old points( Note: the point is old if ActionDate not is GetDate()) ---------------------------
+	delete from CustomStrikeSkewPoint 
+	where CustomStrikeSkewPointID in (
+						
+						select
+							cssp.CustomStrikeSkewPointID
+						from CustomStrikeSkewPoint cssp
+						inner join VolaSurfaceGroup vsg on vsg.vsd_id = cssp.VolaSurfaceDataID
+						left join 	(select 
+									vsg.bi_id as BaseAssetID,
+									vsg.vsd_id as SurfaceID,
+									ivss.expiration_date as ExpiryDate,
+									ivss.Strike as Strike
+								from VolaSurfaceGroup vsg 
+								inner join IVSubSurfaceRawVola ivss on 	vsg.OptionRootID = ivss.OptionRootID and 
+													vsg.bi_id = ivss.bi_id) TP
+								on abs(TP.Strike - cssp.Strike) < 0.0005 and
+								   datediff(d, TP.ExpiryDate, cssp.ExpiryDate) = 0 and 
+								   vsg.vsd_id = TP.SurfaceID
+								where isnull(TP.BaseAssetID, -1) < 0
+					 )
+	
+
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Delete old points failed', 16, 1)
+		return (-5)
+	end
+	------------------------------------------------------------------------------------------------------------
+		
+COMMIT TRANSACTION
+
+GO
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+ALTER   procedure dbo.usp_Option_Save
+		@iOptionID int,
+		@vcSymbol varchar(20) = Null,
+		@iExchangeID int, 
+		@iUnderlyingContractID int,
+		@iIsCall tinyint = Null,
+		@fStrike float = Null,
+		@dtExpiry datetime = Null,
+		@dtExpiryOV datetime = null,
+		@dtTradeClose datetime = null,
+		@tiIsManualyEntered tinyint /* now this flag if not 0, means that this option is flex */
+as
+-- changed by VK - flex option support added
+	-------------------------------------------------
+	set nocount on
+	-------------------------------------------------
+	declare @error int		set @error = -1
+
+	   if exists (select contractID from ContractView where contractID = @iUnderlyingContractID and contractTypeID > 2)
+	   begin
+		 RAISERROR ('Error. Can''t insert or update Option values. The Underlying Contract is not stock or index!', 16, 1)
+		 RETURN (-1)
+	   end	 
+ 	  
+	   if len(@vcSymbol) < 3 and @iOptionID is null
+	   begin
+		 RAISERROR ('Error. Option symbol can''t be less three symbols!', 16, 1)
+		 RETURN (-1)
+	   end	 
+
+	   if exists (select optionRootID from OptionRootView
+		   where symbol = left(@vcSymbol,len(@vcSymbol)-2) and underlyingID != @iUnderlyingContractID)
+		begin
+		  RAISERROR ('Error. Can''t insert or update Option. Current Root assigned to different Underlying', 16, 1)
+		  RETURN (-1)
+		end  
+
+	--===================================================================			
+	-- check if option with same symbol exists
+	--===================================================================		
+	declare	@iOptionRootID int,
+		@ContractName varchar(255) --,
+		--@iExpiryID int,
+		--@iExpCalID INT
+
+	select @iOptionRootID = optionRootID from OptionRootView 
+		where symbol = left(@vcSymbol,len(@vcSymbol)-2) and 
+			underlyingID = @iUnderlyingContractID
+
+	declare @ERR_MSG varchar(8000),
+		@vcUnderlyingSymbol varchar(10)
+
+	select @vcUnderlyingSymbol = symbol from ContractView 
+		where contractID = @iUnderlyingContractID and contractTypeID <= 2
+
+	--set @iExpiryID = cast (@dtExpiry As int) --(year(@dtExpiry) - 2000) * 12 + month(@dtExpiry)
+	
+
+	execute usp_Option_Check @iOptionID = @iOptionID, 
+					@vcSymbol = @vcSymbol,	
+					@iOptionRootID = @iOptionRootID,
+					@dtExpiry = @dtExpiry,
+					--@iExpiryID = @iExpiryID,
+					@fStrike = @fStrike,
+					@iIsCall = @iIsCall,
+					@vcUnderlyingSymbol = @vcUnderlyingSymbol,
+					@ERR_MSG = @ERR_MSG output
+
+		/*	select @vcSymbol '@vcSymbol',@iOptionRootID '@iOptionRootID',@dtExpiry '@dtExpiry',@iExpiryID '@iExpiryID',
+				@fStrike '@fStrike',@iIsCall '@iIsCall',@vcUnderlyingSymbol '@vcUnderlyingSymbol',@ERR_MSG '@ERR_MSG'
+			select @iOptionID = 0 */
+
+	if isnull(@ERR_MSG,'')!= ''
+		begin
+			if @ERR_MSG != '*' Raiserror(@ERR_MSG,16,1)
+			Return(-1)
+		end
+	IF @tiIsManualyEntered = 0 
+   		set @ContractName = @vcUnderlyingSymbol + ' ' + datename(day, @dtExpiry) + ' ' + datename(month, @dtExpiry) + 
+					' ' + datename(year, @dtExpiry) + ' ' + CASE @iIsCall when 1 then 'Call' else 'Put' end +
+					' ' + cast(round(@fStrike, 2) as varchar)
+	ELSE
+		set @ContractName = @vcUnderlyingSymbol + ' ' + datename(day, @dtExpiry) + ' ' + datename(month, @dtExpiry) + 
+					' ' + datename(year, @dtExpiry) + ' ' + CASE @iIsCall when 1 then 'Call' else 'Put' end +
+					' ' + cast(round(@fStrike, 2) as varchar) + ' (OTC)'
+
+	Begin Transaction
+
+	   if  @iOptionRootID is null
+			begin
+				insert into OptionRoot (underlyingID,symbol,lotSize)
+					select @iUnderlyingContractID,left(@vcSymbol,len(@vcSymbol)-2),100
+				set @iOptionRootID = @@identity
+			end 
+
+	   if (@iOptionID is Null)	
+		 begin
+			insert into Contract (contractTypeID, symbol, contractName)
+			values (3, @vcSymbol, @ContractName)
+					
+			if @@error <> 0 begin set @error = 1 if @@TranCount = 1 Rollback Transaction goto finish end
+			set @iOptionID = @@identity			  
+			
+			insert into [Option] (optionID, optionRootID, isCall, strike, expiryDate, ExpiryOV, TradingClose)
+				values (@iOptionID, @iOptionRootID, @iIsCall, @fStrike, @dtExpiry, @dtExpiryOV, @dtTradeClose)
+			if @@error <> 0 begin set @error = 1 if @@TranCount = 1 Rollback Transaction goto finish end
+
+			/* Change ExpiryOV for all Options with the same Root */
+			update [Option]
+				set 	ExpiryOV = isnull(@dtExpiryOV, ExpiryOV),
+					TradingClose = isnull(@dtTradeClose, TradingClose)
+				where optionRootID = @iOptionRootID and expiryDate = @dtExpiry
+			if @@error <> 0 begin set @error = 3 if @@TranCount = 1 Rollback Transaction goto finish end
+
+			--========================================================================
+			-- make record with null exchange for this stock
+			--========================================================================
+			insert into ContractPrice(contractID,exchangeID) values(@iOptionID,null)
+			if @@error <> 0 begin set @error = 1 if @@TranCount = 1 Rollback Transaction goto finish end
+		 end
+	   else
+		 begin
+			update Contract set symbol = isNull(@vcSymbol,symbol), 
+				contractName = isNull(@ContractName,contractName)
+			where contractID = @iOptionID
+			if @@error <> 0 begin set @error = 2 if @@TranCount = 1 Rollback Transaction goto finish end
+			declare @iOldOptionID as int
+			select @iOldOptionID = optionRootID from [Option] 
+				where optionID = @iOptionID
+
+			update [Option]
+				set optionRootID = @iOptionRootID,
+					isCall = isNull(@iIsCall, isCall),
+					strike = isNull(@fStrike, strike),
+					expiryDate = isNull(@dtExpiry, expiryDate),
+					ExpiryOV = isnull(@dtExpiryOV, ExpiryOV),
+					TradingClose = isnull(@dtTradeClose, TradingClose)
+					--expiryID = isNull(@iExpiryID, expiryID)
+				where optionID = @iOptionID
+			if @@error <> 0 begin set @error = 2 if @@TranCount = 1 Rollback Transaction goto finish end
+
+			/* Change ExpiryOV for all Options with the same Root */
+			update [Option]
+				set ExpiryOV = isnull(@dtExpiryOV, ExpiryOV), 
+				TradingClose = isnull(@dtTradeClose, TradingClose)
+			where optionRootID = @iOptionRootID and expiryDate = @dtExpiry
+			if @@error <> 0 begin set @error = 3 if @@TranCount = 1 Rollback Transaction goto finish end
+
+			if @iOldOptionID is not null and @iOptionRootID is not null
+			begin
+			  update Trade set OptionRootId = @iOptionRootID where 	OptionRootId = @iOldOptionID
+	  		  if @@error <> 0 begin set @error = 2 if @@TranCount = 1 Rollback Transaction goto finish end
+			end
+		 end		
+
+		if @tiIsManualyEntered in (0,1) 
+		begin
+			update [Option] set isManualyEntered = @tiIsManualyEntered where optionID = @iOptionID
+			if @@error <> 0 begin set @error = 2 if @@TranCount = 1 Rollback Transaction goto finish end
+		end 
+
+
+
+	Commit Transaction
+
+    set @error = 0
+finish:
+if (@error != 0) return (@error) else return @iOptionID
+
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+ALTER     PROC dbo.usp_BoFutureOption_Save
+		@iFutureOptionID int out,
+		@iFutureID int, -- should be specified for new future option (ignored for update)
+		@vcFutureOptionSymbol varchar(20) = null,
+		@vcFutureOptionName varchar(255) = null, -- calculated if not specified (for new option)
+		@vcExportSymbol varchar(20) = null,
+		@tiIsCall tinyint = null,
+		@fStrike float = null,
+		--@iExpiryID int = null, -- calculated by @dtExpiryDate if not specified
+		@dtExpiryDate datetime = null, -- ignored if @iExpiryID is specified
+		@dtExpiryOV datetime = null,
+		@dtTradeClose datetime = null,
+		@tiIsRaiseError tinyint = 1 
+AS
+	-- create/update future
+
+	set nocount on
+	
+	declare @error int set @error = 0
+
+	if @iFutureOptionID is null -- new option
+	begin
+		-- check new future option future ID
+		if @iFutureID is null
+		begin
+			if @tiIsRaiseError = 1 raiserror('Future for new future option is not specified!', 16, 1)
+			set @error = -1
+			goto finish
+		end
+
+		declare @vcFutureSymbol varchar(20)
+		declare @iFutureContractTypeID int
+		--M declare @iFutureExpCalendarID int
+
+		-- find future name and contract type
+		select @iFutureContractTypeID = contractTypeID,	@vcFutureSymbol = symbol --, @iFutureExpCalendarID = expCalendarID
+		from ContractView where contractID = @iFutureID		
+
+		-- check future existence
+		if @iFutureContractTypeID is null
+		begin
+			if @tiIsRaiseError = 1 raiserror('Underlying contract for new future option is invalid!', 16, 1)
+			set @error = -2
+			goto finish
+		end
+
+		-- check future contract type
+		if @iFutureContractTypeID <> 4
+		begin
+			if @tiIsRaiseError = 1 raiserror('Underlying contract for new future option is not a future!', 16, 1)
+			set @error = -3
+			goto finish
+		end
+
+		-- check future option symbol
+		set @vcFutureOptionSymbol = isnull(@vcFutureOptionSymbol, '')
+		if len(ltrim(@vcFutureOptionSymbol)) = 0
+		begin
+			if @tiIsRaiseError = 1 raiserror('Symbol for new future option is not specified!', 16, 1)
+			set @error = -4
+			goto finish
+		end
+
+		-- check strike
+		if isnull(@fStrike, 0) <= 0
+		begin
+			if @tiIsRaiseError = 1 raiserror('Invalid future option strike specified!', 16, 1)
+			set @error = -5
+			goto finish
+		end
+
+		-- round strike upto 3 decimals
+		set @fStrike = round(@fStrike, 3)
+
+		-- calculate expiry ID by expiry date if expiry ID is not specified
+		--if @iExpiryID is null and @dtExpiryDate is not null
+		--	set @iExpiryID = cast (@dtExpiryDate as int ) --(year(@dtExpiryDate) - 2000) * 12 + month(@dtExpiryDate)
+
+		-- check expiry ID/Date
+		-- select @dtExpiryDate = expiryDate
+		-- from ExpiryInCalendarView
+		-- where expiryID = @iExpiryID and expCalendarID = @iFutureExpCalendarID
+		--if @iExpiryID is not null  
+		--	set @dtExpiryDate = cast (@iExpiryID as DateTime)
+		
+		if @dtExpiryDate is null
+		begin
+			if @tiIsRaiseError = 1 raiserror('Invalid future option expiry specified!', 16, 1)
+			set @error = -6
+			goto finish
+		end
+
+		-- correct call/put
+		set @tiIsCall = isnull(@tiIsCall, 0)
+		if @tiIsCall <> 0
+			set @tiIsCall = 1
+
+		-- check option duplacates by symbol
+		if exists(select 1 from ContractView where contractTypeID = 5 and symbol = @vcFutureOptionSymbol)
+		begin
+			if @tiIsRaiseError = 1 raiserror('Future option with symbol ''%s'' is already exists!', 16, 1, @vcFutureOptionSymbol)
+			set @error = -7
+			goto finish
+		end
+
+		-- check option duplacates by parameters
+		if exists (select 1 from FutureOption
+				where futureID = @iFutureID
+					and datediff(d, expiryDate, @dtExpiryDate) = 0 and isCall = @tiIsCall
+					and abs(strike - @fStrike) < 0.001) -- check equality upto 3 decimals
+		begin
+			if @tiIsRaiseError = 1 raiserror('Future option with the same parameters is already exists for specified future!', 16, 1)
+			set @error = -8
+			goto finish
+		end
+
+		-- make default future option contract name if not specified
+		if @vcFutureOptionName is null
+			set @vcFutureOptionName = @vcFutureSymbol +
+						' ' + datename(month, @dtExpiryDate) + 
+						' ' + datename(year, @dtExpiryDate) +
+						' ' + case @tiIsCall when 1 then 'Call' else 'Put' end +
+						' ' + cast(floor(@fStrike) as varchar)
+
+		begin tran
+
+		-- save new contract data
+		insert into Contract
+			(contractTypeID, symbol, contractName/*, expCalendarID*/, undPriceProfileID, optPriceProfileID)
+		values	(5, @vcFutureOptionSymbol, @vcFutureOptionName/*, null*/, null, null)
+		if @@error <> 0 begin set @error = -9 if @@trancount = 1 rollback tran goto finish end
+
+		set @iFutureOptionID = @@identity
+
+		-- save new future option data
+		insert into FutureOption
+			(futureOptionID, futureID, isCall, expiryDate, ExpiryOV, TradingClose, strike)
+		values	(@iFutureOptionID, @iFutureID, @tiIsCall, @dtExpiryDate, @dtExpiryOV, @dtTradeClose, @fStrike)
+		if @@error <> 0 begin set @error = -10 if @@trancount = 1 rollback tran goto finish end
+
+		/* Change ExpiryOV for all Options with the same Root */
+		update [FutureOption]
+			set ExpiryOV = isnull(@dtExpiryOV, ExpiryOV),
+			TradingClose = isnull(@dtTradeClose, TradingClose)
+		where futureOptionID = @iFutureOptionID and expiryDate = @dtExpiryDate
+		if @@error <> 0 begin set @error = -18 if @@trancount = 1 rollback tran goto finish end
+
+		-- save price record for default exchange
+		if not exists(select 1 from ContractPrice where exchangeID is null and contractID = @iFutureOptionID)
+		begin
+			insert into ContractPrice
+				(contractID, exchangeID)
+			values	(@iFutureOptionID, null)
+			if @@error <> 0 begin set @error = -11 if @@trancount = 1 rollback tran goto finish end
+		end
+
+		commit tran
+	end
+	else
+	begin
+		-- correct future option name (prevent updates to empty string)
+		if len(ltrim(@vcFutureOptionSymbol)) = 0
+			set @vcFutureOptionSymbol = null
+
+		-- check future option name
+		if @vcFutureOptionSymbol is not null
+			if exists(select 1 from ContractView where contractTypeID = 5
+						and contractID <> @iFutureOptionID and symbol = @vcFutureOptionSymbol)
+			begin
+				if @tiIsRaiseError = 1 raiserror('Future option with symbol ''%s'' is already exists!', 16, 1, @vcFutureOptionSymbol)
+				set @error = -12
+				goto finish
+			end
+
+		-- correct strike (prevent updates to zero)
+		if @fStrike = 0
+			set @fStrike = null
+
+		-- check strike
+		if @fStrike is not null
+		begin
+			if @fStrike <= 0
+			begin
+				if @tiIsRaiseError = 1 raiserror('Invalid future option strike specified!', 16, 1)
+				set @error = -13
+				goto finish
+			end
+
+			-- round strike upto 3 decimals
+			set @fStrike = round(@fStrike, 3)
+		end
+
+		-- correct call/put
+		if @tiIsCall is not null
+			if @tiIsCall <> 0
+				set @tiIsCall = 1
+
+		-- correct expiry ID (prevent updates to zero)
+		--if @iExpiryID = 0
+		--	set @iExpiryID = null
+
+		-- calculate expiry ID by expiry date if expiry ID is not specified
+		--if @iExpiryID is null and @dtExpiryDate is not null
+		--	set @iExpiryID = cast (@dtExpiryDate as int) --(year(@dtExpiryDate) - 2000) * 12 + month(@dtExpiryDate)
+
+
+		if @tiIsCall is not null or @fStrike is not null or @dtExpiryDate is not null
+		begin
+			declare @tiIsCallToCheck tinyint
+			declare @fStrikeToCheck float
+			declare @dtExpiryDateToCheck DateTime
+	
+			-- prepare parameters to check option duplacates
+			select @tiIsCallToCheck = isnull(@tiIsCall, isCall),
+				@fStrikeToCheck = isnull(@fStrike, strike),
+				@dtExpiryDateToCheck = isnull(@dtExpiryDate, expiryDate)
+			from FutureOption
+			where futureOptionID = @iFutureOptionID
+	
+			-- check option duplacates by parameters
+			if exists (select 1 from FutureOption
+					where futureOptionID <> @iFutureOptionID and futureID = @iFutureID
+						and datediff(d, expiryDate, @dtExpiryDateToCheck) = 0 and isCall = @tiIsCallToCheck
+						and abs(strike - @fStrikeToCheck) < 0.001) -- check equality upto 3 decimals
+			begin
+				if @tiIsRaiseError = 1 raiserror('Future option with the same parameters is already exists for specified future!', 16, 1)
+				set @error = -15
+				goto finish
+			end
+		end
+
+		begin tran
+
+		-- update contract data
+		update Contract
+		set symbol = isnull(@vcFutureOptionSymbol, symbol),
+			contractName = isnull(@vcFutureOptionName, contractName)
+		where contractID = @iFutureOptionID
+		if @@error <> 0 begin set @error = -16 if @@trancount = 1 rollback tran goto finish end
+
+		-- save future option data
+		update FutureOption
+		set isCall = isnull(@tiIsCall, isCall),
+			expiryDate = isnull(@dtExpiryDate, expiryDate),
+			ExpiryOV = isnull(@dtExpiryOV, ExpiryOV),
+			TradingClose = isnull(@dtTradeClose, TradingClose),
+			strike = isnull(@fStrike, strike)
+		where futureOptionID = @iFutureOptionID
+		if @@error <> 0 begin set @error = -17 if @@trancount = 1 rollback tran goto finish end
+
+		/* Change ExpiryOV for all Options with the same Root */
+		update [FutureOption]
+			set ExpiryOV = isnull(@dtExpiryOV, ExpiryOV),
+			TradingClose = isnull(@dtTradeClose, TradingClose)
+		where futureOptionID = @iFutureOptionID and expiryDate = @dtExpiryDate
+		if @@error <> 0 begin set @error = -18 if @@trancount = 1 rollback tran goto finish end
+		commit tran
+	end
+
+finish:
+if (@error <> 0) return (@error) else return @iFutureOptionID
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[usp_AspEod_SubSurfaceRawData_Init]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure [dbo].[usp_AspEod_SubSurfaceRawData_Init]
+GO
+GO
+create    proc usp_AspEod_SubSurfaceRawData_Init
+as
+SET NOCOUNT ON
+
+-- Clear IVSubSurfaceRawVola --
+truncate table IVSubSurfaceRawVola
+
+-------------------------------------------------------------------------------
+-- Init by data from IV --
+insert into IVSubSurfaceRawVola(BI_ID, OptionRootID, expiration_date, expiration_ov, strike, volatility)
+select 
+	--vm_s.Symbol,
+	RV.BIID,
+	RV.RootID,
+	ov.ExpiryDate,
+	ov.ExpiryOV,
+	ov.Strike,
+	avg(o_ns.iv_interpolated)
+from
+	IVData.IV.Dbo.vm_Stock vm_s
+	inner join IVData.IV.Dbo.option_ns o_ns on o_ns.Stock_id = vm_s.stock_id
+	inner join 	(
+				select
+					cv.Symbol as BaseSymbol,
+					ort.symbol as RootSymbol,
+					ort.OptionRootID as RootID,
+					cv.contractID as BIID
+				from
+					ContractView cv 
+					inner join OptionRootView ort on ort.UnderlyingID = cv.ContractID
+				where 
+					cv.contractTypeID in (1, 2)
+			)RV on vm_s.Symbol = RV.BaseSymbol and o_ns.root_symbol = RV.RootSymbol
+	inner join ContractView cv on cv.Symbol = vm_s.Symbol and cv.ContractTypeID in (1, 2)
+	inner join OptionRootView orv on orv.UnderlyingID = cv.ContractID and orv.Symbol = o_ns.root_symbol
+	inner join OptionView ov on ov.OptionRootID = orv.OptionRootID and 
+					datediff(d, ov.ExpiryDate, o_ns.expiration_date) = 0 and 
+					abs (ov.Strike - o_ns.Strike) < 0.0005
+	
+where 
+	o_ns.t_date in (select max(t_date) from IVData.IV.Dbo.option_ns)
+group by RV.BIID, RV.RootID, ov.ExpiryDate, ov.ExpiryOV, ov.Strike
+GO
+-------------------------------------------------------------------------------------------------------
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+ALTER    proc usp_AspEod_DefaultIVSurface_Load
+as
+SET NOCOUNT ON
+
+BEGIN TRANSACTION
+	insert into VolaSurfaceData(contractID, isDefaultSurface, baseUnderlinePrice)
+	select c.ContractID,1,0 from Contract c
+	where   contractTypeId in (1, 2, 6)
+		and (exists(select top 1 1 from optionRoot where c.ContractId = underlyingid) -- check if optionable
+			or
+			exists(select top 1 1 from futureRoot where c.ContractId = underlyingid) 
+		)
+		and not exists(select top 1 1 from VolaSurfaceData where c.ContractId = ContractId and isDefaultSurface = 1) -- check no default IV
+
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Insert Default Volasurfaces failed', 16, 1)
+		return (-1)
+	end
+
+-- Delete obsolete strike points for instruments which has IV surfaces in IV database
+	delete from CustomStrikeSkewPoint where  customStrikeSkewPointID in (
+		select cssp.customStrikeSkewPointID from ContractView cv
+		inner join VolaSurfaceData vsd on vsd.contractID = cv.contractid
+		inner join CustomStrikeSkewPoint cssp on cssp.volaSurfaceDataID=vsd.volaSurfaceDataID and datediff(d, cssp.actionDate, getDate())>0
+		where cv.contractTypeId in (1, 2, 6) and cssp.actionID < 3 and vsd.IsDefaultSurface = 1 
+			and exists( select top 1 1 from IVUnderlyingPointsRawData where iContractID = cv.ContractID)
+	)
+	
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Delete Obsolete skew points failed', 16, 1)
+		return (-2)
+	end
+
+-- Update existing
+	update CustomStrikeSkewPoint set
+		volatility = isnull(IV.fIV * 100, volatility),
+		ExpiryDate = IV.dtExpDate,
+		ExpiryOV = IV.dtExpDateOV
+--	select 	vsd.VolaSurfaceDataID , IV.fStrike, IV.iExpiryID, IV.fIV
+	from CustomStrikeSkewPoint cssp, ContractView c
+	inner join IVUnderlyingPointsRawData IV on c.ContractID = IV.iContractID
+	inner join VolaSurfaceData vsd on vsd.contractID = c.contractid
+	where vsd.VolaSurfaceDataID = cssp.volaSurfaceDataID
+		and abs(cssp.strike - IV.fStrike) < 0.009	
+		and abs(datediff(d,cssp.ExpiryDate , IV.dtExpDate)) <= 3
+		and vsd.IsDefaultSurface = 1 
+			  
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Update existing skew points failed', 16, 1)
+		return (-3)
+	end
+
+
+-- Insert new IV points from IV database
+	insert into CustomStrikeSkewPoint (
+			volaSurfaceDataID,
+			type,
+			strike,
+			volatility,
+			isBasePoint,
+			expiryDate,
+			expiryOV)
+	select vsd.VolaSurfaceDataID as volaSurfaceDataID,
+	       2                     as Type,
+               IV.fStrike            as Strike,
+	       /*IV.fIV                as */
+		volatility =
+		case
+			when IV.fIV is null then 20
+			when IV.fIV = 0 then 20
+			when IV.fIV < 0 then 20
+			else IV.fIV * 100
+		end,
+               	-1                    as isBasePoint,
+	      	IV.dtExpDate	     as expiryDate,
+	      	IV.dtExpDateOV	     as expiryOV
+	from IVUnderlyingPointsRawData IV
+	inner join ContractView c on c.ContractID = IV.iContractID
+	inner join VolaSurfaceData vsd on vsd.contractID = c.contractid
+	where 
+		not exists(select top 1 1 from CustomStrikeSkewPoint cssp 
+	                   where cssp.volaSurfaceDataID = vsd.volaSurfaceDataID 
+				   and cssp.actionID < 3 
+	                           and abs(datediff(d,cssp.ExpiryDate, IV.dtExpDate)) <= 3
+				   and abs(cssp.strike - IV.fStrike) < 0.009
+		   		   and vsd.IsDefaultSurface = 1 	
+			  )
+		and vsd.IsDefaultSurface = 1 
+	
+	--delete old points without expiryOV
+	delete
+	from 
+		CustomStrikeSkewPoint 
+	where 
+		isnull(expiryOV, -1) < 0
+	
+	if @@error <> 0 
+	begin	
+		rollback tran
+		RAISERROR ('Insert new skew points failed', 16, 1)
+		return (-4)
+	end
+		
+COMMIT TRANSACTION
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
