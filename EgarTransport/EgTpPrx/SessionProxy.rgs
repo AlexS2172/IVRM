@@ -1,0 +1,26 @@
+HKCR
+{
+	EgTpPrx.SessionProxy.1 = s 'SessionProxy Class'
+	{
+		CLSID = s '{5381E86C-E13E-4BB1-ADCA-389DD7E4C6F7}'
+	}
+	EgTpPrx.SessionProxy = s 'SessionProxy Class'
+	{
+		CLSID = s '{5381E86C-E13E-4BB1-ADCA-389DD7E4C6F7}'
+		CurVer = s 'EgTpPrx.SessionProxy.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {5381E86C-E13E-4BB1-ADCA-389DD7E4C6F7} = s 'SessionProxy Class'
+		{
+			ProgID = s 'EgTpPrx.SessionProxy.1'
+			VersionIndependentProgID = s 'EgTpPrx.SessionProxy'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{DAF5C380-32CA-49F8-BED3-36AE6E570F89}'
+		}
+	}
+}

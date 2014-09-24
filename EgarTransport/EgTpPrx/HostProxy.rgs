@@ -1,0 +1,25 @@
+HKCR
+{
+	EgTpPrx.HostProxy.1 = s 'HostProxy Class'
+	{
+		CLSID = s '{3E317841-5968-43AF-A662-098C53057E5C}'
+	}
+	EgTpPrx.HostProxy = s 'HostProxy Class'
+	{
+		CLSID = s '{3E317841-5968-43AF-A662-098C53057E5C}'
+		CurVer = s 'EgTpPrx.HostProxy.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3E317841-5968-43AF-A662-098C53057E5C} = s 'HostProxy Class'
+		{
+			ProgID = s 'EgTpPrx.HostProxy.1'
+			VersionIndependentProgID = s 'EgTpPrx.HostProxy'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{DAF5C380-32CA-49F8-BED3-36AE6E570F89}'
+		}
+	}
+}

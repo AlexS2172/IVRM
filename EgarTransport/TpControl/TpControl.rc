@@ -1,0 +1,392 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_TRANSPORT_SERVICE DIALOG  0, 0, 186, 66
+STYLE DS_SETFONT | WS_POPUP | WS_CAPTION
+CAPTION "Transport service"
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "",IDC_START_BUTTON,38,15,19,14,BS_ICON | BS_CENTER | 
+                    BS_VCENTER
+    PUSHBUTTON      "",IDC_STOP_BUTTON,38,32,19,14,BS_ICON | BS_CENTER | 
+                    BS_VCENTER
+    ICON            IDI_SERVICE_ONLINE,IDC_STATE_IMAGE,9,20,21,20
+    LTEXT           "Start Transport Service",IDC_START_STATIC,68,15,109,14,
+                    SS_CENTERIMAGE
+    LTEXT           "Stop Transport Service",IDC_STOP_STATIC,68,32,109,14,
+                    SS_CENTERIMAGE
+END
+
+IDD_TRACESETTINGS DIALOG  0, 0, 187, 84
+STYLE DS_SETFONT | WS_POPUP | WS_CAPTION
+CAPTION "Trace settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Trace Settings",IDC_STATIC,7,7,173,70
+    EDITTEXT        IDC_LOGDIR,12,29,163,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOGHISTORY,12,58,78,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOGLEVEL,97,58,78,14,ES_AUTOHSCROLL
+    LTEXT           "Logs directory :",IDC_STATIC,12,19,49,8
+    LTEXT           "Logs lifetime (days) :",IDC_STATIC,12,47,64,8
+    LTEXT           "Level filter (0 - 10):",IDC_STATIC,97,47,59,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_TRANSPORT_SERVICE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 59
+    END
+
+    IDD_TRACESETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 77
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Russian resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_HOST_SETTINGS DIALOG  0, 0, 163, 151
+STYLE DS_SETFONT | WS_POPUP | WS_CAPTION
+CAPTION "Host Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Router Server",IDC_STATIC,8,7,148,50
+    LTEXT           "Host Name :",IDC_STATIC,20,22,40,8
+    EDITTEXT        IDC_ROUTERHOST,62,18,86,14,ES_AUTOHSCROLL
+    LTEXT           "Port Number :",IDC_STATIC,16,37,44,8
+    EDITTEXT        IDC_ROUTERPORT,62,35,86,14,ES_AUTOHSCROLL
+    GROUPBOX        "Messaging Settings",IDC_STATIC,8,62,148,83
+    LTEXT           "Connection Lose Time :",IDC_STATIC,26,77,76,8
+    EDITTEXT        IDC_CONNLOSETM,103,74,45,14,ES_AUTOHSCROLL
+    LTEXT           "Connect Receive Timeout :",IDC_STATIC,14,94,88,8
+    EDITTEXT        IDC_CONNTIMEOUT,103,91,45,14,ES_AUTOHSCROLL
+    LTEXT           "Reconnect Delay :",IDC_STATIC,42,111,60,8
+    EDITTEXT        IDC_RECONNTM,103,108,45,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_TESTREQUESTTM,103,125,45,14,ES_AUTOHSCROLL
+    LTEXT           "Test Request Time :",IDC_STATIC,37,126,65,8
+END
+
+IDD_ROUTER_SETTINGS DIALOG  0, 0, 198, 102
+STYLE DS_SETFONT | WS_POPUP | WS_CAPTION
+CAPTION "Router Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Local Router Server Settings",IDC_STATIC,7,7,184,85
+    LTEXT           "Port Number :",IDC_STATIC,54,41,44,8
+    EDITTEXT        IDC_LOCROUTERPORT,101,36,83,14,ES_AUTOHSCROLL
+    LTEXT           "Check Hosts Interval :",IDC_STATIC,27,58,71,8
+    EDITTEXT        IDC_CHECKHOSTM,101,54,83,14,ES_AUTOHSCROLL
+    LTEXT           "Host Connection Timeout :",IDC_STATIC,13,75,85,8
+    EDITTEXT        IDC_CONNTIMEOUT,101,72,83,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_LOCROUTERADDR,101,20,83,50,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Local IP Address :",IDC_STATIC,40,24,58,8
+END
+
+IDD_HOST_STATISTIC DIALOG  0, 0, 190, 92
+STYLE DS_SETFONT | WS_POPUP | WS_CAPTION
+CAPTION "Host Statistics"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,7,176,75
+    LTEXT           "Start logon time :",IDC_STATIC,34,16,53,11
+    LTEXT           "",IDC_START_LOGON_TIME,93,16,87,11
+    LTEXT           "Sent messages # :",IDC_STATIC,28,29,59,11
+    LTEXT           "",IDC_SENT_MSG,93,29,87,11
+    LTEXT           "Confirmed messages # :",IDC_STATIC,11,42,76,11
+    LTEXT           "",IDC_CONF_MSG,93,42,87,11
+    LTEXT           "Received messages # :",IDC_STATIC,11,55,75,11
+    LTEXT           "",IDC_RECEIVE_MSG,93,55,87,11
+    LTEXT           "Unsent messages # :",IDC_STATIC,19,68,67,11
+    LTEXT           "",IDC_UNSENT_MSG,93,68,87,11
+END
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 213, 87
+STYLE DS_SETFONT | WS_POPUP | WS_CAPTION
+CAPTION "About Transport"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    ICON            IDI_LOGO,IDC_STATIC,7,7,21,20
+    LTEXT           "©2002 -2003 EGAR Technology Inc.",IDC_COPYRIGHT,46,58,
+                    113,9
+    LTEXT           "Transport control :",IDC_ABOUT_NAME,46,14,53,8
+    LTEXT           "",IDC_NAME,99,14,58,8
+    LTEXT           "Transport service :",IDC_ABOUT_NAME2,46,27,53,8
+    LTEXT           "",IDC_SERVICE_NAME,99,27,58,8
+    LTEXT           "",IDC_VERSION,168,14,38,8
+    LTEXT           "",IDC_VERSION2,168,27,38,8
+    LTEXT           "Transport proxy :",IDC_ABOUT_NAME3,46,40,53,8
+    LTEXT           "",IDC_PROXY_NAME,100,40,58,8
+    LTEXT           "",IDC_VERSION3,169,40,38,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_HOST_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 156
+        VERTGUIDE, 103
+        VERTGUIDE, 148
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 144
+    END
+
+    IDD_ROUTER_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 191
+        VERTGUIDE, 101
+        VERTGUIDE, 184
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 92
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 206
+        VERTGUIDE, 46
+        VERTGUIDE, 99
+        VERTGUIDE, 157
+        VERTGUIDE, 168
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 80
+        HORZGUIDE, 22
+        HORZGUIDE, 36
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""..\\\\tlb\\\\Transport.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,3,51,0
+ PRODUCTVERSION 1,3,51,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "EGAR Technology Inc."
+            VALUE "FileDescription", "Transport Control Manager"
+            VALUE "FileVersion", "1, 3,51, 0"
+            VALUE "InternalName", "Transport"
+            VALUE "LegalCopyright", "©2002-2003 EGAR Technology Inc."
+            VALUE "OriginalFilename", "TpControl.exe"
+            VALUE "ProductName", "TpControl"
+            VALUE "ProductVersion", "1, 3,51, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_TRAY_POPUP_MENU MENU 
+BEGIN
+    POPUP "TRAY_POPUP"
+    BEGIN
+        MENUITEM "Info",                        ID_SETTINGS
+        MENUITEM "Start Transport service",     ID_TP_START
+        MENUITEM "Stop Transport service",      ID_TP_STOP
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_TRANSPORT_EXIT
+    END
+END
+
+IDR_MAIN_WND MENU 
+BEGIN
+    MENUITEM "About ...",                   ID_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAIN_WND TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_BUTTON32770
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAIN_WND            BITMAP                  "res\\main_wnd.bmp"
+IDB_LOGO                BITMAP                  "res\\logo.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ONLINE              ICON                    "res\\Online.ico"
+IDI_LOGO                ICON                    "res\\logo.ico"
+IDI_START               ICON                    "res\\start.ico"
+IDI_STOP                ICON                    "res\\stop.ico"
+IDI_SERVICE_OFFLINE     ICON                    "res\\ServiceOffline.ico"
+IDI_SERVICE_ONLINE      ICON                    "res\\ServiceOnline.ico"
+IDI_DISABLED_STOP       ICON                    "res\\DisabledStop.ico"
+IDI_DISABLED_START      ICON                    "res\\DisabledStart.ico"
+IDI_OFFLINE_START       ICON                    "res\\OfflineStart.ico"
+IDI_OFFLINE_STOP        ICON                    "res\\OfflineStop.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "Transport control"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_SETTINGS             "Transport Info"
+    IDS_SETTINGS_NOTE       "Settings changes will take effect after restart of router and transport services.\nRestart Transport service now?"
+    IDS_ONLINE              "Transport online. Router : %s"
+    IDS_OFFLINE_START       "Transport offline. Router : %s"
+    IDS_DISABLED_STOP       "Transport service stopped"
+    IDS_SERVICENAME         "Egar Transport"
+    IDS_STARTSERVERROR      "Fail to start Transport Service!\n Error : %d"
+    IDS_STOPSERVERROR       "Fail to stop Transport Service!\n Error : %d"
+    IDS_DISABLED_START      "Transport service started"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_OFFLINE_STOP        "Transport service stopped."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "..\\tlb\\Transport.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

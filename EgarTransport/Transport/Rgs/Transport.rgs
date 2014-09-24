@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{3E3E8035-5318-47A7-8E6E-4DB1C16E21C2} = s 'EgTpSrv'
+		'EgTpSrv.exe'
+		{
+			val AppID = s {3E3E8035-5318-47A7-8E6E-4DB1C16E21C2}
+		}
+	}
+}

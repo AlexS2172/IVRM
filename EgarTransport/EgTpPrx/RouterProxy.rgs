@@ -1,0 +1,26 @@
+HKCR
+{
+	EgTpPrx.RouterProxy.1 = s 'RouterProxy Class'
+	{
+		CLSID = s '{0D801646-FA33-4AE3-9A4C-53210DEAFA21}'
+	}
+	EgTpPrx.RouterProxy = s 'RouterProxy Class'
+	{
+		CLSID = s '{0D801646-FA33-4AE3-9A4C-53210DEAFA21}'
+		CurVer = s 'EgTpPrx.RouterProxy.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {0D801646-FA33-4AE3-9A4C-53210DEAFA21} = s 'RouterProxy Class'
+		{
+			ProgID = s 'EgTpPrx.RouterProxy.1'
+			VersionIndependentProgID = s 'EgTpPrx.RouterProxy'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{DAF5C380-32CA-49F8-BED3-36AE6E570F89}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+HKCR
+{
+	EgTransportAdapter.EgTpRequesterProxy.1 = s 'EgTpRequesterProxy Class'
+	{
+		CLSID = s '{982901BB-4837-496C-B07C-7526097E3E1C}'
+	}
+	EgTransportAdapter.EgTpRequesterProxy = s 'EgTpRequesterProxy Class'
+	{
+		CLSID = s '{982901BB-4837-496C-B07C-7526097E3E1C}'
+		CurVer = s 'EgTransportAdapter.EgTpRequesterProxy.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {982901BB-4837-496C-B07C-7526097E3E1C} = s 'EgTpRequesterProxy Class'
+		{
+			ProgID = s 'EgTransportAdapter.EgTpRequesterProxy.1'
+			VersionIndependentProgID = s 'EgTransportAdapter.EgTpRequesterProxy'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{58F54560-56DA-4733-BE49-755ED2E2BEF7}'
+		}
+	}
+}

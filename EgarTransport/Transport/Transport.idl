@@ -1,0 +1,232 @@
+// Transport.idl : IDL source for Transport.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (Transport.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+#define TRANSPORT_PROP_DEF(_dispid, _type, _name)	\
+		[propget, id(_dispid##_name), helpstring(#_name)] HRESULT _name([out, retval] _type* pVal);	\
+		[propput, id(_dispid##_name), helpstring(#_name)] HRESULT _name([in] _type newVal);
+
+[
+	uuid(814797FA-CE13-44EC-A03C-840C36A980F6),
+	version(1.0),
+	helpstring("Transport 1.0 Type Library")
+]
+library TRANSPORTLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+    typedef	
+	[
+		uuid(B35A9DA8-6722-4a7e-973C-33969E4ADCE0),
+		v1_enum
+	]	
+    enum DISP_TRANSPORT_IDS
+    {
+	    DISPID_IHostFirst = 1,
+	    DISPID_IHostCreateSession	= DISPID_IHostFirst,
+	    DISPID_IHostLogon,
+	    DISPID_IHostLogout,
+	    DISPID_IHostStatus,
+	    DISPID_IHostStatistic,
+	    DISPID_IHostRouterName,
+	    DISPID_IHostLast = DISPID_IHostRouterName,
+
+	    DISPID_IRouterFirst = 1,
+	    DISPID_IRouterHostStatistic	= DISPID_IRouterFirst,
+	    DISPID_IRouterStart,
+	    DISPID_IRouterStop,
+	    DISPID_IRouterActiveHosts,
+	    DISPID_IRouterLast = DISPID_IRouterActiveHosts,
+
+	    DISPID_ISessionFirst = 1,
+	    DISPID_ISessionSubscribe	= DISPID_ISessionFirst,
+	    DISPID_ISessionUnsubscribe,
+		DISPID_ISessionSendMessage,
+		DISPID_ISessionIsLogoned,
+		DISPID_ISessionCheckSubjectStatus,
+	    DISPID_ISessionLast = DISPID_ISessionCheckSubjectStatus,
+
+	    DISPID_IHostStatisticDataFirst = 1,
+	    DISPID_IHostStatisticDataReceivedMessageNum	= DISPID_IHostStatisticDataFirst,
+	    DISPID_IHostStatisticDataSentMessageNum,
+	    DISPID_IHostStatisticDataConfirmedMessageNum,
+	    DISPID_IHostStatisticDataUnsentMessageNum,
+	    DISPID_IHostStatisticDataLogonTime,
+	    DISPID_IHostStatisticDataHostName,
+	    DISPID_IHostStatisticDataLast = DISPID_IHostStatisticDataHostName,
+
+	    DISPID_IHostEventsFirst = 1,
+	    DISPID_IHostEventsOnLogoned	= DISPID_IHostEventsFirst,
+	    DISPID_IHostEventsOnLogout,
+	    DISPID_IHostEventsOnDisabled,
+		DISPID_IHostEventsOnTransportStopped,
+	    DISPID_IHostEventsLast = DISPID_IHostEventsOnTransportStopped,
+
+	    DISPID_IRouterEventsFirst = 1,
+	    DISPID_IRouterEventsOnClientConnected	= DISPID_IRouterEventsFirst,
+	    DISPID_IRouterEventsOnClientDisconnected,
+		DISPID_IRouterEventsOnRouterStarted,
+		DISPID_IRouterEventsOnRouterStopped,
+		DISPID_IRouterEventsOnTransportStopped,
+	    DISPID_IRouterEventsLast = DISPID_IRouterEventsOnTransportStopped,
+
+	    DISPID_ISessionEventsFirst = 1,
+	    DISPID_ISessionEventsOnMessage	= DISPID_ISessionEventsFirst,
+	    DISPID_ISessionEventsOnLogoff,
+	    DISPID_ISessionEventsOnLogon,
+		DISPID_ISessionEventsOnSubjectStatus,
+	    DISPID_ISessionEventsLast = DISPID_ISessionEventsOnSubjectStatus
+	}
+    DISP_TRANSPORT_IDS;
+
+	#include "../include/TpShared.idl"
+
+	[
+		object,
+		uuid(A1090EFB-A40F-4A1F-94DB-5DAA48F97E21),
+		dual,
+		helpstring("IHostStatisticData Interface"),
+		pointer_default(unique)
+	]
+	interface IHostStatisticData : IDispatch
+	{
+		TRANSPORT_PROP_DEF(DISPID_IHostStatisticData,	long,			ReceivedMessageNum)
+		TRANSPORT_PROP_DEF(DISPID_IHostStatisticData,	long,			SentMessageNum)
+		TRANSPORT_PROP_DEF(DISPID_IHostStatisticData,	long,			ConfirmedMessageNum)
+		TRANSPORT_PROP_DEF(DISPID_IHostStatisticData,	long,			UnsentMessageNum)
+		TRANSPORT_PROP_DEF(DISPID_IHostStatisticData,	DATE,			LogonTime)
+		TRANSPORT_PROP_DEF(DISPID_IHostStatisticData,	BSTR,			HostName)
+	};
+
+	[
+		object,
+		uuid(6F7EF6F4-8E97-41A7-8DD5-2495B91175BF),
+		dual,
+		helpstring("IRouter Interface"),
+		pointer_default(unique)
+	]
+	interface IRouter : IDispatch
+	{
+		[propget, id(DISPID_IRouterHostStatistic), helpstring("property HostStatistic")] HRESULT HostStatistic([in]BSTR bsHostIP, [out, retval] IHostStatisticData** ppStatistic);
+		[propget, id(DISPID_IRouterActiveHosts), helpstring("property ActiveHosts")] HRESULT ActiveHosts([out, retval] SAFEARRAY(BSTR)* pHostsIPList);
+		[id(DISPID_IRouterStart), helpstring("method Start")] HRESULT Start(void);
+		[id(DISPID_IRouterStop), helpstring("method Stop")] HRESULT Stop(void);
+	};
+
+	[
+		uuid(1A6C626A-A5EC-45ED-81E1-108C4DA33B18),
+		helpstring("_IRouterEvents Interface")
+	]
+	dispinterface _IRouterEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_IRouterEventsOnClientConnected), helpstring("method OnClientConnected")] HRESULT OnClientConnected([in]BSTR bsHostIP);
+		[id(DISPID_IRouterEventsOnClientDisconnected), helpstring("method OnClientDisconnected")] HRESULT OnClientDisconnected([in]BSTR bsHostIP);
+		[id(DISPID_IRouterEventsOnRouterStarted), helpstring("method OnRouterStarted")] HRESULT OnRouterStarted();
+		[id(DISPID_IRouterEventsOnRouterStopped), helpstring("method OnRouterStopped")] HRESULT OnRouterStopped();
+		[id(DISPID_IRouterEventsOnTransportStopped), helpstring("method OnTransportStopped")] HRESULT OnTransportStopped();
+	};
+	[
+		object,
+		uuid(A404C5E1-A0BE-445C-A66D-1745384FC8B8),
+		dual,
+		helpstring("ISession Interface"),
+		pointer_default(unique)
+	]
+	interface ISession : IDispatch
+	{
+		[id(DISPID_ISessionSubscribe), helpstring("method Subscribe")] HRESULT Subscribe([in]BSTR bsSubject);
+		[id(DISPID_ISessionUnsubscribe), helpstring("method Unsubscribe")] HRESULT Unsubscribe([in]BSTR bsSubject);
+		[id(DISPID_ISessionSendMessage), helpstring("method SendMessage")] HRESULT SendMessage([in]BSTR bsSubject,[in] MsgPropertiesEnum enMsgProp,[in]BSTR bsMessage);
+		[propget, id(DISPID_ISessionIsLogoned), helpstring("property IsLogoned")] HRESULT IsLogoned([out, retval] VARIANT_BOOL* pVal);
+		[id(DISPID_ISessionCheckSubjectStatus), helpstring("method CheckSubjectStatus")] HRESULT CheckSubjectStatus([in]BSTR bsSubject);
+	};
+
+	[
+		object,
+		uuid(C0CD3D43-9472-498A-B0C9-8BDA67257AFF),
+		dual,
+		helpstring("IHost Interface"),
+		pointer_default(unique)
+	]
+	interface IHost : IDispatch
+	{
+		[id(DISPID_IHostCreateSession), helpstring("method CreateSession")] HRESULT CreateSession([out,retval] ISession** ppSession);
+		[id(DISPID_IHostLogon), helpstring("method Logon")] HRESULT Logon(BSTR bsServerName);
+		[id(DISPID_IHostLogout), helpstring("method Logout")] HRESULT Logout();
+		[propget, id(DISPID_IHostStatus), helpstring("property Status")] HRESULT Status([out, retval] HostStatusEnum* pVal);
+		[propget, id(DISPID_IHostStatistic), helpstring("property Statistic")] HRESULT Statistic([out, retval] IHostStatisticData** ppStatistic);
+		[propget, id(DISPID_IHostRouterName), helpstring("property RouterName")] HRESULT RouterName([out, retval] BSTR* pbstrRouterName);
+	};
+
+	[
+		uuid(75A20122-EBCF-4b03-8BAC-7BEF5E7CBF63),
+		helpstring("_IHostEvents Interface")
+	]
+	dispinterface _IHostEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_IHostEventsOnLogoned), helpstring("method OnLogoned")] HRESULT OnLogoned([in]BSTR bsRouterName);
+		[id(DISPID_IHostEventsOnLogout), helpstring("method OnLogout")] HRESULT OnLogout([in]BSTR bsRouterName);
+		[id(DISPID_IHostEventsOnDisabled), helpstring("method OnDisabled")] HRESULT OnDisabled();
+		[id(DISPID_IHostEventsOnTransportStopped), helpstring("method OnTransportStopped")] HRESULT OnTransportStopped();
+	};
+
+	[
+		uuid(3372D3D9-953E-4A68-B2DC-34DD4AC2C9D4),
+		helpstring("Router Class")
+	]	
+	coclass Router
+	{
+		[default] interface IRouter;
+		[default, source] dispinterface _IRouterEvents;
+	};
+	
+	[
+		uuid(E7F0ACEF-F4BF-48AA-A66E-7F997F1A219B),
+		helpstring("Host Class")
+	]
+	coclass Host
+	{
+		[default] interface IHost;
+		[default, source] dispinterface _IHostEvents;
+	};
+	[
+		uuid(E9BC824C-D532-4C50-BA29-23F2319E291A),
+		helpstring("_ISessionEvents Interface")
+	]
+	dispinterface _ISessionEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_ISessionEventsOnMessage), helpstring("method OnMessage")] HRESULT OnMessage([in]BSTR bsSubject, [in]BSTR bsMessage);
+		[id(DISPID_ISessionEventsOnLogoff), helpstring("method OnLogoff")] HRESULT OnLogoff([in]BSTR bsRouterName);
+		[id(DISPID_ISessionEventsOnLogon), helpstring("method OnLogon")] HRESULT OnLogon([in]BSTR bsRouterName);
+		[id(DISPID_ISessionEventsOnSubjectStatus), helpstring("method OnSubjectStatus")] HRESULT OnSubjectStatus([in]BSTR bsSubject, [in]unsigned long ulNumSubscribers);
+	};
+	[
+		uuid(8FD95AD7-C46C-4936-8FCF-0C50B82A812D),
+		helpstring("Session Class")
+	]
+	coclass Session
+	{
+		[default] interface ISession;
+		[default, source] dispinterface _ISessionEvents;
+	};
+	[
+		uuid(0DCA617B-A6F5-4199-92A9-3EAEF944BDAB),
+		helpstring("HostStatisticData Class")
+	]
+	coclass HostStatisticData
+	{
+		[default] interface IHostStatisticData;
+	};
+};

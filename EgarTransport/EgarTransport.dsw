@@ -1,0 +1,100 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "EgTpPrx"=.\EgTpPrx\EgTpPrx.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Work/EgTpPrx", GBOBAAAA
+    .\EgTpPrx
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Transport
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RtControl"=.\RtControl\RtControl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Work/RtControl", UTCAAAAA
+    .\RtControl
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name EgTpPrx
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Transport
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TpControl"=.\TpControl\TpControl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Work/TpControl", NLJAAAAA
+    .\TpControl
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name EgTpPrx
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Transport
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Transport"=.\Transport\Transport.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/ETS/Work/Transport", NJAAAAAA
+    .\Transport
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    EgarTransport
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

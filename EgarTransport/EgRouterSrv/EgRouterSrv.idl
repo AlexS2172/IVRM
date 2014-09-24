@@ -1,0 +1,18 @@
+// EgRouterSrv.idl : IDL source for EgRouterSrv
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EgRouterSrv.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(26B45A77-3111-4411-893A-5BA75E05DEFC),
+	version(1.0),
+	helpstring("EgRouterSrv 1.0 Type Library")
+]
+library EgRouterSrvLib
+{
+	importlib("stdole2.tlb");
+};

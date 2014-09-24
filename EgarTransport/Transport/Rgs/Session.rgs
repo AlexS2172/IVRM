@@ -1,0 +1,33 @@
+HKCR
+{
+	Transport.Session.1 = s 'Session Class'
+	{
+		CLSID = s '{8FD95AD7-C46C-4936-8FCF-0C50B82A812D}'
+	}
+	Transport.Session = s 'Session Class'
+	{
+		CLSID = s '{8FD95AD7-C46C-4936-8FCF-0C50B82A812D}'
+		CurVer = s 'Transport.Session.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8FD95AD7-C46C-4936-8FCF-0C50B82A812D} = s 'Session Class'
+		{
+			ProgID = s 'Transport.Session.1'
+			VersionIndependentProgID = s 'Transport.Session'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{3E3E8035-5318-47A7-8E6E-4DB1C16E21C2}'
+			'TypeLib' = s '{814797FA-CE13-44EC-A03C-840C36A980F6}'
+		}
+	}
+	NoRemove Interface
+	{
+		ForceRemove {A404C5E1-A0BE-445C-A66D-1745384FC8B8} = s 'ISession'
+		{
+			ProxyStubClsid = s '{00020424-0000-0000-C000-000000000046}'
+			ProxyStubClsid32 = s '{00020424-0000-0000-C000-000000000046}'
+			TypeLib = s '{814797FA-CE13-44EC-A03C-840C36A980F6}'
+		}
+	}
+}

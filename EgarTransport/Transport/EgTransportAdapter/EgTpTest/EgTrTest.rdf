@@ -1,0 +1,364 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE rdf:RDF [
+	<!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	<!ENTITY etxcfg 'http://egartech.com/ETX/etxcfg#'>
+	<!ENTITY etxrepo 'http://egartech.com/ETX/etxrepo#'>
+	<!ENTITY sample_cfg 'http://egartech.com/ETX/sample_cfg#'>
+]>
+<rdf:RDF xmlns:rdf="&rdf;"
+	xmlns:etxcfg="&etxcfg;"
+	xmlns:etxrepo="&etxrepo;"
+	xmlns:sample_cfg="&sample_cfg;">
+<etxcfg:BusinessMessageType rdf:about="IDE43731E5F6B94C74B8274507EDAB3A7C">
+	<etxcfg:ID>etxOnLogon</etxcfg:ID>
+	<etxcfg:DefinitionLanguage>RDFS</etxcfg:DefinitionLanguage>
+	<etxcfg:Description>Call when transport OnLogon event fired</etxcfg:Description>
+	<etxcfg:StructuralType rdf:resource="IDC01CE3B2D9214A7A9C07A94B0602FBD4"/>
+</etxcfg:BusinessMessageType>
+<etxcfg:BusinessMessageType rdf:about="ID7A9007A6318F4BD2BE18C5B73CDE9447">
+	<etxcfg:ID>etxOnLogoff</etxcfg:ID>
+	<etxcfg:DefinitionLanguage>RDFS</etxcfg:DefinitionLanguage>
+	<etxcfg:Description>Call when Transport OnLogoff event fired</etxcfg:Description>
+	<etxcfg:StructuralType rdf:resource="IDC01CE3B2D9214A7A9C07A94B0602FBD4"/>
+</etxcfg:BusinessMessageType>
+<etxcfg:BusinessMessageType rdf:about="IDEC867BFA6F73457189275C95341AF1D3">
+	<etxcfg:ID>EgTpPublisherInitMessage</etxcfg:ID>
+	<etxcfg:DefinitionLanguage>RDFS</etxcfg:DefinitionLanguage>
+	<etxcfg:StructuralType rdf:resource="IDC01CE3B2D9214A7A9C07A94B0602FBD4"/>
+</etxcfg:BusinessMessageType>
+<etxcfg:BusinessMessageType rdf:about="IDE5CB5BF7EA4D4D0CAD00C232FCE904FE">
+	<etxcfg:ID>EgTpReplierProxyInitMessage</etxcfg:ID>
+	<etxcfg:DefinitionLanguage>RDFS</etxcfg:DefinitionLanguage>
+	<etxcfg:StructuralType rdf:resource="IDC01CE3B2D9214A7A9C07A94B0602FBD4"/>
+</etxcfg:BusinessMessageType>
+<etxcfg:BusinessMessageType rdf:about="IDF93B468F3EB24CA4880E4911A9ED8B7D">
+	<etxcfg:ID>EgTpRequesterProxyInitMessage</etxcfg:ID>
+	<etxcfg:DefinitionLanguage>RDFS</etxcfg:DefinitionLanguage>
+	<etxcfg:StructuralType rdf:resource="IDC01CE3B2D9214A7A9C07A94B0602FBD4"/>
+</etxcfg:BusinessMessageType>
+<etxcfg:BusinessMessageType rdf:about="ID998BCD50FF9A47F9BBC937995E816A87">
+	<etxcfg:ID>UniInitMessage</etxcfg:ID>
+	<etxcfg:DefinitionLanguage>RDFS</etxcfg:DefinitionLanguage>
+	<etxcfg:StructuralType rdf:resource="IDC01CE3B2D9214A7A9C07A94B0602FBD4"/>
+</etxcfg:BusinessMessageType>
+<etxcfg:StructuralMessageType rdf:about="IDC01CE3B2D9214A7A9C07A94B0602FBD4">
+	<etxcfg:ID>MapMessage</etxcfg:ID>
+	<etxcfg:DefinitionLanguage>RDFS</etxcfg:DefinitionLanguage>
+</etxcfg:StructuralMessageType>
+<etxcfg:ServiceConfigurationDescriptor rdf:about="IDF09CBB6C937940A7BEADB637916F4E83">
+	<etxcfg:ServiceName>etxDumpService</etxcfg:ServiceName>
+	<etxcfg:Parameter>
+		<etxcfg:ServiceConfigurationParameter rdf:about="IDF09CBB6C937940A7BEADB637916F4E83_1">
+			<etxcfg:Name>LogFile</etxcfg:Name>
+			<etxcfg:Value>c:\etxDump.txt</etxcfg:Value>
+		</etxcfg:ServiceConfigurationParameter>
+	</etxcfg:Parameter>
+	<etxcfg:Parameter>
+		<etxcfg:ServiceConfigurationParameter rdf:about="IDF09CBB6C937940A7BEADB637916F4E83_2">
+			<etxcfg:Name>LogLevel</etxcfg:Name>
+			<etxcfg:Value>2</etxcfg:Value>
+		</etxcfg:ServiceConfigurationParameter>
+	</etxcfg:Parameter>
+</etxcfg:ServiceConfigurationDescriptor>
+<etxcfg:ComponentType rdf:about="IDB509656627854F1B97AEA19A3DA5E93B">
+	<etxcfg:ID>UniTester</etxcfg:ID>
+	<etxcfg:InstantiationDescriptor>
+		<etxcfg:ComponentInstantiationDescriptor rdf:about="ID46E4B66A15144226ACD7BEBAA7F4563E">
+			<etxcfg:HostingFramework>COM</etxcfg:HostingFramework>
+			<etxcfg:COMProgID>UniTester.Tester</etxcfg:COMProgID>
+			<etxcfg:RequiresSeparateThread>true</etxcfg:RequiresSeparateThread>
+			<etxcfg:IsThreadSafe>false</etxcfg:IsThreadSafe>
+			<etxcfg:InitMessageType rdf:resource="ID998BCD50FF9A47F9BBC937995E816A87"/>
+		</etxcfg:ComponentInstantiationDescriptor>
+	</etxcfg:InstantiationDescriptor>
+	<etxcfg:InterfaceDescriptor>
+		<etxcfg:ComponentInterfaceDescriptor rdf:about="IDA939B9CD28044A85A8E8975FE7E836AF">
+			<etxcfg:PortDescription>
+				<etxcfg:ComponentPort rdf:about="IDECA7B7AA844E428189857B0DCCED176C">
+					<etxcfg:Name>TestIn</etxcfg:Name>
+					<etxcfg:CommunicationModel>Receiver</etxcfg:CommunicationModel>
+					<etxcfg:CommunicationStyle>Synchronous</etxcfg:CommunicationStyle>
+				</etxcfg:ComponentPort>
+			</etxcfg:PortDescription>
+			<etxcfg:PortDescription>
+				<etxcfg:ComponentPort rdf:about="ID265B15B31CEE44A595C92CCDB6872B47">
+					<etxcfg:Name>TestOut</etxcfg:Name>
+					<etxcfg:CommunicationModel>Sender</etxcfg:CommunicationModel>
+					<etxcfg:CommunicationStyle>Asynchronous</etxcfg:CommunicationStyle>
+				</etxcfg:ComponentPort>
+			</etxcfg:PortDescription>
+		</etxcfg:ComponentInterfaceDescriptor>
+	</etxcfg:InterfaceDescriptor>
+</etxcfg:ComponentType>
+<etxcfg:ComponentType rdf:about="ID08A59ABED7AE4DB0822C44344191265C">
+	<etxcfg:ID>UniReplyer</etxcfg:ID>
+	<etxcfg:InstantiationDescriptor>
+		<etxcfg:ComponentInstantiationDescriptor rdf:about="IDECEFADD9021D436788927C9CE2BBE9C9">
+			<etxcfg:HostingFramework>COM</etxcfg:HostingFramework>
+			<etxcfg:COMProgID>UniTester.UniReplyer</etxcfg:COMProgID>
+			<etxcfg:RequiresSeparateThread>true</etxcfg:RequiresSeparateThread>
+			<etxcfg:IsThreadSafe>false</etxcfg:IsThreadSafe>
+			<etxcfg:InitMessageType rdf:resource="ID998BCD50FF9A47F9BBC937995E816A87"/>
+		</etxcfg:ComponentInstantiationDescriptor>
+	</etxcfg:InstantiationDescriptor>
+	<etxcfg:InterfaceDescriptor>
+		<etxcfg:ComponentInterfaceDescriptor rdf:about="ID4DA0E8F7EB9A4D5A88C86B83118E2430">
+			<etxcfg:PortDescription>
+				<etxcfg:ComponentPort rdf:about="IDCF9FA84A3DD94A20AFB79CB133AAB105">
+					<etxcfg:Name>TestInOut</etxcfg:Name>
+					<etxcfg:CommunicationModel>Replier</etxcfg:CommunicationModel>
+					<etxcfg:CommunicationStyle>Synchronous</etxcfg:CommunicationStyle>
+				</etxcfg:ComponentPort>
+			</etxcfg:PortDescription>
+		</etxcfg:ComponentInterfaceDescriptor>
+	</etxcfg:InterfaceDescriptor>
+</etxcfg:ComponentType>
+<etxcfg:ComponentType rdf:about="ID6D413AB91AED4DC3A900A15DF274CD46">
+	<etxcfg:ID>EgTpReplierProxy</etxcfg:ID>
+	<etxcfg:InstantiationDescriptor>
+		<etxcfg:ComponentInstantiationDescriptor rdf:about="IDCE44E8A6599B4EFDA3264602073ED2DC">
+			<etxcfg:HostingFramework>COM</etxcfg:HostingFramework>
+			<etxcfg:COMProgID>EgTransportAdapter.EgTpReplierProxy</etxcfg:COMProgID>
+			<etxcfg:RequiresSeparateThread>false</etxcfg:RequiresSeparateThread>
+			<etxcfg:IsThreadSafe>true</etxcfg:IsThreadSafe>
+			<etxcfg:InitMessageType rdf:resource="IDE5CB5BF7EA4D4D0CAD00C232FCE904FE"/>
+		</etxcfg:ComponentInstantiationDescriptor>
+	</etxcfg:InstantiationDescriptor>
+	<etxcfg:InterfaceDescriptor>
+		<etxcfg:ComponentInterfaceDescriptor rdf:about="ID260792A30C5140D1BF74AE21D8692F76">
+			<etxcfg:PortDescription>
+				<etxcfg:ComponentPort rdf:about="IDDBEF42A401C04D178443EAFBBC27A799">
+					<etxcfg:Name>Out</etxcfg:Name>
+					<etxcfg:CommunicationModel>Sender</etxcfg:CommunicationModel>
+					<etxcfg:CommunicationStyle>Asynchronous</etxcfg:CommunicationStyle>
+				</etxcfg:ComponentPort>
+			</etxcfg:PortDescription>
+			<etxcfg:PortDescription>
+				<etxcfg:ComponentPort rdf:about="IDEB29F4AA31D842F98A86F1841DF0F890">
+					<etxcfg:Name>In</etxcfg:Name>
+					<etxcfg:CommunicationModel>Receiver</etxcfg:CommunicationModel>
+					<etxcfg:CommunicationStyle>Synchronous</etxcfg:CommunicationStyle>
+				</etxcfg:ComponentPort>
+			</etxcfg:PortDescription>
+		</etxcfg:ComponentInterfaceDescriptor>
+	</etxcfg:InterfaceDescriptor>
+</etxcfg:ComponentType>
+<etxcfg:ComponentType rdf:about="ID2EB31756262B4B06A8240E74DBEC1E7A">
+	<etxcfg:ID>EgTpRequesterProxy</etxcfg:ID>
+	<etxcfg:InstantiationDescriptor>
+		<etxcfg:ComponentInstantiationDescriptor rdf:about="ID5EBD7A8C8E5948B3B5D45A37F658E01B">
+			<etxcfg:HostingFramework>COM</etxcfg:HostingFramework>
+			<etxcfg:COMProgID>EgTransportAdapter.EgTpRequesterProxy</etxcfg:COMProgID>
+			<etxcfg:RequiresSeparateThread>false</etxcfg:RequiresSeparateThread>
+			<etxcfg:IsThreadSafe>true</etxcfg:IsThreadSafe>
+			<etxcfg:InitMessageType rdf:resource="IDF93B468F3EB24CA4880E4911A9ED8B7D"/>
+		</etxcfg:ComponentInstantiationDescriptor>
+	</etxcfg:InstantiationDescriptor>
+	<etxcfg:InterfaceDescriptor>
+		<etxcfg:ComponentInterfaceDescriptor rdf:about="ID96ED0992B14945B6885CC2E2174304B0">
+			<etxcfg:PortDescription>
+				<etxcfg:ComponentPort rdf:about="IDF122601A2DB84E1AB91B0E1651DC52C5">
+					<etxcfg:Name>Out</etxcfg:Name>
+					<etxcfg:CommunicationModel>Sender</etxcfg:CommunicationModel>
+					<etxcfg:CommunicationStyle>Asynchronous</etxcfg:CommunicationStyle>
+				</etxcfg:ComponentPort>
+			</etxcfg:PortDescription>
+			<etxcfg:PortDescription>
+				<etxcfg:ComponentPort rdf:about="IDE50FEC6DC39C4220AD57812815790D50">
+					<etxcfg:Name>In</etxcfg:Name>
+					<etxcfg:CommunicationModel>Receiver</etxcfg:CommunicationModel>
+					<etxcfg:CommunicationStyle>Synchronous</etxcfg:CommunicationStyle>
+				</etxcfg:ComponentPort>
+			</etxcfg:PortDescription>
+		</etxcfg:ComponentInterfaceDescriptor>
+	</etxcfg:InterfaceDescriptor>
+</etxcfg:ComponentType>
+<etxcfg:Component rdf:about="ID8214664E8BC3449C8D47B2D7B627EEA1">
+	<etxcfg:ID>Left</etxcfg:ID>
+	<etxcfg:SelfInstantiating>false</etxcfg:SelfInstantiating>
+	<etxcfg:CriticalComponent>false</etxcfg:CriticalComponent>
+	<etxcfg:Layout>ID8214664E8BC3449C8D47B2D7B627EEA1="77 68 227 118";
+
+IDECA7B7AA844E428189857B0DCCED176C="37 83 77 103";
+
+ID265B15B31CEE44A595C92CCDB6872B47="142 28 162 68"</etxcfg:Layout>
+	<etxcfg:Type rdf:resource="IDB509656627854F1B97AEA19A3DA5E93B"/>
+	<etxcfg:InitMessage>
+		<etxcfg:Message rdf:about="ID64933AC547A14D5A84F15E9817BACCF0">
+			<etxcfg:Body>
+				<etxcfg:SimpleMapMessageBody rdf:about="ID64933AC547A14D5A84F15E9817BACCF0_1">
+					<etxcfg:Element>
+						<etxcfg:MapMessageElement rdf:about="ID64933AC547A14D5A84F15E9817BACCF0_2">
+							<etxcfg:Name>Caption</etxcfg:Name>
+							<etxcfg:Value>Left component</etxcfg:Value>
+						</etxcfg:MapMessageElement>
+					</etxcfg:Element>
+				</etxcfg:SimpleMapMessageBody>
+			</etxcfg:Body>
+		</etxcfg:Message>
+	</etxcfg:InitMessage>
+</etxcfg:Component>
+<etxcfg:Component rdf:about="ID802B7F92547D4BCAB9A3FE63EEA54F37">
+	<etxcfg:ID>Right</etxcfg:ID>
+	<etxcfg:SelfInstantiating>false</etxcfg:SelfInstantiating>
+	<etxcfg:CriticalComponent>false</etxcfg:CriticalComponent>
+	<etxcfg:Layout>ID802B7F92547D4BCAB9A3FE63EEA54F37="345 30 495 80";
+
+IDCF9FA84A3DD94A20AFB79CB133AAB105="305 45 345 65"</etxcfg:Layout>
+	<etxcfg:Type rdf:resource="ID08A59ABED7AE4DB0822C44344191265C"/>
+	<etxcfg:InitMessage>
+		<etxcfg:Message rdf:about="IDB60CE15A18284F35AC03505566194D46">
+			<etxcfg:Body>
+				<etxcfg:SimpleMapMessageBody rdf:about="IDB60CE15A18284F35AC03505566194D46_1">
+					<etxcfg:Element>
+						<etxcfg:MapMessageElement rdf:about="IDB60CE15A18284F35AC03505566194D46_2">
+							<etxcfg:Name>Caption</etxcfg:Name>
+							<etxcfg:Value>Right component</etxcfg:Value>
+						</etxcfg:MapMessageElement>
+					</etxcfg:Element>
+				</etxcfg:SimpleMapMessageBody>
+			</etxcfg:Body>
+		</etxcfg:Message>
+	</etxcfg:InitMessage>
+</etxcfg:Component>
+<etxcfg:Component rdf:about="ID9AE86737998C434CBB897DB0594065FD">
+	<etxcfg:ID>LeftProxy</etxcfg:ID>
+	<etxcfg:SelfInstantiating>false</etxcfg:SelfInstantiating>
+	<etxcfg:CriticalComponent>false</etxcfg:CriticalComponent>
+	<etxcfg:Layout>ID9AE86737998C434CBB897DB0594065FD="81 226 231 276";
+
+IDDBEF42A401C04D178443EAFBBC27A799="41 241 81 261";
+
+IDEB29F4AA31D842F98A86F1841DF0F890="146 186 166 226"</etxcfg:Layout>
+	<etxcfg:Type rdf:resource="ID6D413AB91AED4DC3A900A15DF274CD46"/>
+	<etxcfg:InitMessage>
+		<etxcfg:Message rdf:about="ID30B00C5014544EB0AF1A2B54C914B16B">
+			<etxcfg:Body>
+				<etxcfg:SimpleMapMessageBody rdf:about="ID30B00C5014544EB0AF1A2B54C914B16B_1">
+					<etxcfg:Element>
+						<etxcfg:MapMessageElement rdf:about="ID30B00C5014544EB0AF1A2B54C914B16B_2">
+							<etxcfg:Name>ClientSubject</etxcfg:Name>
+							<etxcfg:Value>LeftClient</etxcfg:Value>
+						</etxcfg:MapMessageElement>
+					</etxcfg:Element>
+					<etxcfg:Element>
+						<etxcfg:MapMessageElement rdf:about="ID30B00C5014544EB0AF1A2B54C914B16B_3">
+							<etxcfg:Name>MessageProperty</etxcfg:Name>
+							<etxcfg:Value>2</etxcfg:Value>
+						</etxcfg:MapMessageElement>
+					</etxcfg:Element>
+					<etxcfg:Element>
+						<etxcfg:MapMessageElement rdf:about="ID30B00C5014544EB0AF1A2B54C914B16B_4">
+							<etxcfg:Name>ServerSubject</etxcfg:Name>
+							<etxcfg:Value>RightServer</etxcfg:Value>
+						</etxcfg:MapMessageElement>
+					</etxcfg:Element>
+				</etxcfg:SimpleMapMessageBody>
+			</etxcfg:Body>
+		</etxcfg:Message>
+	</etxcfg:InitMessage>
+</etxcfg:Component>
+<etxcfg:Component rdf:about="IDD1AC5E1099FF4D94BC1F9692240C6EE6">
+	<etxcfg:ID>RightProxy</etxcfg:ID>
+	<etxcfg:SelfInstantiating>false</etxcfg:SelfInstantiating>
+	<etxcfg:CriticalComponent>false</etxcfg:CriticalComponent>
+	<etxcfg:Layout>IDD1AC5E1099FF4D94BC1F9692240C6EE6="352 228 502 278";
+
+IDF122601A2DB84E1AB91B0E1651DC52C5="312 243 352 263";
+
+IDE50FEC6DC39C4220AD57812815790D50="417 188 437 228"</etxcfg:Layout>
+	<etxcfg:Type rdf:resource="ID2EB31756262B4B06A8240E74DBEC1E7A"/>
+	<etxcfg:InitMessage>
+		<etxcfg:Message rdf:about="IDD43672F3023540F08BEA5DD999F167DA">
+			<etxcfg:Body>
+				<etxcfg:SimpleMapMessageBody rdf:about="IDD43672F3023540F08BEA5DD999F167DA_1">
+					<etxcfg:Element>
+						<etxcfg:MapMessageElement rdf:about="IDD43672F3023540F08BEA5DD999F167DA_2">
+							<etxcfg:Name>MessageProperty</etxcfg:Name>
+							<etxcfg:Value>2</etxcfg:Value>
+						</etxcfg:MapMessageElement>
+					</etxcfg:Element>
+					<etxcfg:Element>
+						<etxcfg:MapMessageElement rdf:about="IDD43672F3023540F08BEA5DD999F167DA_3">
+							<etxcfg:Name>ServerSubject</etxcfg:Name>
+							<etxcfg:Value>RightServer</etxcfg:Value>
+						</etxcfg:MapMessageElement>
+					</etxcfg:Element>
+				</etxcfg:SimpleMapMessageBody>
+			</etxcfg:Body>
+		</etxcfg:Message>
+	</etxcfg:InitMessage>
+</etxcfg:Component>
+<etxcfg:Connection rdf:about="ID8C0CC31D8BB1415082D41AC507F573AD">
+	<etxcfg:ID>Out_TestIn</etxcfg:ID>
+	<etxcfg:Layout>47 93 51 251</etxcfg:Layout>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="IDF9E6DB9960864E299D5725C27C782A46">
+			<etxcfg:PortPin>Main</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="ID9AE86737998C434CBB897DB0594065FD"/>
+			<etxcfg:PortDescr rdf:resource="IDDBEF42A401C04D178443EAFBBC27A799"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="IDFC8118FE23C84A4B9505B0D8E27AA2AE">
+			<etxcfg:PortPin>Input</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="ID8214664E8BC3449C8D47B2D7B627EEA1"/>
+			<etxcfg:PortDescr rdf:resource="IDECA7B7AA844E428189857B0DCCED176C"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+</etxcfg:Connection>
+<etxcfg:Connection rdf:about="IDDB5F0B2FFBFC4335B1F3129CB1C54C2F">
+	<etxcfg:ID>TestOut_In</etxcfg:ID>
+	<etxcfg:Layout>152 38 156 196</etxcfg:Layout>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="IDF0996A7CBA4046E19C042964B2F4BFE4">
+			<etxcfg:PortPin>Main</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="ID8214664E8BC3449C8D47B2D7B627EEA1"/>
+			<etxcfg:PortDescr rdf:resource="ID265B15B31CEE44A595C92CCDB6872B47"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="ID59A389EDB7A64F2788E78158F0512F4B">
+			<etxcfg:PortPin>Input</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="ID9AE86737998C434CBB897DB0594065FD"/>
+			<etxcfg:PortDescr rdf:resource="IDEB29F4AA31D842F98A86F1841DF0F890"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+</etxcfg:Connection>
+<etxcfg:Connection rdf:about="ID50579A609D514CB0915B75DE74CAD4A8">
+	<etxcfg:ID>Out_TestInOut</etxcfg:ID>
+	<etxcfg:Layout>315 55 322 253</etxcfg:Layout>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="IDA6DB175FE7BB4AA68645F5A87CFFC17A">
+			<etxcfg:PortPin>Main</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="IDD1AC5E1099FF4D94BC1F9692240C6EE6"/>
+			<etxcfg:PortDescr rdf:resource="IDF122601A2DB84E1AB91B0E1651DC52C5"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="ID10A17B56EF1D4F67ADB09B83CDCC8AE8">
+			<etxcfg:PortPin>Input</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="ID802B7F92547D4BCAB9A3FE63EEA54F37"/>
+			<etxcfg:PortDescr rdf:resource="IDCF9FA84A3DD94A20AFB79CB133AAB105"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+</etxcfg:Connection>
+<etxcfg:Connection rdf:about="ID3A35FF630BCF456C922B11E8E381D1DA">
+	<etxcfg:ID>TestInOut_In</etxcfg:ID>
+	<etxcfg:Layout>315 55 427 198</etxcfg:Layout>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="IDEB53766A979C4A3E97C9701AF20257CB">
+			<etxcfg:PortPin>OutputCopy</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="ID802B7F92547D4BCAB9A3FE63EEA54F37"/>
+			<etxcfg:PortDescr rdf:resource="IDCF9FA84A3DD94A20AFB79CB133AAB105"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+	<etxcfg:ConnectionPoint>
+		<etxcfg:ConnectionPointDescriptor rdf:about="ID014D2EDA9CF341909A1F4CDBBEFE57DD">
+			<etxcfg:PortPin>Input</etxcfg:PortPin>
+			<etxcfg:ComponentInstance rdf:resource="IDD1AC5E1099FF4D94BC1F9692240C6EE6"/>
+			<etxcfg:PortDescr rdf:resource="IDE50FEC6DC39C4220AD57812815790D50"/>
+		</etxcfg:ConnectionPointDescriptor>
+	</etxcfg:ConnectionPoint>
+</etxcfg:Connection>
+</rdf:RDF>

@@ -1,0 +1,26 @@
+HKCR
+{
+	EgTransportAdapter.EgTpPublisher.1 = s 'EgTpPublisher Class'
+	{
+		CLSID = s '{EA7D5DE7-DE62-401A-882F-8DFEFE069459}'
+	}
+	EgTransportAdapter.EgTpPublisher = s 'EgTpPublisher Class'
+	{
+		CLSID = s '{EA7D5DE7-DE62-401A-882F-8DFEFE069459}'
+		CurVer = s 'EgTransportAdapter.EgTpPublisher.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EA7D5DE7-DE62-401A-882F-8DFEFE069459} = s 'EgTpPublisher Class'
+		{
+			ProgID = s 'EgTransportAdapter.EgTpPublisher.1'
+			VersionIndependentProgID = s 'EgTransportAdapter.EgTpPublisher'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{58F54560-56DA-4733-BE49-755ED2E2BEF7}'
+		}
+	}
+}

@@ -1,0 +1,33 @@
+HKCR
+{
+	Transport.Router.1 = s 'Router Class'
+	{
+		CLSID = s '{3372D3D9-953E-4A68-B2DC-34DD4AC2C9D4}'
+	}
+	Transport.Router = s 'Router Class'
+	{
+		CLSID = s '{3372D3D9-953E-4A68-B2DC-34DD4AC2C9D4}'
+		CurVer = s 'Transport.Router.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3372D3D9-953E-4A68-B2DC-34DD4AC2C9D4} = s 'Router Class'
+		{
+			ProgID = s 'Transport.Router.1'
+			VersionIndependentProgID = s 'Transport.Router'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{3E3E8035-5318-47A7-8E6E-4DB1C16E21C2}'
+			'TypeLib' = s '{814797FA-CE13-44EC-A03C-840C36A980F6}'
+		}
+	}
+	NoRemove Interface
+	{
+		ForceRemove {6F7EF6F4-8E97-41A7-8DD5-2495B91175BF} = s 'IRouter'
+		{
+			ProxyStubClsid = s '{00020424-0000-0000-C000-000000000046}'
+			ProxyStubClsid32 = s '{00020424-0000-0000-C000-000000000046}'
+			TypeLib = s '{814797FA-CE13-44EC-A03C-840C36A980F6}'
+		}
+	}
+}

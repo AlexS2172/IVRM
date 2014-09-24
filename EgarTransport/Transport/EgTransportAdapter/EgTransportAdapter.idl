@@ -1,0 +1,48 @@
+// EgTransportAdapter.idl : IDL source for EgTransportAdapter.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EgTransportAdapter.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(58F54560-56DA-4733-BE49-755ED2E2BEF7),
+	version(1.0),
+	helpstring("EgTransportAdapter 1.0 Type Library")
+]
+library EGTRANSPORTADAPTERLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("..\..\..\..\Services\etxRuntime\ETXRuntime.tlb");
+
+	[
+		uuid(EA7D5DE7-DE62-401A-882F-8DFEFE069459),
+		helpstring("EgTpPublisher Class")
+	]
+	coclass EgTpPublisher
+	{
+		[default]	interface IEtxComponent;
+					interface IEtxListener;
+	};
+	[
+		uuid(7AFFD637-DCA0-4645-87C9-270F01AACD13),
+		helpstring("EgTpReplierProxy Class")
+	]
+	coclass EgTpReplierProxy
+	{
+		[default]	interface IEtxComponent;
+					interface IEtxListener;
+	};
+	[
+		uuid(982901BB-4837-496C-B07C-7526097E3E1C),
+		helpstring("EgTpRequesterProxy Class")
+	]
+	coclass EgTpRequesterProxy
+	{
+		[default]	interface IEtxComponent;
+					interface IEtxListener;
+	};
+};

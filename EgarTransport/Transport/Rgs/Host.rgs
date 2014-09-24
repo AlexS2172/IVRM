@@ -1,0 +1,33 @@
+HKCR
+{ 
+	Transport.Host.1 = s 'Host Class'
+	{
+		CLSID = s '{E7F0ACEF-F4BF-48AA-A66E-7F997F1A219B}'
+	}
+	Transport.Host = s 'Host Class'
+	{
+		CLSID = s '{E7F0ACEF-F4BF-48AA-A66E-7F997F1A219B}'
+		CurVer = s 'Transport.Host.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {E7F0ACEF-F4BF-48AA-A66E-7F997F1A219B} = s 'Host Class'
+		{
+			ProgID = s 'Transport.Host.1'
+			VersionIndependentProgID = s 'Transport.Host'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{3E3E8035-5318-47A7-8E6E-4DB1C16E21C2}'
+			'TypeLib' = s '{814797FA-CE13-44EC-A03C-840C36A980F6}'
+		}
+	}
+	NoRemove Interface
+	{
+		ForceRemove {C0CD3D43-9472-498A-B0C9-8BDA67257AFF} = s 'IHello'
+		{
+			ProxyStubClsid = s '{00020424-0000-0000-C000-000000000046}'
+			ProxyStubClsid32 = s '{00020424-0000-0000-C000-000000000046}'
+			TypeLib = s '{814797FA-CE13-44EC-A03C-840C36A980F6}'
+		}
+	}
+}

@@ -1,0 +1,26 @@
+	typedef 
+	[
+		uuid(8D135951-1DD8-41ed-BAD5-0E31B865EF66),
+		v1_enum
+	]
+	enum MsgPropertiesEnum
+	{
+		enMpNotBuffered,	// Only last message stored
+		enMpBuffered,		// All messages stored
+		enMpGuarantee,		// All messages stored and guaranteed
+		enMpUnspecified
+	}
+	MsgPropertiesEnum;
+
+	typedef 
+	[
+		uuid(05E4766C-C6EF-4e45-A8EC-6FE6045B246C),
+		v1_enum
+	]
+	enum HostStatusEnum
+	{
+		enHSOnline,
+		enHSOffline,
+		enHSDisabled
+	}
+	HostStatusEnum;

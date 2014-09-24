@@ -1,0 +1,139 @@
+// EgTpPrx.idl : IDL source for EgTpPrx.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EgTpPrx.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(DAF5C380-32CA-49F8-BED3-36AE6E570F89),
+	version(1.0),
+	helpstring("EgTpPrx 1.0 Type Library")
+]
+library EGTPPRXLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+	importlib("..\tlb\Transport.tlb");
+
+    typedef	
+	[
+		uuid(67F1C462-013A-4566-ADE2-7A0EF5A3896A),
+		v1_enum
+	]	
+    enum DISP_EGTPPRX_IDS
+    {
+	    DISPID_IHostProxyFirst = 1000,
+	    DISPID_IHostProxyStart = DISPID_IHostProxyFirst,
+	    DISPID_IHostProxyStop,
+	    DISPID_IHostProxyRestart,
+	    DISPID_IHostProxyLast = DISPID_IHostProxyRestart,
+
+	    DISPID_IRouterProxyFirst = 1100,
+	    DISPID_IRouterProxyStart = DISPID_IRouterProxyFirst,
+	    DISPID_IRouterProxyStop,
+	    DISPID_IRouterProxyLast = DISPID_IRouterProxyStop,
+
+	    DISPID_IHostProxyEventsFirst = 1200,
+	    DISPID_IHostProxyEventsOnServiceStatus = DISPID_IHostProxyEventsFirst,
+	    DISPID_IHostProxyEventsOnServiceError,
+	    DISPID_IHostProxyEventsOnLogoned,
+	    DISPID_IHostProxyEventsOnLogout,
+	    DISPID_IHostProxyEventsOnDisabled,
+	    DISPID_IHostProxyEventsLast = DISPID_IHostProxyEventsOnDisabled,
+
+	    DISPID_IRouterProxyEventsFirst = 1300,
+	    DISPID_IRouterProxyEventsOnServiceStatus = DISPID_IRouterProxyEventsFirst,
+	    DISPID_IRouterProxyEventsOnServiceError,
+	    DISPID_IRouterProxyEventsOnClientConnected,
+	    DISPID_IRouterProxyEventsOnClientDisconnected,
+	    DISPID_IRouterProxyEventsLast = DISPID_IRouterProxyEventsOnClientDisconnected
+	}
+    DISP_EGTPPRX_IDS;
+
+	[
+		object,
+		uuid(8D677603-AC99-4315-AF54-DB9C78A51FEF),
+		dual,
+		helpstring("IHostProxy Interface"),
+		pointer_default(unique)
+	]
+	interface IHostProxy : IHost
+	{
+		[id(DISPID_IHostProxyStart), helpstring("method Start")] HRESULT Start();
+		[id(DISPID_IHostProxyStop), helpstring("method Stop")] HRESULT Stop();
+		[id(DISPID_IHostProxyRestart), helpstring("method Restart")] HRESULT Restart();
+	};
+
+	[
+		object,
+		uuid(952F832A-6DB2-45F4-896D-948F48BA7978),
+		dual,
+		helpstring("IRouterProxy Interface"),
+		pointer_default(unique)
+	]
+	interface IRouterProxy : IRouter
+	{
+		[id(DISPID_IRouterProxyStart), helpstring("method Start")] HRESULT Start();
+		[id(DISPID_IRouterProxyStop), helpstring("method Stop")] HRESULT Stop();
+	};
+
+	[
+		uuid(1A1985A4-65FA-4124-808E-9825B2C11A50),
+		helpstring("_IHostProxyEvents Interface")
+	]
+	dispinterface _IHostProxyEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_IHostProxyEventsOnServiceStatus), helpstring("method OnServiceStatus")] HRESULT OnServiceStatus([in]long dwStatus);
+		[id(DISPID_IHostProxyEventsOnServiceError), helpstring("method OnServiceError")] HRESULT OnServiceError([in]long lCode, [in]BSTR bsDescription);
+		[id(DISPID_IHostProxyEventsOnLogoned), helpstring("method OnLogoned")] HRESULT OnLogoned([in]BSTR bsRouterName);
+		[id(DISPID_IHostProxyEventsOnLogout), helpstring("method OnLogout")] HRESULT OnLogout([in]BSTR bsRouterName);
+		[id(DISPID_IHostProxyEventsOnDisabled), helpstring("method OnDisabled")] HRESULT OnDisabled();
+	};
+
+	[
+		uuid(0247A77D-AEBB-48a9-A4B1-AF8A017F9301),
+		helpstring("_IRouterProxyEvents Interface")
+	]
+	dispinterface _IRouterProxyEvents
+	{
+		properties:
+		methods:
+		[id(DISPID_IRouterProxyEventsOnServiceStatus), helpstring("method OnServiceStatus")] HRESULT OnServiceStatus([in]long dwStatus);
+		[id(DISPID_IRouterProxyEventsOnServiceError), helpstring("method OnServiceError")] HRESULT OnServiceError([in]long lCode, [in]BSTR bsDescription);
+		[id(DISPID_IRouterProxyEventsOnClientConnected), helpstring("method OnClientConnected")] HRESULT OnClientConnected([in]BSTR bsHostIP);
+		[id(DISPID_IRouterProxyEventsOnClientDisconnected), helpstring("method OnClientDisconnected")] HRESULT OnClientDisconnected([in]BSTR bsHostIP);
+	};
+
+	[
+		uuid(3E317841-5968-43AF-A662-098C53057E5C),
+		helpstring("HostProxy Class")
+	]
+	coclass HostProxy
+	{
+		[default] interface IHostProxy;
+		[default, source] dispinterface _IHostProxyEvents;
+	};
+	[
+		uuid(5381E86C-E13E-4BB1-ADCA-389DD7E4C6F7),
+		helpstring("SessionProxy Class")
+	]
+	coclass SessionProxy
+	{
+		[default] interface ISession;
+		[default, source] dispinterface _ISessionEvents;
+	};
+
+	[
+		uuid(0D801646-FA33-4AE3-9A4C-53210DEAFA21),
+		helpstring("RouterProxy Class")
+	]
+	coclass RouterProxy
+	{
+		[default] interface IRouterProxy;
+		[default, source] dispinterface _IRouterProxyEvents;
+	};
+};
